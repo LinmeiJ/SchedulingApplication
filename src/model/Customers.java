@@ -1,26 +1,26 @@
-package sample;
+package model;
 
+import java.sql.Date;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 
-public class Controller {
-    int customer_id;
-    String customer_name;
-    String address;
-    String postal_code;
-    String phone;
-    LocalDateTime created_date;
-    String created_by;
-    Timestamp last_update;
-    String last_updated_by;
-    int division_id;
+public class Customers {
+   private int customer_id;
+   private String customer_name;
+   private String address;
+   private String postal_code;
+   private String phone;
+   private Date created_date;
+   private String created_by;
+   private Timestamp last_update;
+   private String last_updated_by;
+   private int division_id; //this is a fk
 
     public int getCustomer_id() {
         return customer_id;
     }
 
-    public void setCustomer_id(int customer_id) {
-        this.customer_id = customer_id;
+    public int getDivision_id() {
+        return division_id;
     }
 
     public String getCustomer_name() {
@@ -55,11 +55,11 @@ public class Controller {
         this.phone = phone;
     }
 
-    public LocalDateTime getCreated_date() {
+    public Date getCreated_date() {
         return created_date;
     }
 
-    public void setCreated_date(LocalDateTime created_date) {
+    public void setCreated_date(Date created_date) {
         this.created_date = created_date;
     }
 
@@ -85,13 +85,5 @@ public class Controller {
 
     public void setLast_updated_by(String last_updated_by) {
         this.last_updated_by = last_updated_by;
-    }
-
-    public int getDivision_id() {
-        return division_id;
-    }
-
-    public void setDivision_id(int division_id) {
-        this.division_id = division_id;
     }
 }

@@ -1,28 +1,24 @@
-package entity;
+package model;
 
 import java.sql.Date;
 import java.sql.Timestamp;
 
 public class Appointments {
-    int appointment_id;
-    String title;
-    String description;
-    String location;
-    String type;
-    Date start;
-    Date end;
-    Date Created_date;
-    String Created_by;
-    Timestamp last_update;
-    String last_updated_by;
-    int customer_id;
+   private int appointment_id;
+   private String title;
+   private String description;
+   private String location;
+   private String type;
+   private Date start;
+   private Date end;
+   private Date Created_date;
+   private String Created_by;
+   private Timestamp last_update;
+   private String last_updated_by;
+   private int customer_id; // this is a fk
 
     public int getAppointment_id() {
         return appointment_id;
-    }
-
-    public void setAppointment_id(int appointment_id) {
-        this.appointment_id = appointment_id;
     }
 
     public String getTitle() {
@@ -107,9 +103,5 @@ public class Appointments {
 
     public int getCustomer_id() {
         return customer_id;
-    }
-
-    public void setCustomer_id(int customer_id) {
-        this.customer_id = customer_id;
     }
 }
