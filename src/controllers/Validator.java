@@ -1,15 +1,27 @@
 package controllers;
 
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Optional;
 
 public final class Validator {
+    /**
+     * An optional button type window to confirm user's action.
+     */
+    public static Optional<ButtonType> confirmResult;
+
     /**
      * An alert to display an error message.
      */
     private static Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+
+    /**
+     * An alert object to display a confirmation to a user.
+     */
+    private static Alert confirmAlert = new Alert(Alert.AlertType.CONFIRMATION);
 
     public static boolean isValidString(String str1, String str2){
         return checkStringEntry(str1) && checkStringEntry(str2);
@@ -42,5 +54,15 @@ public final class Validator {
             }
         }
         return false;
+    }
+
+    /**
+     * This method sets a confirmation window to ensure the end user wants to exit the program.
+     */
+    public static void displayExitConfirmation() {
+        confirmAlert.setTitle("Exit");
+        confirmAlert.setHeaderText("Close the program");
+        confirmAlert.setContentText("Are you sure you want to close the program?");
+        confirmResult = confirmAlert.showAndWait();
     }
 }

@@ -1,48 +1,52 @@
 package controllers;
 
+import DBService.DBService;
+import entities.Customers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.fxml.Initializable;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
-public class CustomerRecordController {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class CustomerRecordController extends DBService implements Initializable {
 
     @FXML
     private Button exitId;
 
     @FXML
-    private AnchorPane partPane;
+    private AnchorPane CustomerRecordPane;
 
     @FXML
-    private TableView<?> partsTable;
+    private TableView<Customers> recordTable;
 
     @FXML
-    private TableColumn<?, ?> custID;
+    private TableColumn<Customers, Long> custID;
 
     @FXML
-    private TableColumn<?, ?> custName;
+    private TableColumn<Customers, String> custName;
 
     @FXML
-    private TableColumn<?, ?> custAddress;
+    private TableColumn<Customers, String> custAddress;
 
     @FXML
-    private TableColumn<?, ?> custZipCode;
+    private TableColumn<Customers, String> custZipCode;
 
     @FXML
-    private TableColumn<?, ?> custPhoneNum;
+    private TableColumn<Customers, String> custPhoneNum;
 
     @FXML
-    private TableColumn<?, ?> custPhoneNum1;
+    private TableColumn<Customers, String> delete;
 
     @FXML
-    private TableColumn<?, ?> custPhoneNum2;
+    private TableColumn<Customers, String> update;
 
     @FXML
-    private ComboBox<?> divisionList;
+    private ComboBox<String> divisionList;
 
     @FXML
     private RadioButton USBtn;
@@ -53,8 +57,22 @@ public class CustomerRecordController {
     @FXML
     private RadioButton EnglandBtn;
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        custID.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
+        custName.setCellValueFactory(new PropertyValueFactory<>("customer_name"));
+        custAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
+        custZipCode.setCellValueFactory(new PropertyValueFactory<>("postal_code"));
+        custPhoneNum.setCellValueFactory(new PropertyValueFactory<>("phone"));
+//        recordTable.setItems();
+    }
+
     @FXML
     void exitBtnClicked(ActionEvent event) {
-
+        Stage stage = (Stage) exitId.getScene().getWindow();
+        Validator.displayExitConfirmation();
+        if (Validator.confirmResult.isPresent() && Validator.confirmResult.get() == ButtonType.OK) {
+            stage.close();
+        }
     }
 }

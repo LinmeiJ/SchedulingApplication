@@ -4,18 +4,39 @@ import java.sql.Date;
 import java.sql.Timestamp;
 
 public class Customers {
-   private int customer_id;
-   private String customer_name;
-   private String address;
-   private String postal_code;
-   private String phone;
-   private Date created_date;
-   private String created_by;
-   private Timestamp last_update;
-   private String last_updated_by;
-   private int division_id; //this is a fk
+    private long customer_id;
+    private String customer_name;
+    private String address;
+    private String postal_code;
+    private String phone;
+    private Date created_date;
+    private String created_by;
+    private Timestamp last_update;
+    private String last_updated_by;
+    private int division_id; //this is a fk
 
-    public int getCustomer_id() {
+    public Customers(long customer_id, String customer_name, String address, String postal_code, String phone) {
+        this.customer_id = customer_id;
+        this.customer_name = customer_name;
+        this.address = address;
+        this.postal_code = postal_code;
+        this.phone = phone;
+    }
+
+    public Customers(long customer_id, String customer_name, String address, String postal_code, String phone, Date created_date, String created_by, Timestamp last_update, String last_updated_by, int division_id) {
+        this.customer_id = customer_id;
+        this.customer_name = customer_name;
+        this.address = address;
+        this.postal_code = postal_code;
+        this.phone = phone;
+        this.created_date = created_date;
+        this.created_by = created_by;
+        this.last_update = last_update;
+        this.last_updated_by = last_updated_by;
+        this.division_id = division_id;
+    }
+
+    public long getCustomer_id() {
         return customer_id;
     }
 
