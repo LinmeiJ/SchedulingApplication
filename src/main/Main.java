@@ -1,6 +1,6 @@
-package controller;
+package main;
 
-import DBConnection.JDBC;
+import DBService.JDBCConnection;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -11,12 +11,11 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("../view/sample.fxml"));
-        primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(root, 300, 275));
+        Parent root = FXMLLoader.load(getClass().getResource("../views/login.fxml"));
+        primaryStage.setScene(new Scene(root, 800, 800));
         primaryStage.show();
-        JDBC.openConnection();
-        JDBC.closeConnection();
+        JDBCConnection.openConnection();
+
     }
 
 

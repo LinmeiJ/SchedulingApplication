@@ -1,4 +1,4 @@
-package model;
+package entities;
 
 import java.sql.Date;
 import java.sql.Timestamp;
@@ -17,6 +17,7 @@ public class Appointments {
    private String last_updated_by;
    private int customer_id; // this is a fk
 
+
     public int getAppointment_id() {
         return appointment_id;
     }
@@ -25,6 +26,12 @@ public class Appointments {
         return title;
     }
 
+    /**
+     * f
+     *
+     * @param title the title for the appointment
+     *
+     * */
     public void setTitle(String title) {
         this.title = title;
     }

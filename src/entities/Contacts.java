@@ -1,4 +1,4 @@
-package model;
+package entities;
 
 public class Contacts {
     private int contact_id;
