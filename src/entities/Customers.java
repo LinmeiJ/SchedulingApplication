@@ -1,9 +1,12 @@
 package entities;
 
+import DBService.DBService;
+
 import java.sql.Date;
+import java.sql.ResultSet;
 import java.sql.Timestamp;
 
-public class Customers {
+public class Customers implements Entity {
     private long customer_id;
     private String customer_name;
     private String address;
@@ -13,35 +16,19 @@ public class Customers {
     private String created_by;
     private Timestamp last_update;
     private String last_updated_by;
-    private int division_id; //this is a fk
+    private FirstLevelDivisions division; //this is a fk
 
-    public Customers(long customer_id, String customer_name, String address, String postal_code, String phone) {
+    public Customers(long customer_id, String customer_name, String address, String phone, long divisionID, long countryID) {
         this.customer_id = customer_id;
         this.customer_name = customer_name;
         this.address = address;
-        this.postal_code = postal_code;
         this.phone = phone;
-    }
-
-    public Customers(long customer_id, String customer_name, String address, String postal_code, String phone, Date created_date, String created_by, Timestamp last_update, String last_updated_by, int division_id) {
-        this.customer_id = customer_id;
-        this.customer_name = customer_name;
-        this.address = address;
-        this.postal_code = postal_code;
-        this.phone = phone;
-        this.created_date = created_date;
-        this.created_by = created_by;
-        this.last_update = last_update;
-        this.last_updated_by = last_updated_by;
-        this.division_id = division_id;
+        this.division.setDivision_id(divisionID);
+        this.division.getCountry().setCountry_id(countryID);
     }
 
     public long getCustomer_id() {
         return customer_id;
-    }
-
-    public int getDivision_id() {
-        return division_id;
     }
 
     public String getCustomer_name() {
@@ -106,5 +93,11 @@ public class Customers {
 
     public void setLast_updated_by(String last_updated_by) {
         this.last_updated_by = last_updated_by;
+    }
+
+    public Customers getAllCustomers(){
+            
+//        ResultSet result = (Customers, ResultSet) -> {};
+        return null; //fix me
     }
 }

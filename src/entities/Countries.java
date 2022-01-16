@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.sql.Timestamp;
 
 public class Countries {
+
     private long country_id;
     private String country;
     private Date create_date;
@@ -55,5 +56,9 @@ public class Countries {
 
     public void setLast_updated_by(String last_updated_by) {
         this.last_updated_by = last_updated_by;
+    }
+
+    public void setCountry_id(long country_id) {
+        this.country_id = country_id;
     }
 }

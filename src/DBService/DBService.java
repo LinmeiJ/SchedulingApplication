@@ -1,7 +1,9 @@
 package DBService;
 
 import controllers.Validator;
+import entities.Customers;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class DBService extends JDBCConnection {
@@ -17,7 +19,7 @@ public class DBService extends JDBCConnection {
         return Validator.validateUserLogin(result, userPassword);
     }
 
-    public void getCustomerRecord(){
+    public ResultSet getCustomerRecord(){
         try {
             statement = connection.createStatement();
             String sql = "SELECT Customer_ID, Customer_Name, Address, Postal_Code, Phone, d.Division_ID, d.Country_ID FROM customers c JOIN first_level_divisions d ON d.Division_ID = c.Division_ID";
@@ -25,5 +27,7 @@ public class DBService extends JDBCConnection {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+        return result;
     }
+
 }

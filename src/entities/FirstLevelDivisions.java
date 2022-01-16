@@ -4,13 +4,26 @@ import java.sql.Date;
 import java.sql.Timestamp;
 
 public class FirstLevelDivisions {
+    public void setDivision_id(long division_id) {
+        this.division_id = division_id;
+    }
+
     private long division_id;
     private String division;
     private Date create_date;
     private String created_by;
     private Timestamp last_update;
     private String last_updated_by;
-    private long country_id; //this is a foreign key
+
+    public Countries getCountry() {
+        return country;
+    }
+
+    public void setCountry(Countries country) {
+        this.country = country;
+    }
+
+    private Countries country; //this is a foreign key
 
     public long getDivision_id() {
         return division_id;
@@ -54,9 +67,5 @@ public class FirstLevelDivisions {
 
     public void setLast_updated_by(String last_updated_by) {
         this.last_updated_by = last_updated_by;
-    }
-
-    public long getCountry_id() {
-        return country_id;
     }
 }
