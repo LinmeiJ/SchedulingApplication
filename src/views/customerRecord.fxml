@@ -50,17 +50,17 @@
       <AnchorPane layoutX="781.0" layoutY="55.0" prefHeight="249.0" prefWidth="181.0">
          <children>
             <ComboBox fx:id="divisionList" editable="true" layoutX="25.0" layoutY="61.0" prefWidth="150.0" promptText="Division List" />
-            <RadioButton fx:id="USBtn" layoutX="14.0" layoutY="30.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="49.0" text="U.S">
+            <RadioButton fx:id="USBtn" layoutX="14.0" layoutY="30.0" mnemonicParsing="false" onAction="#USSelected" prefHeight="17.0" prefWidth="49.0" text="U.S">
                <font>
                   <Font size="11.0" />
                </font>
             </RadioButton>
-            <RadioButton fx:id="CABtn" layoutX="57.0" layoutY="30.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="59.0" text="Canada">
+            <RadioButton fx:id="CABtn" layoutX="57.0" layoutY="30.0" mnemonicParsing="false" onAction="#CanadaSelected" prefHeight="17.0" prefWidth="59.0" text="Canada">
                <font>
                   <Font size="11.0" />
                </font>
             </RadioButton>
-            <RadioButton fx:id="EnglandBtn" layoutX="122.0" layoutY="30.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="67.0" text="England">
+            <RadioButton fx:id="EnglandBtn" layoutX="122.0" layoutY="30.0" mnemonicParsing="false" onAction="#EnglandSelected" prefHeight="17.0" prefWidth="67.0" text="England">
                <font>
                   <Font size="11.0" />
                </font>

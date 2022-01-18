@@ -23,7 +23,6 @@ public class Customer {
         this.postal_code = postal_code;
         this.phone = phone;
         this.placeHolder = divisionID;
-//        this.division.setDivision_id(divisionID);
     }
 
     public long getCustomer_id() {
@@ -93,4 +92,13 @@ public class Customer {
     public void setLast_updated_by(String last_updated_by) {
         this.last_updated_by = last_updated_by;
     }
+
+    public FirstLevelDivision getDivision() {
+        return division;
+    }
+
+    public void setDivision(FirstLevelDivision division) {
+        this.division = division;
+    }
+
 }

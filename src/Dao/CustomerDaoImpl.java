@@ -36,11 +36,7 @@ public class CustomerDaoImpl extends JDBCConnection{
             String phoneNum = rs.getString("Phone");
             long div_id = rs.getLong("Division_ID");
 
-            FirstLevelDivision firstLevelDivision = firstLevelDivisionDao.findById(div_id);
-            Country country = countryDao.findById(firstLevelDivision.getCountry_id());
-
-            String addressOnDisplay = country.getCountry() + ": " + address +", " + firstLevelDivision.getDivision();
-            Customer customer = new Customer(id, name, addressOnDisplay, postalCode, phoneNum, div_id);
+            Customer customer = new Customer(id, name, address, postalCode, phoneNum, div_id);
             allCustomers.add(customer);
         }
         return allCustomers;

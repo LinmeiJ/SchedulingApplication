@@ -65,6 +65,7 @@ public class CustomerRecordController implements Initializable {
 
     ObservableList<Customer> customers = FXCollections.observableArrayList();
     Logger logger = Logger.getLogger(this.getClass().getName());
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         custID.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
