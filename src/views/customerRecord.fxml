@@ -26,7 +26,7 @@
             <children>
                 <TableView fx:id="recordTable" editable="true" layoutX="4.0" layoutY="40.0" prefHeight="258.0" prefWidth="714.0">
                     <columns>
-                  <TableColumn fx:id="custID" minWidth="-Infinity" prefWidth="81.0" text="Customer ID" />
+                  <TableColumn fx:id="custID" editable="false" minWidth="-Infinity" prefWidth="81.0" text="Customer ID" />
                   <TableColumn fx:id="custName" prefWidth="85.0" text="Name" />
                   <TableColumn fx:id="custAddress" prefWidth="177.0" text="Address" />
                   <TableColumn fx:id="custZipCode" prefWidth="85.0" text="Postcode" />

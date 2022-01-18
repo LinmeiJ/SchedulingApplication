@@ -1,6 +1,6 @@
-package entities;
+package entity;
 
-public class Contacts {
+public class Contact {
     private int contact_id;
     private String contract_name;
     private String email;

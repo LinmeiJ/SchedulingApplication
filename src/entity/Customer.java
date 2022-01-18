@@ -1,12 +1,9 @@
-package entities;
-
-import DBService.DBService;
+package entity;
 
 import java.sql.Date;
-import java.sql.ResultSet;
 import java.sql.Timestamp;
 
-public class Customers implements Entity {
+public class Customer {
     private long customer_id;
     private String customer_name;
     private String address;
@@ -16,15 +13,17 @@ public class Customers implements Entity {
     private String created_by;
     private Timestamp last_update;
     private String last_updated_by;
-    private FirstLevelDivisions division; //this is a fk
+    private FirstLevelDivision division;
+    private long placeHolder;
 
-    public Customers(long customer_id, String customer_name, String address, String phone, long divisionID, long countryID) {
+    public Customer(long customer_id, String customer_name, String address, String postal_code, String phone, long divisionID) {
         this.customer_id = customer_id;
         this.customer_name = customer_name;
         this.address = address;
+        this.postal_code = postal_code;
         this.phone = phone;
-        this.division.setDivision_id(divisionID);
-        this.division.getCountry().setCountry_id(countryID);
+        this.placeHolder = divisionID;
+//        this.division.setDivision_id(divisionID);
     }
 
     public long getCustomer_id() {
@@ -93,11 +92,5 @@ public class Customers implements Entity {
 
     public void setLast_updated_by(String last_updated_by) {
         this.last_updated_by = last_updated_by;
-    }
-
-    public Customers getAllCustomers(){
-            
-//        ResultSet result = (Customers, ResultSet) -> {};
-        return null; //fix me
     }
 }

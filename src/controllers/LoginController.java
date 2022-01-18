@@ -1,6 +1,7 @@
 package controllers;
 
-import DBService.DBService;
+import Dao.UserDaoImpl;
+import Dao.Validator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,6 +10,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -22,14 +24,14 @@ public class LoginController implements Initializable {
     private TextField userNameField;
 
     @FXML
-    private TextField passwordField;
+    private PasswordField passwordField;
 
     @FXML
     private static Label locationID;
 
     ResourceBundle rb;
 
-    private DBService dbService = new DBService();
+//    private DBService dbService = new DBService();
 
     private String userName;
     private String password;
@@ -42,14 +44,10 @@ public class LoginController implements Initializable {
         userName = (userNameField.getText());
         password = (passwordField.getText());
 
-        try {
-            if(dbService.findUser(userName, password)) {
-                setNextScene(event);
-            }else{
-                Validator.displayInvalidInput(USER_NOT_FOUND);
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
+        if(UserDaoImpl.findByUserName(userName, password)) {
+            setNextScene(event);
+        }else{
+            Validator.displayInvalidInput(USER_NOT_FOUND);
         }
     }
 

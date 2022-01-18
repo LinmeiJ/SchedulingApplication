@@ -1,29 +1,45 @@
-package entities;
+package entity;
 
 import java.sql.Date;
+import java.sql.Time;
 import java.sql.Timestamp;
 
-public class FirstLevelDivisions {
-    public void setDivision_id(long division_id) {
-        this.division_id = division_id;
-    }
+public class FirstLevelDivision {
 
     private long division_id;
     private String division;
-    private Date create_date;
+    private Timestamp create_date;
     private String created_by;
     private Timestamp last_update;
     private String last_updated_by;
 
-    public Countries getCountry() {
-        return country;
+    private long country_id;
+
+    public FirstLevelDivision(long division_id, String division, Timestamp create_date, String created_by, Timestamp last_update, String last_updated_by, long country) {
+        this.division_id = division_id;
+        this.division = division;
+        this.create_date = create_date;
+        this.created_by = created_by;
+        this.last_update = last_update;
+        this.last_updated_by = last_updated_by;
+        this.country_id = country;
     }
 
-    public void setCountry(Countries country) {
-        this.country = country;
+
+    public long getCountry_id() {
+        return country_id;
     }
 
-    private Countries country; //this is a foreign key
+    public void setCountry_id(long country_id) {
+        this.country_id = country_id;
+    }
+
+
+    public void setDivision_id(long division_id) {
+        this.division_id = division_id;
+    }
+
+    private Country country; //this is a foreign key
 
     public long getDivision_id() {
         return division_id;
@@ -37,11 +53,11 @@ public class FirstLevelDivisions {
         this.division = division;
     }
 
-    public Date getCreate_date() {
+    public Timestamp getCreate_date() {
         return create_date;
     }
 
-    public void setCreate_date(Date create_date) {
+    public void setCreate_date(Timestamp create_date) {
         this.create_date = create_date;
     }
 

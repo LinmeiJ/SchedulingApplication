@@ -1,18 +1,27 @@
-package entities;
+package entity;
 
 
 import java.sql.Date;
+import java.sql.Time;
 import java.sql.Timestamp;
 
-public class Countries {
+public class Country {
 
     private long country_id;
     private String country;
-    private Date create_date;
+    private Timestamp create_date;
     private String created_by;
     private Timestamp last_update;
     private String last_updated_by;
 
+    public Country(long country_id, String country, Timestamp create_date, String created_by, Timestamp last_update, String last_updated_by) {
+        this.country_id = country_id;
+        this.country = country;
+        this.create_date = create_date;
+        this.created_by = created_by;
+        this.last_update = last_update;
+        this.last_updated_by = last_updated_by;
+    }
 
     public long getCountry_id() {
         return country_id;
@@ -26,11 +35,11 @@ public class Countries {
         this.country = country;
     }
 
-    public Date getCreate_date() {
+    public Timestamp getCreate_date() {
         return create_date;
     }
 
-    public void setCreate_date(Date create_date) {
+    public void setCreate_date(Timestamp create_date) {
         this.create_date = create_date;
     }
 

@@ -1,9 +1,9 @@
-package entities;
+package entity;
 
 import java.sql.Date;
 import java.sql.Timestamp;
 
-public class Users {
+public class User {
     private int user_id;
     private String user_name;
     private String password;

@@ -1,9 +1,9 @@
-package entities;
+package entity;
 
 import java.sql.Date;
 import java.sql.Timestamp;
 
-public class Appointments {
+public class Appointment {
    private int appointment_id;
    private String title;
    private String description;
