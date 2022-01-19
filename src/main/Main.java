@@ -11,7 +11,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("../views/login.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("../views/loginView.fxml"));
         primaryStage.setScene(new Scene(root, 800, 800));
         primaryStage.show();
         JDBCConnection.openConnection();

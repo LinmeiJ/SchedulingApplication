@@ -95,7 +95,7 @@ public class CustomerRecordController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         custID.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
         custName.setCellValueFactory(new PropertyValueFactory<>("customer_name"));
-        custAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
+        custAddress.setCellValueFactory(new PropertyValueFactory<>("addres"));
         custZipCode.setCellValueFactory(new PropertyValueFactory<>("postal_code"));
         custPhoneNum.setCellValueFactory(new PropertyValueFactory<>("phone"));
         custDivision.setCellValueFactory(cellData ->

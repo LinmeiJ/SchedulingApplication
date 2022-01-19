@@ -36,7 +36,7 @@ public class LoginController implements Initializable {
     private String userName;
     private String password;
 
-    private static final String CUSTOMER_RECORD_VIEW = "../views/customerRecord.fxml";
+    private static final String CUSTOMER_RECORD_VIEW = "../views/customerRecordView.fxml";
     private static final String USER_NOT_FOUND = "User is not found, please check your user name or password.";
 
     @FXML
