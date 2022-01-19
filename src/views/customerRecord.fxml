@@ -39,7 +39,7 @@
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
                 </TableView>
-            <Button layoutX="557.0" layoutY="7.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="158.0" text="Add A New Customer">
+            <Button fx:id="addNew" layoutX="557.0" layoutY="7.0" mnemonicParsing="false" onAction="#addNewCustomer" prefHeight="27.0" prefWidth="158.0" text="Add A New Customer">
                <font>
                   <Font size="13.0" />
                </font></Button>

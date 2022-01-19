@@ -111,4 +111,9 @@ public class CustomerRecordController implements Initializable {
             stage.close();
         }
     }
+
+    @FXML
+    void addNewCustomer(ActionEvent event) {
+
+    }
 }
