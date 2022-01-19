@@ -71,6 +71,21 @@ public class CustomerRecordController implements Initializable {
     ObservableList<Customer> customers = FXCollections.observableArrayList();
     Logger logger = Logger.getLogger(this.getClass().getName());
 
+    @FXML
+    void CanadaSelected(ActionEvent event) {
+
+    }
+
+    @FXML
+    void EnglandSelected(ActionEvent event) {
+
+    }
+
+    @FXML
+    void USSelected(ActionEvent event) {
+
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         custID.setCellValueFactory(new PropertyValueFactory<>("customer_id"));

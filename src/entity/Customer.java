@@ -14,15 +14,14 @@ public class Customer {
     private Timestamp last_update;
     private String last_updated_by;
     private FirstLevelDivision firstLevelDivision;
-    private long placeHolder;
 
-    public Customer(long customer_id, String customer_name, String address, String postal_code, String phone, long divisionID) {
+    public Customer(long customer_id, String customer_name, String address, String postal_code, String phone,FirstLevelDivision firstLevelDivision) {
         this.customer_id = customer_id;
         this.customer_name = customer_name;
         this.address = address;
         this.postal_code = postal_code;
         this.phone = phone;
-        this.placeHolder = divisionID;
+        this.firstLevelDivision = firstLevelDivision;
     }
 
     public long getCustomer_id() {
