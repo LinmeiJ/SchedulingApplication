@@ -17,9 +17,17 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.TextStyle;
+import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-public class LoginController implements Initializable, Exit {
+public class LoginController extends Location implements Initializable, Exit {
     @FXML
     private TextField userNameField;
 
@@ -28,6 +36,9 @@ public class LoginController implements Initializable, Exit {
 
     @FXML
     private static Label locationID;
+
+    @FXML
+    private TextField locationField;
 
     @FXML
     private Button exitId;
@@ -68,7 +79,9 @@ public class LoginController implements Initializable, Exit {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-//        locationID.setText(Locale.getDefault().toString());
+        String location = String.valueOf(Locale.getDefault() + ", " +String.valueOf(ZoneId.systemDefault().getId()));
+
+        locationField.setText(location);
     }
 }
 
