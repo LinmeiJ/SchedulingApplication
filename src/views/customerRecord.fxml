@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane cache="true" prefHeight="400.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.CustomerRecordController">
+<AnchorPane cache="true" prefHeight="400.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.CustomerRecordController">
     <children>
         <Label alignment="CENTER" graphicTextGap="105.0" layoutX="49.0" layoutY="14.0" prefHeight="29.0" prefWidth="921.0" text="Customer Records" textAlignment="CENTER" textFill="#5e2d2d">
             <font>
@@ -31,6 +31,7 @@
                   <TableColumn fx:id="custAddress" prefWidth="177.0" text="Address" />
                   <TableColumn fx:id="custZipCode" prefWidth="85.0" text="Postcode" />
                   <TableColumn fx:id="custPhoneNum" prefWidth="109.0" text="Phone Number" />
+                  <TableColumn fx:id="custDivision" prefWidth="109.0" text="Divsion" />
                   <TableColumn fx:id="delete" prefWidth="81.0" text="Delete" />
                   <TableColumn fx:id="update" prefWidth="94.0" text="Update" />
                     </columns>

@@ -3,6 +3,8 @@ package controllers;
 import Dao.CustomerDaoImpl;
 import Dao.Validator;
 import entity.Customer;
+import javafx.beans.property.SimpleListProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -44,6 +46,9 @@ public class CustomerRecordController implements Initializable {
     private TableColumn<Customer, String> custPhoneNum;
 
     @FXML
+    private TableColumn<Customer, String> custDivision;
+
+    @FXML
     private TableColumn<Customer, String> delete;
 
     @FXML
@@ -73,6 +78,8 @@ public class CustomerRecordController implements Initializable {
         custAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
         custZipCode.setCellValueFactory(new PropertyValueFactory<>("postal_code"));
         custPhoneNum.setCellValueFactory(new PropertyValueFactory<>("phone"));
+        custDivision.setCellValueFactory(cellData ->
+                new SimpleStringProperty(cellData.getValue().getFirstLevelDivision().getDivision()));
         try{
             customers.addAll(customerDao.getAllCustomers());
         } catch (Exception e) {

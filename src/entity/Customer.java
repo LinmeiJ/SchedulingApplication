@@ -13,7 +13,7 @@ public class Customer {
     private String created_by;
     private Timestamp last_update;
     private String last_updated_by;
-    private FirstLevelDivision division;
+    private FirstLevelDivision firstLevelDivision;
     private long placeHolder;
 
     public Customer(long customer_id, String customer_name, String address, String postal_code, String phone, long divisionID) {
@@ -93,12 +93,12 @@ public class Customer {
         this.last_updated_by = last_updated_by;
     }
 
-    public FirstLevelDivision getDivision() {
-        return division;
+    public FirstLevelDivision getFirstLevelDivision() {
+        return firstLevelDivision;
     }
 
-    public void setDivision(FirstLevelDivision division) {
-        this.division = division;
+    public void setFirstLevelDivision(FirstLevelDivision firstLevelDivision) {
+        this.firstLevelDivision = firstLevelDivision;
     }
 
 }
