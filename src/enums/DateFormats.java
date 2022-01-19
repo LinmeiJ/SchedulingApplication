@@ -10,14 +10,10 @@ public enum DateFormats {
     private String dateFormat;
 
     DateFormats(String dateFormat) {
-        this.setDateFormat(dateFormat);
+        this.dateFormat = dateFormat;
     }
 
     public String getDateFormat() {
         return dateFormat;
-    }
-
-    public void setDateFormat(String dateFormat) {
-        this.dateFormat = dateFormat;
     }
 }

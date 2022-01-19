@@ -1,7 +1,6 @@
 package controller;
 
 import Dao.CustomerDaoImpl;
-import Dao.Validator;
 import entity.Customer;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -21,8 +20,6 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.function.BiConsumer;
-import java.util.function.BiFunction;
 import java.util.logging.*;
 
 public class CustomerRecordController implements Initializable, Exit{
@@ -60,7 +57,7 @@ public class CustomerRecordController implements Initializable, Exit{
     @FXML
     private TableColumn<Customer, String> update;
 
-    private static final String ADD_NEW_CUSTOMER_VIEW = "../views/addNewCustomerView.fxml";
+    private static final String ADD_NEW_CUSTOMER_VIEW_PATH = "../views/addNewCustomerView.fxml";
 
     CustomerDaoImpl customerDao = new CustomerDaoImpl();
 
@@ -91,7 +88,7 @@ public class CustomerRecordController implements Initializable, Exit{
 
     @FXML
     void addNewCustomer(ActionEvent event) throws IOException {
-        setScene(event, ADD_NEW_CUSTOMER_VIEW);
+        setScene(event, ADD_NEW_CUSTOMER_VIEW_PATH);
     }
 
     /**
