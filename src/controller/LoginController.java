@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -27,6 +28,9 @@ public class LoginController implements Initializable, Exit {
 
     @FXML
     private static Label locationID;
+
+    @FXML
+    private Button exitId;
 
     ResourceBundle rb;
 
@@ -55,6 +59,11 @@ public class LoginController implements Initializable, Exit {
         var scene = new Scene(parent);
         var stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
+    }
+
+    @FXML
+    void exitClicked(ActionEvent event) {
+        exit(event, exitId);
     }
 
     @Override

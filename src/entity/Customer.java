@@ -1,6 +1,7 @@
 package entity;
 
 import java.sql.Date;
+import java.sql.Time;
 import java.sql.Timestamp;
 
 public class Customer {
@@ -9,7 +10,7 @@ public class Customer {
     private String address;
     private String postal_code;
     private String phone;
-    private Date created_date;
+    private Timestamp created_date;
     private String created_by;
     private Timestamp last_update;
     private String last_updated_by;
@@ -61,11 +62,11 @@ public class Customer {
         this.phone = phone;
     }
 
-    public Date getCreated_date() {
+    public Timestamp getCreated_date() {
         return created_date;
     }
 
-    public void setCreated_date(Date created_date) {
+    public void setCreated_date(Timestamp created_date) {
         this.created_date = created_date;
     }
 

@@ -1,6 +1,7 @@
 package controller;
 
 import Dao.UserDaoImpl;
+import converter.DateTimeConverter;
 import entity.Customer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -63,7 +64,7 @@ public class AddNewCustomerController implements Initializable, Exit {
 
     @FXML
     void cancelBtnClicked(ActionEvent event) {
-
+        exit(event, cancelBtn);
     }
 
     @FXML
@@ -78,7 +79,7 @@ public class AddNewCustomerController implements Initializable, Exit {
             customer.setPhone(addPhoneField.getText());
             customer.setPostal_code(addZipCodeField.getText());
             customer.setCreated_by(UserDaoImpl.userName);
-            customer.getCreated_date();
+            customer.setCreated_date(DateTimeConverter.convertedTimeTOUTC());
 
     }
 
