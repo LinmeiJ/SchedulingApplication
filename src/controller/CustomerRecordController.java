@@ -1,9 +1,8 @@
-package controllers;
+package controller;
 
 import Dao.CustomerDaoImpl;
 import Dao.Validator;
 import entity.Customer;
-import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -59,37 +58,12 @@ public class CustomerRecordController implements Initializable {
     @FXML
     private TableColumn<Customer, String> update;
 
-    @FXML
-    private ComboBox<String> divisionList;
-
-    @FXML
-    private RadioButton USBtn;
-
-    @FXML
-    private RadioButton CABtn;
-
-    @FXML
-    private RadioButton EnglandBtn;
+    private static final String ADD_NEW_CUSTOMER_VIEW = "../views/addNewCustomerView.fxml";
 
     CustomerDaoImpl customerDao = new CustomerDaoImpl();
 
     ObservableList<Customer> customers = FXCollections.observableArrayList();
     Logger logger = Logger.getLogger(this.getClass().getName());
-
-    @FXML
-    void CanadaSelected(ActionEvent event) {
-
-    }
-
-    @FXML
-    void EnglandSelected(ActionEvent event) {
-
-    }
-
-    @FXML
-    void USSelected(ActionEvent event) {
-
-    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -119,7 +93,7 @@ public class CustomerRecordController implements Initializable {
 
     @FXML
     void addNewCustomer(ActionEvent event) throws IOException {
-        setScene(event, "fxml/addNewCustomerView.fxml");
+        setScene(event, ADD_NEW_CUSTOMER_VIEW);
     }
 
     /**

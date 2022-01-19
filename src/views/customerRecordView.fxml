@@ -3,15 +3,13 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane cache="true" prefHeight="400.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.CustomerRecordController">
+<AnchorPane cache="true" prefHeight="400.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CustomerRecordController">
     <children>
         <Label alignment="CENTER" graphicTextGap="105.0" layoutX="49.0" layoutY="14.0" prefHeight="29.0" prefWidth="921.0" text="Customer Records" textAlignment="CENTER" textFill="#5e2d2d">
             <font>
@@ -24,7 +22,7 @@
         <Button fx:id="exitId" layoutX="935.0" layoutY="352.0" mnemonicParsing="false" onAction="#exitBtnClicked" text="Exit" />
         <AnchorPane fx:id="CustomerRecordPane" layoutX="38.0" layoutY="55.0" prefHeight="266.0" prefWidth="648.0" style="-fx-border-color: #C0C0C0; -fx-border-radius: 18 18 18 18; -fx-border-width: 0.5;     -fx-padding:5px">
             <children>
-                <TableView fx:id="recordTable" editable="true" layoutX="4.0" layoutY="40.0" prefHeight="258.0" prefWidth="714.0">
+                <TableView fx:id="recordTable" editable="true" layoutX="4.0" layoutY="40.0" prefHeight="258.0" prefWidth="846.0">
                     <columns>
                   <TableColumn fx:id="custID" editable="false" minWidth="-Infinity" prefWidth="81.0" text="Customer ID" />
                   <TableColumn fx:id="custName" prefWidth="85.0" text="Name" />
@@ -39,7 +37,7 @@
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
                 </TableView>
-            <Button fx:id="addNew" layoutX="557.0" layoutY="7.0" mnemonicParsing="false" onAction="#addNewCustomer" prefHeight="27.0" prefWidth="158.0" text="Add A New Customer">
+            <Button fx:id="addNew" layoutX="689.0" layoutY="7.0" mnemonicParsing="false" onAction="#addNewCustomer" prefHeight="27.0" prefWidth="158.0" text="Add A New Customer">
                <font>
                   <Font size="13.0" />
                </font></Button>
@@ -48,26 +46,6 @@
                 <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
             </opaqueInsets>
         </AnchorPane>
-      <AnchorPane layoutX="781.0" layoutY="55.0" prefHeight="249.0" prefWidth="181.0">
-         <children>
-            <ComboBox fx:id="divisionList" editable="true" layoutX="25.0" layoutY="61.0" prefWidth="150.0" promptText="Division List" />
-            <RadioButton fx:id="USBtn" layoutX="14.0" layoutY="30.0" mnemonicParsing="false" onAction="#USSelected" prefHeight="17.0" prefWidth="49.0" text="U.S">
-               <font>
-                  <Font size="11.0" />
-               </font>
-            </RadioButton>
-            <RadioButton fx:id="CABtn" layoutX="57.0" layoutY="30.0" mnemonicParsing="false" onAction="#CanadaSelected" prefHeight="17.0" prefWidth="59.0" text="Canada">
-               <font>
-                  <Font size="11.0" />
-               </font>
-            </RadioButton>
-            <RadioButton fx:id="EnglandBtn" layoutX="122.0" layoutY="30.0" mnemonicParsing="false" onAction="#EnglandSelected" prefHeight="17.0" prefWidth="67.0" text="England">
-               <font>
-                  <Font size="11.0" />
-               </font>
-            </RadioButton>
-         </children>
-      </AnchorPane>
     </children>
    <cursor>
       <Cursor fx:constant="DEFAULT" />

@@ -1,4 +1,4 @@
-package controllers;
+package controller;
 
 import Dao.UserDaoImpl;
 import Dao.Validator;
@@ -16,7 +16,6 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
@@ -54,7 +53,8 @@ public class LoginController implements Initializable {
     private void setNextScene(ActionEvent event) throws IOException {
         Parent parent = FXMLLoader.load(getClass().getResource(CUSTOMER_RECORD_VIEW));
         var scene = new Scene(parent);
-        var stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+//        var stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        var stage = new Stage();
         stage.setScene(scene);
     }
 
