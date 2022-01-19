@@ -15,6 +15,7 @@ public class Customer {
     private String last_updated_by;
     private FirstLevelDivision firstLevelDivision;
 
+    public Customer(){}
     public Customer(long customer_id, String customer_name, String address, String postal_code, String phone,FirstLevelDivision firstLevelDivision) {
         this.customer_id = customer_id;
         this.customer_name = customer_name;

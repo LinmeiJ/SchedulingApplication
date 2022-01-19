@@ -1,7 +1,7 @@
 package Dao;
 
+import dbConnection.JDBCConnection;
 import entity.Country;
-import entity.FirstLevelDivision;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

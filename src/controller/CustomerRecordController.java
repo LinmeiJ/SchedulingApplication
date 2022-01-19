@@ -21,9 +21,11 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
 import java.util.logging.*;
 
-public class CustomerRecordController implements Initializable {
+public class CustomerRecordController implements Initializable, Exit{
 
     @FXML
     private Button exitId;
@@ -69,7 +71,7 @@ public class CustomerRecordController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         custID.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
         custName.setCellValueFactory(new PropertyValueFactory<>("customer_name"));
-        custAddress.setCellValueFactory(new PropertyValueFactory<>("addres"));
+        custAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
         custZipCode.setCellValueFactory(new PropertyValueFactory<>("postal_code"));
         custPhoneNum.setCellValueFactory(new PropertyValueFactory<>("phone"));
         custDivision.setCellValueFactory(cellData ->
@@ -84,11 +86,7 @@ public class CustomerRecordController implements Initializable {
 
     @FXML
     void exitBtnClicked(ActionEvent event) {
-        Stage stage = (Stage) exitId.getScene().getWindow();
-        Validator.displayExitConfirmation();
-        if (Validator.confirmResult.isPresent() && Validator.confirmResult.get() == ButtonType.OK) {
-            stage.close();
-        }
+        exit(event, exitId);
     }
 
     @FXML

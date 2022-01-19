@@ -1,16 +1,17 @@
 package Dao;
 
+import dbConnection.JDBCConnection;
 import entity.FirstLevelDivision;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.List;
 
-public class FirstLevelDivisionDaoImpl extends JDBCConnection {
+public class FirstLevelDivisionDaoImpl extends JDBCConnection implements ServiceIfc<FirstLevelDivision> {
     List<FirstLevelDivision> listOfFirstLevelDivisions;
 
+    @Override
     public FirstLevelDivision findById(long id){
         FirstLevelDivision firstLevelDivision = null;
         try{
@@ -20,6 +21,26 @@ public class FirstLevelDivisionDaoImpl extends JDBCConnection {
             e.printStackTrace();
         }
         return firstLevelDivision;
+    }
+
+    @Override
+    public void update(FirstLevelDivision obj) {
+
+    }
+
+    @Override
+    public void delete(FirstLevelDivision obj) {
+
+    }
+
+    @Override
+    public void save(FirstLevelDivision obj) {
+
+    }
+
+    @Override
+    public ResultSet findAll() {
+        return null;
     }
 
     private FirstLevelDivision assignObject(ResultSet rs) throws SQLException {

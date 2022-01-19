@@ -2,31 +2,34 @@ package Dao;
 
 import entity.Appointment;
 
+import java.sql.ResultSet;
 import java.util.List;
 
-public class AppointmentDaoImpl{
+public class AppointmentDaoImpl implements ServiceIfc<Appointment>{
 
-    public static List<Appointment> findAll() {
+
+    @Override
+    public ResultSet findAll() {
         return null;
     }
 
-
-    public static Appointment findById(Long id) {
+    @Override
+    public Appointment findById(long id) {
         return null;
     }
 
-
-    public static void update(Appointment appointment) {
+    @Override
+    public void update(Appointment obj) {
 
     }
 
+    @Override
+    public void delete(Appointment obj) {
 
-    public static Long save(Appointment appointment) {
-        return null;
     }
 
-
-    public static void delete(Appointment appointment) {
+    @Override
+    public void save(Appointment obj) {
 
     }
 }

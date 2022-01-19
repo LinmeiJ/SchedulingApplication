@@ -1,19 +1,18 @@
 package Dao;
 
-import entity.Country;
+import dbConnection.JDBCConnection;
 import entity.Customer;
-import entity.FirstLevelDivision;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 
-public class CustomerDaoImpl extends JDBCConnection{
+public class CustomerDaoImpl extends JDBCConnection implements ServiceIfc<Customer> {
     FirstLevelDivisionDaoImpl firstLevelDivisionDao = new FirstLevelDivisionDaoImpl();
     CountryDaoImpl countryDao = new CountryDaoImpl();
 
+    @Override
     public ResultSet findAll() {
         try {
             statement = connection.createStatement();
@@ -42,19 +41,24 @@ public class CustomerDaoImpl extends JDBCConnection{
         return allCustomers;
     }
 
-    public  Customer findById(Long id) {
+    @Override
+    public Customer findById(long id) {
         return null;
     }
 
-    public  void update(Customer customer) {
+    @Override
+    public void delete(Customer customer) {
 
     }
 
-    public  Long save(Customer customer) {
-        return null;
-    }
-
-    public  void delete(Customer customer) {
+    @Override
+    public void save(Customer customer) {
 
     }
+
+    @Override
+    public void update(Customer customer) {
+
+    }
+
 }
