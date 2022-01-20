@@ -1,8 +1,12 @@
 package controller;
 
+import Dao.FirstLevelDivisionDaoImpl;
 import Dao.UserDaoImpl;
 import converter.DateTimeConverter;
+import dbConnection.JDBCConnection;
 import entity.Customer;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -12,9 +16,10 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 
 import java.net.URL;
+import java.sql.ResultSet;
 import java.util.ResourceBundle;
 
-public class AddNewCustomerController implements Initializable, Exit {
+public class AddNewCustomerController extends JDBCConnection implements Initializable, Exit {
     @FXML
     private TextField addPhoneField;
 
@@ -34,7 +39,7 @@ public class AddNewCustomerController implements Initializable, Exit {
     private Button cancelBtn;
 
     @FXML
-    private RadioButton USId;
+    private RadioButton USAId;
 
     @FXML
     private RadioButton canadaId;
@@ -43,7 +48,7 @@ public class AddNewCustomerController implements Initializable, Exit {
     private RadioButton englandId;
 
     @FXML
-    private ComboBox<?> divisionList;
+    private ComboBox<String> divisionList;
 
     Customer customer;
 
@@ -74,18 +79,29 @@ public class AddNewCustomerController implements Initializable, Exit {
 
     @FXML
     void saveCustClicked(ActionEvent event) {
-            customer.setCustomer_name(addCustNameField.getText());
-            customer.setAddress(addAddressField.getText());
-            customer.setPhone(addPhoneField.getText());
-            customer.setPostal_code(addZipCodeField.getText());
-            customer.setCreated_by(UserDaoImpl.userName);
-            customer.setCreated_date(DateTimeConverter.convertedTimeTOUTC());
+//            customer.setCustomer_name(addCustNameField.getText());
+//            customer.setAddress(addAddressField.getText());
+//            customer.setPhone(addPhoneField.getText());
+//            customer.setPostal_code(addZipCodeField.getText());
+//            customer.setCreated_by(UserDaoImpl.userName);
+//            customer.setCreated_date(DateTimeConverter.convertedTimeTOUTC());
 
     }
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        ObservableList<String> divisions= FXCollections.observableArrayList();
+        divisionList.getItems().clear();
+        if(USAId.isSelected()){
+            USAId.setSelected(true);
+            ResultSet rs = new FirstLevelDivisionDaoImpl().findAll();
+            try {
+                while (rs.next()) {
+                   divisions.add(rs.getString(1));
+                }
+            }catch(Exception e){}
+            divisionList.setItems(divisions);
+        }
     }
 }

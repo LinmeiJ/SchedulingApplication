@@ -40,7 +40,13 @@ public class FirstLevelDivisionDaoImpl extends JDBCConnection implements Service
 
     @Override
     public ResultSet findAll() {
-        return null;
+        try {
+            statement = connection.createStatement();
+            String sql = "SELECT Division FROM first_level_divisions WHERE Country_ID = 1";
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return result;
     }
 
     private FirstLevelDivision assignObject(ResultSet rs) throws SQLException {

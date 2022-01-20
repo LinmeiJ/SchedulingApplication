@@ -49,7 +49,7 @@
       <Button fx:id="cancelBtn" layoutX="930.0" layoutY="550.0" mnemonicParsing="false" onAction="#cancelBtnClicked" text="Cancel" />
       <AnchorPane layoutX="503.0" layoutY="145.0" prefHeight="343.0" prefWidth="287.0">
          <children>
-            <RadioButton fx:id="USId" layoutX="37.0" layoutY="41.0" mnemonicParsing="false" onAction="#USSelected" text="U.S" />
+            <RadioButton fx:id="USAId" layoutX="37.0" layoutY="41.0" mnemonicParsing="false" onAction="#USSelected" text="U.S" />
             <RadioButton fx:id="canadaId" layoutX="112.0" layoutY="41.0" mnemonicParsing="false" onAction="#CanadaSelected" text="Canada" />
             <RadioButton fx:id="englandId" layoutX="209.0" layoutY="41.0" mnemonicParsing="false" onAction="#EnglandSelected" text="England" />
             <ComboBox fx:id="divisionList" editable="true" layoutX="37.0" layoutY="87.0" onAction="#divisionSelected" prefHeight="20.0" prefWidth="249.0" promptText="Division List" visibleRowCount="0" />
