@@ -42,7 +42,8 @@ public class FirstLevelDivisionDaoImpl extends JDBCConnection implements Service
     public ResultSet findAll() {
         try {
             statement = connection.createStatement();
-            String sql = "SELECT Division FROM first_level_divisions WHERE Country_ID = 1";
+            String sql = "SELECT DISTINCT Division FROM first_level_divisions WHERE Country_ID = 1";
+            result = statement.executeQuery(sql);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }

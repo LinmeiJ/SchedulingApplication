@@ -64,7 +64,8 @@ public class AddNewCustomerController extends JDBCConnection implements Initiali
 
     @FXML
     void USSelected(ActionEvent event) {
-
+        USAId.setSelected(true);
+        String s = divisionList.getSelectionModel().getSelectedItem().toString();
     }
 
     @FXML
@@ -92,16 +93,15 @@ public class AddNewCustomerController extends JDBCConnection implements Initiali
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ObservableList<String> divisions= FXCollections.observableArrayList();
+        USAId.setSelected(true);
         divisionList.getItems().clear();
-        if(USAId.isSelected()){
-            USAId.setSelected(true);
             ResultSet rs = new FirstLevelDivisionDaoImpl().findAll();
             try {
                 while (rs.next()) {
-                   divisions.add(rs.getString(1));
+                    divisions.add(rs.getString(1));
                 }
             }catch(Exception e){}
             divisionList.setItems(divisions);
-        }
+
     }
 }
