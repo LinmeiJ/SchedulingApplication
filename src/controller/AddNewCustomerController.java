@@ -5,6 +5,7 @@ import Dao.UserDaoImpl;
 import converter.DateTimeConverter;
 import dbConnection.JDBCConnection;
 import entity.Customer;
+import enums.CountryId;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -51,21 +52,27 @@ public class AddNewCustomerController extends JDBCConnection implements Initiali
     private ComboBox<String> divisionList;
 
     Customer customer;
+    public static CountryId ctryID;
+
+    FirstLevelDivisionDaoImpl divisionDao = new FirstLevelDivisionDaoImpl();
 
     @FXML
     void CanadaSelected(ActionEvent event) {
-
+        ctryID = CountryId.CANADA;
+        canadaId.setSelected(true);
     }
 
     @FXML
     void EnglandSelected(ActionEvent event) {
-
+        ctryID = CountryId.UK;
+        englandId.setSelected(true);
     }
 
     @FXML
     void USSelected(ActionEvent event) {
+        ctryID = CountryId.US;
         USAId.setSelected(true);
-        String s = divisionList.getSelectionModel().getSelectedItem().toString();
+//        String s = divisionList.getSelectionModel().getSelectedItem().toString();
     }
 
     @FXML
@@ -92,16 +99,9 @@ public class AddNewCustomerController extends JDBCConnection implements Initiali
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        ObservableList<String> divisions= FXCollections.observableArrayList();
         USAId.setSelected(true);
-        divisionList.getItems().clear();
-            ResultSet rs = new FirstLevelDivisionDaoImpl().findAll();
-            try {
-                while (rs.next()) {
-                    divisions.add(rs.getString(1));
-                }
-            }catch(Exception e){}
-            divisionList.setItems(divisions);
+        ctryID = CountryId.US;
+        divisionList.setItems(divisionDao.getAllDivisions());
 
     }
 }

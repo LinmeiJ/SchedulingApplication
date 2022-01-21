@@ -1,7 +1,10 @@
 package Dao;
 
+import controller.AddNewCustomerController;
 import dbConnection.JDBCConnection;
 import entity.FirstLevelDivision;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -42,12 +45,23 @@ public class FirstLevelDivisionDaoImpl extends JDBCConnection implements Service
     public ResultSet findAll() {
         try {
             statement = connection.createStatement();
-            String sql = "SELECT DISTINCT Division FROM first_level_divisions WHERE Country_ID = 1";
+            String sql = "SELECT DISTINCT Division FROM first_level_divisions WHERE Country_ID = " + AddNewCustomerController.ctryID.getId();
             result = statement.executeQuery(sql);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
         return result;
+    }
+
+    public ObservableList<String> getAllDivisions(){
+        ObservableList<String> divisions = FXCollections.observableArrayList();
+        ResultSet rs = findAll();
+        try {
+            while (rs.next()) {
+                divisions.add(rs.getString("Division"));
+            }
+        }catch(Exception e){}
+        return  divisions;
     }
 
     private FirstLevelDivision assignObject(ResultSet rs) throws SQLException {
