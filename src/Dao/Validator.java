@@ -23,6 +23,11 @@ public final class Validator {
      */
     private static Alert confirmAlert = new Alert(Alert.AlertType.CONFIRMATION);
 
+    /**
+     * An alert object to display info to user to the user.
+     */
+    private static Alert infoAlert = new Alert(Alert.AlertType.INFORMATION);
+
     public static boolean isValidString(String str1, String str2){
         return checkStringEntry(str1) && checkStringEntry(str2);
     };
@@ -66,12 +71,10 @@ public final class Validator {
         confirmResult = confirmAlert.showAndWait();
     }
 
-    /**
-     * This method generates a message to confirm whether the end user want to delete a selected item.
-     */
+
     public static void displayAddSuccess() {
-        confirmAlert.setTitle("Save Window");
-        confirmAlert.setHeaderText("Saved Successfully!");
-        confirmResult = confirmAlert.showAndWait();
+        infoAlert.setTitle("Information");
+        infoAlert.setHeaderText("Added Successfully!");
+        infoAlert.showAndWait();
     }
 }

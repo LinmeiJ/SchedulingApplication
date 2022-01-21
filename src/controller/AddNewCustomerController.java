@@ -11,12 +11,18 @@ import enums.CountryId;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -36,11 +42,14 @@ public class AddNewCustomerController extends JDBCConnection implements Initiali
     @FXML
     private TextField addCustNameField;
 
-    @FXML
-    private Button saveCustBtn;
+//    @FXML
+//    private Button saveCustBtn;
 
     @FXML
     private Button cancelBtn;
+
+//    @FXML
+//    private Button backBtn;
 
     @FXML
     private RadioButton USAId;
@@ -54,16 +63,12 @@ public class AddNewCustomerController extends JDBCConnection implements Initiali
     @FXML
     private ComboBox<String> divisionList;
 
-    Customer customer;
-    CustomerDaoImpl customerDao = new CustomerDaoImpl();
+    private Customer customer;
+    private CustomerDaoImpl customerDao = new CustomerDaoImpl();
     public static CountryId ctryID;
+    private FirstLevelDivisionDaoImpl divisionDao = new FirstLevelDivisionDaoImpl();
+    private static final String CUSTOMER_RECORD_VIEW = "../views/customerRecordView.fxml";
 
-    FirstLevelDivisionDaoImpl divisionDao = new FirstLevelDivisionDaoImpl();
-
-    @FXML
-    void selectDivision(ActionEvent event) {
-        listDivisionByCountry();
-    }
 
     @FXML
     void CanadaSelected(ActionEvent event) {
@@ -124,5 +129,13 @@ public class AddNewCustomerController extends JDBCConnection implements Initiali
     public void initialize(URL url, ResourceBundle resourceBundle) {
         divisionList.setPromptText("Division List");
         divisionList.setItems(divisionDao.getAllDivisions());
+    }
+
+    @FXML
+    void backToRecordPage(ActionEvent event) throws IOException {
+        Parent parent = FXMLLoader.load(getClass().getResource(CUSTOMER_RECORD_VIEW));
+        var scene = new Scene(parent);
+        var stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(scene);
     }
 }

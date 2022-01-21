@@ -10,4 +10,6 @@ public class Location {
         locale = Locale.getDefault();
         bundle = ResourceBundle.getBundle("Resource", locale);
     }
+
+
 }

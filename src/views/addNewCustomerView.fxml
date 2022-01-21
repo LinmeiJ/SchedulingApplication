@@ -10,7 +10,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="619.0" prefWidth="1103.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddNewCustomerController">
    <children>
-      <AnchorPane layoutX="26.0" layoutY="37.0" prefHeight="522.0" prefWidth="481.0">
+      <AnchorPane layoutX="106.0" layoutY="49.0" prefHeight="522.0" prefWidth="481.0">
          <children>
             <Label text="Add New Customer">
                <font>
@@ -45,15 +45,16 @@
             <TextField fx:id="addZipCodeField" layoutX="101.0" layoutY="268.0" prefHeight="26.0" prefWidth="128.0" />
          </children>
       </AnchorPane>
-      <Button fx:id="saveCustBtn" layoutX="848.0" layoutY="550.0" mnemonicParsing="false" onAction="#saveCustClicked" text="Save" />
-      <Button fx:id="cancelBtn" layoutX="930.0" layoutY="550.0" mnemonicParsing="false" onAction="#cancelBtnClicked" text="Cancel" />
-      <AnchorPane layoutX="503.0" layoutY="145.0" prefHeight="343.0" prefWidth="287.0">
+      <Button fx:id="saveCustBtn" layoutX="782.0" layoutY="547.0" mnemonicParsing="false" onAction="#saveCustClicked" text="Save" />
+      <Button fx:id="cancelBtn" layoutX="938.0" layoutY="547.0" mnemonicParsing="false" onAction="#cancelBtnClicked" text="Exit" />
+      <AnchorPane layoutX="536.0" layoutY="85.0" prefHeight="343.0" prefWidth="287.0">
          <children>
             <RadioButton fx:id="USAId" layoutX="37.0" layoutY="41.0" mnemonicParsing="false" onAction="#USSelected" text="U.S" />
             <RadioButton fx:id="canadaId" layoutX="112.0" layoutY="41.0" mnemonicParsing="false" onAction="#CanadaSelected" text="Canada" />
             <RadioButton fx:id="englandId" layoutX="209.0" layoutY="41.0" mnemonicParsing="false" onAction="#EnglandSelected" text="England" />
-            <ComboBox fx:id="divisionList" editable="true" layoutX="37.0" layoutY="87.0" onAction="#selectDivision" prefHeight="36.0" prefWidth="249.0" promptText="Division List" />
+            <ComboBox fx:id="divisionList" editable="true" layoutX="37.0" layoutY="87.0" prefHeight="36.0" prefWidth="249.0" promptText="Division List" />
          </children>
       </AnchorPane>
+      <Button fx:id="backBtn" layoutX="859.0" layoutY="547.0" mnemonicParsing="false" onAction="#backToRecordPage" text="Back" />
    </children>
 </AnchorPane>
