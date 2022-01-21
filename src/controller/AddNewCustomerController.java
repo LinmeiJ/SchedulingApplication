@@ -4,6 +4,7 @@ import Dao.CustomerDaoImpl;
 import Dao.FirstLevelDivisionDaoImpl;
 import Dao.UserDaoImpl;
 
+import Dao.Validator;
 import dbConnection.JDBCConnection;
 import entity.Customer;
 import enums.CountryId;
@@ -60,22 +61,25 @@ public class AddNewCustomerController extends JDBCConnection implements Initiali
     FirstLevelDivisionDaoImpl divisionDao = new FirstLevelDivisionDaoImpl();
 
     @FXML
+    void selectDivision(ActionEvent event) {
+        listDivisionByCountry();
+    }
+
+    @FXML
     void CanadaSelected(ActionEvent event) {
         ctryID = CountryId.CANADA;
-        setSelectedRadioBtn(false, false, true, CountryId.CANADA);
-
-        divisionList.setItems(divisionDao.getAllDivisions());
-
+        setSelectedRadioBtn(false, false, true);
+        listDivisionByCountry();
     }
 
     @FXML
     void EnglandSelected(ActionEvent event) {
-        setSelectedRadioBtn(false, true, false, CountryId.UK);
+        setSelectedRadioBtn(false, true, false);
+        ctryID = CountryId.UK;
         listDivisionByCountry();
     }
 
-    private void setSelectedRadioBtn(boolean us, boolean en, boolean ca, CountryId country) {
-        ctryID = country;
+    private void setSelectedRadioBtn(boolean us, boolean en, boolean ca) {
         USAId.setSelected(us);
         englandId.setSelected(en);
         canadaId.setSelected(ca);
@@ -84,10 +88,10 @@ public class AddNewCustomerController extends JDBCConnection implements Initiali
     @FXML
     void USSelected(ActionEvent event) {
         ctryID = CountryId.US;
-        setSelectedRadioBtn(true,false, false, CountryId.US);
+        setSelectedRadioBtn(true,false, false);
         listDivisionByCountry();
-
     }
+
 
     private void listDivisionByCountry() {
         divisionList.getItems().clear();
@@ -112,6 +116,8 @@ public class AddNewCustomerController extends JDBCConnection implements Initiali
         customer.setLast_updated_by(UserDaoImpl.userName);
         customer.setDivision_id(divisionDao.findIdByDivisionName(divisionList.getValue()));
         customerDao.save(customer);
+
+        Validator.displayAddSuccess();
     }
 
     @Override

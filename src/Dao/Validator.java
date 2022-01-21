@@ -65,4 +65,13 @@ public final class Validator {
         confirmAlert.setContentText("Are you sure you want to close the program?");
         confirmResult = confirmAlert.showAndWait();
     }
+
+    /**
+     * This method generates a message to confirm whether the end user want to delete a selected item.
+     */
+    public static void displayAddSuccess() {
+        confirmAlert.setTitle("Save Window");
+        confirmAlert.setHeaderText("Saved Successfully!");
+        confirmResult = confirmAlert.showAndWait();
+    }
 }
