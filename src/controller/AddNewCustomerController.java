@@ -62,30 +62,41 @@ public class AddNewCustomerController extends JDBCConnection implements Initiali
     @FXML
     void CanadaSelected(ActionEvent event) {
         ctryID = CountryId.CANADA;
-        canadaId.setSelected(true);
+        setSelectedRadioBtn(false, false, true, CountryId.CANADA);
+
+        divisionList.setItems(divisionDao.getAllDivisions());
+
     }
 
     @FXML
     void EnglandSelected(ActionEvent event) {
-        ctryID = CountryId.UK;
-        englandId.setSelected(true);
+        setSelectedRadioBtn(false, true, false, CountryId.UK);
+        listDivisionByCountry();
+    }
+
+    private void setSelectedRadioBtn(boolean us, boolean en, boolean ca, CountryId country) {
+        ctryID = country;
+        USAId.setSelected(us);
+        englandId.setSelected(en);
+        canadaId.setSelected(ca);
     }
 
     @FXML
     void USSelected(ActionEvent event) {
         ctryID = CountryId.US;
-        USAId.setSelected(true);
-//        String s = divisionList.getSelectionModel().getSelectedItem().toString();
+        setSelectedRadioBtn(true,false, false, CountryId.US);
+        listDivisionByCountry();
+
+    }
+
+    private void listDivisionByCountry() {
+        divisionList.getItems().clear();
+        divisionList.setItems(divisionDao.getAllDivisions());
     }
 
     @FXML
     void cancelBtnClicked(ActionEvent event) {
         exit(event, cancelBtn);
-    }
-
-    @FXML
-    void divisionSelected(ActionEvent event) {
-
     }
 
     @FXML
@@ -105,8 +116,7 @@ public class AddNewCustomerController extends JDBCConnection implements Initiali
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        USAId.setSelected(true);
-        ctryID = CountryId.US;
+        divisionList.setPromptText("Division List");
         divisionList.setItems(divisionDao.getAllDivisions());
     }
 }

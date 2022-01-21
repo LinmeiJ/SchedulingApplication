@@ -3,6 +3,7 @@ package Dao;
 import controller.AddNewCustomerController;
 import dbConnection.JDBCConnection;
 import entity.FirstLevelDivision;
+import enums.CountryId;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -48,7 +49,7 @@ public class FirstLevelDivisionDaoImpl extends JDBCConnection implements Service
 
     public long findIdByDivisionName(String divisionName) throws SQLException {
         long id = 0;
-        String countryName = String.valueOf(AddNewCustomerController.ctryID).substring(0,1) + "." +  String.valueOf(AddNewCustomerController.ctryID).substring(1);
+        String countryName = AddNewCustomerController.ctryID == CountryId.US ? String.valueOf(AddNewCustomerController.ctryID).substring(0,1) + "." +  String.valueOf(AddNewCustomerController.ctryID).substring(1) : divisionName;
         ResultSet rs = findRawDataFromDB("SELECT division_id from first_level_divisions where country_id = (SELECT country_id FROM countries where Country = '" + countryName + "') and division = '"+ divisionName + "'");
         while(rs.next()){
            id = rs.getLong("division_id");
@@ -58,7 +59,7 @@ public class FirstLevelDivisionDaoImpl extends JDBCConnection implements Service
 
     public ObservableList<String> getAllDivisions(){
         ObservableList<String> divisions = FXCollections.observableArrayList();
-        ResultSet rs = findRawDataFromDB("SELECT DISTINCT Division FROM first_level_divisions WHERE Country_ID = " + AddNewCustomerController.ctryID.getId());
+        ResultSet rs = findRawDataFromDB("SELECT DISTINCT Division FROM first_level_divisions");// WHERE Country_ID = " + AddNewCustomerController.ctryID.getId())
         try {
             while (rs.next()) {
                 divisions.add(rs.getString("Division"));
