@@ -5,6 +5,7 @@ import entity.Customer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -12,21 +13,9 @@ public class CustomerDaoImpl extends JDBCConnection implements ServiceIfc<Custom
     FirstLevelDivisionDaoImpl firstLevelDivisionDao = new FirstLevelDivisionDaoImpl();
     CountryDaoImpl countryDao = new CountryDaoImpl();
 
-    @Override
-    public ResultSet findAll() {
-        try {
-            statement = connection.createStatement();
-            String sql = "SELECT Customer_ID, Customer_Name, Address, Postal_Code, Phone, d.Division_ID, d.Country_ID FROM customers c JOIN first_level_divisions d ON d.Division_ID = c.Division_ID";
-            result = statement.executeQuery(sql);
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        return result;
-    }
-
-    public ObservableList<Customer> getAllCustomers() throws SQLException {
+    public ObservableList<Customer> findAll() throws SQLException {
         ObservableList<Customer> allCustomers= FXCollections.observableArrayList();
-        ResultSet rs = findAll();
+        ResultSet rs = findRawDataFromDB("SELECT Customer_ID, Customer_Name, Address, Postal_Code, Phone, d.Division_ID, d.Country_ID FROM customers c JOIN first_level_divisions d ON d.Division_ID = c.Division_ID");
         while(rs.next()){
             long id = rs.getLong("customer_id");
             String name = rs.getString("customer_name");
@@ -52,13 +41,28 @@ public class CustomerDaoImpl extends JDBCConnection implements ServiceIfc<Custom
     }
 
     @Override
-    public void save(Customer customer) {
+    public void save(Customer customer) throws SQLException {
+        statement = connection.createStatement();
+        String sql = "INSERT INTO customers VALUES(NULL, ?, ?, ?, ?, ?, ?, ?, ?,?)";
+        PreparedStatement preparedStatement = JDBCConnection.connection.prepareStatement(sql);
+        preparedStatement.setString(1, customer.getCustomer_name());
+        preparedStatement.setString(2, customer.getAddress());
+        preparedStatement.setString(3, customer.getPostal_code());
+        preparedStatement.setString(4, customer.getPhone());
+        preparedStatement.setTimestamp(5, customer.getCreate_date());
+        preparedStatement.setString(6,customer.getCreated_by());
+        preparedStatement.setTimestamp(7, customer.getLast_update());
+        preparedStatement.setString(8, customer.getLast_updated_by());
+        preparedStatement.setLong(9, customer.getDivision_id());
 
+        preparedStatement.execute();
     }
 
     @Override
     public void update(Customer customer) {
 
     }
+
+
 
 }

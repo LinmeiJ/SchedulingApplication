@@ -1,9 +1,8 @@
 package dbConnection;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import controller.AddNewCustomerController;
+
+import java.sql.*;
 
 public abstract class JDBCConnection {
     private static final String protocol = "jdbc";
@@ -54,5 +53,15 @@ public abstract class JDBCConnection {
         {
             System.out.println("Error:" + e.getMessage());
         }
+    }
+
+    public ResultSet findRawDataFromDB(String sql){
+        try {
+            statement = connection.createStatement();
+            result = statement.executeQuery(sql);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return result;
     }
 }

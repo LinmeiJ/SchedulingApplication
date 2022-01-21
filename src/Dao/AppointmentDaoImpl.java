@@ -1,6 +1,7 @@
 package Dao;
 
 import entity.Appointment;
+import javafx.collections.ObservableList;
 
 import java.sql.ResultSet;
 import java.util.List;
@@ -9,7 +10,7 @@ public class AppointmentDaoImpl implements ServiceIfc<Appointment>{
 
 
     @Override
-    public ResultSet findAll() {
+    public ObservableList<Appointment> findAll() {
         return null;
     }
 

@@ -15,6 +15,7 @@ public class FirstLevelDivision {
 
     private long country_id;
 
+    public FirstLevelDivision(){}
     public FirstLevelDivision(long division_id, String division, Timestamp create_date, String created_by, Timestamp last_update, String last_updated_by, long country) {
         this.division_id = division_id;
         this.division = division;

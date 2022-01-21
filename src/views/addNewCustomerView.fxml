@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="619.0" prefWidth="1103.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddNewCustomerController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="619.0" prefWidth="1103.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddNewCustomerController">
    <children>
       <AnchorPane layoutX="26.0" layoutY="37.0" prefHeight="522.0" prefWidth="481.0">
          <children>
@@ -39,10 +39,10 @@
             </Label>
             <Label layoutX="28.0" layoutY="177.0" prefHeight="18.0" prefWidth="110.0" text="Phone Number" />
             <TextField disable="true" editable="false" layoutX="97.0" layoutY="86.0" prefHeight="26.0" prefWidth="128.0" promptText="Auto Gen - Disabled" />
+            <TextField fx:id="addCustNameField" layoutX="97.0" layoutY="128.0" prefHeight="25.0" prefWidth="155.0" />
             <TextField fx:id="addPhoneField" layoutX="155.0" layoutY="173.0" prefHeight="26.0" prefWidth="143.0" />
             <TextField fx:id="addAddressField" layoutX="116.0" layoutY="219.0" prefHeight="26.0" prefWidth="179.0" />
             <TextField fx:id="addZipCodeField" layoutX="101.0" layoutY="268.0" prefHeight="26.0" prefWidth="128.0" />
-            <TextField fx:id="addCustNameField" layoutX="97.0" layoutY="128.0" prefHeight="25.0" prefWidth="155.0" />
          </children>
       </AnchorPane>
       <Button fx:id="saveCustBtn" layoutX="848.0" layoutY="550.0" mnemonicParsing="false" onAction="#saveCustClicked" text="Save" />
@@ -52,7 +52,7 @@
             <RadioButton fx:id="USAId" layoutX="37.0" layoutY="41.0" mnemonicParsing="false" onAction="#USSelected" text="U.S" />
             <RadioButton fx:id="canadaId" layoutX="112.0" layoutY="41.0" mnemonicParsing="false" onAction="#CanadaSelected" text="Canada" />
             <RadioButton fx:id="englandId" layoutX="209.0" layoutY="41.0" mnemonicParsing="false" onAction="#EnglandSelected" text="England" />
-            <ComboBox fx:id="divisionList" editable="true" layoutX="37.0" layoutY="87.0" onAction="#divisionSelected" prefHeight="20.0" prefWidth="249.0" promptText="Division List" visibleRowCount="0" />
+            <ComboBox fx:id="divisionList" editable="true" layoutX="37.0" layoutY="87.0" onAction="#divisionSelected" prefHeight="36.0" prefWidth="249.0" promptText="Division List" />
          </children>
       </AnchorPane>
    </children>

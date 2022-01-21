@@ -74,11 +74,12 @@ public class CustomerRecordController implements Initializable, Exit{
         custDivision.setCellValueFactory(cellData ->
                 new SimpleStringProperty(cellData.getValue().getFirstLevelDivision().getDivision()));
         try{
-            customers.addAll(customerDao.getAllCustomers());
+            customers.addAll(customerDao.findAll());
         } catch (Exception e) {
            logger.log(Level.WARNING, "initialize() throws an exception", this.getClass().getName());
         }
         recordTable.setItems(customers);
+
     }
 
     @FXML

@@ -1,11 +1,15 @@
 package Dao;
 
+import entity.Customer;
+import javafx.collections.ObservableList;
+
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public interface ServiceIfc<T> {
-    ResultSet findAll();
+    ObservableList<T> findAll() throws SQLException;
     T findById(long id);
     void update(T obj);
     void delete(T obj);
-    void save(T obj);
+    void save(T obj) throws SQLException;
 }
