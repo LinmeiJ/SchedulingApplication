@@ -13,8 +13,6 @@ import java.sql.Timestamp;
 import java.util.List;
 
 public class FirstLevelDivisionDaoImpl extends JDBCConnection implements ServiceIfc<FirstLevelDivision> {
-    List<FirstLevelDivision> listOfFirstLevelDivisions;
-
     @Override
     public ObservableList<FirstLevelDivision> findAll() throws SQLException {
         return null;
@@ -24,9 +22,8 @@ public class FirstLevelDivisionDaoImpl extends JDBCConnection implements Service
     public FirstLevelDivision findById(long id){
         FirstLevelDivision firstLevelDivision = null;
         try{
-//            ResultSet rs = getData(id);
             ResultSet rs = findRawDataFromDB("SELECT * FROM first_level_divisions WHERE Division_ID = '"+ id + "'");
-           firstLevelDivision = assignObject(rs);
+           firstLevelDivision = mapObjMembers(rs);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -76,7 +73,7 @@ public class FirstLevelDivisionDaoImpl extends JDBCConnection implements Service
         return  divisions;
     }
 
-    private FirstLevelDivision assignObject(ResultSet rs) throws SQLException {
+    private FirstLevelDivision mapObjMembers(ResultSet rs) throws SQLException {
         FirstLevelDivision firstLevelDivisionDivision = null;
         while(rs.next()){
             long id = rs.getLong("Division_ID");
@@ -91,10 +88,4 @@ public class FirstLevelDivisionDaoImpl extends JDBCConnection implements Service
         }
         return firstLevelDivisionDivision;
     }
-
-//    private ResultSet getData(long id) throws SQLException {
-//        statement = connection.createStatement();
-//        String sql = "SELECT * FROM first_level_divisions WHERE Division_ID = '"+ id + "'";
-//        return statement.executeQuery(sql);
-//    }
 }

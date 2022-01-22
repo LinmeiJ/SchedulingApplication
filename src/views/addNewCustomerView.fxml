@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="619.0" prefWidth="1103.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddNewCustomerController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="619.0" prefWidth="1103.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddNewCustomerController">
    <children>
       <AnchorPane layoutX="106.0" layoutY="49.0" prefHeight="522.0" prefWidth="481.0">
          <children>
@@ -53,8 +53,8 @@
             <ComboBox fx:id="divisionList" editable="true" layoutX="37.0" layoutY="87.0" prefHeight="36.0" prefWidth="249.0" promptText="Division List" />
          </children>
       </AnchorPane>
-      <Button fx:id="backBtn" layoutX="859.0" layoutY="547.0" mnemonicParsing="false" onAction="#backToRecordPage" text="Back" />
       <Button fx:id="saveCustBtn" layoutX="782.0" layoutY="547.0" mnemonicParsing="false" onAction="#saveCustClicked" text="Save" />
+      <Button fx:id="backBtn" layoutX="859.0" layoutY="547.0" mnemonicParsing="false" onAction="#backToRecordPage" text="Back" />
       <Button fx:id="cancelBtn" layoutX="938.0" layoutY="547.0" mnemonicParsing="false" onAction="#cancelBtnClicked" text="Exit" />
    </children>
 </AnchorPane>
