@@ -24,7 +24,8 @@ public class FirstLevelDivisionDaoImpl extends JDBCConnection implements Service
     public FirstLevelDivision findById(long id){
         FirstLevelDivision firstLevelDivision = null;
         try{
-            ResultSet rs = getData(id);
+//            ResultSet rs = getData(id);
+            ResultSet rs = findRawDataFromDB("SELECT * FROM first_level_divisions WHERE Division_ID = '"+ id + "'");
            firstLevelDivision = assignObject(rs);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -59,12 +60,12 @@ public class FirstLevelDivisionDaoImpl extends JDBCConnection implements Service
 
     public ObservableList<String> getAllDivisions(){
         ObservableList<String> divisions = FXCollections.observableArrayList();
-        ResultSet rs;
-        if(AddNewCustomerController.ctryID != null) {
-            rs = findRawDataFromDB("SELECT DISTINCT Division FROM first_level_divisions WHERE Country_ID = " + AddNewCustomerController.ctryID.getId());
-        }else{
-            rs = findRawDataFromDB("SELECT DISTINCT Division FROM first_level_divisions WHERE Country_ID = ");
-        }
+
+        String specificCtyDivisionQuery = "SELECT DISTINCT Division FROM first_level_divisions WHERE Country_ID = " + AddNewCustomerController.ctryID.getId();
+        String allCtyDivisionQuery = "SELECT DISTINCT Division FROM first_level_divisions WHERE Country_ID = ";
+
+        ResultSet rs = (AddNewCustomerController.ctryID != null) ? findRawDataFromDB(specificCtyDivisionQuery) : findRawDataFromDB(allCtyDivisionQuery);
+
         try {
             while (rs.next()) {
                 divisions.add(rs.getString("Division"));
@@ -91,9 +92,9 @@ public class FirstLevelDivisionDaoImpl extends JDBCConnection implements Service
         return firstLevelDivisionDivision;
     }
 
-    private ResultSet getData(long id) throws SQLException {
-        statement = connection.createStatement();
-        String sql = "SELECT * FROM first_level_divisions WHERE Division_ID = '"+ id + "'";
-        return statement.executeQuery(sql);
-    }
+//    private ResultSet getData(long id) throws SQLException {
+//        statement = connection.createStatement();
+//        String sql = "SELECT * FROM first_level_divisions WHERE Division_ID = '"+ id + "'";
+//        return statement.executeQuery(sql);
+//    }
 }
