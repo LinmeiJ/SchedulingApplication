@@ -22,31 +22,29 @@
                   <Font size="14.0" />
                </font>
             </Label>
+            <TextField disable="true" editable="false" layoutX="97.0" layoutY="86.0" prefHeight="26.0" prefWidth="128.0" promptText="Auto Gen - Disabled" />
             <Label layoutX="27.0" layoutY="131.0" text="Name">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
+            <TextField fx:id="addCustNameField" layoutX="97.0" layoutY="128.0" prefHeight="25.0" prefWidth="155.0" />
+            <Label layoutX="28.0" layoutY="177.0" prefHeight="18.0" prefWidth="110.0" text="Phone Number" />
+            <TextField fx:id="addPhoneField" layoutX="155.0" layoutY="173.0" prefHeight="26.0" prefWidth="143.0" />
             <Label layoutX="28.0" layoutY="222.0" text="Address">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
+            <TextField fx:id="addAddressField" layoutX="116.0" layoutY="219.0" prefHeight="26.0" prefWidth="179.0" />
             <Label layoutX="25.0" layoutY="271.0" text="Zip Code">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label layoutX="28.0" layoutY="177.0" prefHeight="18.0" prefWidth="110.0" text="Phone Number" />
-            <TextField disable="true" editable="false" layoutX="97.0" layoutY="86.0" prefHeight="26.0" prefWidth="128.0" promptText="Auto Gen - Disabled" />
-            <TextField fx:id="addCustNameField" layoutX="97.0" layoutY="128.0" prefHeight="25.0" prefWidth="155.0" />
-            <TextField fx:id="addPhoneField" layoutX="155.0" layoutY="173.0" prefHeight="26.0" prefWidth="143.0" />
-            <TextField fx:id="addAddressField" layoutX="116.0" layoutY="219.0" prefHeight="26.0" prefWidth="179.0" />
             <TextField fx:id="addZipCodeField" layoutX="101.0" layoutY="268.0" prefHeight="26.0" prefWidth="128.0" />
          </children>
       </AnchorPane>
-      <Button fx:id="saveCustBtn" layoutX="782.0" layoutY="547.0" mnemonicParsing="false" onAction="#saveCustClicked" text="Save" />
-      <Button fx:id="cancelBtn" layoutX="938.0" layoutY="547.0" mnemonicParsing="false" onAction="#cancelBtnClicked" text="Exit" />
       <AnchorPane layoutX="536.0" layoutY="85.0" prefHeight="343.0" prefWidth="287.0">
          <children>
             <RadioButton fx:id="USAId" layoutX="37.0" layoutY="41.0" mnemonicParsing="false" onAction="#USSelected" text="U.S" />
@@ -56,5 +54,7 @@
          </children>
       </AnchorPane>
       <Button fx:id="backBtn" layoutX="859.0" layoutY="547.0" mnemonicParsing="false" onAction="#backToRecordPage" text="Back" />
+      <Button fx:id="saveCustBtn" layoutX="782.0" layoutY="547.0" mnemonicParsing="false" onAction="#saveCustClicked" text="Save" />
+      <Button fx:id="cancelBtn" layoutX="938.0" layoutY="547.0" mnemonicParsing="false" onAction="#cancelBtnClicked" text="Exit" />
    </children>
 </AnchorPane>

@@ -60,11 +60,11 @@ public class FirstLevelDivisionDaoImpl extends JDBCConnection implements Service
 
     public ObservableList<String> getAllDivisions(){
         ObservableList<String> divisions = FXCollections.observableArrayList();
+        CountryId id = AddNewCustomerController.ctryID;
+        String specificCtyDivisionQuery = "SELECT DISTINCT Division FROM first_level_divisions WHERE Country_ID = ";
+        String allCtyDivisionQuery = "SELECT DISTINCT Division FROM first_level_divisions";
 
-        String specificCtyDivisionQuery = "SELECT DISTINCT Division FROM first_level_divisions WHERE Country_ID = " + AddNewCustomerController.ctryID.getId();
-        String allCtyDivisionQuery = "SELECT DISTINCT Division FROM first_level_divisions WHERE Country_ID = ";
-
-        ResultSet rs = (AddNewCustomerController.ctryID != null) ? findRawDataFromDB(specificCtyDivisionQuery) : findRawDataFromDB(allCtyDivisionQuery);
+        ResultSet rs = (AddNewCustomerController.ctryID != null) ? findRawDataFromDB(specificCtyDivisionQuery + AddNewCustomerController.ctryID.getId()) : findRawDataFromDB(allCtyDivisionQuery);
 
         try {
             while (rs.next()) {

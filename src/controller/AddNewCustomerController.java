@@ -31,6 +31,9 @@ import java.util.ResourceBundle;
 
 public class AddNewCustomerController extends JDBCConnection implements Initializable, Exit {
     @FXML
+    private TextField addCustNameField;
+
+    @FXML
     private TextField addPhoneField;
 
     @FXML
@@ -38,18 +41,6 @@ public class AddNewCustomerController extends JDBCConnection implements Initiali
 
     @FXML
     private TextField addZipCodeField;
-
-    @FXML
-    private TextField addCustNameField;
-
-//    @FXML
-//    private Button saveCustBtn;
-
-    @FXML
-    private Button cancelBtn;
-
-//    @FXML
-//    private Button backBtn;
 
     @FXML
     private RadioButton USAId;
@@ -63,6 +54,14 @@ public class AddNewCustomerController extends JDBCConnection implements Initiali
     @FXML
     private ComboBox<String> divisionList;
 
+    @FXML
+    private Button backBtn;
+
+    @FXML
+    private Button saveCustBtn;
+
+    @FXML
+    private Button cancelBtn;
     private Customer customer;
     private CustomerDaoImpl customerDao = new CustomerDaoImpl();
     public static CountryId ctryID;
