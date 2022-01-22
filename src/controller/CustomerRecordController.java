@@ -53,10 +53,9 @@ public class CustomerRecordController implements Initializable, Exit {
     private TableColumn<Customer, String> custDivision;
 
     @FXML
-    private TableColumn<Customer, Button> delete;
-
+    private Button updateBtn;
     @FXML
-    private TableColumn<Customer, Button> update;
+    private Button deleteBtn;
 
     private static final String ADD_NEW_CUSTOMER_VIEW_PATH = "../views/addNewCustomerView.fxml";
     private static final String CUSTOMER_RECORD_VIEW = "../views/customerRecordView.fxml";
@@ -80,8 +79,8 @@ public class CustomerRecordController implements Initializable, Exit {
         custPhoneNum.setCellValueFactory(new PropertyValueFactory<>("phone"));
         custDivision.setCellValueFactory(cellData ->
                 new SimpleStringProperty(cellData.getValue().getFirstLevelDivision().getDivision()));
-        delete.setCellValueFactory(new PropertyValueFactory<>("delete"));
-        update.setCellValueFactory(new PropertyValueFactory<>("update"));
+//        delete.setCellValueFactory(new PropertyValueFactory<>("delete"));
+//        update.setCellValueFactory(new PropertyValueFactory<>("update"));
     }
 
     private void initTable() {
@@ -109,6 +108,18 @@ public class CustomerRecordController implements Initializable, Exit {
 //       });
 //        Validator.displayAddSuccess();
     }
+
+
+    @FXML
+    void UpdateSelected(ActionEvent event) {
+
+    }
+
+    @FXML
+    void deleteSelected(ActionEvent event) {
+
+    }
+
 
     @FXML
     void addNewCustomer(ActionEvent event) throws IOException {

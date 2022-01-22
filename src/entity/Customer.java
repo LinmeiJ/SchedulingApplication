@@ -1,6 +1,8 @@
 package entity;
 
 import Dao.CustomerDaoImpl;
+import controller.AddNewCustomerController;
+import controller.CustomerRecordController;
 import javafx.scene.control.Button;
 
 import java.sql.Timestamp;
@@ -16,35 +18,25 @@ public class Customer {
     private Timestamp last_update;
     private String last_updated_by;
     private long division_id;
-    private Button delete;
-    private Button update;
+//    private Button delete;
+//    private Button update;
 
     private FirstLevelDivision firstLevelDivision;//imperfect way to display the division on the record table
 
     public Customer(){}
-    public Customer(long customer_id, String customer_name, String address, String postal_code, String phone,FirstLevelDivision firstLevelDivision) {
+    public Customer(long customer_id, String customer_name, String address, String postal_code, String phone, FirstLevelDivision firstLevelDivision) {
         this.customer_id = customer_id;
         this.customer_name = customer_name;
         this.address = address;
         this.postal_code = postal_code;
         this.phone = phone;
         this.firstLevelDivision = firstLevelDivision;
-    }
-
-
-    public Customer(long customer_id, String customer_name, String address, String postal_code, String phone, FirstLevelDivision firstLevelDivision, Button delete, Button update) {
-        this.customer_id = customer_id;
-        this.customer_name = customer_name;
-        this.address = address;
-        this.postal_code = postal_code;
-        this.phone = phone;
-        this.firstLevelDivision = firstLevelDivision;
-        this.delete = delete;
-        this.update = update;
-        delete.setOnAction(e -> {
-            CustomerDaoImpl customerDao = new CustomerDaoImpl();
-            customerDao.delete(this.customer_id);
-        });
+//        this.delete = delete;
+//        this.update = update;
+//        delete.setOnAction(e -> {
+//            CustomerDaoImpl customerDao = new CustomerDaoImpl();
+//            customerDao.delete(this.customer_id);
+//        });
     }
 
     public long getCustomer_id() {
@@ -129,21 +121,21 @@ public class Customer {
     public void setDivision_id(long division_id) {
         this.division_id = division_id;
     }
-
-    public Button getDelete() {
-        return delete;
-    }
-
-    public void setDelete(Button delete) {
-        this.delete = delete;
-    }
-
-    public Button getUpdate() {
-        return update;
-    }
-    public void setUpdate(Button update) {
-        this.update = update;
-    }
+//
+//    public Button getDelete() {
+//        return delete;
+//    }
+//
+//    public void setDelete(Button delete) {
+//        this.delete = delete;
+//    }
+//
+//    public Button getUpdate() {
+//        return update;
+//    }
+//    public void setUpdate(Button update) {
+//        this.update = update;
+//    }
 
 
 }
