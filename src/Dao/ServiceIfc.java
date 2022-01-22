@@ -10,6 +10,6 @@ public interface ServiceIfc<T> {
     ObservableList<T> findAll() throws SQLException;
     T findById(long id);
     void update(T obj);
-    void delete(T obj);
+    void delete(long id) throws SQLException;
     void save(T obj) throws SQLException;
 }

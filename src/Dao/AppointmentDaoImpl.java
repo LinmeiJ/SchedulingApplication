@@ -25,7 +25,7 @@ public class AppointmentDaoImpl implements ServiceIfc<Appointment>{
     }
 
     @Override
-    public void delete(Appointment obj) {
+    public void delete(long id) {
 
     }
 

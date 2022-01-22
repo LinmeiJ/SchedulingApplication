@@ -1,5 +1,8 @@
 package entity;
 
+import Dao.CustomerDaoImpl;
+import javafx.scene.control.Button;
+
 import java.sql.Timestamp;
 
 public class Customer {
@@ -13,6 +16,8 @@ public class Customer {
     private Timestamp last_update;
     private String last_updated_by;
     private long division_id;
+    private Button delete;
+    private Button update;
 
     private FirstLevelDivision firstLevelDivision;//imperfect way to display the division on the record table
 
@@ -26,17 +31,20 @@ public class Customer {
         this.firstLevelDivision = firstLevelDivision;
     }
 
-    public Customer(long customer_id, String customer_name, String address, String postal_code, String phone, Timestamp created_date, String created_by, Timestamp last_update, String last_updated_by, long division_id) {
+
+    public Customer(long customer_id, String customer_name, String address, String postal_code, String phone, FirstLevelDivision firstLevelDivision, Button delete, Button update) {
         this.customer_id = customer_id;
         this.customer_name = customer_name;
         this.address = address;
         this.postal_code = postal_code;
         this.phone = phone;
-        this.create_date = created_date;
-        this.created_by = created_by;
-        this.last_update = last_update;
-        this.last_updated_by = last_updated_by;
-        this.division_id = division_id;
+        this.firstLevelDivision = firstLevelDivision;
+        this.delete = delete;
+        this.update = update;
+        delete.setOnAction(e -> {
+            CustomerDaoImpl customerDao = new CustomerDaoImpl();
+            customerDao.delete(this.customer_id);
+        });
     }
 
     public long getCustomer_id() {
@@ -114,14 +122,27 @@ public class Customer {
     public void setFirstLevelDivision(FirstLevelDivision firstLevelDivision) {
         this.firstLevelDivision = firstLevelDivision;
     }
-
-
     public long getDivision_id() {
         return division_id;
     }
 
     public void setDivision_id(long division_id) {
         this.division_id = division_id;
+    }
+
+    public Button getDelete() {
+        return delete;
+    }
+
+    public void setDelete(Button delete) {
+        this.delete = delete;
+    }
+
+    public Button getUpdate() {
+        return update;
+    }
+    public void setUpdate(Button update) {
+        this.update = update;
     }
 
 

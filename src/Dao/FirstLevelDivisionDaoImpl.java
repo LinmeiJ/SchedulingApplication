@@ -38,7 +38,7 @@ public class FirstLevelDivisionDaoImpl extends JDBCConnection implements Service
     }
 
     @Override
-    public void delete(FirstLevelDivision obj) {
+    public void delete(long id) {
 
     }
 
@@ -50,7 +50,7 @@ public class FirstLevelDivisionDaoImpl extends JDBCConnection implements Service
     public long findIdByDivisionName(String divisionName) throws SQLException {
         long id = 0;
         String countryName = (AddNewCustomerController.ctryID == CountryId.US) ? String.valueOf(AddNewCustomerController.ctryID).substring(0,1) + "." +  String.valueOf(AddNewCustomerController.ctryID).substring(1) : String.valueOf(AddNewCustomerController.ctryID);
-        ResultSet rs = findRawDataFromDB("SELECT division_id from first_level_divisions where country_id = (SELECT country_id FROM countries where Country = '" + countryName + "') and division = '"+ divisionName + "'");
+        ResultSet rs = findRawDataFromDB("SELECT Division_Id from first_level_divisions where Country_Id = (SELECT Country_Id FROM countries where Country = '" + countryName + "') and Division = '"+ divisionName + "'");
         while(rs.next()){
            id = rs.getLong("division_id");
         }

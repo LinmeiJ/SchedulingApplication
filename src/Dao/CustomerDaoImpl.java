@@ -1,10 +1,19 @@
 package Dao;
 
+import controller.CustomerRecordController;
 import dbConnection.JDBCConnection;
 import entity.Customer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,6 +21,7 @@ import java.sql.SQLException;
 public class CustomerDaoImpl extends JDBCConnection implements ServiceIfc<Customer> {
     FirstLevelDivisionDaoImpl firstLevelDivisionDao = new FirstLevelDivisionDaoImpl();
     CountryDaoImpl countryDao = new CountryDaoImpl();
+    public static Customer customer;
 
     public ObservableList<Customer> findAll() throws SQLException {
         ObservableList<Customer> allCustomers= FXCollections.observableArrayList();
@@ -24,7 +34,11 @@ public class CustomerDaoImpl extends JDBCConnection implements ServiceIfc<Custom
             String phoneNum = rs.getString("Phone");
             long div_id = rs.getLong("Division_ID");
 
-            Customer customer = new Customer(id, name, address, postalCode, phoneNum, firstLevelDivisionDao.findById(div_id));
+            Button delete = new Button("delete");
+            Button update = new Button("update");
+            customer = new Customer(id, name, address, postalCode, phoneNum, firstLevelDivisionDao.findById(div_id), delete, update);
+//                        Customer customer = new Customer(id, name, address, postalCode, phoneNum, div_id, delete);
+
             allCustomers.add(customer);
         }
         return allCustomers;
@@ -36,13 +50,20 @@ public class CustomerDaoImpl extends JDBCConnection implements ServiceIfc<Custom
     }
 
     @Override
-    public void delete(Customer customer) {
-
+    public void delete(long id) {
+        try {
+            statement = connection.createStatement();
+            String sql = "DELETE FROM customers WHERE Customer_ID = "+ id;
+            statement.executeUpdate(sql);
+        } catch (SQLException e) {
+            System.out.println("something wrong with execusting delete sql");
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void save(Customer customer) throws SQLException {
-        statement = connection.createStatement();
+//        statement = connection.createStatement();
         String sql = "INSERT INTO customers VALUES(NULL, ?, ?, ?, ?, ?, ?, ?, ?,?)";
         PreparedStatement preparedStatement = JDBCConnection.connection.prepareStatement(sql);
         preparedStatement.setString(1, customer.getCustomer_name());

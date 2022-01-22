@@ -1,6 +1,7 @@
 package controller;
 
 import Dao.CustomerDaoImpl;
+import Dao.Validator;
 import entity.Customer;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -22,7 +23,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.*;
 
-public class CustomerRecordController implements Initializable, Exit{
+public class CustomerRecordController implements Initializable, Exit {
 
     @FXML
     private Button exitId;
@@ -52,20 +53,26 @@ public class CustomerRecordController implements Initializable, Exit{
     private TableColumn<Customer, String> custDivision;
 
     @FXML
-    private TableColumn<Customer, String> delete;
+    private TableColumn<Customer, Button> delete;
 
     @FXML
-    private TableColumn<Customer, String> update;
+    private TableColumn<Customer, Button> update;
 
     private static final String ADD_NEW_CUSTOMER_VIEW_PATH = "../views/addNewCustomerView.fxml";
+    private static final String CUSTOMER_RECORD_VIEW = "../views/customerRecordView.fxml";
 
-    CustomerDaoImpl customerDao = new CustomerDaoImpl();
+    public static CustomerDaoImpl customerDao = new CustomerDaoImpl();
+    public static ObservableList<Customer> customersDataTable = FXCollections.observableArrayList();
 
-    ObservableList<Customer> customers = FXCollections.observableArrayList();
     Logger logger = Logger.getLogger(this.getClass().getName());
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        initTable();
+        loadData();
+    }
+
+    private void initCols() {
         custID.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
         custName.setCellValueFactory(new PropertyValueFactory<>("customer_name"));
         custAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
@@ -73,18 +80,34 @@ public class CustomerRecordController implements Initializable, Exit{
         custPhoneNum.setCellValueFactory(new PropertyValueFactory<>("phone"));
         custDivision.setCellValueFactory(cellData ->
                 new SimpleStringProperty(cellData.getValue().getFirstLevelDivision().getDivision()));
-        try{
-            customers.addAll(customerDao.findAll());
-        } catch (Exception e) {
-           logger.log(Level.WARNING, "initialize() throws an exception", this.getClass().getName());
-        }
-        recordTable.setItems(customers);
-
+        delete.setCellValueFactory(new PropertyValueFactory<>("delete"));
+        update.setCellValueFactory(new PropertyValueFactory<>("update"));
     }
 
-    @FXML
-    void exitBtnClicked(ActionEvent event) {
-        exit(event, exitId);
+    private void initTable() {
+        initCols();
+        try {
+            customersDataTable.addAll(customerDao.findAll());
+        } catch (Exception e) {
+            logger.log(Level.WARNING, "initialize() throws an exception", this.getClass().getName());
+        }
+    }
+
+    private void loadData() {
+        recordTable.setItems(customersDataTable);
+    }
+
+    public void delete(){
+//       CustomerDaoImpl.customer.getDelete().setOnAction(e -> {
+//           Customer selectedCust = recordTable.getSelectionModel().getSelectedItem();
+//          customerDao.delete(selectedCust.getCustomer_id());
+//           try {
+//               setScene(e, CUSTOMER_RECORD_VIEW );
+//           } catch (IOException ioException) {
+//               ioException.printStackTrace();
+//           }
+//       });
+//        Validator.displayAddSuccess();
     }
 
     @FXML
@@ -104,6 +127,11 @@ public class CustomerRecordController implements Initializable, Exit{
         var scene = new Scene(parent);
         var stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
+    }
+
+    @FXML
+    void exitBtnClicked(ActionEvent event) {
+        exit(event, exitId);
     }
 
 }
