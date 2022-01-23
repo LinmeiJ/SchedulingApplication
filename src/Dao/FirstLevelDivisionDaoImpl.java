@@ -36,7 +36,7 @@ public class FirstLevelDivisionDaoImpl extends JDBCConnection implements Service
     }
 
     @Override
-    public void delete(long id) {
+    public void delete(FirstLevelDivision firstLevelDivision) {
 
     }
 

@@ -77,4 +77,14 @@ public final class Validator {
         infoAlert.setHeaderText("Added Successfully!");
         infoAlert.showAndWait();
     }
+    /**
+     * This method generates a message to confirm whether the end user want to delete a selected item.
+     */
+    public static void displayDeleteConfirmation() {
+        confirmAlert.setTitle("Parts");
+        confirmAlert.setHeaderText("Delete");
+        confirmAlert.setContentText("Are you sure you want to delete it?");
+        confirmResult = confirmAlert.showAndWait();
+    }
+
 }

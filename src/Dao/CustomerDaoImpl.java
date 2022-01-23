@@ -21,10 +21,10 @@ import java.sql.SQLException;
 public class CustomerDaoImpl extends JDBCConnection implements ServiceIfc<Customer> {
     FirstLevelDivisionDaoImpl firstLevelDivisionDao = new FirstLevelDivisionDaoImpl();
     CountryDaoImpl countryDao = new CountryDaoImpl();
-    public static Customer customer;
+    public   Customer customer;
+    private static ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
 
     public ObservableList<Customer> findAll() throws SQLException {
-        ObservableList<Customer> allCustomers= FXCollections.observableArrayList();
         ResultSet rs = findRawDataFromDB("SELECT Customer_ID, Customer_Name, Address, Postal_Code, Phone, d.Division_ID, d.Country_ID FROM customers c JOIN first_level_divisions d ON d.Division_ID = c.Division_ID");
         while(rs.next()){
             long id = rs.getLong("customer_id");
@@ -50,11 +50,13 @@ public class CustomerDaoImpl extends JDBCConnection implements ServiceIfc<Custom
     }
 
     @Override
-    public void delete(long id) {
+    public void delete(Customer customer) {
         try {
             statement = connection.createStatement();
-            String sql = "DELETE FROM customers WHERE Customer_ID = "+ id;
+            String sql = "DELETE FROM customers WHERE Customer_ID = "+ customer.getCustomer_id();
             statement.executeUpdate(sql);
+            allCustomers.remove(customer);
+            Validator.displayDeleteConfirmation();
         } catch (SQLException e) {
             System.out.println("something wrong with execusting delete sql");
             e.printStackTrace();

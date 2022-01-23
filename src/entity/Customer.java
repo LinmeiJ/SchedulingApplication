@@ -24,6 +24,7 @@ public class Customer {
     private FirstLevelDivision firstLevelDivision;//imperfect way to display the division on the record table
 
     public Customer(){}
+
     public Customer(long customer_id, String customer_name, String address, String postal_code, String phone, FirstLevelDivision firstLevelDivision) {
         this.customer_id = customer_id;
         this.customer_name = customer_name;

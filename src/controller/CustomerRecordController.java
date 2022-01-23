@@ -79,8 +79,6 @@ public class CustomerRecordController implements Initializable, Exit {
         custPhoneNum.setCellValueFactory(new PropertyValueFactory<>("phone"));
         custDivision.setCellValueFactory(cellData ->
                 new SimpleStringProperty(cellData.getValue().getFirstLevelDivision().getDivision()));
-//        delete.setCellValueFactory(new PropertyValueFactory<>("delete"));
-//        update.setCellValueFactory(new PropertyValueFactory<>("update"));
     }
 
     private void initTable() {
@@ -96,20 +94,6 @@ public class CustomerRecordController implements Initializable, Exit {
         recordTable.setItems(customersDataTable);
     }
 
-    public void delete(){
-//       CustomerDaoImpl.customer.getDelete().setOnAction(e -> {
-//           Customer selectedCust = recordTable.getSelectionModel().getSelectedItem();
-//          customerDao.delete(selectedCust.getCustomer_id());
-//           try {
-//               setScene(e, CUSTOMER_RECORD_VIEW );
-//           } catch (IOException ioException) {
-//               ioException.printStackTrace();
-//           }
-//       });
-//        Validator.displayAddSuccess();
-    }
-
-
     @FXML
     void UpdateSelected(ActionEvent event) {
 
@@ -117,7 +101,15 @@ public class CustomerRecordController implements Initializable, Exit {
 
     @FXML
     void deleteSelected(ActionEvent event) {
+        Customer selectedCust = recordTable.getSelectionModel().getSelectedItem();
 
+        if(selectedCust != null) {
+            customerDao.delete(selectedCust);
+        }
+        else
+        {
+            Validator.displayInvalidInput("Please select a row to delete");
+        }
     }
 
 
