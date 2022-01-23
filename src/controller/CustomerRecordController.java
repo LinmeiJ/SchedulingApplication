@@ -58,8 +58,6 @@ public class CustomerRecordController implements Initializable, Exit {
     private Button deleteBtn;
 
     private static final String ADD_NEW_CUSTOMER_VIEW_PATH = "../views/addNewCustomerView.fxml";
-    private static final String CUSTOMER_RECORD_VIEW = "../views/customerRecordView.fxml";
-
     public static CustomerDaoImpl customerDao = new CustomerDaoImpl();
     public static ObservableList<Customer> customersDataTable = FXCollections.observableArrayList();
 
@@ -100,11 +98,12 @@ public class CustomerRecordController implements Initializable, Exit {
     }
 
     @FXML
-    void deleteSelected(ActionEvent event) {
+    void deleteSelected(ActionEvent event) throws IOException {
         Customer selectedCust = recordTable.getSelectionModel().getSelectedItem();
 
         if(selectedCust != null) {
             customerDao.delete(selectedCust);
+            customersDataTable.remove(selectedCust);
         }
         else
         {

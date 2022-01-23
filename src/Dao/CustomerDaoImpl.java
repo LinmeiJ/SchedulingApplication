@@ -33,12 +33,7 @@ public class CustomerDaoImpl extends JDBCConnection implements ServiceIfc<Custom
             String postalCode =  rs.getString("Postal_Code");
             String phoneNum = rs.getString("Phone");
             long div_id = rs.getLong("Division_ID");
-//
-//            Button delete = new Button("delete");
-//            Button update = new Button("update");
             customer = new Customer(id, name, address, postalCode, phoneNum, firstLevelDivisionDao.findById(div_id));
-//                        Customer customer = new Customer(id, name, address, postalCode, phoneNum, div_id, delete);
-
             allCustomers.add(customer);
         }
         return allCustomers;
