@@ -43,6 +43,11 @@
                </font>
             </Label>
             <TextField fx:id="zipCodeField" layoutX="101.0" layoutY="268.0" prefHeight="26.0" prefWidth="128.0" />
+            <Button fx:id="updateApt" layoutX="13.0" layoutY="345.0" mnemonicParsing="false" onAction="#updateAptClicked" prefHeight="35.0" prefWidth="238.0" text="Update/Add Appointment">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
          </children>
       </AnchorPane>
       <AnchorPane layoutX="536.0" layoutY="85.0" prefHeight="343.0" prefWidth="287.0">

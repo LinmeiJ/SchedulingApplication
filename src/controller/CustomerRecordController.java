@@ -91,7 +91,7 @@ public class CustomerRecordController implements Initializable, CommonUseHelperI
     void UpdateSelected(ActionEvent event) throws IOException {
         selectedCust =  recordTable.getSelectionModel().getSelectedItem();
         if(selectedCust != null) {
-            setScene(event, UPDATE_CUSTOMER_VIEW_PATH);
+            setScene(event, UPDATE_CUSTOMER_VIEW);
         }else{
             Validator.displayInvalidInput("Please select a row/customer to update");
         }

@@ -1,6 +1,9 @@
 package controller;
 
+import Dao.CustomerDaoImpl;
 import Dao.FirstLevelDivisionDaoImpl;
+import Dao.UserDaoImpl;
+import Dao.Validator;
 import entity.Customer;
 import enums.CountryId;
 import javafx.event.ActionEvent;
@@ -10,6 +13,9 @@ import javafx.scene.control.*;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
 public class UpdateCustomerController implements Initializable, CommonUseHelperIfc {
@@ -51,6 +57,8 @@ public class UpdateCustomerController implements Initializable, CommonUseHelperI
 
     public static CountryId ctryID;
     private Customer customer;
+    private CustomerDaoImpl customerDao = new CustomerDaoImpl();
+
 
     private FirstLevelDivisionDaoImpl divisionDao = new FirstLevelDivisionDaoImpl();
 
@@ -99,8 +107,25 @@ public class UpdateCustomerController implements Initializable, CommonUseHelperI
     }
 
     @FXML
-    void saveUpdateClicked(ActionEvent event) {
+    void saveUpdateClicked(ActionEvent event) throws SQLException {
+        customer = new Customer();
+        customer.setCustomer_name(custNameField.getText());
+        customer.setAddress(addressField.getText());
+        customer.setPhone(phoneField.getText());
+        customer.setPostal_code(zipCodeField.getText());
+        customer.setCreated_by(UserDaoImpl.userName);
+        customer.setCreate_date(Timestamp.valueOf(LocalDateTime.now()));
+        customer.setLast_update(Timestamp.valueOf(LocalDateTime.now()));
+        customer.setLast_updated_by(UserDaoImpl.userName);
+        customer.setDivision_id(divisionDao.findIdByDivisionName(division.getValue()));
+        customerDao.update(customer);
 
+        Validator.displayAddSuccess();
+    }
+
+    @FXML
+    void updateAptClicked(ActionEvent event) throws IOException {
+        setScene(event, UPDATE_APPOINTMENT_VIEW);
     }
 
     @Override
