@@ -12,6 +12,11 @@
    <children>
       <AnchorPane layoutX="106.0" layoutY="49.0" prefHeight="522.0" prefWidth="481.0">
          <children>
+            <Button fx:id="aptBtn" layoutX="20.0" layoutY="343.0" mnemonicParsing="false" onAction="#aptClicked" prefHeight="36.0" prefWidth="319.0" text="Add Appointment" textAlignment="CENTER">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
             <Label text="Add New Customer">
                <font>
                   <Font name="System Bold" size="18.0" />

@@ -61,6 +61,9 @@ public class AddNewCustomerController extends JDBCConnection implements Initiali
     private Button saveCustBtn;
 
     @FXML
+    private Button aptBtn;
+
+    @FXML
     private Button cancelBtn;
     private Customer customer;
     private CustomerDaoImpl customerDao = new CustomerDaoImpl();
@@ -96,10 +99,15 @@ public class AddNewCustomerController extends JDBCConnection implements Initiali
         listDivisionByCountry();
     }
 
-
     private void listDivisionByCountry() {
         divisionList.getItems().clear();
         divisionList.setItems(divisionDao.getAllDivisions());
+    }
+
+
+    @FXML
+    void aptClicked(ActionEvent event) {
+
     }
 
     @FXML
