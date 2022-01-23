@@ -54,6 +54,7 @@ public class CustomerRecordController implements Initializable, CommonUseHelperI
 
     public static CustomerDaoImpl customerDao = new CustomerDaoImpl();
     public static ObservableList<Customer> customersDataTable = FXCollections.observableArrayList();
+    public static Customer selectedCust;
 
     Logger logger = Logger.getLogger(this.getClass().getName());
 
@@ -88,12 +89,17 @@ public class CustomerRecordController implements Initializable, CommonUseHelperI
 
     @FXML
     void UpdateSelected(ActionEvent event) throws IOException {
-        setScene(event, UPDATE_CUSTOMER_VIEW_PATH);
+        selectedCust =  recordTable.getSelectionModel().getSelectedItem();
+        if(selectedCust != null) {
+            setScene(event, UPDATE_CUSTOMER_VIEW_PATH);
+        }else{
+            Validator.displayInvalidInput("Please select a row/customer to update");
+        }
     }
 
     @FXML
     void deleteSelected(ActionEvent event) throws IOException {
-        Customer selectedCust = recordTable.getSelectionModel().getSelectedItem();
+        selectedCust = recordTable.getSelectionModel().getSelectedItem();
 
         if(selectedCust != null) {
             customerDao.delete(selectedCust);

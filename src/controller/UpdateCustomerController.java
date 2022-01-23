@@ -1,14 +1,12 @@
 package controller;
 
 import Dao.FirstLevelDivisionDaoImpl;
+import entity.Customer;
 import enums.CountryId;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
 import java.io.IOException;
 import java.net.URL;
@@ -16,16 +14,19 @@ import java.util.ResourceBundle;
 
 public class UpdateCustomerController implements Initializable, CommonUseHelperIfc {
     @FXML
-    private TextField updateCustNameField;
+    private TextField custId;
 
     @FXML
-    private TextField updatePhoneField;
+    private TextField custNameField;
 
     @FXML
-    private TextField updateAddressField;
+    private TextField phoneField;
 
     @FXML
-    private TextField updateZipCodeField;
+    private TextField addressField;
+
+    @FXML
+    private TextField zipCodeField;
 
     @FXML
     private RadioButton USAId;
@@ -37,7 +38,7 @@ public class UpdateCustomerController implements Initializable, CommonUseHelperI
     private RadioButton englandId;
 
     @FXML
-    private ComboBox<String> updateDivision;
+    private ComboBox<String> division;
 
     @FXML
     private Button saveUpdates;
@@ -49,6 +50,7 @@ public class UpdateCustomerController implements Initializable, CommonUseHelperI
     private Button cancelBtn;
 
     public static CountryId ctryID;
+    private Customer customer;
 
     private FirstLevelDivisionDaoImpl divisionDao = new FirstLevelDivisionDaoImpl();
 
@@ -74,8 +76,8 @@ public class UpdateCustomerController implements Initializable, CommonUseHelperI
     }
 
     private void listDivisionByCountry() {
-        updateDivision.getItems().clear();
-        updateDivision.setItems(divisionDao.getAllDivisions());
+        division.getItems().clear();
+        division.setItems(divisionDao.getAllDivisions());
     }
 
 
@@ -103,6 +105,12 @@ public class UpdateCustomerController implements Initializable, CommonUseHelperI
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        customer = CustomerRecordController.selectedCust;
+        custId.setText(String.valueOf(customer.getCustomer_id()));
+        custNameField.setText(customer.getCustomer_name());
+        phoneField.setText(customer.getPhone());
+        addressField.setText(customer.getAddress());
+        zipCodeField.setText(customer.getPostal_code());
+//        division.setItems(customer.getFirstLevelDivision().getDivision());
     }
 }

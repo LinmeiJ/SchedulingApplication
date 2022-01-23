@@ -22,27 +22,27 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <TextField disable="true" editable="false" layoutX="97.0" layoutY="86.0" prefHeight="26.0" prefWidth="128.0" promptText="Auto Gen - Disabled" />
+            <TextField fx:id="custId" disable="true" editable="false" layoutX="97.0" layoutY="86.0" prefHeight="26.0" prefWidth="128.0" promptText="Auto Gen - Disabled" />
             <Label layoutX="27.0" layoutY="131.0" text="Name">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <TextField fx:id="updateCustNameField" layoutX="97.0" layoutY="128.0" prefHeight="25.0" prefWidth="155.0" />
+            <TextField fx:id="custNameField" layoutX="97.0" layoutY="128.0" prefHeight="25.0" prefWidth="155.0" />
             <Label layoutX="28.0" layoutY="177.0" prefHeight="18.0" prefWidth="110.0" text="Phone Number" />
-            <TextField fx:id="updatePhoneField" layoutX="155.0" layoutY="173.0" prefHeight="26.0" prefWidth="143.0" />
+            <TextField fx:id="phoneField" layoutX="155.0" layoutY="173.0" prefHeight="26.0" prefWidth="143.0" />
             <Label layoutX="28.0" layoutY="222.0" text="Address">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <TextField fx:id="updateAddressField" layoutX="116.0" layoutY="219.0" prefHeight="26.0" prefWidth="179.0" />
+            <TextField fx:id="addressField" layoutX="116.0" layoutY="219.0" prefHeight="26.0" prefWidth="179.0" />
             <Label layoutX="25.0" layoutY="271.0" text="Zip Code">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <TextField fx:id="updateZipCodeField" layoutX="101.0" layoutY="268.0" prefHeight="26.0" prefWidth="128.0" />
+            <TextField fx:id="zipCodeField" layoutX="101.0" layoutY="268.0" prefHeight="26.0" prefWidth="128.0" />
          </children>
       </AnchorPane>
       <AnchorPane layoutX="536.0" layoutY="85.0" prefHeight="343.0" prefWidth="287.0">
@@ -62,7 +62,7 @@
                   <Font size="15.0" />
                </font>
             </RadioButton>
-            <ComboBox fx:id="updateDivision" editable="true" layoutX="37.0" layoutY="87.0" prefHeight="36.0" prefWidth="249.0" promptText="Division List" />
+            <ComboBox fx:id="division" editable="true" layoutX="37.0" layoutY="87.0" prefHeight="36.0" prefWidth="249.0" promptText="Division List" />
          </children>
       </AnchorPane>
       <Button fx:id="saveUpdates" layoutX="948.0" layoutY="482.0" mnemonicParsing="false" onAction="#saveUpdateClicked" prefHeight="44.0" prefWidth="94.0" text="Save">
