@@ -17,17 +17,11 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.TextStyle;
 import java.util.Locale;
 import java.util.ResourceBundle;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-public class LoginController extends Location implements Initializable, Exit {
+public class LoginController extends Location implements Initializable, CommonUseIfc {
     @FXML
     private TextField userNameField;
 
@@ -43,14 +37,10 @@ public class LoginController extends Location implements Initializable, Exit {
     @FXML
     private Button exitId;
 
-    ResourceBundle rb;
-
-//    private DBService dbService = new DBService();
-
+    private ResourceBundle rb;
     private String userName;
     private String password;
 
-    private static final String CUSTOMER_RECORD_VIEW = "../views/customerRecordView.fxml";
     private static final String USER_NOT_FOUND = "User is not found, please check your user name or password.";
 
     @FXML
@@ -59,17 +49,10 @@ public class LoginController extends Location implements Initializable, Exit {
         password = (passwordField.getText());
 
         if(UserDaoImpl.findByUserName(userName, password)) {
-            setNextScene(event);
+            setScene(event, CUSTOMER_RECORD_VIEW);
         }else{
             Validator.displayInvalidInput(USER_NOT_FOUND);
         }
-    }
-
-    private void setNextScene(ActionEvent event) throws IOException {
-        Parent parent = FXMLLoader.load(getClass().getResource(CUSTOMER_RECORD_VIEW));
-        var scene = new Scene(parent);
-        var stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(scene);
     }
 
     @FXML

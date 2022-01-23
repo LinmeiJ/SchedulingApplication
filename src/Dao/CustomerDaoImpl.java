@@ -60,7 +60,6 @@ public class CustomerDaoImpl extends JDBCConnection implements ServiceIfc<Custom
 
     @Override
     public void save(Customer customer) throws SQLException {
-//        statement = connection.createStatement();
         String sql = "INSERT INTO customers VALUES(NULL, ?, ?, ?, ?, ?, ?, ?, ?,?)";
         PreparedStatement preparedStatement = JDBCConnection.connection.prepareStatement(sql);
         preparedStatement.setString(1, customer.getCustomer_name());

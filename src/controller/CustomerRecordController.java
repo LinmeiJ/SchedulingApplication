@@ -23,7 +23,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.*;
 
-public class CustomerRecordController implements Initializable, Exit {
+public class CustomerRecordController implements Initializable, CommonUseIfc {
 
     @FXML
     private Button exitId;
@@ -57,7 +57,6 @@ public class CustomerRecordController implements Initializable, Exit {
     @FXML
     private Button deleteBtn;
 
-    private static final String ADD_NEW_CUSTOMER_VIEW_PATH = "../views/addNewCustomerView.fxml";
     public static CustomerDaoImpl customerDao = new CustomerDaoImpl();
     public static ObservableList<Customer> customersDataTable = FXCollections.observableArrayList();
 
@@ -111,24 +110,9 @@ public class CustomerRecordController implements Initializable, Exit {
         }
     }
 
-
     @FXML
     void addNewCustomer(ActionEvent event) throws IOException {
         setScene(event, ADD_NEW_CUSTOMER_VIEW_PATH);
-    }
-
-    /**
-     * set a scene based on this particular action and fxml path passed over to the params.
-     *
-     * @param event an event indicates a component-defined action occurred
-     * @param s     the file path where the fxml is located at
-     * @throws IOException it happens when the fxml file is not found
-     */
-    private void setScene(ActionEvent event, String s) throws IOException {
-        Parent parent = FXMLLoader.load(getClass().getResource(s));
-        var scene = new Scene(parent);
-        var stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(scene);
     }
 
     @FXML

@@ -29,7 +29,7 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
-public class AddNewCustomerController extends JDBCConnection implements Initializable, Exit {
+public class AddNewCustomerController extends JDBCConnection implements Initializable, CommonUseIfc {
     @FXML
     private TextField addCustNameField;
 
@@ -65,12 +65,11 @@ public class AddNewCustomerController extends JDBCConnection implements Initiali
 
     @FXML
     private Button cancelBtn;
+
     private Customer customer;
     private CustomerDaoImpl customerDao = new CustomerDaoImpl();
     public static CountryId ctryID;
     private FirstLevelDivisionDaoImpl divisionDao = new FirstLevelDivisionDaoImpl();
-    private static final String CUSTOMER_RECORD_VIEW = "../views/customerRecordView.fxml";
-
 
     @FXML
     void CanadaSelected(ActionEvent event) {
@@ -106,13 +105,8 @@ public class AddNewCustomerController extends JDBCConnection implements Initiali
 
 
     @FXML
-    void aptClicked(ActionEvent event) {
-
-    }
-
-    @FXML
-    void cancelBtnClicked(ActionEvent event) {
-        exit(event, cancelBtn);
+    void aptClicked(ActionEvent event) throws IOException {
+        setScene(event, NEW_APT_VIEW);
     }
 
     @FXML
@@ -140,9 +134,15 @@ public class AddNewCustomerController extends JDBCConnection implements Initiali
 
     @FXML
     void backToRecordPage(ActionEvent event) throws IOException {
-        Parent parent = FXMLLoader.load(getClass().getResource(CUSTOMER_RECORD_VIEW));
-        var scene = new Scene(parent);
-        var stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(scene);
+        setScene(event, CUSTOMER_RECORD_VIEW);
+//        Parent parent = FXMLLoader.load(getClass().getResource(CUSTOMER_RECORD_VIEW));
+//        var scene = new Scene(parent);
+//        var stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+//        stage.setScene(scene);
+    }
+
+    @FXML
+    void exitBtnClicked(ActionEvent event) {
+        exit(event, cancelBtn);
     }
 }
