@@ -12,10 +12,12 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public interface CommonUseIfc {
-     String ADD_NEW_CUSTOMER_VIEW_PATH = "../views/addNewCustomerView.fxml";
+public interface CommonUseHelperIfc {
+
+     String ADD_NEW_CUSTOMER_VIEW = "../views/addNewCustomerView.fxml";
      String CUSTOMER_RECORD_VIEW = "../views/customerRecordView.fxml";
-    String NEW_APT_VIEW = "../views/addNewAptView.fxml";
+     String NEW_APT_VIEW = "../views/addNewAptView.fxml";
+     String UPDATE_CUSTOMER_VIEW_PATH = "../views/updateCustView.fxml";
 
 
     /**

@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class AddNewAppointmentController implements Initializable, CommonUseIfc {
+public class AddNewAppointmentController implements Initializable, CommonUseHelperIfc {
 
     @FXML
     private TextField aptField;
@@ -48,7 +48,7 @@ public class AddNewAppointmentController implements Initializable, CommonUseIfc 
 
     @FXML
     void BackToLastViewIsClicked(ActionEvent event) throws IOException {
-        setScene(event, ADD_NEW_CUSTOMER_VIEW_PATH);
+        setScene(event, ADD_NEW_CUSTOMER_VIEW);
     }
 
     @FXML
