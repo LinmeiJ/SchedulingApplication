@@ -16,6 +16,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Timestamp;
 import java.util.ResourceBundle;
@@ -71,6 +72,8 @@ public class UpdateAppointmentController implements Initializable, CommonUseHelp
 
     @FXML
     private Button exitBtn;
+    @FXML
+    private Button backBtn;
 
     Logger logger = Logger.getLogger(this.getClass().getName());
     private String[] filterOptions = {"By Month", "By Week"};
@@ -112,6 +115,11 @@ public class UpdateAppointmentController implements Initializable, CommonUseHelp
 
     }
 
+    @FXML
+    void backExitClicked(ActionEvent event) throws IOException {
+        setScene(event, CUSTOMER_RECORD_VIEW);
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         dateTimefilter.getItems().addAll(filterOptions);
@@ -133,12 +141,13 @@ public class UpdateAppointmentController implements Initializable, CommonUseHelp
         aptTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
         aptDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
         aptLocation.setCellValueFactory(new PropertyValueFactory<>("location"));
-        aptUserID.setCellValueFactory(new PropertyValueFactory<>("contact_id")); // fix me need to set the contact as a contact name instead of ID
         aptType.setCellValueFactory(new PropertyValueFactory<>("type"));
         aptStartDateTime.setCellValueFactory(new PropertyValueFactory<>("start"));
         aptEndDateTime.setCellValueFactory(new PropertyValueFactory<>("end"));
         aptCustID.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
         aptUserID.setCellValueFactory(new PropertyValueFactory<>("user_id"));
+        aptUserID.setCellValueFactory(new PropertyValueFactory<>("contact_id")); // fix me need to set the contact as a contact name instead of ID
+
     }
 
     private void loadData() {

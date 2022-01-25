@@ -26,7 +26,10 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
     }
 
     public ObservableList<Appointment> findAllByCustId(long customerId) throws SQLException {
-        ResultSet rs = findRawDataFromDB("SELECT Appointment_ID, Title, Description, Location, Type, Start, End, User_ID, Contact_ID FROM appointments WHERE Customer_ID = " + customerId);
+        ResultSet rs = findRawDataFromDB("SELECT Appointment_ID, Title, a.Description, Location, a.Type, a.Start, a.End, User_ID, Contact_ID FROM appointments as a WHERE Customer_ID = " + customerId);
+        System.out.println(rs.getMetaData());
+        System.out.println(rs.getStatement());
+
         while(rs.next()){
             long aptId = rs.getLong("appointment_id");
             String title = rs.getString("title");

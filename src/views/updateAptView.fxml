@@ -22,7 +22,7 @@
             </padding>
         </Label>
       <Button fx:id="leftArrow" layoutX="467.0" layoutY="65.0" minHeight="10.0" minWidth="30.0" mnemonicParsing="false" onAction="#rightArrowClicked" prefHeight="10.0" prefWidth="30.0" rotate="180.0" style="-fx-shape: &quot;M 0 -1.5 v 3 l 1 -1.5 z&quot;;" />
-      <ChoiceBox fx:id="dateTimefilter" layoutX="529.0" layoutY="61.0" onDragDetected="#FilterButton" prefHeight="30.0" prefWidth="89.0" />
+      <ChoiceBox fx:id="dateTimefilter" layoutX="521.0" layoutY="61.0" onDragDetected="#FilterButton" prefHeight="30.0" prefWidth="89.0" />
       <Button fx:id="rightArrow" layoutX="628.0" layoutY="65.0" minHeight="10.0" minWidth="30.0" mnemonicParsing="false" onAction="#rightArrowClicked" prefHeight="10.0" prefWidth="30.0" style="-fx-shape: &quot;M 0 -1.5 v 3 l 1 -1.5 z&quot;;" />
         <AnchorPane fx:id="CustomerRecordPane" layoutX="57.0" layoutY="106.0" prefHeight="465.0" prefWidth="1141.0" style="-fx-border-color: #C0C0C0; -fx-border-radius: 18 18 18 18; -fx-border-width: 0.5;     -fx-padding:5px">
             <children>
@@ -66,18 +66,23 @@
                 <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
             </opaqueInsets>
         </AnchorPane>
-      <Button fx:id="saveBtn" layoutX="859.0" layoutY="576.0" mnemonicParsing="false" onAction="#saveBtnClicked" prefHeight="39.0" prefWidth="161.0" text="Save">
+      <Button fx:id="saveBtn" layoutX="1037.0" layoutY="584.0" mnemonicParsing="false" onAction="#saveBtnClicked" prefHeight="39.0" prefWidth="161.0" text="Save">
          <font>
-            <Font size="36.0" />
+            <Font size="28.0" />
          </font>
          <effect>
             <ColorAdjust brightness="0.19" contrast="-0.09" saturation="0.12" />
          </effect>
       </Button>
-        <Button fx:id="exitBtn" layoutX="1143.0" layoutY="600.0" mnemonicParsing="false" onAction="#exitBtnClicked" prefHeight="30.0" prefWidth="55.0" text="Exit">
+        <Button fx:id="exitBtn" layoutX="1131.0" layoutY="46.0" mnemonicParsing="false" onAction="#exitBtnClicked" prefHeight="30.0" prefWidth="55.0" text="Exit">
          <font>
             <Font size="14.0" />
          </font></Button>
+      <Button fx:id="backBtn" layoutX="1047.0" layoutY="46.0" mnemonicParsing="false" onAction="#backExitClicked" prefHeight="30.0" prefWidth="55.0" text="Back">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
     </children>
    <cursor>
       <Cursor fx:constant="DEFAULT" />
