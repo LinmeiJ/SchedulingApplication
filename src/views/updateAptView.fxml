@@ -3,15 +3,17 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.effect.ColorAdjust?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane cache="true" prefHeight="400.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.UpdateAppointmentController">
+<AnchorPane cache="true" prefHeight="656.0" prefWidth="1236.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.UpdateAppointmentController">
     <children>
-        <Label alignment="CENTER" graphicTextGap="105.0" layoutX="10.0" layoutY="14.0" prefHeight="30.0" prefWidth="961.0" text="Customer Records" textAlignment="CENTER" textFill="#5e2d2d">
+        <Label alignment="CENTER" graphicTextGap="105.0" layoutX="145.0" layoutY="20.0" prefHeight="30.0" prefWidth="947.0" text="Appointment" textAlignment="CENTER" textFill="#5e2d2d">
             <font>
                 <Font name="System Bold" size="18.0" />
             </font>
@@ -19,36 +21,42 @@
                 <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
             </padding>
         </Label>
-        <Button fx:id="exitId" layoutX="883.0" layoutY="368.0" mnemonicParsing="false" onAction="#exitBtnClicked" prefHeight="22.0" prefWidth="54.0" text="Exit">
-         <font>
-            <Font size="14.0" />
-         </font></Button>
-        <AnchorPane fx:id="CustomerRecordPane" layoutX="14.0" layoutY="45.0" prefHeight="303.0" prefWidth="947.0" style="-fx-border-color: #C0C0C0; -fx-border-radius: 18 18 18 18; -fx-border-width: 0.5;     -fx-padding:5px">
+      <Button layoutX="469.0" layoutY="67.0" minHeight="10.0" minWidth="30.0" mnemonicParsing="false" onAction="#rightArrowClicked" prefHeight="10.0" prefWidth="30.0" rotate="175.9" style="-fx-shape: &quot;M 0 -1.5 v 3 l 1 -1.5 z&quot;;" />
+      <ChoiceBox layoutX="539.0" layoutY="58.0" onDragDetected="#FilterButton" prefHeight="39.0" prefWidth="144.0" />
+      <Button layoutX="690.0" layoutY="66.0" minHeight="10.0" minWidth="30.0" mnemonicParsing="false" onAction="#rightArrowClicked" prefHeight="10.0" prefWidth="30.0" style="-fx-shape: &quot;M 0 -1.5 v 3 l 1 -1.5 z&quot;;" />
+        <AnchorPane fx:id="CustomerRecordPane" layoutX="57.0" layoutY="106.0" prefHeight="465.0" prefWidth="1141.0" style="-fx-border-color: #C0C0C0; -fx-border-radius: 18 18 18 18; -fx-border-width: 0.5;     -fx-padding:5px">
             <children>
-                <TableView fx:id="recordTable" editable="true" layoutX="4.0" layoutY="40.0" prefHeight="258.0" prefWidth="753.0">
+                <TableView fx:id="recordTable" editable="true" layoutX="4.0" layoutY="40.0" prefHeight="365.0" prefWidth="1125.0">
                     <columns>
-                  <TableColumn fx:id="custID" editable="false" minWidth="-Infinity" prefWidth="81.0" text="Appointment_ID" />
-                  <TableColumn fx:id="custName" prefWidth="109.5999755859375" text="Title" />
-                  <TableColumn fx:id="custAddress" prefWidth="104.79998779296875" text="Description" />
-                  <TableColumn fx:id="custZipCode" prefWidth="92.800048828125" text="location" />
-                  <TableColumn fx:id="custPhoneNum" prefWidth="91.199951171875" text="Contact" />
-                  <TableColumn fx:id="custDivision" prefWidth="97.60009765625" text="Type" />
+                  <TableColumn fx:id="aptID" editable="false" minWidth="-Infinity" prefWidth="81.0" text="Appointment_ID" />
+                  <TableColumn fx:id="aptTitle" prefWidth="109.5999755859375" text="Title" />
+                  <TableColumn fx:id="aptDescription" prefWidth="104.79998779296875" text="Description" />
+                  <TableColumn fx:id="aptLocation" prefWidth="92.800048828125" text="location" />
+                  <TableColumn fx:id="aptContact" prefWidth="91.199951171875" text="Contact" />
+                  <TableColumn fx:id="aptType" prefWidth="97.60009765625" text="Type" />
+                  <TableColumn fx:id="aptStartDateTime" prefWidth="97.60009765625" text="Start Time" />
+                  <TableColumn fx:id="aptEndDateTime" prefWidth="97.60009765625" text="End Time" />
+                  <TableColumn fx:id="aptCustID" prefWidth="97.60009765625" text="Customer ID" />
+                  <TableColumn fx:id="aptUserID" prefWidth="97.60009765625" text="User ID" />
                     </columns>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
                 </TableView>
-            <Button fx:id="addNewApt" layoutX="772.0" layoutY="92.0" mnemonicParsing="false" onAction="#addNewAptClicked" prefHeight="27.0" prefWidth="158.0" text="Add New Apt">
+            <Button layoutX="692.0" layoutY="414.0" mnemonicParsing="false" onAction="#addUpdateClicked" prefHeight="30.0" prefWidth="144.0" text="Add New Apt">
                <font>
                   <Font size="14.0" />
                </font>
             </Button>
-            <Button fx:id="updateBtn" layoutX="786.0" layoutY="154.0" mnemonicParsing="false" onAction="#UpdateSelected" prefHeight="26.0" prefWidth="130.0" text="Update">
+            <Button layoutX="861.0" layoutY="414.0" mnemonicParsing="false" onAction="#updateClicked" prefHeight="30.0" prefWidth="133.0" text="Update">
                <font>
                   <Font size="14.0" />
                </font>
             </Button>
-            <Button fx:id="deleteBtn" layoutX="805.0" layoutY="211.0" mnemonicParsing="false" onAction="#deleteSelected" prefHeight="26.0" prefWidth="92.0" text="Delete">
+            <Button layoutX="1020.0" layoutY="414.0" mnemonicParsing="false" onAction="#deleteClicked" prefHeight="30.0" prefWidth="110.0" text="Delete">
                <font>
                   <Font size="14.0" />
                </font>
@@ -58,6 +66,18 @@
                 <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
             </opaqueInsets>
         </AnchorPane>
+      <Button fx:id="exitId1" layoutX="1039.0" layoutY="571.0" mnemonicParsing="false" onAction="#saveBtnClicked" prefHeight="30.0" prefWidth="159.0" text="Save">
+         <font>
+            <Font size="24.0" />
+         </font>
+         <effect>
+            <ColorAdjust brightness="0.19" contrast="-0.09" saturation="0.12" />
+         </effect>
+      </Button>
+        <Button fx:id="exitId" layoutX="1160.0" layoutY="609.0" mnemonicParsing="false" onAction="#exitBtnClicked" prefHeight="30.0" prefWidth="55.0" text="Exit">
+         <font>
+            <Font size="14.0" />
+         </font></Button>
     </children>
    <cursor>
       <Cursor fx:constant="DEFAULT" />

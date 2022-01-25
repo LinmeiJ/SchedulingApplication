@@ -2,100 +2,88 @@ package controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
-
-public class UpdateAppointmentController implements CommonUseHelperIfc, Initializable {
-
-    @FXML
-    private TextField aptField;
+public class UpdateAppointmentController {
 
     @FXML
-    private TextField aptTitleField;
+    private AnchorPane CustomerRecordPane;
 
     @FXML
-    private TextField aptTypeField;
+    private TableColumn<?, ?> aptContact;
 
     @FXML
-    private TextField aptLocationField;
+    private TableColumn<?, ?> aptCustID;
 
     @FXML
-    private TextField aptContactField;
+    private TableColumn<?, ?> aptDescription;
 
     @FXML
-    private TextArea aptDescriptionField;
+    private TableColumn<?, ?> aptEndDateTime;
 
     @FXML
-    private TextField setCustId;
+    private TableColumn<?, ?> aptID;
 
     @FXML
-    private TextField setUserId;
+    private TableColumn<?, ?> aptLocation;
 
     @FXML
-    private DatePicker startDate;
+    private TableColumn<?, ?> aptStartDateTime;
 
     @FXML
-    private ComboBox<?> startHr;
+    private TableColumn<?, ?> aptTitle;
 
     @FXML
-    private ComboBox<?> startMinute;
+    private TableColumn<?, ?> aptType;
 
     @FXML
-    private ChoiceBox<?> startMeridiem;
+    private TableColumn<?, ?> aptUserID;
 
     @FXML
-    private DatePicker endDate;
+    private Button exitId;
 
     @FXML
-    private ComboBox<?> endHr;
+    private Button exitId1;
 
     @FXML
-    private ComboBox<?> endMinute;
+    private TableView<?> recordTable;
 
     @FXML
-    private ChoiceBox<?> endMeridiem;
+    void FilterButton(MouseEvent event) {
+
+    }
 
     @FXML
-    private Button saveBtn;
+    void addUpdateClicked(ActionEvent event) {
+
+    }
 
     @FXML
-    private Button BackBtn;
+    void deleteClicked(ActionEvent event) {
 
-    @FXML
-    private Button exitBtn;
-
-    @FXML
-    void BackToLastViewIsClicked(ActionEvent event) throws IOException {
-        setScene(event, UPDATE_CUSTOMER_VIEW);
     }
 
     @FXML
     void exitBtnClicked(ActionEvent event) {
-        exit(event, exitBtn);
-    }
-
-    @FXML
-    void saveIsClicked(ActionEvent event) {
-
-    }
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
 
     }
 
     @FXML
-    public void addNewAptClicked(ActionEvent actionEvent) {
-    }
-    @FXML
-    public void UpdateSelected(ActionEvent actionEvent) {
-    }
-    @FXML
-    public void deleteSelected(ActionEvent actionEvent) {
+    void rightArrowClicked(ActionEvent event) {
+
     }
 
+    @FXML
+    void saveBtnClicked(ActionEvent event) {
+
+    }
+
+    @FXML
+    void updateClicked(ActionEvent event) {
+
+    }
 }
