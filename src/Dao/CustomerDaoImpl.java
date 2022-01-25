@@ -17,6 +17,8 @@ import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 public class CustomerDaoImpl extends JDBCConnection implements ServiceIfc<Customer> {
     FirstLevelDivisionDaoImpl firstLevelDivisionDao = new FirstLevelDivisionDaoImpl();
@@ -52,8 +54,9 @@ public class CustomerDaoImpl extends JDBCConnection implements ServiceIfc<Custom
             statement.executeUpdate(sql);
             allCustomers.remove(customer);
             Validator.displayDeleteConfirmation();
+            Validator.displaySuccess("Delete");
         } catch (SQLException e) {
-            System.out.println("something wrong with execusting delete sql");
+            System.out.println("something wrong with executing delete sql");
             e.printStackTrace();
         }
     }
@@ -77,6 +80,21 @@ public class CustomerDaoImpl extends JDBCConnection implements ServiceIfc<Custom
 
     @Override
     public void update(Customer customer) {
+        String sql = "UPDATE customers SET Customer_Name=?, Address=?, Postal_Code=?, Phone=?, Last_Update=?, Last_Updated_By=?, Division_ID=? WHERE Customer_ID = " + customer.getCustomer_id();
+        try {
+            PreparedStatement preparedStatement = JDBCConnection.connection.prepareStatement(sql);
+            preparedStatement.setString(1, customer.getCustomer_name());
+            preparedStatement.setString(2, customer.getAddress());
+            preparedStatement.setString(3, customer.getPostal_code());
+            preparedStatement.setString(4, customer.getPhone());
+            preparedStatement.setString(5, String.valueOf(customer.getLast_update()));
+            preparedStatement.setString(6, customer.getLast_updated_by());
+            preparedStatement.setString(7, String.valueOf(customer.getDivision_id()));
+
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
 

@@ -1,6 +1,7 @@
 package controller;
 
 import Dao.Validator;
+import enums.CountryId;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -18,7 +19,6 @@ public interface CommonUseHelperIfc {
      String NEW_APT_VIEW = "../views/addNewAptView.fxml";
      String UPDATE_CUSTOMER_VIEW = "../views/updateCustView.fxml";
      String UPDATE_APPOINTMENT_VIEW = "../views/updateAptView.fxml";
-
 
     /**
      * This method closes the the program.

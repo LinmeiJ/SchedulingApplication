@@ -6,6 +6,8 @@ import Dao.UserDaoImpl;
 import Dao.Validator;
 import entity.Customer;
 import enums.CountryId;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -55,45 +57,35 @@ public class UpdateCustomerController implements Initializable, CommonUseHelperI
     @FXML
     private Button cancelBtn;
 
-    public static CountryId ctryID;
-    private Customer customer;
+    private Customer customer = CustomerRecordController.selectedCust;;
     private CustomerDaoImpl customerDao = new CustomerDaoImpl();
-
-
     private FirstLevelDivisionDaoImpl divisionDao = new FirstLevelDivisionDaoImpl();
 
-
     @FXML
-    void CanadaSelected(ActionEvent event) {
-        ctryID = CountryId.CANADA;
-        setSelectedRadioBtn(false, false, true);
-        listDivisionByCountry();
+    void canadaSelected(ActionEvent event) {
+        CustomerRecordController.ctryId = CountryId.CANADA;
+        setCountry(false, false, true);
+        division.setItems(divisionDao.getAllDivisions());
     }
 
     @FXML
-    void EnglandSelected(ActionEvent event) {
-        setSelectedRadioBtn(false, true, false);
-        ctryID = CountryId.UK;
-        listDivisionByCountry();
+    void englandSelected(ActionEvent event) {
+        setCountry(false, true, false);
+        CustomerRecordController.ctryId  = CountryId.UK;
+        division.setItems(divisionDao.getAllDivisions());
+    }
+
+    @FXML
+    void uSSelected(ActionEvent event) {
+        CustomerRecordController.ctryId  = CountryId.US;
+        setSelectedRadioBtn(true,false, false);
+        division.setItems(divisionDao.getAllDivisions());
     }
 
     private void setSelectedRadioBtn(boolean us, boolean en, boolean ca) {
         USAId.setSelected(us);
         englandId.setSelected(en);
         canadaId.setSelected(ca);
-    }
-
-    private void listDivisionByCountry() {
-        division.getItems().clear();
-        division.setItems(divisionDao.getAllDivisions());
-    }
-
-
-    @FXML
-    void USSelected(ActionEvent event) {
-        ctryID = CountryId.US;
-        setSelectedRadioBtn(true,false, false);
-        listDivisionByCountry();
     }
 
     @FXML
@@ -108,7 +100,6 @@ public class UpdateCustomerController implements Initializable, CommonUseHelperI
 
     @FXML
     void saveUpdateClicked(ActionEvent event) throws SQLException {
-        customer = new Customer();
         customer.setCustomer_name(custNameField.getText());
         customer.setAddress(addressField.getText());
         customer.setPhone(phoneField.getText());
@@ -120,7 +111,7 @@ public class UpdateCustomerController implements Initializable, CommonUseHelperI
         customer.setDivision_id(divisionDao.findIdByDivisionName(division.getValue()));
         customerDao.update(customer);
 
-        Validator.displayAddSuccess();
+        Validator.displaySuccess("Update");
     }
 
     @FXML
@@ -130,12 +121,44 @@ public class UpdateCustomerController implements Initializable, CommonUseHelperI
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        customer = CustomerRecordController.selectedCust;
+
         custId.setText(String.valueOf(customer.getCustomer_id()));
         custNameField.setText(customer.getCustomer_name());
         phoneField.setText(customer.getPhone());
         addressField.setText(customer.getAddress());
         zipCodeField.setText(customer.getPostal_code());
-//        division.setItems(customer.getFirstLevelDivision().getDivision());
+        division.setItems(getCustomerDivision());
+//        getCountry();
+    }
+
+    private ObservableList<String> getCustomerDivision() {
+        ObservableList<String> divisionList = FXCollections.observableArrayList();
+        divisionList.add(customer.getFirstLevelDivision().getDivision());
+        return divisionList;
+    }
+
+//    private void getCountry(){
+//       Long ctyId = customer.getFirstLevelDivision().getCountry_id();
+//       ctryID = ctyId == 1 ? CountryId.US : ctyId == 2 ? CountryId.UK : CountryId.CANADA;
+//       switch (ctryID){
+//           case US:
+//               setCountry(true, false, false);
+//               break;
+//           case UK:
+//               setCountry(false, true, false);
+//               break;
+//           case CANADA:
+//               setCountry(false, false, true);
+//               break;
+//           default:
+//               // fix me : log something here
+//               break;
+//       }
+//    }
+
+    private void setCountry(boolean us, boolean en, boolean ca) {
+        USAId.setSelected(us);
+        englandId.setSelected(en);
+        canadaId.setSelected(ca);
     }
 }

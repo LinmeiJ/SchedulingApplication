@@ -3,6 +3,7 @@ package controller;
 import Dao.CustomerDaoImpl;
 import Dao.Validator;
 import entity.Customer;
+import enums.CountryId;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -55,6 +56,7 @@ public class CustomerRecordController implements Initializable, CommonUseHelperI
     public static CustomerDaoImpl customerDao = new CustomerDaoImpl();
     public static ObservableList<Customer> customersDataTable = FXCollections.observableArrayList();
     public static Customer selectedCust;
+    public static CountryId ctryId;
 
     Logger logger = Logger.getLogger(this.getClass().getName());
 

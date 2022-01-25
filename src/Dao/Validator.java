@@ -72,9 +72,9 @@ public final class Validator {
     }
 
 
-    public static void displayAddSuccess() {
+    public static void displaySuccess(String message) {
         infoAlert.setTitle("Information");
-        infoAlert.setHeaderText("Added Successfully!");
+        infoAlert.setHeaderText(message + " Successfully!");
         infoAlert.showAndWait();
     }
     /**

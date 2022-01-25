@@ -63,41 +63,34 @@ public class AddNewCustomerController extends JDBCConnection implements Initiali
 
     private Customer customer;
     private CustomerDaoImpl customerDao = new CustomerDaoImpl();
-    public static CountryId ctryID;
     private FirstLevelDivisionDaoImpl divisionDao = new FirstLevelDivisionDaoImpl();
 
     @FXML
-    void CanadaSelected(ActionEvent event) {
-        ctryID = CountryId.CANADA;
-        setSelectedRadioBtn(false, false, true);
-        listDivisionByCountry();
+    void canadaSelected(ActionEvent event) {
+        CustomerRecordController.ctryId  = CountryId.CANADA;
+        setCountry(false, false, true);
+        divisionList.setItems(divisionDao.getAllDivisions());
     }
 
     @FXML
-    void EnglandSelected(ActionEvent event) {
-        setSelectedRadioBtn(false, true, false);
-        ctryID = CountryId.UK;
-        listDivisionByCountry();
+    void englandSelected(ActionEvent event) {
+        setCountry(false, true, false);
+        CustomerRecordController.ctryId  = CountryId.UK;
+        divisionList.setItems(divisionDao.getAllDivisions());
     }
 
-    private void setSelectedRadioBtn(boolean us, boolean en, boolean ca) {
+    @FXML
+    void uSSelected(ActionEvent event) {
+        CustomerRecordController.ctryId  = CountryId.US;
+        setCountry(true,false, false);
+        divisionList.setItems(divisionDao.getAllDivisions());
+    }
+
+    private void setCountry(boolean us, boolean en, boolean ca) {
         USAId.setSelected(us);
         englandId.setSelected(en);
         canadaId.setSelected(ca);
     }
-
-    @FXML
-    void USSelected(ActionEvent event) {
-        ctryID = CountryId.US;
-        setSelectedRadioBtn(true,false, false);
-        listDivisionByCountry();
-    }
-
-    private void listDivisionByCountry() {
-        divisionList.getItems().clear();
-        divisionList.setItems(divisionDao.getAllDivisions());
-    }
-
 
     @FXML
     void aptClicked(ActionEvent event) throws IOException {
@@ -118,7 +111,7 @@ public class AddNewCustomerController extends JDBCConnection implements Initiali
         customer.setDivision_id(divisionDao.findIdByDivisionName(divisionList.getValue()));
         customerDao.save(customer);
 
-        Validator.displayAddSuccess();
+        Validator.displaySuccess("Add");
     }
 
     @Override
@@ -130,10 +123,6 @@ public class AddNewCustomerController extends JDBCConnection implements Initiali
     @FXML
     void backToRecordPage(ActionEvent event) throws IOException {
         setScene(event, CUSTOMER_RECORD_VIEW);
-//        Parent parent = FXMLLoader.load(getClass().getResource(CUSTOMER_RECORD_VIEW));
-//        var scene = new Scene(parent);
-//        var stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-//        stage.setScene(scene);
     }
 
     @FXML

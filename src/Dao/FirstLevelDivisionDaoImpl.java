@@ -1,6 +1,6 @@
 package Dao;
 
-import controller.AddNewCustomerController;
+import controller.CustomerRecordController;
 import dbConnection.JDBCConnection;
 import entity.FirstLevelDivision;
 import enums.CountryId;
@@ -10,7 +10,6 @@ import javafx.collections.ObservableList;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.util.List;
 
 public class FirstLevelDivisionDaoImpl extends JDBCConnection implements ServiceIfc<FirstLevelDivision> {
     @Override
@@ -47,7 +46,7 @@ public class FirstLevelDivisionDaoImpl extends JDBCConnection implements Service
 
     public long findIdByDivisionName(String divisionName) throws SQLException {
         long id = 0;
-        String countryName = (AddNewCustomerController.ctryID == CountryId.US) ? String.valueOf(AddNewCustomerController.ctryID).substring(0,1) + "." +  String.valueOf(AddNewCustomerController.ctryID).substring(1) : String.valueOf(AddNewCustomerController.ctryID);
+        String countryName = (CustomerRecordController.ctryId == CountryId.US) ? String.valueOf(CustomerRecordController.ctryId).substring(0,1) + "." +  String.valueOf(CustomerRecordController.ctryId).substring(1) : String.valueOf(CustomerRecordController.ctryId);
         ResultSet rs = findRawDataFromDB("SELECT Division_Id from first_level_divisions where Country_Id = (SELECT Country_Id FROM countries where Country = '" + countryName + "') and Division = '"+ divisionName + "'");
         while(rs.next()){
            id = rs.getLong("division_id");
@@ -57,11 +56,11 @@ public class FirstLevelDivisionDaoImpl extends JDBCConnection implements Service
 
     public ObservableList<String> getAllDivisions(){
         ObservableList<String> divisions = FXCollections.observableArrayList();
-        CountryId id = AddNewCustomerController.ctryID;
+        CountryId id = CustomerRecordController.ctryId ;
         String specificCtyDivisionQuery = "SELECT DISTINCT Division FROM first_level_divisions WHERE Country_ID = ";
         String allCtyDivisionQuery = "SELECT DISTINCT Division FROM first_level_divisions";
 
-        ResultSet rs = (AddNewCustomerController.ctryID != null) ? findRawDataFromDB(specificCtyDivisionQuery + AddNewCustomerController.ctryID.getId()) : findRawDataFromDB(allCtyDivisionQuery);
+        ResultSet rs = (CustomerRecordController.ctryId  != null) ? findRawDataFromDB(specificCtyDivisionQuery + CustomerRecordController.ctryId.getId()) : findRawDataFromDB(allCtyDivisionQuery);
 
         try {
             while (rs.next()) {

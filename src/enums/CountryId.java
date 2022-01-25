@@ -6,10 +6,10 @@ public enum CountryId {
     UK(2),
     CANADA(3);
 
-    private final int id;
+    private final long id;
 
-    CountryId(final int id) { this.id = id; }
+    CountryId(final long id) { this.id = id; }
 
-    public int getId() { return id; }
+    public long getId() { return id; }
 
 }
