@@ -4,34 +4,45 @@ import java.sql.Date;
 import java.sql.Timestamp;
 
 public class Appointment {
-   private int appointment_id;
-   private String title;
-   private String description;
-   private String location;
-   private String type;
-   private Date start;
-   private Date end;
-   private Date Created_date;
-   private String Created_by;
-   private Timestamp last_update;
-   private String last_updated_by;
-   private int customer_id; // this is a fk
+    private long appointment_id;
+    private String title;
+    private String description;
+    private String location;
+    private String type;
+    private Timestamp start;
+    private Timestamp end;
+    private Timestamp Created_date;
+    private String Created_by;
+    private Timestamp last_update;
+    private String last_updated_by;
+    private long customer_id; // this is a fk
+    private long contact_id;
+    private long user_id;
 
 
-    public int getAppointment_id() {
-        return appointment_id;
+    public Appointment(long appointment_id, String title, String description, String location, String type, Timestamp start, Timestamp end, long customer_id, long contact_id, long user_id) {
+        this.appointment_id = appointment_id;
+        this.title = title;
+        this.description = description;
+        this.location = location;
+        this.type = type;
+        this.start = start;
+        this.end = end;
+        this.customer_id = customer_id;
+        this.contact_id = contact_id;
+        this.user_id = user_id;
     }
 
     public String getTitle() {
         return title;
     }
+    public long getAppointment_id() {
+        return appointment_id;
+    }
 
     /**
-     * f
-     *
      * @param title the title for the appointment
-     *
-     * */
+     */
     public void setTitle(String title) {
         this.title = title;
     }
@@ -60,27 +71,27 @@ public class Appointment {
         this.type = type;
     }
 
-    public Date getStart() {
+    public Timestamp getStart() {
         return start;
     }
 
-    public void setStart(Date start) {
+    public void setStart(Timestamp start) {
         this.start = start;
     }
 
-    public Date getEnd() {
+    public Timestamp getEnd() {
         return end;
     }
 
-    public void setEnd(Date end) {
+    public void setEnd(Timestamp end) {
         this.end = end;
     }
 
-    public Date getCreated_date() {
+    public Timestamp getCreated_date() {
         return Created_date;
     }
 
-    public void setCreated_date(Date created_date) {
+    public void setCreated_date(Timestamp created_date) {
         Created_date = created_date;
     }
 
@@ -108,7 +119,15 @@ public class Appointment {
         this.last_updated_by = last_updated_by;
     }
 
-    public int getCustomer_id() {
+    public long getCustomer_id() {
         return customer_id;
     }
+
+    public long getUser_id() {
+        return user_id;
+    }
+    public long getContact_id() {
+        return contact_id;
+    }
+
 }

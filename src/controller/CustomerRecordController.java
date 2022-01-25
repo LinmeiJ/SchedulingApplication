@@ -53,8 +53,8 @@ public class CustomerRecordController implements Initializable, CommonUseHelperI
     @FXML
     private Button deleteBtn;
 
-    public static CustomerDaoImpl customerDao = new CustomerDaoImpl();
-    public static ObservableList<Customer> customersDataTable = FXCollections.observableArrayList();
+    public  CustomerDaoImpl customerDao = new CustomerDaoImpl();
+    public  ObservableList<Customer> customersDataTable = FXCollections.observableArrayList();
     public static Customer selectedCust;
     public static CountryId ctryId;
 
@@ -64,6 +64,14 @@ public class CustomerRecordController implements Initializable, CommonUseHelperI
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initTable();
         loadData();
+    }
+    private void initTable() {
+        initCols();
+        try {
+            customersDataTable.addAll(customerDao.findAll());
+        } catch (Exception e) {
+            logger.log(Level.WARNING, "initialize() throws an exception", this.getClass().getName());
+        }
     }
 
     private void initCols() {
@@ -76,14 +84,6 @@ public class CustomerRecordController implements Initializable, CommonUseHelperI
                 new SimpleStringProperty(cellData.getValue().getFirstLevelDivision().getDivision()));
     }
 
-    private void initTable() {
-        initCols();
-        try {
-            customersDataTable.addAll(customerDao.findAll());
-        } catch (Exception e) {
-            logger.log(Level.WARNING, "initialize() throws an exception", this.getClass().getName());
-        }
-    }
 
     private void loadData() {
         recordTable.setItems(customersDataTable);

@@ -22,9 +22,8 @@ import java.time.LocalDateTime;
 
 public class CustomerDaoImpl extends JDBCConnection implements ServiceIfc<Customer> {
     FirstLevelDivisionDaoImpl firstLevelDivisionDao = new FirstLevelDivisionDaoImpl();
-    CountryDaoImpl countryDao = new CountryDaoImpl();
     public   Customer customer;
-    private static ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
+    private  ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
 
     public ObservableList<Customer> findAll() throws SQLException {
         ResultSet rs = findRawDataFromDB("SELECT Customer_ID, Customer_Name, Address, Postal_Code, Phone, d.Division_ID, d.Country_ID FROM customers c JOIN first_level_divisions d ON d.Division_ID = c.Division_ID");

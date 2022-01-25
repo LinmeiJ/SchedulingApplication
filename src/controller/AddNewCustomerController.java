@@ -61,7 +61,7 @@ public class AddNewCustomerController extends JDBCConnection implements Initiali
     @FXML
     private Button cancelBtn;
 
-    private Customer customer;
+    private Customer customer ;
     private CustomerDaoImpl customerDao = new CustomerDaoImpl();
     private FirstLevelDivisionDaoImpl divisionDao = new FirstLevelDivisionDaoImpl();
 

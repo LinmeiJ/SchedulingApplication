@@ -57,7 +57,7 @@ public class UpdateCustomerController implements Initializable, CommonUseHelperI
     @FXML
     private Button cancelBtn;
 
-    private Customer customer = CustomerRecordController.selectedCust;;
+    private static Customer customer = CustomerRecordController.selectedCust;;
     private CustomerDaoImpl customerDao = new CustomerDaoImpl();
     private FirstLevelDivisionDaoImpl divisionDao = new FirstLevelDivisionDaoImpl();
 
