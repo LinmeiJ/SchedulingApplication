@@ -52,11 +52,9 @@ public final class Validator {
         errorAlert.showAndWait();
     }
 
-    public static boolean validateUserLogin(ResultSet result, String userPassword) throws SQLException {
-        while(result.next()){
-            if(result.getString("Password").equals(userPassword)){
-                return true;
-            }
+    public static boolean validateUserLogin(String dbPassword, String userPassword) throws SQLException {
+        if (dbPassword.equals(userPassword)) {
+            return true;
         }
         return false;
     }

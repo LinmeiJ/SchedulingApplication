@@ -19,6 +19,7 @@ public class Appointment {
     private long contact_id;
     private long user_id;
 
+    public Appointment(){};
 
     public Appointment(long appointment_id, String title, String description, String location, String type, Timestamp start, Timestamp end, long customer_id, long contact_id, long user_id) {
         this.appointment_id = appointment_id;
@@ -128,6 +129,18 @@ public class Appointment {
     }
     public long getContact_id() {
         return contact_id;
+    }
+
+    public void setContact_id(long contact_id) {
+        this.contact_id = contact_id;
+    }
+
+    public void setUser_id(long user_id) {
+        this.user_id = user_id;
+    }
+
+    public void setCustomer_id(long customer_id) {
+        this.customer_id = customer_id;
     }
 
 }

@@ -1,6 +1,7 @@
 package controller;
 
 import Dao.AppointmentDaoImpl;
+import dbConnection.JDBCConnection;
 import entity.Appointment;
 import entity.Customer;
 import javafx.beans.property.SimpleStringProperty;
@@ -23,7 +24,7 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class UpdateAppointmentController implements Initializable, CommonUseHelperIfc {
+public class UpdateAppointmentController extends JDBCConnection implements Initializable, CommonUseHelperIfc {
 
     @FXML
     private TableColumn<Appointment, String> aptContact;
@@ -86,8 +87,8 @@ public class UpdateAppointmentController implements Initializable, CommonUseHelp
     }
 
     @FXML
-    void addUpdateClicked(ActionEvent event) {
-
+    void addUpdateClicked(ActionEvent event) throws IOException {
+        setScene(event, NEW_APT_VIEW);
     }
 
     @FXML
@@ -146,8 +147,7 @@ public class UpdateAppointmentController implements Initializable, CommonUseHelp
         aptEndDateTime.setCellValueFactory(new PropertyValueFactory<>("end"));
         aptCustID.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
         aptUserID.setCellValueFactory(new PropertyValueFactory<>("user_id"));
-        aptUserID.setCellValueFactory(new PropertyValueFactory<>("contact_id")); // fix me need to set the contact as a contact name instead of ID
-
+        aptContact.setCellValueFactory(new PropertyValueFactory<>("contact_id"));
     }
 
     private void loadData() {
