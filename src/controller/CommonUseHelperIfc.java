@@ -1,7 +1,8 @@
 package controller;
 
 import Dao.Validator;
-import enums.CountryId;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -12,6 +13,7 @@ import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 public interface CommonUseHelperIfc {
      String ADD_NEW_CUSTOMER_VIEW = "../views/addNewCustomerView.fxml";
@@ -19,6 +21,12 @@ public interface CommonUseHelperIfc {
      String NEW_APT_VIEW = "../views/addNewAptView.fxml";
      String UPDATE_CUSTOMER_VIEW = "../views/updateCustView.fxml";
      String UPDATE_APPOINTMENT_VIEW = "../views/updateAptView.fxml";
+     ObservableList<Integer> initHrs = FXCollections.observableArrayList(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12));
+     ObservableList<Integer> initMinutes = FXCollections.observableArrayList();
+    ObservableList<String> initMeridiem = FXCollections.observableArrayList("AM", "PM");
+
+
+
 
     /**
      * This method closes the the program.
@@ -46,6 +54,13 @@ public interface CommonUseHelperIfc {
         var scene = new Scene(parent);
         var stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
+    }
+
+    default ObservableList<Integer> initializeMinutes(){
+        for(int i = 1; i >=60 ; i++){
+            initMinutes.add(i);
+        }
+        return initMinutes;
     }
 
 }

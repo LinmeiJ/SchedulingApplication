@@ -8,9 +8,7 @@ import entity.Appointment;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
 import java.io.IOException;
 import java.net.URL;
@@ -38,19 +36,38 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
     private TextArea aptDescriptionField;
 
     @FXML
+    private ComboBox<Integer> endHr;
+
+    @FXML
+    private ChoiceBox<String> endMeridiem;
+
+    @FXML
+    private ComboBox<Integer> endMinute;
+
+    @FXML
     private TextField setCustId;
 
     @FXML
     private TextField setUserId;
 
     @FXML
-    private Button saveBtn;
+    private DatePicker startDate;
 
     @FXML
-    private Button BackBtn;
+    private ComboBox<Integer> startHr;
+
+    @FXML
+    private ChoiceBox<String> startMeridiem;
+
+    @FXML
+    private ComboBox<Integer> startMinute;
 
     @FXML
     private Button exitBtn;
+
+    @FXML
+    private Button saveBtn;
+
     private Appointment appointment;
     private ContactDaoImpl contactDao = new ContactDaoImpl();
     private CustomerDaoImpl customerDao = new CustomerDaoImpl();
@@ -69,7 +86,7 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
         appointment.setLocation(aptLocationField.getText());
         aptDescriptionField.getText();
         appointment.setCustomer_id(CustomerRecordController.selectedCust.getCustomer_id());
-//        appointment.setStart();
+        appointment.setStart(appointmentDao.formatTime(startHr.getValue(), startMinute.getValue(), startMeridiem.getValue()));
         appointment.setUser_id(UserDaoImpl.userId);
         appointment.setContact_id(contactDao.getContactId(aptContactField.getText()));
 
@@ -78,7 +95,12 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        aptStart
+        startHr.setItems(initHrs);
+        startMinute.setItems(initMinutes);
+        startMeridiem.setItems(initMeridiem);
+        endHr.setItems(initHrs);
+        endMinute.setItems(initMinutes);
+        endMeridiem.setItems(initMeridiem);
     }
 
     @FXML

@@ -58,4 +58,8 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
     public void save(Appointment obj) {
 
     }
+
+    public Timestamp formatTime(Integer value, Integer value1, String value2) {
+
+    }
 }
