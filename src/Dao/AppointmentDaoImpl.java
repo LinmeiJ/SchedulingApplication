@@ -3,12 +3,14 @@ package Dao;
 import dbConnection.JDBCConnection;
 import entity.Appointment;
 import entity.Customer;
+import enums.DateFormats;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<Appointment>{
@@ -59,7 +61,8 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
 
     }
 
-    public Timestamp formatTime(Integer value, Integer value1, String value2) {
-
+    public Timestamp formatTime(Integer dateValue, Integer hrValue, String minuteValue) {
+//        Timestamp timestamp = Timestamp.valueOf();
+        return  null;
     }
 }
