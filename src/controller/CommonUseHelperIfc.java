@@ -21,11 +21,7 @@ public interface CommonUseHelperIfc {
      String NEW_APT_VIEW = "../views/addNewAptView.fxml";
      String UPDATE_CUSTOMER_VIEW = "../views/updateCustView.fxml";
      String UPDATE_APPOINTMENT_VIEW = "../views/updateAptView.fxml";
-     ObservableList<Integer> initHrs = FXCollections.observableArrayList(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12));
-     ObservableList<Integer> initMinutes = FXCollections.observableArrayList();
-    ObservableList<String> initMeridiem = FXCollections.observableArrayList("AM", "PM");
-
-
+     ObservableList<String> initHrs = FXCollections.observableArrayList(Arrays.asList("08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22"));
 
 
     /**
@@ -56,9 +52,13 @@ public interface CommonUseHelperIfc {
         stage.setScene(scene);
     }
 
-    default ObservableList<Integer> initializeMinutes(){
-        for(int i = 1; i >=60 ; i++){
-            initMinutes.add(i);
+    default ObservableList<String> initializeMinutes(){
+        ObservableList<String> initMinutes = FXCollections.observableArrayList();
+
+        for(int i = 0; i <= 60 ;){
+            if(i < 10){  initMinutes.add("0" + i);}
+            else initMinutes.add(String.valueOf(i));
+            i = i + 5;
         }
         return initMinutes;
     }

@@ -13,6 +13,9 @@ import javafx.scene.control.*;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
 public class AddNewAppointmentController implements Initializable, CommonUseHelperIfc {
@@ -36,15 +39,6 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
     private TextArea aptDescriptionField;
 
     @FXML
-    private ComboBox<Integer> endHr;
-
-    @FXML
-    private ChoiceBox<String> endMeridiem;
-
-    @FXML
-    private ComboBox<Integer> endMinute;
-
-    @FXML
     private TextField setCustId;
 
     @FXML
@@ -52,15 +46,20 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
 
     @FXML
     private DatePicker startDate;
+    @FXML
+    private DatePicker endDate;
 
     @FXML
-    private ComboBox<Integer> startHr;
+    private ComboBox<String> startHr;
 
     @FXML
-    private ChoiceBox<String> startMeridiem;
+    private ComboBox<String> startMinute;
 
     @FXML
-    private ComboBox<Integer> startMinute;
+    private ComboBox<String> endMinute;
+
+    @FXML
+    private ComboBox<String> endHr;
 
     @FXML
     private Button exitBtn;
@@ -82,11 +81,16 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
     void saveIsClicked(ActionEvent event) throws SQLException {
         appointment = new Appointment();
         appointment.setTitle(aptTitleField.getText());
+        appointment.setDescription(aptDescriptionField.getText());
         appointment.setType(aptTypeField.getText());
         appointment.setLocation(aptLocationField.getText());
-        aptDescriptionField.getText();
+        appointment.setStart(appointmentDao.formatTime(startDate.getValue(), startHr.getValue(), startMinute.getValue()));
+        appointment.setEnd(appointmentDao.formatTime(endDate.getValue(), endHr.getValue(), startMinute.getValue()));
+        appointment.setCreated_date(Timestamp.valueOf(LocalDateTime.now()));
+        appointment.setCreated_by(UserDaoImpl.userName);
+        appointment.setLast_update(Timestamp.valueOf(LocalDateTime.now()));
+        appointment.setLast_updated_by(UserDaoImpl.userName);
         appointment.setCustomer_id(CustomerRecordController.selectedCust.getCustomer_id());
-        appointment.setStart(appointmentDao.formatTime(startHr.getValue(), startMinute.getValue(), startMeridiem.getValue()));
         appointment.setUser_id(UserDaoImpl.userId);
         appointment.setContact_id(contactDao.getContactId(aptContactField.getText()));
 
@@ -96,11 +100,9 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         startHr.setItems(initHrs);
-        startMinute.setItems(initMinutes);
-        startMeridiem.setItems(initMeridiem);
+        startMinute.setItems(initializeMinutes());
         endHr.setItems(initHrs);
-        endMinute.setItems(initMinutes);
-        endMeridiem.setItems(initMeridiem);
+        endMinute.setItems(initializeMinutes());
     }
 
     @FXML

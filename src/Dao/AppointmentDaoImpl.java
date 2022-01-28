@@ -7,10 +7,12 @@ import enums.DateFormats;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Timestamp;
+import java.sql.*;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 
 public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<Appointment>{
@@ -57,12 +59,30 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
     }
 
     @Override
-    public void save(Appointment obj) {
+    public void save(Appointment appointment) throws SQLException {
+        String sql = "INSERT INTO appointments VALUES(NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        PreparedStatement preparedStatement = JDBCConnection.connection.prepareStatement(sql);
+        preparedStatement.setString(1, appointment.getTitle());
+        preparedStatement.setString(2, appointment.getDescription());
+        preparedStatement.setString(3, appointment.getLocation());
+        preparedStatement.setString(4, appointment.getType());
+        preparedStatement.setTimestamp(5, appointment.getStart());
+        preparedStatement.setTimestamp(6,appointment.getEnd());
+        preparedStatement.setTimestamp(7, appointment.getCreated_date());
+        preparedStatement.setString(8, appointment.getCreated_by());
+        preparedStatement.setTimestamp(9, appointment.getLast_update());
+        preparedStatement.setString(10, appointment.getLast_updated_by());
+        preparedStatement.setLong(11, appointment.getCustomer_id());
+        preparedStatement.setLong(12, appointment.getUser_id());
+        preparedStatement.setLong(13, appointment.getContact_id());
 
+        preparedStatement.execute();
     }
 
-    public Timestamp formatTime(Integer dateValue, Integer hrValue, String minuteValue) {
-//        Timestamp timestamp = Timestamp.valueOf();
-        return  null;
+    public Timestamp formatTime(LocalDate dateValue, String hrValue, String minuteValue) {
+        String str = dateValue.toString() + " " + hrValue + ":" + minuteValue + ":00";
+        System.out.println(str);
+        Timestamp timestamp = Timestamp.valueOf(str);
+        return timestamp ;
     }
 }
