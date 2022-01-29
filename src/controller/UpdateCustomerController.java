@@ -4,7 +4,6 @@ import Dao.CustomerDaoImpl;
 import Dao.FirstLevelDivisionDaoImpl;
 import Dao.UserDaoImpl;
 import Dao.Validator;
-import entity.Country;
 import entity.Customer;
 import enums.CountryId;
 import javafx.collections.FXCollections;
@@ -123,12 +122,11 @@ public class UpdateCustomerController implements Initializable, CommonUseHelperI
     @FXML
     void updateAptClicked(ActionEvent event) throws SQLException, IOException {
         updateCustInfo(event);
-        setScene(event, UPDATE_APPOINTMENT_VIEW);
+        setScene(event, APPOINTMENT_RECORD_VIEW);
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         custId.setText(String.valueOf(customer.getCustomer_id()));
         custNameField.setText(customer.getCustomer_name());
         phoneField.setText(customer.getPhone());

@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
@@ -93,7 +92,7 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
 
         appointmentDao.save(appointment);
         Validator.displaySuccess("Appointment is saved");
-        setScene(event, UPDATE_APPOINTMENT_VIEW);
+        setScene(event, APPOINTMENT_RECORD_VIEW);
     }
 
     @Override
