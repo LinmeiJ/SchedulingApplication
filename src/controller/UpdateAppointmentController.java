@@ -16,6 +16,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
@@ -148,6 +149,16 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
         aptCustID.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
         aptUserID.setCellValueFactory(new PropertyValueFactory<>("user_id"));
         aptContact.setCellValueFactory(new PropertyValueFactory<>("contact_id"));
+
+        editableCol();
+    }
+
+    private void editableCol() {
+        aptTitle.setCellFactory(TextFieldTableCell.forTableColumn());
+        aptTitle.setOnEditCommit( e ->{
+            e.getTableView().getItems().get(e.getTablePosition().getRow()).setTitle(e.getNewValue());
+        });
+
     }
 
     private void loadData() {
