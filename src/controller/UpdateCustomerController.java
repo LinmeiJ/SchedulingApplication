@@ -4,6 +4,7 @@ import Dao.CustomerDaoImpl;
 import Dao.FirstLevelDivisionDaoImpl;
 import Dao.UserDaoImpl;
 import Dao.Validator;
+import entity.Country;
 import entity.Customer;
 import enums.CountryId;
 import javafx.collections.FXCollections;
@@ -62,6 +63,7 @@ public class UpdateCustomerController implements Initializable, CommonUseHelperI
     private static Customer customer = CustomerRecordController.selectedCust;;
     private CustomerDaoImpl customerDao = new CustomerDaoImpl();
     private FirstLevelDivisionDaoImpl divisionDao = new FirstLevelDivisionDaoImpl();
+    CountryId ctryID;
 
     @FXML
     void canadaSelected(ActionEvent event) {
