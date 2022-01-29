@@ -100,6 +100,11 @@ public class UpdateCustomerController implements Initializable, CommonUseHelperI
 
     @FXML
     void saveUpdateClicked(ActionEvent event) throws SQLException {
+        updateCustInfo(event);
+        Validator.displaySuccess("Update");
+    }
+
+    private void updateCustInfo(ActionEvent event) throws SQLException {
         customer.setCustomer_name(custNameField.getText());
         customer.setAddress(addressField.getText());
         customer.setPhone(phoneField.getText());
@@ -110,13 +115,11 @@ public class UpdateCustomerController implements Initializable, CommonUseHelperI
         customer.setLast_updated_by(UserDaoImpl.userName);
         customer.setDivision_id(divisionDao.findIdByDivisionName(division.getValue()));
         customerDao.update(customer);
-
-        Validator.displaySuccess("Update");
     }
 
     @FXML
     void updateAptClicked(ActionEvent event) throws SQLException, IOException {
-        saveCustInfo(event);
+        updateCustInfo(event);
         setScene(event, UPDATE_APPOINTMENT_VIEW);
     }
 
