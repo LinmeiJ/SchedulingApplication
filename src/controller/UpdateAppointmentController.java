@@ -19,6 +19,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Timestamp;
@@ -111,10 +112,10 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
     }
 
     @FXML
-    void updateClicked(ActionEvent event) {
+    void updateClicked(ActionEvent event) throws IOException {
         selecteApt = appointmentTable.getSelectionModel().getSelectedItem();
-        System.out.println(selecteApt.getTitle());
-        appointmentDao.update(selecteApt);
+
+        setScene(event, UPDATE_APPOINTMENT_VIEW);
     }
 
     @FXML
@@ -151,16 +152,16 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
         aptUserID.setCellValueFactory(new PropertyValueFactory<>("user_id"));
         aptContact.setCellValueFactory(new PropertyValueFactory<>("contact_id"));
 
-        editableCol();
+//        editableCol();
     }
-
-    private void editableCol() {
-        aptTitle.setCellFactory(TextFieldTableCell.forTableColumn());
-        aptTitle.setOnEditCommit( e ->{
-            e.getTableView().getItems().get(e.getTablePosition().getRow()).setTitle(e.getNewValue());
-        });
-        appointmentTable.setEditable(true);
-    }
+//
+//    private void editableCol() {
+//        aptTitle.setCellFactory(TextFieldTableCell.forTableColumn());
+//        aptTitle.setOnEditCommit( e ->{
+//            e.getTableView().getItems().get(e.getTablePosition().getRow()).setTitle(e.getNewValue());
+//        });
+//        appointmentTable.setEditable(true);
+//    }
 
     private void loadData() {
         appointmentTable.setItems(aptDataTable);
