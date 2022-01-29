@@ -139,6 +139,7 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
     private void initCols() {
         aptID.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
         aptTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
+        aptTitle.setEditable(true);
         aptDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
         aptLocation.setCellValueFactory(new PropertyValueFactory<>("location"));
         aptType.setCellValueFactory(new PropertyValueFactory<>("type"));
