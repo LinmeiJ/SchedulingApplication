@@ -113,6 +113,7 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
     @FXML
     void updateClicked(ActionEvent event) {
         selecteApt = appointmentTable.getSelectionModel().getSelectedItem();
+        System.out.println(selecteApt.getTitle());
         appointmentDao.update(selecteApt);
     }
 
@@ -158,7 +159,7 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
         aptTitle.setOnEditCommit( e ->{
             e.getTableView().getItems().get(e.getTablePosition().getRow()).setTitle(e.getNewValue());
         });
-
+        appointmentTable.setEditable(true);
     }
 
     private void loadData() {
