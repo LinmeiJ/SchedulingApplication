@@ -57,7 +57,7 @@ public class LoginController extends Location implements Initializable, CommonUs
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        String location = String.valueOf(Locale.getDefault() + ", " +String.valueOf(ZoneId.systemDefault().getId()));
+        String location = Locale.getDefault() + ", " +ZoneId.systemDefault().getId();
 
         locationField.setText(location);
     }

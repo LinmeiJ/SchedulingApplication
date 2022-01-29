@@ -1,6 +1,7 @@
 package controller;
 
 import Dao.CustomerDaoImpl;
+import Dao.FirstLevelDivisionDaoImpl;
 import Dao.Validator;
 import entity.Customer;
 import enums.CountryId;
@@ -54,6 +55,7 @@ public class CustomerRecordController implements Initializable, CommonUseHelperI
     private Button deleteBtn;
 
     public  CustomerDaoImpl customerDao = new CustomerDaoImpl();
+    public FirstLevelDivisionDaoImpl firstLevelDivisionDao = new FirstLevelDivisionDaoImpl();
     public  ObservableList<Customer> customersDataTable = FXCollections.observableArrayList();
     public static Customer selectedCust;
     public static CountryId ctryId;
@@ -92,6 +94,8 @@ public class CustomerRecordController implements Initializable, CommonUseHelperI
     @FXML
     void UpdateSelected(ActionEvent event) throws IOException {
         selectedCust =  recordTable.getSelectionModel().getSelectedItem();
+        long countryId = firstLevelDivisionDao.findById(selectedCust.getDivision_id()).getCountry_id();
+        ctryId = countryId == 1? CountryId.US : countryId == 2? CountryId.UK : CountryId.CANADA;
         if(selectedCust != null) {
             setScene(event, UPDATE_CUSTOMER_VIEW);
         }else{

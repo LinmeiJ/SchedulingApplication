@@ -57,6 +57,8 @@ public class UpdateCustomerController implements Initializable, CommonUseHelperI
     @FXML
     private Button cancelBtn;
 
+
+    CountryId ctryID;
     private static Customer customer = CustomerRecordController.selectedCust;;
     private CustomerDaoImpl customerDao = new CustomerDaoImpl();
     private FirstLevelDivisionDaoImpl divisionDao = new FirstLevelDivisionDaoImpl();
@@ -131,8 +133,8 @@ public class UpdateCustomerController implements Initializable, CommonUseHelperI
         phoneField.setText(customer.getPhone());
         addressField.setText(customer.getAddress());
         zipCodeField.setText(customer.getPostal_code());
-        division.setItems(getCustomerDivision());
-//        getCountry();
+        division.setValue(getCustomerDivision().get(0));
+        getCountry();
     }
 
     private ObservableList<String> getCustomerDivision() {
@@ -141,24 +143,24 @@ public class UpdateCustomerController implements Initializable, CommonUseHelperI
         return divisionList;
     }
 
-//    private void getCountry(){
-//       Long ctyId = customer.getFirstLevelDivision().getCountry_id();
-//       ctryID = ctyId == 1 ? CountryId.US : ctyId == 2 ? CountryId.UK : CountryId.CANADA;
-//       switch (ctryID){
-//           case US:
-//               setCountry(true, false, false);
-//               break;
-//           case UK:
-//               setCountry(false, true, false);
-//               break;
-//           case CANADA:
-//               setCountry(false, false, true);
-//               break;
-//           default:
-//               // fix me : log something here
-//               break;
-//       }
-//    }
+    private void getCountry(){
+       Long ctyId = customer.getFirstLevelDivision().getCountry_id();
+       ctryID = ctyId == 1 ? CountryId.US : ctyId == 2 ? CountryId.UK : CountryId.CANADA;
+       switch (ctryID){
+           case US:
+               setCountry(true, false, false);
+               break;
+           case UK:
+               setCountry(false, true, false);
+               break;
+           case CANADA:
+               setCountry(false, false, true);
+               break;
+           default:
+               // fix me : log something here
+               break;
+       }
+    }
 
     private void setCountry(boolean us, boolean en, boolean ca) {
         USAId.setSelected(us);
