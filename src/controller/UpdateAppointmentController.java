@@ -14,30 +14,23 @@ import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 public class UpdateAppointmentController extends JDBCConnection implements Initializable, CommonUseHelperIfc {
+    @FXML
+    private TextField aptContactName;
 
     @FXML
-    private TextField addressField;
+    private TextArea aptDescription;
 
     @FXML
-    private TextField addressField1;
-
-    @FXML
-    private Label aptContactName;
-
-    @FXML
-    private Label aptDescription;
-
-    @FXML
-    private Label aptID;
+    private TextField aptID;
 
     @FXML
     private Label aptLocation;
 
     @FXML
-    private Label aptTitle;
+    private TextField aptTitle;
 
     @FXML
-    private Label aptType;
+    private TextField aptType;
 
     @FXML
     private Button backBtn;
@@ -49,12 +42,6 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
     private Label custID;
 
     @FXML
-    private TextField custId;
-
-    @FXML
-    private TextField custNameField;
-
-    @FXML
     private DatePicker endDate;
 
     @FXML
@@ -64,10 +51,10 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
     private ComboBox<String> endMin;
 
     @FXML
-    private TextField orgEnd;
+    private Label orgEnd;
 
     @FXML
-    private TextField orgStart;
+    private Label orgStart;
 
     @FXML
     private TextField phoneField;

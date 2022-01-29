@@ -18,38 +18,38 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <Label fx:id="aptID" layoutX="39.0" layoutY="89.0" text="ID">
+            <Label layoutX="39.0" layoutY="89.0" text="ID">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <TextField fx:id="custId" disable="true" editable="false" layoutX="97.0" layoutY="86.0" prefHeight="26.0" prefWidth="119.0" promptText="Auto Gen - Disabled" />
-            <Label fx:id="aptTitle" layoutX="27.0" layoutY="131.0" text="Title">
+            <TextField fx:id="aptID" disable="true" editable="false" layoutX="97.0" layoutY="86.0" prefHeight="26.0" prefWidth="119.0" promptText="Auto Gen - Disabled" />
+            <Label layoutX="27.0" layoutY="131.0" text="Title">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <TextField fx:id="custNameField" layoutX="85.0" layoutY="128.0" prefHeight="26.0" prefWidth="161.0" />
+            <TextField fx:id="aptTitle" layoutX="85.0" layoutY="128.0" prefHeight="26.0" prefWidth="161.0" />
             <Label fx:id="aptLocation" layoutX="6.0" layoutY="186.0" prefHeight="18.0" prefWidth="110.0" text="Location" />
             <TextField fx:id="phoneField" layoutX="82.0" layoutY="173.0" prefHeight="26.0" prefWidth="179.0" />
-            <Label fx:id="aptType" layoutX="24.0" layoutY="222.0" text="Type">
+            <Label layoutX="24.0" layoutY="222.0" text="Type">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <TextField fx:id="addressField" layoutX="85.0" layoutY="219.0" prefHeight="26.0" prefWidth="179.0" />
-            <Label fx:id="aptContactName" layoutX="-24.0" layoutY="274.0" text="Contact Name" />
-            <TextField fx:id="addressField1" layoutX="85.0" layoutY="270.0" prefHeight="26.0" prefWidth="173.0" />
-            <Label fx:id="aptDescription" layoutX="-11.0" layoutY="312.0" text="Description">
+            <TextField fx:id="aptType" layoutX="85.0" layoutY="219.0" prefHeight="26.0" prefWidth="179.0" />
+            <Label layoutX="-24.0" layoutY="274.0" text="Contact Name" />
+            <TextField fx:id="aptContactName" layoutX="85.0" layoutY="270.0" prefHeight="26.0" prefWidth="173.0" />
+            <Label layoutX="-11.0" layoutY="312.0" text="Description">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <TextArea layoutX="74.0" layoutY="322.0" prefHeight="108.0" prefWidth="536.0" />
+            <Label fx:id="orgStart" layoutX="411.0" layoutY="57.0" prefHeight="18.0" prefWidth="119.0" />
             <Label layoutX="370.0" layoutY="56.0" prefHeight="18.0" prefWidth="46.0" text="Start: " />
-            <TextField fx:id="orgStart" editable="false" layoutX="424.0" layoutY="53.0" />
+            <TextArea fx:id="aptDescription" layoutX="74.0" layoutY="322.0" prefHeight="108.0" prefWidth="536.0" />
             <Label layoutX="582.0" layoutY="56.0" prefHeight="18.0" prefWidth="27.0" text="End:" />
-            <TextField fx:id="orgEnd" editable="false" layoutX="636.0" layoutY="53.0" />
+            <Label fx:id="orgEnd" layoutX="621.0" layoutY="57.0" prefHeight="18.0" prefWidth="119.0" />
             <Label layoutX="334.0" layoutY="100.0" prefHeight="18.0" prefWidth="71.0" text="New Start: " />
             <DatePicker fx:id="startDate" layoutX="421.0" layoutY="96.0" prefHeight="26.0" prefWidth="155.0" />
             <Label layoutX="582.0" layoutY="100.0" text="HH:MM" />
@@ -62,10 +62,10 @@
             <ComboBox fx:id="endHr" layoutX="636.0" layoutY="138.0" prefHeight="26.0" prefWidth="88.0" />
             <Label layoutX="731.0" layoutY="141.0" text=":" />
             <ComboBox fx:id="endMin" layoutX="739.0" layoutY="138.0" prefHeight="26.0" prefWidth="88.0" />
-            <Label fx:id="custID" layoutX="16.0" layoutY="476.0" text="Customer ID" />
-            <TextField layoutX="101.0" layoutY="472.0" prefHeight="26.0" prefWidth="54.0" />
-            <Label fx:id="userId" layoutX="195.0" layoutY="476.0" text="User ID" />
-            <TextField layoutX="246.0" layoutY="472.0" prefHeight="26.0" prefWidth="54.0" />
+            <Label layoutX="16.0" layoutY="476.0" text="Customer ID:" />
+            <Label fx:id="custID" layoutX="97.0" layoutY="476.0" prefHeight="18.0" prefWidth="54.0" />
+            <Label fx:id="userId" layoutX="195.0" layoutY="476.0" text="User ID:" />
+            <Label layoutX="246.0" layoutY="476.0" prefHeight="18.0" prefWidth="54.0" />
          </children>
       </AnchorPane>
       <Button fx:id="saveUpdates" layoutX="973.0" layoutY="476.0" mnemonicParsing="false" onAction="#saveUpdateClicked" prefHeight="44.0" prefWidth="94.0" text="Save">
