@@ -70,18 +70,13 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
     private Button rightArrow;
 
     @FXML
-    private Button saveBtn;
-
-    @FXML
     private Button exitBtn;
-    @FXML
-    private Button backBtn;
 
     Logger logger = Logger.getLogger(this.getClass().getName());
     private String[] filterOptions = {"By Month", "By Week"};
     ObservableList<Appointment> aptDataTable = FXCollections.observableArrayList();
     AppointmentDaoImpl appointmentDao = new AppointmentDaoImpl();
-    public Appointment selecteApt;
+    public static Appointment selecteApt;
 
     @FXML
     void FilterButton(MouseEvent event) {
@@ -115,13 +110,9 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
     }
 
     @FXML
-    void saveBtnClicked(ActionEvent event) {
-
-    }
-
-    @FXML
     void updateClicked(ActionEvent event) {
-
+        selecteApt = appointmentTable.getSelectionModel().getSelectedItem();
+        appointmentDao.update(selecteApt);
     }
 
     @FXML

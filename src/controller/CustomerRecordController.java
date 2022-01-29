@@ -109,7 +109,7 @@ public class CustomerRecordController implements Initializable, CommonUseHelperI
 
         if(selectedCust != null) {
             customerDao.delete(selectedCust);
-            customersDataTable.remove(selectedCust);
+//            customersDataTable.remove(selectedCust);
         }
         else
         {

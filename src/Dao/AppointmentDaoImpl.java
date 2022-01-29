@@ -17,7 +17,6 @@ import java.util.List;
 
 public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<Appointment>{
     private Appointment appointment;
-    public static Appointment selectApt;
     private ObservableList<Appointment> allAppointment = FXCollections.observableArrayList();
 
     @Override
@@ -50,8 +49,28 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
     }
 
     @Override
-    public void update(Appointment obj) {
+    public void update(Appointment appointment) {
+        String sql = "UPDATE customers SET Title=?, Description=?, Location=?, Type=?, Start=?, End=?, Create_Date=?,Created_By=?, Last_Update=?, Last_Updated_By=?, Customer_ID=?, User_ID=? Contact_ID=? WHERE Appointment_ID = " + appointment.getAppointment_id();
+        try {
+            PreparedStatement preparedStatement = JDBCConnection.connection.prepareStatement(sql);
+            preparedStatement.setString(1, appointment.getTitle());
+            preparedStatement.setString(2, appointment.getDescription());
+            preparedStatement.setString(3, appointment.getLocation());
+            preparedStatement.setString(4, appointment.getType());
+            preparedStatement.setTimestamp(5, appointment.getStart());
+            preparedStatement.setTimestamp(6, appointment.getEnd());
+            preparedStatement.setTimestamp(7, Timestamp.valueOf(LocalDateTime.now()));
+            preparedStatement.setString(8, UserDaoImpl.userName);
+            preparedStatement.setTimestamp(9, Timestamp.valueOf(LocalDateTime.now()));
+            preparedStatement.setString(10, UserDaoImpl.userName);
+            preparedStatement.setLong(11, appointment.getCustomer_id());
+            preparedStatement.setLong(12, appointment.getUser_id());
+            preparedStatement.setLong(13, appointment.getContact_id());
 
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -60,7 +79,6 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
             statement = connection.createStatement();
             String sql = "DELETE FROM customers WHERE Customer_ID = "+ appointment.getAppointment_id();
             statement.executeUpdate(sql);
-//            allAppointment.remove(appointment);
             Validator.displayDeleteConfirmation();
             Validator.displaySuccess("Delete");
         } catch (SQLException e) {

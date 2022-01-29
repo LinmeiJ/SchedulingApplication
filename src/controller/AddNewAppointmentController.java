@@ -1,9 +1,6 @@
 package controller;
 
-import Dao.AppointmentDaoImpl;
-import Dao.ContactDaoImpl;
-import Dao.CustomerDaoImpl;
-import Dao.UserDaoImpl;
+import Dao.*;
 import entity.Appointment;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -72,13 +69,13 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
     private CustomerDaoImpl customerDao = new CustomerDaoImpl();
     private AppointmentDaoImpl appointmentDao = new AppointmentDaoImpl();
 
-    @FXML
-    void BackToLastViewIsClicked(ActionEvent event) throws IOException {
-        setScene(event, CUSTOMER_RECORD_VIEW);
-    }
+//    @FXML
+//    void BackToLastViewIsClicked(ActionEvent event) throws IOException {
+//        setScene(event, CUSTOMER_RECORD_VIEW);
+//    }
 
     @FXML
-    void saveIsClicked(ActionEvent event) throws SQLException {
+    void saveIsClicked(ActionEvent event) throws SQLException, IOException {
         appointment = new Appointment();
         appointment.setTitle(aptTitleField.getText());
         appointment.setDescription(aptDescriptionField.getText());
@@ -95,6 +92,8 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
         appointment.setContact_id(contactDao.getContactId(aptContactField.getText()));
 
         appointmentDao.save(appointment);
+        Validator.displaySuccess("Appointment is saved");
+        setScene(event, UPDATE_APPOINTMENT_VIEW);
     }
 
     @Override
