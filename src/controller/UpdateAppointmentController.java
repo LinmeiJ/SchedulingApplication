@@ -24,7 +24,10 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
     private TextField aptID;
 
     @FXML
-    private Label aptLocation;
+    private Label location;
+
+    @FXML
+    private TextField aptLocation;
 
     @FXML
     private TextField aptTitle;
