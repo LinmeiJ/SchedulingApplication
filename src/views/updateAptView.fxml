@@ -46,7 +46,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
                 </TableView>
-            <Button layoutX="692.0" layoutY="414.0" mnemonicParsing="false" onAction="#addUpdateClicked" prefHeight="30.0" prefWidth="144.0" text="Add New Apt">
+            <Button layoutX="692.0" layoutY="414.0" mnemonicParsing="false" onAction="#addNewClicked" prefHeight="30.0" prefWidth="144.0" text="Add New Apt">
                <font>
                   <Font size="14.0" />
                </font>

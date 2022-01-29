@@ -115,7 +115,8 @@ public class UpdateCustomerController implements Initializable, CommonUseHelperI
     }
 
     @FXML
-    void updateAptClicked(ActionEvent event) throws IOException {
+    void updateAptClicked(ActionEvent event) throws SQLException, IOException {
+        saveCustInfo(event);
         setScene(event, UPDATE_APPOINTMENT_VIEW);
     }
 

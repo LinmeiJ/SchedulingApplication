@@ -17,6 +17,7 @@ import java.util.List;
 
 public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<Appointment>{
     private Appointment appointment;
+    public static Appointment selectApt;
     private ObservableList<Appointment> allAppointment = FXCollections.observableArrayList();
 
     @Override
@@ -55,7 +56,17 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
 
     @Override
     public void delete(Appointment appointment) {
-
+        try {
+            statement = connection.createStatement();
+            String sql = "DELETE FROM customers WHERE Customer_ID = "+ appointment.getAppointment_id();
+            statement.executeUpdate(sql);
+//            allAppointment.remove(appointment);
+            Validator.displayDeleteConfirmation();
+            Validator.displaySuccess("Delete");
+        } catch (SQLException e) {
+            System.out.println("something wrong with executing delete sql");
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -81,7 +92,6 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
 
     public Timestamp formatTime(LocalDate dateValue, String hrValue, String minuteValue) {
         String str = dateValue.toString() + " " + hrValue + ":" + minuteValue + ":00";
-        System.out.println(str);
         Timestamp timestamp = Timestamp.valueOf(str);
         return timestamp ;
     }

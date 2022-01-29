@@ -74,7 +74,7 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
 
     @FXML
     void BackToLastViewIsClicked(ActionEvent event) throws IOException {
-        setScene(event, ADD_NEW_CUSTOMER_VIEW);
+        setScene(event, CUSTOMER_RECORD_VIEW);
     }
 
     @FXML

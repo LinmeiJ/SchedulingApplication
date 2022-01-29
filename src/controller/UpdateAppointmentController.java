@@ -1,6 +1,7 @@
 package controller;
 
 import Dao.AppointmentDaoImpl;
+import Dao.Validator;
 import dbConnection.JDBCConnection;
 import entity.Appointment;
 import entity.Customer;
@@ -80,6 +81,7 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
     private String[] filterOptions = {"By Month", "By Week"};
     ObservableList<Appointment> aptDataTable = FXCollections.observableArrayList();
     AppointmentDaoImpl appointmentDao = new AppointmentDaoImpl();
+    public Appointment selecteApt;
 
     @FXML
     void FilterButton(MouseEvent event) {
@@ -87,13 +89,19 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
     }
 
     @FXML
-    void addUpdateClicked(ActionEvent event) throws IOException {
+    void addNewClicked(ActionEvent event) throws IOException {
         setScene(event, NEW_APT_VIEW);
     }
 
     @FXML
-    void deleteClicked(ActionEvent event) {
-
+    void deleteClicked(ActionEvent event) throws IOException {
+        selecteApt = appointmentTable.getSelectionModel().getSelectedItem();
+        if(selecteApt != null) {
+            appointmentDao.delete(selecteApt);
+            aptDataTable.remove(selecteApt);
+        }else{
+            Validator.displayInvalidInput("Please select a row to delete");
+        }
     }
 
     @FXML

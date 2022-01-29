@@ -11,12 +11,6 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="560.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddNewAppointmentController">
    <children>
-      <Label layoutX="53.0" layoutY="40.0" text="Appointment ID">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <TextField fx:id="aptField" editable="false" layoutX="214.0" layoutY="36.0" />
       <Label layoutX="82.0" layoutY="87.0" text="Title">
          <font>
             <Font size="14.0" />
@@ -74,5 +68,10 @@
       </Button>
       <Button fx:id="BackBtn" layoutX="789.0" layoutY="503.0" mnemonicParsing="false" onAction="#BackToLastViewIsClicked" text="Back" />
       <Button fx:id="exitBtn" layoutX="849.0" layoutY="503.0" mnemonicParsing="false" onAction="#existIsClicked" text="Exit" />
+      <Label layoutX="325.0" layoutY="20.0" prefHeight="27.0" prefWidth="149.0" text="Add Appointment">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
