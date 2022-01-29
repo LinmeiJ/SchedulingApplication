@@ -94,7 +94,7 @@ public class CustomerRecordController implements Initializable, CommonUseHelperI
     @FXML
     void UpdateSelected(ActionEvent event) throws IOException {
         selectedCust =  recordTable.getSelectionModel().getSelectedItem();
-        long countryId = firstLevelDivisionDao.findById(selectedCust.getDivision_id()).getCountry_id();
+        long countryId = selectedCust.getFirstLevelDivision().getDivision_id();
         ctryId = countryId == 1? CountryId.US : countryId == 2? CountryId.UK : CountryId.CANADA;
         if(selectedCust != null) {
             setScene(event, UPDATE_CUSTOMER_VIEW);
