@@ -46,13 +46,17 @@
                </font>
             </Label>
             <TextArea layoutX="74.0" layoutY="322.0" prefHeight="108.0" prefWidth="536.0" />
-            <Label layoutX="382.0" layoutY="100.0" prefHeight="18.0" prefWidth="46.0" text="Start: " />
+            <Label layoutX="370.0" layoutY="56.0" prefHeight="18.0" prefWidth="46.0" text="Start: " />
+            <TextField fx:id="orgStart" editable="false" layoutX="424.0" layoutY="53.0" />
+            <Label layoutX="582.0" layoutY="56.0" prefHeight="18.0" prefWidth="27.0" text="End:" />
+            <TextField fx:id="orgEnd" editable="false" layoutX="636.0" layoutY="53.0" />
+            <Label layoutX="334.0" layoutY="100.0" prefHeight="18.0" prefWidth="71.0" text="New Start: " />
             <DatePicker fx:id="startDate" layoutX="421.0" layoutY="96.0" prefHeight="26.0" prefWidth="155.0" />
             <Label layoutX="582.0" layoutY="100.0" text="HH:MM" />
             <ComboBox fx:id="startHr" layoutX="636.0" layoutY="96.0" prefHeight="26.0" prefWidth="88.0" />
             <Label layoutX="731.0" layoutY="101.0" text=":" />
             <ComboBox fx:id="startMin" layoutX="738.0" layoutY="97.0" prefHeight="26.0" prefWidth="88.0" />
-            <Label layoutX="382.0" layoutY="141.0" prefHeight="18.0" prefWidth="46.0" text="End:" />
+            <Label layoutX="341.0" layoutY="141.0" prefHeight="18.0" prefWidth="64.0" text="New End:" />
             <DatePicker fx:id="endDate" layoutX="421.0" layoutY="137.0" prefHeight="26.0" prefWidth="155.0" />
             <Label layoutX="582.0" layoutY="141.0" text="HH:MM" />
             <ComboBox fx:id="endHr" layoutX="636.0" layoutY="138.0" prefHeight="26.0" prefWidth="88.0" />

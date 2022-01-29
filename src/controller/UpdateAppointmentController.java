@@ -14,6 +14,7 @@ import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 public class UpdateAppointmentController extends JDBCConnection implements Initializable, CommonUseHelperIfc {
+
     @FXML
     private TextField addressField;
 
@@ -63,6 +64,12 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
     private ComboBox<String> endMin;
 
     @FXML
+    private TextField orgEnd;
+
+    @FXML
+    private TextField orgStart;
+
+    @FXML
     private TextField phoneField;
 
     @FXML
@@ -79,6 +86,7 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
 
     @FXML
     private Label userId;
+
 
 
     Appointment appointment = AppointmentRecordController.selecteApt;
@@ -106,12 +114,19 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
         aptDescription.setText(appointment.getDescription());
         aptLocation.setText(appointment.getLocation());
         aptType.setText(appointment.getType());
-        startDate.setValue(LocalDate.now()); //fix me.. pass the DB saved start date
-        endDate.setValue(LocalDate.now()); //fix me.. pass the DB saved start date
+        orgStart.setText(String.valueOf(appointment.getStart().toLocalDateTime().toLocalDate())); //fix me.. pass the DB saved start date
+        orgEnd.setText(String.valueOf(appointment.getEnd().toLocalDateTime().toLocalDate())); //fix me.. pass the DB saved start date
         try {
             aptContactName.setText(contactDao.findNameByID(appointment.getContact_id()));
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        custID.setText(String.valueOf(appointment.getCustomer_id()));
+        userId.setText(String.valueOf(appointment.getUser_id()));
+
+        startHr.setItems(initHrs);
+        startMin.setItems(initializeMinutes());
+        endHr.setItems(initHrs);
+        endMin.setItems(initializeMinutes());
     }
 }
