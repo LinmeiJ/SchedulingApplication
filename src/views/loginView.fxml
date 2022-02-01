@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
+<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
    <top>
       <Label alignment="CENTER" prefHeight="17.0" prefWidth="150.0" text="SIGN IN" BorderPane.alignment="CENTER">
          <font>
@@ -24,8 +24,7 @@
             <Label layoutX="192.0" layoutY="159.0" prefHeight="17.0" prefWidth="61.0" text="Password" />
             <PasswordField fx:id="passwordField" layoutX="254.0" layoutY="155.0" />
             <Button layoutX="353.0" layoutY="186.0" mnemonicParsing="false" onAction="#login" text="Login" />
-            <TextField fx:id="locationField" disable="true" editable="false" layoutX="81.0" layoutY="13.0" prefHeight="25.0" prefWidth="120.0" promptText="locationField" />
-            <Label fx:id="locationID" layoutX="20.0" layoutY="14.0" prefHeight="22.0" prefWidth="61.0" text="Location:" />
+            <Label fx:id="locationField" layoutX="20.0" layoutY="14.0" prefHeight="22.0" prefWidth="61.0" />
             <Button fx:id="exitId" layoutX="522.0" layoutY="327.0" mnemonicParsing="false" onAction="#exitClicked" text="Exit" />
          </children>
       </AnchorPane>
