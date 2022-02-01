@@ -77,7 +77,9 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
     public void delete(Appointment appointment) {
         try {
             statement = connection.createStatement();
-            String sql = "DELETE FROM customers WHERE Customer_ID = "+ appointment.getAppointment_id();
+//            String sql = "DELETE FROM customers WHERE Customer_ID = "+ appointment.getAppointment_id();
+            String sql = "DELETE FROM appointments WHERE Appointment_ID = "+ appointment.getAppointment_id();
+
             statement.executeUpdate(sql);
             Validator.displayDeleteConfirmation();
             Validator.displaySuccess("Delete");
@@ -85,6 +87,11 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
             System.out.println("something wrong with executing delete sql");
             e.printStackTrace();
         }
+    }
+
+    public void deleteByCustID(long id) throws SQLException {
+        statement = connection.createStatement();
+            String sql = "DELETE FROM appointments WHERE Customer_ID = "+ id;
     }
 
     @Override

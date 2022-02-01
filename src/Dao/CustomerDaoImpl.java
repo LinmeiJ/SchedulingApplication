@@ -11,6 +11,7 @@ import java.sql.SQLException;
 
 public class CustomerDaoImpl extends JDBCConnection implements ServiceIfc<Customer> {
     FirstLevelDivisionDaoImpl firstLevelDivisionDao = new FirstLevelDivisionDaoImpl();
+    AppointmentDaoImpl aptDao = new AppointmentDaoImpl();
     public   Customer customer;
     private  ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
 
@@ -37,6 +38,7 @@ public class CustomerDaoImpl extends JDBCConnection implements ServiceIfc<Custom
     @Override
     public void delete(Customer customer) {
         try {
+            aptDao.deleteByCustID(customer.getCustomer_id());
             statement = connection.createStatement();
             String sql = "DELETE FROM customers WHERE Customer_ID = "+ customer.getCustomer_id();
             statement.executeUpdate(sql);
