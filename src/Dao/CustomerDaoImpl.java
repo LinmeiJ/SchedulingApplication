@@ -87,5 +87,11 @@ public class CustomerDaoImpl extends JDBCConnection implements ServiceIfc<Custom
     }
 
 
-
+    public void findIdByNameAndDivisionId(String customer_name, long division_id) {
+        ResultSet rs = findRawDataFromDB("SELECT Customer_ID FROM customer_name = '" + );
+    }
 }
+
+
+
+
