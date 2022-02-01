@@ -10,7 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ContactDaoImpl extends JDBCConnection {
-    ObservableList<Contact> allContacts = FXCollections.observableArrayList();
+    ObservableList<String> allContacts = FXCollections.observableArrayList();
     public long getContactId(String name) throws SQLException {
         ResultSet rs = findRawDataFromDB("SELECT Contact_ID FROM contacts WHERE Contact_Name = '" + name + "'");
         while(rs.next())
@@ -26,13 +26,11 @@ public class ContactDaoImpl extends JDBCConnection {
         return "";
     }
 
-    public ObservableList<Contact> findAll() throws SQLException {
+    public ObservableList<String> findAll() throws SQLException {
         ResultSet rs = findRawDataFromDB("SELECT contact_Name FROM contacts");
         while(rs.next()){
             String name = rs.getString("contact_name");
-            Contact contact = new Contact();
-            contact.setContract_name(name);
-            allContacts.add(contact);
+            allContacts.add(name);
         }
         return allContacts;
     }

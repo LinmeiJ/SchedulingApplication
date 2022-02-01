@@ -62,7 +62,7 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
     private Button exitBtn;
 
     @FXML
-    private ChoiceBox<Contact> contactList;
+    private ChoiceBox<String> contactList;
 
     @FXML
     private Button saveBtn;
