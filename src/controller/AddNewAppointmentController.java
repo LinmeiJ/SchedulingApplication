@@ -2,6 +2,7 @@ package controller;
 
 import Dao.*;
 import entity.Appointment;
+import entity.Contact;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -61,6 +62,9 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
     private Button exitBtn;
 
     @FXML
+    private ChoiceBox<Contact> contactList;
+
+    @FXML
     private Button saveBtn;
 
     private Appointment appointment;
@@ -107,6 +111,11 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
         startMinute.setItems(initializeMinutes());
         endHr.setItems(initHrs);
         endMinute.setItems(initializeMinutes());
+        try {
+            contactList.setItems(contactDao.findAll());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
