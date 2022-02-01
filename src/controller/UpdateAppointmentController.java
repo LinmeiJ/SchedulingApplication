@@ -1,5 +1,8 @@
 package controller;
+import Dao.AppointmentDaoImpl;
 import Dao.ContactDaoImpl;
+import Dao.UserDaoImpl;
+import Dao.Validator;
 import dbConnection.JDBCConnection;
 import entity.Appointment;
 import javafx.event.ActionEvent;
@@ -10,7 +13,9 @@ import javafx.scene.control.*;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
 public class UpdateAppointmentController extends JDBCConnection implements Initializable, CommonUseHelperIfc {
@@ -78,7 +83,7 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
     private Label userId;
 
 
-
+    private AppointmentDaoImpl appointmentDao = new AppointmentDaoImpl();
     Appointment appointment = AppointmentRecordController.selecteApt;
     ContactDaoImpl contactDao = new ContactDaoImpl();
 
@@ -93,8 +98,24 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
     }
 
     @FXML
-    void saveUpdateClicked(ActionEvent event) {
+    void saveUpdateClicked(ActionEvent event) throws SQLException, IOException {
+       appointment.setType(aptType.getText());
+       appointment.setLocation(aptLocation.getText());
+       appointment.setTitle(aptTitle.getText());
+       appointment.setContact_id(contactDao.getContactId(aptContactName.getText()));
+       appointment.setDescription(aptDescription.getText());
+       appointment.setStart(appointmentDao.formatTime(startDate.getValue(), startHr.getValue(), startMin.getValue()));
+       appointment.setEnd(appointmentDao.formatTime(endDate.getValue(), endHr.getValue(), startMin.getValue()));
+       appointment.setCreated_date(Timestamp.valueOf(LocalDateTime.now()));
+       appointment.setCreated_by(UserDaoImpl.userName);
+       appointment.setLast_update(Timestamp.valueOf(LocalDateTime.now()));
+       appointment.setLast_updated_by(UserDaoImpl.userName);
+       appointment.setCustomer_id(CustomerRecordController.selectedCust.getCustomer_id());
+       appointment.setUser_id(UserDaoImpl.userId);
 
+       appointmentDao.save(appointment);
+       Validator.displaySuccess("Appointment is saved");
+       setScene(event, APPOINTMENT_RECORD_VIEW);
     }
 
     @Override
