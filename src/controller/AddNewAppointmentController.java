@@ -87,8 +87,8 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
         appointment.setLast_update(Timestamp.valueOf(LocalDateTime.now()));
         appointment.setLast_updated_by(UserDaoImpl.userName);
         if(AddNewCustomerController.isNewCust){
-            customerDao.findIdByNameAndDivisionId(AddNewCustomerController.customer.getCustomer_name(), AddNewCustomerController.customer.getDivision_id());
-            appointment.setCustomer_id(AddNewCustomerController.customer.getCustomer_id());
+            long customerID = customerDao.findIdByNameAndDivisionId(AddNewCustomerController.customer.getCustomer_name(), AddNewCustomerController.customer.getDivision_id());
+            appointment.setCustomer_id(customerID);
             AddNewCustomerController.isNewCust = false;
         }else{
             appointment.setCustomer_id(CustomerRecordController.selectedCust.getCustomer_id())
