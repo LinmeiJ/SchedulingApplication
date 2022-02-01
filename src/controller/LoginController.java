@@ -24,7 +24,7 @@ public class LoginController extends Location implements Initializable, CommonUs
     private PasswordField passwordField;
 
     @FXML
-    private static Label locationField;
+    private Label locationField;
 
     @FXML
     private Button exitId;

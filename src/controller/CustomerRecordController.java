@@ -134,4 +134,13 @@ public class CustomerRecordController implements Initializable, CommonUseHelperI
         exit(event, exitId);
     }
 
+    @FXML
+    void listAptSelected(ActionEvent actionEvent) throws IOException {
+        selectedCust =  recordTable.getSelectionModel().getSelectedItem();
+        if(selectedCust != null) {
+            setScene(actionEvent, APPOINTMENT_RECORD_VIEW);
+        }else{
+            Validator.displayInvalidInput("Please select a row/customer to update");
+        }
+    }
 }
