@@ -67,6 +67,7 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
     private ContactDaoImpl contactDao = new ContactDaoImpl();
     private CustomerDaoImpl customerDao = new CustomerDaoImpl();
     private AppointmentDaoImpl appointmentDao = new AppointmentDaoImpl();
+    public static long newCustID;
 
 //    @FXML
 //    void BackToLastViewIsClicked(ActionEvent event) throws IOException {
@@ -87,9 +88,8 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
         appointment.setLast_update(Timestamp.valueOf(LocalDateTime.now()));
         appointment.setLast_updated_by(UserDaoImpl.userName);
         if(AddNewCustomerController.isNewCust){
-            long customerID = customerDao.findIdByNameAndDivisionId(AddNewCustomerController.customer.getCustomer_name(), AddNewCustomerController.customer.getDivision_id());
-            appointment.setCustomer_id(customerID);
-            AddNewCustomerController.isNewCust = false;
+             newCustID = customerDao.findIdByNameAndDivisionId(AddNewCustomerController.customer.getCustomer_name(), AddNewCustomerController.customer.getDivision_id());
+            appointment.setCustomer_id(newCustID);
         }else{
             appointment.setCustomer_id(CustomerRecordController.selectedCust.getCustomer_id())
         ;}

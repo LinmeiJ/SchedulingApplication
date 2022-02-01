@@ -128,7 +128,13 @@ public class AppointmentRecordController extends JDBCConnection implements Initi
     private void initTable() {
         initCols();
         try {
-            aptDataTable.addAll(appointmentDao.findAllByCustId(CustomerRecordController.selectedCust.getCustomer_id()));
+            if(AddNewCustomerController.isNewCust) {
+                aptDataTable.addAll(appointmentDao.findAllByCustId(AddNewAppointmentController.newCustID));
+                AddNewCustomerController.isNewCust = false;
+            }
+            else {
+                aptDataTable.addAll(appointmentDao.findAllByCustId(CustomerRecordController.selectedCust.getCustomer_id()));
+            }
         } catch (Exception e) {
             logger.log(Level.WARNING, "initialize() throws an exception", this.getClass().getName());
         }

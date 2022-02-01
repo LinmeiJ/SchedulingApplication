@@ -88,7 +88,7 @@ public class CustomerDaoImpl extends JDBCConnection implements ServiceIfc<Custom
 
 
     public long findIdByNameAndDivisionId(String customerName, long divisionId) throws SQLException {
-        ResultSet rs = findRawDataFromDB("SELECT Customer_ID FROM customer_name = '" + customerName + "' and division_id = " + divisionId);
+        ResultSet rs = findRawDataFromDB("SELECT Customer_ID FROM customers WHERE customer_name = '" + customerName + "' and division_id = " + divisionId);
         long id = 0;
         while(rs.next()){
             id = rs.getLong("customer_id");
