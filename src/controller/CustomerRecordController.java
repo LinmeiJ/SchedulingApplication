@@ -118,6 +118,12 @@ public class CustomerRecordController implements Initializable, CommonUseHelperI
     }
 
     @FXML
+    void addNewAptSelected(ActionEvent event) throws IOException {
+        setScene(event,  NEW_APT_VIEW);
+
+    }
+
+    @FXML
     void addNewCustomer(ActionEvent event) throws IOException {
         setScene(event, ADD_NEW_CUSTOMER_VIEW);
     }

@@ -113,7 +113,7 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
        appointment.setCustomer_id(CustomerRecordController.selectedCust.getCustomer_id());
        appointment.setUser_id(UserDaoImpl.userId);
 
-       appointmentDao.save(appointment);
+       appointmentDao.update(appointment);
        Validator.displaySuccess("Appointment is saved");
        setScene(event, APPOINTMENT_RECORD_VIEW);
     }
