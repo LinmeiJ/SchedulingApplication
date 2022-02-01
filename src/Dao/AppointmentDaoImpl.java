@@ -50,7 +50,7 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
 
     @Override
     public void update(Appointment appointment) {
-        String sql = "UPDATE appointments SET Title=?, Description=?, Location=?, Type=?, Start=?, End=?, Create_Date=?,Created_By=?, Last_Update=?, Last_Updated_By=?, Customer_ID=?, User_ID=? Contact_ID=? WHERE Appointment_ID = " + appointment.getAppointment_id();
+        String sql = "UPDATE appointments SET Title=?, Description=?, Location=?, Type=?, Start=?, End=?, Create_Date=?,Created_By=?, Last_Update=?, Last_Updated_By=?, Customer_ID=?, User_ID=?, Contact_ID=? WHERE Appointment_ID = " + appointment.getAppointment_id();
         try {
             PreparedStatement preparedStatement = JDBCConnection.connection.prepareStatement(sql);
             preparedStatement.setString(1, appointment.getTitle());

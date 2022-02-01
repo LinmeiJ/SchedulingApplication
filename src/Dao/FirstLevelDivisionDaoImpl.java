@@ -47,7 +47,8 @@ public class FirstLevelDivisionDaoImpl extends JDBCConnection implements Service
     public long findIdByDivisionName(String divisionName) throws SQLException {
         long id = 0;
         String countryName = (CustomerRecordController.ctryId == CountryId.US) ? String.valueOf(CustomerRecordController.ctryId).substring(0,1) + "." +  String.valueOf(CustomerRecordController.ctryId).substring(1) : String.valueOf(CustomerRecordController.ctryId);
-        ResultSet rs = findRawDataFromDB("SELECT Division_Id from first_level_divisions where Country_Id = (SELECT Country_Id FROM countries where Country = '" + countryName + "') and Division = '"+ divisionName + "'");
+
+        ResultSet rs = findRawDataFromDB("SELECT Division_Id from first_level_divisions where Country_Id = (SELECT Country_Id FROM client_schedule.countries where Country = '" + countryName + "') and Division = '"+ divisionName + "'");
         while(rs.next()){
            id = rs.getLong("division_id");
         }

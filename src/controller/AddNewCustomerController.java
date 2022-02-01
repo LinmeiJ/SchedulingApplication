@@ -61,9 +61,10 @@ public class AddNewCustomerController extends JDBCConnection implements Initiali
     @FXML
     private Button cancelBtn;
 
-    private Customer customer ;
+    public static Customer customer = new Customer();
     private CustomerDaoImpl customerDao = new CustomerDaoImpl();
     private FirstLevelDivisionDaoImpl divisionDao = new FirstLevelDivisionDaoImpl();
+    public static boolean isNewCust = false;
 
     @FXML
     void canadaSelected(ActionEvent event) {
@@ -93,13 +94,18 @@ public class AddNewCustomerController extends JDBCConnection implements Initiali
     }
 
     @FXML
-    void aptClicked(ActionEvent event) throws IOException {
+    void aptClicked(ActionEvent event) throws IOException, SQLException {
+        addCust(event);
         setScene(event, NEW_APT_VIEW);
     }
 
     @FXML
     void saveCustClicked(ActionEvent event) throws SQLException {
-        customer = new Customer();
+        addCust(event);
+        Validator.displaySuccess("Add");
+    }
+
+    private void addCust(ActionEvent event) throws SQLException {
         customer.setCustomer_name(addCustNameField.getText());
         customer.setAddress(addAddressField.getText());
         customer.setPhone(addPhoneField.getText());
@@ -109,9 +115,9 @@ public class AddNewCustomerController extends JDBCConnection implements Initiali
         customer.setLast_update(Timestamp.valueOf(LocalDateTime.now()));
         customer.setLast_updated_by(UserDaoImpl.userName);
         customer.setDivision_id(divisionDao.findIdByDivisionName(divisionList.getValue()));
-        customerDao.save(customer);
 
-        Validator.displaySuccess("Add");
+        isNewCust = true;
+        customerDao.save(customer);
     }
 
     @Override

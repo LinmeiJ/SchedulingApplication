@@ -86,7 +86,12 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
         appointment.setCreated_by(UserDaoImpl.userName);
         appointment.setLast_update(Timestamp.valueOf(LocalDateTime.now()));
         appointment.setLast_updated_by(UserDaoImpl.userName);
-        appointment.setCustomer_id(CustomerRecordController.selectedCust.getCustomer_id());
+        if(AddNewCustomerController.isNewCust){
+            appointment.setCustomer_id(AddNewCustomerController.customer.getCustomer_id());
+            AddNewCustomerController.isNewCust = false;
+        }else{
+            appointment.setCustomer_id(CustomerRecordController.selectedCust.getCustomer_id())
+        ;}
         appointment.setUser_id(UserDaoImpl.userId);
         appointment.setContact_id(contactDao.getContactId(aptContactField.getText()));
 
@@ -108,4 +113,7 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
         exit(event, exitBtn);
     }
 
+    public void BackToLastViewIsClicked(ActionEvent actionEvent) throws IOException {
+        setScene(actionEvent, CUSTOMER_RECORD_VIEW);
+    }
 }
