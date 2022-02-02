@@ -9,10 +9,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 
@@ -70,6 +67,13 @@ public class AppointmentRecordController extends JDBCConnection implements Initi
     @FXML
     private Button exitBtn;
 
+    @FXML
+    private RadioButton filterByMonth;
+
+    @FXML
+    private RadioButton filterByWeek;
+
+
     Logger logger = Logger.getLogger(this.getClass().getName());
     private String[] filterOptions = {"By Month", "By Week"};
     ObservableList<Appointment> aptDataTable = FXCollections.observableArrayList();
@@ -117,6 +121,12 @@ public class AppointmentRecordController extends JDBCConnection implements Initi
     void backExitClicked(ActionEvent event) throws IOException {
         setScene(event, CUSTOMER_RECORD_VIEW);
     }
+    @FXML
+    void filterByMonthSelected(ActionEvent event) {}
+
+    @FXML
+    void filterByWeekSelected(ActionEvent event) {}
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
