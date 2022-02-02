@@ -30,9 +30,6 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
     private TextField aptLocationField;
 
     @FXML
-    private TextField aptContactField;
-
-    @FXML
     private TextArea aptDescriptionField;
 
     @FXML
@@ -98,7 +95,7 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
             appointment.setCustomer_id(CustomerRecordController.selectedCust.getCustomer_id())
         ;}
         appointment.setUser_id(UserDaoImpl.userId);
-        appointment.setContact_id(contactDao.getContactId(aptContactField.getText()));
+        appointment.setContact_id(contactDao.getContactId(contactList.getValue()));
 
         appointmentDao.save(appointment);
         Validator.displaySuccess("Appointment is saved");
