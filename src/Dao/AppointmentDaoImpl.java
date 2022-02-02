@@ -70,25 +70,31 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
     public void update(Appointment appointment) {
         String sql = "UPDATE appointments SET Title=?, Description=?, Location=?, Type=?, Start=?, End=?, Create_Date=?,Created_By=?, Last_Update=?, Last_Updated_By=?, Customer_ID=?, User_ID=?, Contact_ID=? WHERE Appointment_ID = " + appointment.getAppointment_id();
         try {
-            PreparedStatement preparedStatement = JDBCConnection.connection.prepareStatement(sql);
-            preparedStatement.setString(1, appointment.getTitle());
-            preparedStatement.setString(2, appointment.getDescription());
-            preparedStatement.setString(3, appointment.getLocation());
-            preparedStatement.setString(4, appointment.getType());
-            preparedStatement.setTimestamp(5, appointment.getStart());
+            PreparedStatement preparedStatement = getPreparedStatement(appointment, sql);
             preparedStatement.setTimestamp(6, appointment.getEnd());
             preparedStatement.setTimestamp(7, Timestamp.valueOf(LocalDateTime.now()));
             preparedStatement.setString(8, UserDaoImpl.userName);
             preparedStatement.setTimestamp(9, Timestamp.valueOf(LocalDateTime.now()));
             preparedStatement.setString(10, UserDaoImpl.userName);
-            preparedStatement.setLong(11, appointment.getCustomer_id());
-            preparedStatement.setLong(12, appointment.getUser_id());
-            preparedStatement.setLong(13, appointment.getContact_id());
 
             preparedStatement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    private PreparedStatement getPreparedStatement(Appointment appointment, String sql) throws SQLException {
+        PreparedStatement preparedStatement = JDBCConnection.connection.prepareStatement(sql);
+        preparedStatement.setString(1, appointment.getTitle());
+        preparedStatement.setString(2, appointment.getDescription());
+        preparedStatement.setString(3, appointment.getLocation());
+        preparedStatement.setString(4, appointment.getType());
+        preparedStatement.setTimestamp(5, appointment.getStart());
+        preparedStatement.setTimestamp(6, appointment.getEnd());
+        preparedStatement.setLong(11, appointment.getCustomer_id());
+        preparedStatement.setLong(12, appointment.getUser_id());
+        preparedStatement.setLong(13, appointment.getContact_id());
+        return preparedStatement;
     }
 
     @Override
@@ -115,20 +121,11 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
     @Override
     public void save(Appointment appointment) throws SQLException {
         String sql = "INSERT INTO appointments VALUES(NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        PreparedStatement preparedStatement = JDBCConnection.connection.prepareStatement(sql);
-        preparedStatement.setString(1, appointment.getTitle());
-        preparedStatement.setString(2, appointment.getDescription());
-        preparedStatement.setString(3, appointment.getLocation());
-        preparedStatement.setString(4, appointment.getType());
-        preparedStatement.setTimestamp(5, appointment.getStart());
-        preparedStatement.setTimestamp(6,appointment.getEnd());
+        PreparedStatement preparedStatement = getPreparedStatement(appointment, sql);
         preparedStatement.setTimestamp(7, appointment.getCreated_date());
         preparedStatement.setString(8, appointment.getCreated_by());
         preparedStatement.setTimestamp(9, appointment.getLast_update());
         preparedStatement.setString(10, appointment.getLast_updated_by());
-        preparedStatement.setLong(11, appointment.getCustomer_id());
-        preparedStatement.setLong(12, appointment.getUser_id());
-        preparedStatement.setLong(13, appointment.getContact_id());
 
         preparedStatement.execute();
     }

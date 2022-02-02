@@ -96,6 +96,7 @@ public class CustomerRecordController implements Initializable, CommonUseHelperI
         selectedCust =  recordTable.getSelectionModel().getSelectedItem();
         long countryId = selectedCust.getFirstLevelDivision().getCountry_id();
         ctryId = countryId == 1? CountryId.US : countryId == 2? CountryId.UK : CountryId.CANADA;
+
         if(selectedCust != null) {
             setScene(event, UPDATE_CUSTOMER_VIEW);
         }else{
@@ -119,9 +120,13 @@ public class CustomerRecordController implements Initializable, CommonUseHelperI
 
     @FXML
     void addNewAptSelected(ActionEvent event) throws IOException {
-        selectedCust =  recordTable.getSelectionModel().getSelectedItem();
-        setScene(event,  NEW_APT_VIEW);
+        selectedCust = recordTable.getSelectionModel().getSelectedItem();
 
+        if(selectedCust != null) {
+            setScene(event,  NEW_APT_VIEW);
+        }else{
+            Validator.displayInvalidInput("Please select a row/customer to update");
+        }
     }
 
     @FXML
