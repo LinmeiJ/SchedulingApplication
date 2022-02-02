@@ -20,7 +20,7 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
     private ObservableList<Appointment> allAppointment = FXCollections.observableArrayList();
 
     @Override
-    public ObservableList<Appointment> findAll() throws SQLException {
+    public ObservableList<Appointment> findAll() {
         return null;
     }
 
@@ -29,8 +29,27 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
         return null;
     }
 
+    public ObservableList<Appointment> findAllByCurrentMonth(long customerId) throws SQLException {
+        String startYrMonth = "2020-05"; // fix me the timezone difference
+        ResultSet rs = findRawDataFromDB("select * from appointments where Customer_ID = " + customerId + " AND start like '" + startYrMonth +"%'");
+        saveToObj(customerId, rs);
+        return allAppointment;
+    }
+
+    public ObservableList<Appointment> findAllByCurrentWeek(long customerId) throws SQLException {
+        String sql = "SELECT * FROM appointments WHERE YEARWEEK(start)=YEARWEEK(NOW()) AND  Customer_ID = " + customerId; // fix me the time zone difference;
+        ResultSet rs = findRawDataFromDB(sql);
+        saveToObj(customerId, rs);
+        return allAppointment;
+    }
+
     public ObservableList<Appointment> findAllByCustId(long customerId) throws SQLException {
         ResultSet rs = findRawDataFromDB("SELECT Appointment_ID, Title, a.Description, Location, a.Type, a.Start, a.End, User_ID, Contact_ID FROM appointments as a WHERE Customer_ID = " + customerId);
+        saveToObj(customerId, rs);
+        return allAppointment;
+    }
+
+    private void saveToObj(long customerId, ResultSet rs) throws SQLException {
         while(rs.next()){
             long aptId = rs.getLong("appointment_id");
             String title = rs.getString("title");
@@ -41,11 +60,10 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
             Timestamp endDateTime = rs.getTimestamp("end");
             long contactId = rs.getLong("contact_id");
             long userId = rs.getLong("user_id");
-            System.out.println(contactId);
+
             appointment  = new Appointment(aptId, title, description, location, type, startDateTime, endDateTime, customerId, contactId, userId);
             allAppointment.add(appointment);
         }
-        return allAppointment;
     }
 
     @Override
@@ -113,11 +131,5 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
         preparedStatement.setLong(13, appointment.getContact_id());
 
         preparedStatement.execute();
-    }
-
-    public Timestamp formatTime(LocalDate dateValue, String hrValue, String minuteValue) {
-        String str = dateValue.toString() + " " + hrValue + ":" + minuteValue + ":00";
-        Timestamp timestamp = Timestamp.valueOf(str);
-        return timestamp ;
     }
 }

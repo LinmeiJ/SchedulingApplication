@@ -2,6 +2,7 @@ package controller;
 
 import Dao.UserDaoImpl;
 import Dao.Validator;
+import converter.DateTimeConverter;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -13,8 +14,7 @@ import javafx.scene.control.TextField;
 import java.io.IOException;
 import java.net.URL;
 import java.time.ZoneId;
-import java.util.Locale;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class LoginController extends Location implements Initializable, CommonUseHelperIfc {
     @FXML
@@ -54,9 +54,7 @@ public class LoginController extends Location implements Initializable, CommonUs
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        String location = Locale.getDefault() + ", " +ZoneId.systemDefault().getId();
-
-        locationField.setText(location);
+        locationField.setText(DateTimeConverter.getTimeZoneID());
     }
 }
 

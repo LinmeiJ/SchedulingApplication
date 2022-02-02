@@ -11,10 +11,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -56,15 +56,6 @@ public class AppointmentRecordController extends JDBCConnection implements Initi
     private TableView<Appointment> appointmentTable;
 
     @FXML
-    private Button leftArrow;
-
-    @FXML
-    private ChoiceBox<String> dateTimefilter;
-
-    @FXML
-    private Button rightArrow;
-
-    @FXML
     private Button exitBtn;
 
     @FXML
@@ -79,11 +70,8 @@ public class AppointmentRecordController extends JDBCConnection implements Initi
     ObservableList<Appointment> aptDataTable = FXCollections.observableArrayList();
     AppointmentDaoImpl appointmentDao = new AppointmentDaoImpl();
     public static Appointment selecteApt;
-
-    @FXML
-    void FilterButton(MouseEvent event) {
-
-    }
+    private static boolean isMonthFilter = false;
+    private static boolean isWeekFilter = false;
 
     @FXML
     void addNewClicked(ActionEvent event) throws IOException {
@@ -106,10 +94,6 @@ public class AppointmentRecordController extends JDBCConnection implements Initi
         exit(event, exitBtn);
     }
 
-    @FXML
-    void rightArrowClicked(ActionEvent event) {
-
-    }
 
     @FXML
     void updateClicked(ActionEvent event) throws IOException {
@@ -122,15 +106,26 @@ public class AppointmentRecordController extends JDBCConnection implements Initi
         setScene(event, CUSTOMER_RECORD_VIEW);
     }
     @FXML
-    void filterByMonthSelected(ActionEvent event) {}
+    void filterByMonthSelected(ActionEvent event) throws SQLException, IOException {
+        filterByWeek.setSelected(false);
+        filterByMonth.setSelected(true);
+        isMonthFilter = true;
+        setScene(event, APPOINTMENT_RECORD_VIEW);
+    }
 
     @FXML
-    void filterByWeekSelected(ActionEvent event) {}
+    void filterByWeekSelected(ActionEvent event) throws IOException {
+        filterByMonth.setSelected(false);
+        filterByWeek.setSelected(true);
+        isWeekFilter = true;
+        setScene(event, APPOINTMENT_RECORD_VIEW);
+    }
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        dateTimefilter.getItems().addAll(filterOptions);
+        filterByMonth.setSelected(false);
+        filterByWeek.setSelected(false);
         initTable();
         loadData();
     }
@@ -141,6 +136,12 @@ public class AppointmentRecordController extends JDBCConnection implements Initi
             if(AddNewCustomerController.isNewCust) {
                 aptDataTable.addAll(appointmentDao.findAllByCustId(AddNewAppointmentController.newCustID));
                 AddNewCustomerController.isNewCust = false;
+            }else if(isMonthFilter){
+                aptDataTable.addAll(appointmentDao.findAllByCurrentMonth(CustomerRecordController.selectedCust.getCustomer_id()));
+                isMonthFilter = false;
+            }else if(isWeekFilter){
+                aptDataTable.addAll(appointmentDao.findAllByCurrentWeek(CustomerRecordController.selectedCust.getCustomer_id()));
+                isWeekFilter = false;
             }
             else {
                 aptDataTable.addAll(appointmentDao.findAllByCustId(CustomerRecordController.selectedCust.getCustomer_id()));

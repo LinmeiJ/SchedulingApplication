@@ -1,6 +1,7 @@
 package controller;
 
 import Dao.*;
+import converter.DateTimeConverter;
 import entity.Appointment;
 import entity.Contact;
 import javafx.event.ActionEvent;
@@ -82,8 +83,8 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
         appointment.setDescription(aptDescriptionField.getText());
         appointment.setType(aptTypeField.getText());
         appointment.setLocation(aptLocationField.getText());
-        appointment.setStart(appointmentDao.formatTime(startDate.getValue(), startHr.getValue(), startMinute.getValue()));
-        appointment.setEnd(appointmentDao.formatTime(endDate.getValue(), endHr.getValue(), startMinute.getValue()));
+        appointment.setStart(DateTimeConverter.formatTime(startDate.getValue(), startHr.getValue(), startMinute.getValue()));
+        appointment.setEnd(DateTimeConverter.formatTime(endDate.getValue(), endHr.getValue(), startMinute.getValue()));
         appointment.setCreated_date(Timestamp.valueOf(LocalDateTime.now()));
         appointment.setCreated_by(UserDaoImpl.userName);
         appointment.setLast_update(Timestamp.valueOf(LocalDateTime.now()));

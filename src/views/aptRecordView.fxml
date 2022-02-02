@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane cache="true" prefHeight="656.0" prefWidth="1236.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AppointmentRecordController">
+<AnchorPane cache="true" prefHeight="656.0" prefWidth="1236.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AppointmentRecordController">
     <children>
         <Label alignment="CENTER" graphicTextGap="105.0" layoutX="145.0" layoutY="20.0" prefHeight="30.0" prefWidth="843.0" text="Appointments" textAlignment="CENTER" textFill="#5e2d2d">
             <font>

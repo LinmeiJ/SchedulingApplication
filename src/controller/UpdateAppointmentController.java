@@ -3,6 +3,7 @@ import Dao.AppointmentDaoImpl;
 import Dao.ContactDaoImpl;
 import Dao.UserDaoImpl;
 import Dao.Validator;
+import converter.DateTimeConverter;
 import dbConnection.JDBCConnection;
 import entity.Appointment;
 import javafx.event.ActionEvent;
@@ -104,8 +105,8 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
        appointment.setTitle(aptTitle.getText());
        appointment.setContact_id(contactDao.getContactId(aptContactName.getText()));
        appointment.setDescription(aptDescription.getText());
-       appointment.setStart(appointmentDao.formatTime(startDate.getValue(), startHr.getValue(), startMin.getValue()));
-       appointment.setEnd(appointmentDao.formatTime(endDate.getValue(), endHr.getValue(), startMin.getValue()));
+       appointment.setStart(DateTimeConverter.formatTime(startDate.getValue(), startHr.getValue(), startMin.getValue()));
+       appointment.setEnd(DateTimeConverter.formatTime(endDate.getValue(), endHr.getValue(), startMin.getValue()));
        appointment.setCreated_date(Timestamp.valueOf(LocalDateTime.now()));
        appointment.setCreated_by(UserDaoImpl.userName);
        appointment.setLast_update(Timestamp.valueOf(LocalDateTime.now()));
