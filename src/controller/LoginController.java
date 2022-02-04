@@ -13,15 +13,24 @@ import javafx.scene.control.TextField;
 
 import java.io.IOException;
 import java.net.URL;
-import java.time.ZoneId;
 import java.util.*;
 
 public class LoginController extends Location implements Initializable, CommonUseHelperIfc {
+
+    @FXML
+    private Label userName;
+
     @FXML
     private TextField userNameField;
 
     @FXML
+    private Label password;
+
+    @FXML
     private PasswordField passwordField;
+
+    @FXML
+    private Button loginBtn;
 
     @FXML
     private Label locationField;
@@ -29,21 +38,25 @@ public class LoginController extends Location implements Initializable, CommonUs
     @FXML
     private Button exitId;
 
-    private ResourceBundle rb;
-    private String userName;
-    private String password;
+    @FXML
+    private Label signIn;
 
-    private static final String USER_NOT_FOUND = "User is not found, please check your user name or password.";
+
+    public static ResourceBundle language;
+    private String name;
+    private String userPassword;
+
 
     @FXML
     void login(ActionEvent event) throws IOException {
-        userName = (userNameField.getText());
-        password = (passwordField.getText());
+        name = (userNameField.getText());
+        userPassword = (passwordField.getText());
 
-        if(UserDaoImpl.findByUserName(userName, password)) {
+        if(UserDaoImpl.findByUserName(name, userPassword)) {
             setScene(event, CUSTOMER_RECORD_VIEW);
+
         }else{
-            Validator.displayInvalidInput(USER_NOT_FOUND);
+            Validator.displayLoginInvalidInput(language.getString("userNotFound"));
         }
     }
 
@@ -54,7 +67,13 @@ public class LoginController extends Location implements Initializable, CommonUs
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        this.language = resourceBundle;
         locationField.setText(DateTimeConverter.getTimeZoneID());
+        signIn.setText(language.getString("signIn"));
+        userName.setText(language.getString("name"));
+        password.setText(language.getString("password"));
+        exitId.setText(language.getString("exit"));
+        loginBtn.setText(language.getString("loginBtn"));
     }
 }
 

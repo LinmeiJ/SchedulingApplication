@@ -1,7 +1,6 @@
 package controller;
 
 import Dao.CustomerDaoImpl;
-import Dao.FirstLevelDivisionDaoImpl;
 import Dao.Validator;
 import entity.Customer;
 import enums.CountryId;
@@ -49,13 +48,7 @@ public class CustomerRecordController implements Initializable, CommonUseHelperI
     @FXML
     private TableColumn<Customer, String> custDivision;
 
-    @FXML
-    private Button updateBtn;
-    @FXML
-    private Button deleteBtn;
-
     public  CustomerDaoImpl customerDao = new CustomerDaoImpl();
-    public FirstLevelDivisionDaoImpl firstLevelDivisionDao = new FirstLevelDivisionDaoImpl();
     public  ObservableList<Customer> customersDataTable = FXCollections.observableArrayList();
     public static Customer selectedCust;
     public static CountryId ctryId;

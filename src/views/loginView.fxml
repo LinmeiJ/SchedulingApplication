@@ -10,7 +10,7 @@
 
 <BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
    <top>
-      <Label alignment="CENTER" prefHeight="17.0" prefWidth="150.0" text="SIGN IN" BorderPane.alignment="CENTER">
+      <Label fx:id="signIn" alignment="CENTER" prefHeight="28.0" prefWidth="185.0" text="SIGN IN" BorderPane.alignment="CENTER">
          <font>
             <Font size="19.0" />
          </font>
@@ -19,13 +19,13 @@
    <center>
       <AnchorPane prefHeight="488.0" prefWidth="774.0" BorderPane.alignment="CENTER">
          <children>
-            <Label layoutX="185.0" layoutY="121.0" text="User Name" />
-            <TextField fx:id="userNameField" layoutX="254.0" layoutY="117.0" />
-            <Label layoutX="192.0" layoutY="159.0" prefHeight="17.0" prefWidth="61.0" text="Password" />
-            <PasswordField fx:id="passwordField" layoutX="254.0" layoutY="155.0" />
-            <Button layoutX="353.0" layoutY="186.0" mnemonicParsing="false" onAction="#login" text="Login" />
+            <Label fx:id="userName" layoutX="97.0" layoutY="121.0" prefHeight="17.0" prefWidth="103.0" text="User Name" />
+            <TextField fx:id="userNameField" layoutX="229.0" layoutY="117.0" prefHeight="25.0" prefWidth="196.0" />
+            <Label fx:id="password" layoutX="100.0" layoutY="159.0" prefHeight="17.0" prefWidth="96.0" text="Password" />
+            <PasswordField fx:id="passwordField" layoutX="229.0" layoutY="155.0" prefHeight="25.0" prefWidth="196.0" />
+            <Button fx:id="loginBtn" layoutX="326.0" layoutY="186.0" mnemonicParsing="false" onAction="#login" prefHeight="25.0" prefWidth="104.0" text="Login" />
             <Label fx:id="locationField" layoutX="20.0" layoutY="14.0" prefHeight="22.0" prefWidth="130.0" />
-            <Button fx:id="exitId" layoutX="522.0" layoutY="327.0" mnemonicParsing="false" onAction="#exitClicked" text="Exit" />
+            <Button fx:id="exitId" layoutX="477.0" layoutY="327.0" mnemonicParsing="false" onAction="#exitClicked" prefHeight="25.0" prefWidth="80.0" text="Exit" />
          </children>
       </AnchorPane>
    </center>

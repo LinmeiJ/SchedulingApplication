@@ -1,11 +1,13 @@
 package Dao;
 
+import controller.LoginController;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
+import java.util.ResourceBundle;
 
 public final class Validator {
     /**
@@ -45,9 +47,22 @@ public final class Validator {
      *
      * @param msg the message puts in the content of the alert dialog
      */
+    public static void displayLoginInvalidInput(String msg) {
+        errorAlert.setTitle(LoginController.language.getString("error"));
+        errorAlert.setHeaderText(LoginController.language.getString("invalidInput"));
+        errorAlert.setContentText(msg);
+        errorAlert.showAndWait();
+    }
+
+
+    /**
+     * This method sets an error alert that displays to the end user.
+     *
+     * @param msg the message puts in the content of the alert dialog
+     */
     public static void displayInvalidInput(String msg) {
         errorAlert.setTitle("Error");
-        errorAlert.setHeaderText("Incorrect Input");
+        errorAlert.setHeaderText(LoginController.language.getString("Invalid Input"));
         errorAlert.setContentText(msg);
         errorAlert.showAndWait();
     }
