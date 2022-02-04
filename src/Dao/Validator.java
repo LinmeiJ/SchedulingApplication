@@ -8,6 +8,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public final class Validator {
     /**
@@ -62,7 +64,7 @@ public final class Validator {
      */
     public static void displayInvalidInput(String msg) {
         errorAlert.setTitle("Error");
-        errorAlert.setHeaderText(LoginController.language.getString("Invalid Input"));
+        errorAlert.setHeaderText(("Invalid Input"));
         errorAlert.setContentText(msg);
         errorAlert.showAndWait();
     }
@@ -100,4 +102,78 @@ public final class Validator {
         confirmResult = confirmAlert.showAndWait();
     }
 
+    /**
+     * This method checks whether an user's input is an integer.
+     *
+     * @param input input from the end user
+     * @return whether is a integer
+     */
+    public static boolean isInteger(String input) {
+        boolean isValid = false;
+        try {
+            Integer d = Integer.parseInt(input);
+            isValid = true;
+        } catch (Exception ex) {
+            isValid = false;
+        }
+        return isValid;
+    }
+
+    /**
+     * This method checks whether an user's input is empty.
+     *
+     * @param input input from the end user
+     * @return whether is a an empty string
+     */
+    public static boolean isEmpty(String input) {
+        boolean isValid = false;
+        if (input.isEmpty() || input.isBlank() || input == null) {
+            isValid = true;
+
+        }
+        return isValid;
+    }
+
+    public static boolean isValidName(String name){
+        Pattern p = Pattern.compile("^[a-zA-Z]+\\s[a-zA-Z]+$");//match only letters and one space between
+        if(name == null){
+            return false;
+        }
+        Matcher m = p.matcher(name);
+        return m.matches();
+    }
+
+    public static boolean isValidPhoneNumber(String phoneNumber){
+        Pattern p = Pattern.compile("^\\d+$"); //as long as only digits
+        if (phoneNumber == null) {
+            return false;
+        }
+        Matcher m = p.matcher(phoneNumber);
+        return m.matches();
+    }
+
+    public static boolean isValidAddress(String address){
+        Pattern p = Pattern.compile("^\\d+\\s[a-zA-Z]+,\\s[a-zA-Z]+$"); //formatted it as how US address looks like
+        if (address == null) {
+            return false;
+        }
+        Matcher m = p.matcher(address);
+        return m.matches();
+    }
+
+    public static boolean isValidZipCode(String address){
+        Pattern p = Pattern.compile("^\\d+$");
+        if (address == null) {
+            return false;
+        }
+        Matcher m = p.matcher(address);
+        return m.matches();
+    }
+
+    public static void displayUnsavedInfo(String msg) {
+        errorAlert.setTitle("Alert");
+        errorAlert.setHeaderText(("Please save before continuing!"));
+        errorAlert.setContentText(msg);
+        errorAlert.showAndWait();
+    }
 }

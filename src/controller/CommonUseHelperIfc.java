@@ -45,11 +45,16 @@ public interface CommonUseHelperIfc {
      * @param s     the file path where the fxml is located at
      * @throws IOException it happens when the fxml file is not found
      */
-    default void setScene(ActionEvent event, String s) throws IOException {
-        Parent parent = FXMLLoader.load(getClass().getResource(s));
-        var scene = new Scene(parent);
-        var stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(scene);
+    default void setScene(ActionEvent event, String s){
+        Parent parent = null;
+        try {
+            parent = FXMLLoader.load(getClass().getResource(s));
+            var scene = new Scene(parent);
+            var stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     default ObservableList<String> initializeMinutes(){

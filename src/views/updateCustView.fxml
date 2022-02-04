@@ -10,9 +10,9 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="619.0" prefWidth="1103.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.UpdateCustomerController">
    <children>
-      <AnchorPane layoutX="106.0" layoutY="49.0" prefHeight="522.0" prefWidth="481.0">
+      <AnchorPane layoutX="80.0" layoutY="14.0" prefHeight="522.0" prefWidth="481.0">
          <children>
-            <Label prefHeight="27.0" prefWidth="201.0" text="Update Customer Info">
+            <Label layoutX="312.0" layoutY="14.0" prefHeight="27.0" prefWidth="201.0" text="Update Customer Info">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
@@ -43,38 +43,39 @@
                </font>
             </Label>
             <TextField fx:id="zipCodeField" layoutX="101.0" layoutY="268.0" prefHeight="26.0" prefWidth="128.0" />
-            <Button fx:id="updateApt" layoutX="13.0" layoutY="345.0" mnemonicParsing="false" onAction="#updateAptClicked" prefHeight="35.0" prefWidth="238.0" text="Update/Add Appointment">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Button>
+            <AnchorPane layoutX="499.0" layoutY="74.0" prefHeight="343.0" prefWidth="287.0">
+               <children>
+                  <RadioButton fx:id="USAId" layoutX="37.0" layoutY="41.0" mnemonicParsing="false" onAction="#uSSelected" text="U.S">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </RadioButton>
+                  <RadioButton fx:id="canadaId" layoutX="112.0" layoutY="41.0" mnemonicParsing="false" onAction="#canadaSelected" text="Canada">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </RadioButton>
+                  <RadioButton fx:id="englandId" layoutX="209.0" layoutY="41.0" mnemonicParsing="false" onAction="#englandSelected" text="England">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </RadioButton>
+                  <ComboBox fx:id="division" editable="true" layoutX="37.0" layoutY="87.0" prefHeight="36.0" prefWidth="249.0" promptText="Division List" />
+                  <Button fx:id="saveUpdates" layoutX="196.0" layoutY="150.0" mnemonicParsing="false" onAction="#saveUpdateClicked" prefHeight="44.0" prefWidth="94.0" text="Save">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Button>
+               </children>
+            </AnchorPane>
          </children>
       </AnchorPane>
-      <AnchorPane layoutX="536.0" layoutY="85.0" prefHeight="343.0" prefWidth="287.0">
-         <children>
-            <RadioButton fx:id="USAId" layoutX="37.0" layoutY="41.0" mnemonicParsing="false" onAction="#uSSelected" text="U.S">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </RadioButton>
-            <RadioButton fx:id="canadaId" layoutX="112.0" layoutY="41.0" mnemonicParsing="false" onAction="#canadaSelected" text="Canada">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </RadioButton>
-            <RadioButton fx:id="englandId" layoutX="209.0" layoutY="41.0" mnemonicParsing="false" onAction="#englandSelected" text="England">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </RadioButton>
-            <ComboBox fx:id="division" editable="true" layoutX="37.0" layoutY="87.0" prefHeight="36.0" prefWidth="249.0" promptText="Division List" />
-         </children>
-      </AnchorPane>
-      <Button fx:id="saveUpdates" layoutX="948.0" layoutY="482.0" mnemonicParsing="false" onAction="#saveUpdateClicked" prefHeight="44.0" prefWidth="94.0" text="Save">
-         <font>
-            <Font size="20.0" />
-         </font></Button>
       <Button fx:id="backBtn" layoutX="919.0" layoutY="547.0" mnemonicParsing="false" onAction="#backToRecordPage" text="Back" />
       <Button fx:id="cancelBtn" layoutX="1030.0" layoutY="547.0" mnemonicParsing="false" onAction="#exitBtnClicked" text="Exit" />
+      <Button fx:id="updateApt" layoutX="841.0" layoutY="473.0" mnemonicParsing="false" onAction="#updateAptClicked" prefHeight="35.0" prefWidth="238.0" text="Update/Add Appointment">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

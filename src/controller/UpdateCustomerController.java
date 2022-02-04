@@ -59,6 +59,7 @@ public class UpdateCustomerController implements Initializable, CommonUseHelperI
 
 
     CountryId ctryID;
+    private boolean isSaved = false;
     private static Customer customer = CustomerRecordController.selectedCust;;
     private CustomerDaoImpl customerDao = new CustomerDaoImpl();
     private FirstLevelDivisionDaoImpl divisionDao = new FirstLevelDivisionDaoImpl();
@@ -103,26 +104,51 @@ public class UpdateCustomerController implements Initializable, CommonUseHelperI
     @FXML
     void saveUpdateClicked(ActionEvent event) throws SQLException {
         updateCustInfo(event);
-        Validator.displaySuccess("Update");
+        isSaved = true;
     }
 
-    private void updateCustInfo(ActionEvent event) throws SQLException {
-        customer.setCustomer_name(custNameField.getText());
-        customer.setAddress(addressField.getText());
-        customer.setPhone(phoneField.getText());
-        customer.setPostal_code(zipCodeField.getText());
+    private void updateCustInfo(ActionEvent event) {
+        try {
+            String name = custNameField.getText();
+            String address = addressField.getText();
+            String phone = phoneField.getText();
+            String postCode = zipCodeField.getText();
+            if (areValidInputs(name, address, phone, postCode)) {
+                getCustomerUpdatedInfo(name, address, phone, postCode);
+                customerDao.update(customer);
+                Validator.displaySuccess("Update");
+            } else {
+                Validator.displayInvalidInput("Contain invalid entry! E.g: name only contains alphabets and a space, phone number and zipcode has to be only digits.");
+                setScene(event, UPDATE_CUSTOMER_VIEW);
+            }
+        } catch (SQLException | RuntimeException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void getCustomerUpdatedInfo(String name, String address, String phone, String postCode) throws SQLException {
+        customer.setCustomer_name(name);
+        customer.setAddress(address);
+        customer.setPhone(phone);
+        customer.setPostal_code(postCode);
         customer.setCreated_by(UserDaoImpl.userName);
         customer.setCreate_date(Timestamp.valueOf(LocalDateTime.now()));
         customer.setLast_update(Timestamp.valueOf(LocalDateTime.now()));
         customer.setLast_updated_by(UserDaoImpl.userName);
         customer.setDivision_id(divisionDao.findIdByDivisionName(division.getValue()));
-        customerDao.update(customer);
+    }
+
+    private boolean areValidInputs(String name, String address, String phone, String postCode) throws SQLException {
+        return Validator.isValidName(name) && Validator.isValidAddress(address) && Validator.isValidPhoneNumber(phone) && Validator.isValidZipCode(postCode);
     }
 
     @FXML
-    void updateAptClicked(ActionEvent event) throws SQLException, IOException {
-        updateCustInfo(event);
-        setScene(event, APPOINTMENT_RECORD_VIEW);
+    void updateAptClicked(ActionEvent event){
+        if(isSaved) {
+            setScene(event, APPOINTMENT_RECORD_VIEW);
+        }else{
+            Validator.displayUnsavedInfo("Please save customer's information before add/update the appointments");
+        }
     }
 
     @Override
