@@ -27,6 +27,10 @@ public class DateTimeConverter {
         return timeZone.getID();
     }
 
+//    public static String convertUTCToGMT(){
+//
+//    }
+
 
     public static Timestamp formatTime(LocalDate dateValue, String hrValue, String minuteValue) {
         String str = dateValue.toString() + " " + hrValue + ":" + minuteValue + ":00";

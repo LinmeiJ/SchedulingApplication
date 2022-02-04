@@ -14,6 +14,7 @@ import javafx.scene.control.TextField;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
+import java.util.logging.Logger;
 
 public class LoginController extends Location implements Initializable, CommonUseHelperIfc {
 
@@ -45,7 +46,7 @@ public class LoginController extends Location implements Initializable, CommonUs
     public static ResourceBundle language;
     private String name;
     private String userPassword;
-
+    private final static Logger LOGGER = Logger.getLogger(LoggerUtil.class.getName());
 
     @FXML
     void login(ActionEvent event) throws IOException {
