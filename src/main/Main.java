@@ -1,17 +1,15 @@
 package main;
 
-import controller.LoginController;
+import converter.DateTimeConverter;
 import dbConnection.JDBCConnection;
-import enums.CountryId;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.sql.Date;
-import java.text.SimpleDateFormat;
-import java.time.ZonedDateTime;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -21,6 +19,8 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+        System.out.println(LocalDateTime.now());
+        DateTimeConverter.convertAptTimeToUTC(LocalDate.of(2022,02, 04), "13", "00");
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(LOGIN_VIEW_PATH)),  ResourceBundle.getBundle("resource/language", getLocale()));
         primaryStage.setScene(new Scene(root, 800, 800));
         primaryStage.show();

@@ -17,6 +17,7 @@ import javafx.scene.input.MouseEvent;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -129,8 +130,8 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
        appointment.setTitle(aptTitle.getText());
        appointment.setContact_id(contactDao.getContactId(contactList.getValue()));
        appointment.setDescription(aptDescription.getText());
-       appointment.setStart(DateTimeConverter.formatTime(startDate.getValue(), startHr.getValue(), startMin.getValue()));
-       appointment.setEnd(DateTimeConverter.formatTime(endDate.getValue(), endHr.getValue(), startMin.getValue()));
+       appointment.setStart(DateTimeConverter.convertAptTimeToUTC(startD, startH, startM));
+       appointment.setEnd(DateTimeConverter.convertAptTimeToUTC(endD,endH, endM));
        appointment.setCreated_date(Timestamp.valueOf(LocalDateTime.now()));
        appointment.setCreated_by(UserDaoImpl.userName);
        appointment.setLast_update(Timestamp.valueOf(LocalDateTime.now()));

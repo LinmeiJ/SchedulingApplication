@@ -12,6 +12,7 @@ import javafx.scene.control.*;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ResourceBundle;
@@ -83,11 +84,11 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
         appointment.setDescription(aptDescriptionField.getText());
         appointment.setType(aptTypeField.getText());
         appointment.setLocation(aptLocationField.getText());
-        appointment.setStart(DateTimeConverter.formatTime(startDate.getValue(), startHr.getValue(), startMinute.getValue()));
-        appointment.setEnd(DateTimeConverter.formatTime(endDate.getValue(), endHr.getValue(), startMinute.getValue()));
-        appointment.setCreated_date(Timestamp.valueOf(LocalDateTime.now()));
+        appointment.setStart(DateTimeConverter.convertAptTimeToUTC(startDate.getValue(), startHr.getValue(), startMinute.getValue()));
+        appointment.setEnd(DateTimeConverter.convertAptTimeToUTC(endDate.getValue(), endHr.getValue(), endMinute.getValue()));
+        appointment.setCreated_date(DateTimeConverter.convertLocalTimeToUTC(LocalDateTime.now()));
         appointment.setCreated_by(UserDaoImpl.userName);
-        appointment.setLast_update(Timestamp.valueOf(LocalDateTime.now()));
+        appointment.setLast_update(DateTimeConverter.convertLocalTimeToUTC(LocalDateTime.now()));
         appointment.setLast_updated_by(UserDaoImpl.userName);
         if(AddNewCustomerController.isNewCust){
              newCustID = customerDao.findIdByNameAndDivisionId(AddNewCustomerController.customer.getCustomer_name(), AddNewCustomerController.customer.getDivision_id());

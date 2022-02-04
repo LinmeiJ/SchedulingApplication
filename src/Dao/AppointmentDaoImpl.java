@@ -1,19 +1,13 @@
 package Dao;
 
+import converter.DateTimeConverter;
 import dbConnection.JDBCConnection;
 import entity.Appointment;
-import entity.Customer;
-import enums.DateFormats;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.*;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.List;
 
 public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<Appointment>{
     private Appointment appointment;
@@ -32,32 +26,32 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
     public ObservableList<Appointment> findAllByCurrentMonth(long customerId) throws SQLException {
         String startYrMonth = "2020-05"; // fix me the timezone difference
         ResultSet rs = findRawDataFromDB("select * from appointments where Customer_ID = " + customerId + " AND start like '" + startYrMonth +"%'");
-        saveToObj(customerId, rs);
+        convertToObj(customerId, rs);
         return allAppointment;
     }
 
     public ObservableList<Appointment> findAllByCurrentWeek(long customerId) throws SQLException {
         String sql = "SELECT * FROM appointments WHERE YEARWEEK(start)=YEARWEEK(NOW()) AND  Customer_ID = " + customerId; // fix me the time zone difference;
         ResultSet rs = findRawDataFromDB(sql);
-        saveToObj(customerId, rs);
+        convertToObj(customerId, rs);
         return allAppointment;
     }
 
     public ObservableList<Appointment> findAllByCustId(long customerId) throws SQLException {
         ResultSet rs = findRawDataFromDB("SELECT Appointment_ID, Title, a.Description, Location, a.Type, a.Start, a.End, User_ID, Contact_ID FROM appointments as a WHERE Customer_ID = " + customerId);
-        saveToObj(customerId, rs);
+        convertToObj(customerId, rs);
         return allAppointment;
     }
 
-    private void saveToObj(long customerId, ResultSet rs) throws SQLException {
+    private void convertToObj(long customerId, ResultSet rs) throws SQLException {
         while(rs.next()){
             long aptId = rs.getLong("appointment_id");
             String title = rs.getString("title");
             String description =  rs.getString("description");
             String location =  rs.getString("location");
             String type =  rs.getString("type");
-            Timestamp startDateTime = rs.getTimestamp("start");
-            Timestamp endDateTime = rs.getTimestamp("end");
+            Timestamp startDateTime = DateTimeConverter.convertUTCToLocal(String.valueOf(rs.getTimestamp("start")));
+            Timestamp endDateTime = DateTimeConverter.convertUTCToLocal(String.valueOf(rs.getTimestamp("end")));
             long contactId = rs.getLong("contact_id");
             long userId = rs.getLong("user_id");
 
@@ -74,7 +68,7 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
             preparedStatement.setTimestamp(6, appointment.getEnd());
             preparedStatement.setTimestamp(7, Timestamp.valueOf(LocalDateTime.now()));
             preparedStatement.setString(8, UserDaoImpl.userName);
-            preparedStatement.setTimestamp(9, Timestamp.valueOf(LocalDateTime.now()));
+            preparedStatement.setTimestamp(9, Timestamp.valueOf("2022-02-04 03:08:00"));
             preparedStatement.setString(10, UserDaoImpl.userName);
 
             preparedStatement.execute();
