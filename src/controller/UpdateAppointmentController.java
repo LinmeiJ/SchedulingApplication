@@ -6,10 +6,13 @@ import Dao.Validator;
 import converter.DateTimeConverter;
 import dbConnection.JDBCConnection;
 import entity.Appointment;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 import java.net.URL;
@@ -20,8 +23,8 @@ import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
 public class UpdateAppointmentController extends JDBCConnection implements Initializable, CommonUseHelperIfc {
-    @FXML
-    private TextField aptContactName;
+//    @FXML
+//    private TextField aptContactName;
 
     @FXML
     private TextArea aptDescription;
@@ -81,12 +84,17 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
     private ComboBox<String> startMin;
 
     @FXML
+    private ChoiceBox<String> contactList;
+
+    @FXML
     private Label userId;
 
 
     private AppointmentDaoImpl appointmentDao = new AppointmentDaoImpl();
+    private ContactDaoImpl contactDao = new ContactDaoImpl();
+    ObservableList<String> contact = FXCollections.observableArrayList();
+
     Appointment appointment = AppointmentRecordController.selecteApt;
-    ContactDaoImpl contactDao = new ContactDaoImpl();
 
     @FXML
     void backToRecordPage(ActionEvent event) throws IOException {
@@ -98,12 +106,28 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
         exit(event, cancelBtn);
     }
 
+    private boolean areValidInput(String type, String location, String title, String description, LocalDate startD, String startH, String startM, LocalDate endD, String endH, String endM) {
+        return Validator.isValidString(type, location, title, description) && startD != null && endD != null && Validator.isValidString(startH, startM, endH, endM);
+    }
     @FXML
     void saveUpdateClicked(ActionEvent event) throws SQLException, IOException {
+        String type = aptType.getText();
+        String location = aptLocation.getText();
+        String title = aptTitle.getText();
+        String description = aptDescription.getText();
+        LocalDate startD = startDate.getValue();
+        String startH = startHr.getValue();
+        String startM = startMin.getValue();
+        LocalDate endD = endDate.getValue();
+        String endH = endHr.getValue();
+        String endM = endMin.getValue();
+        if(areValidInput(type, location, title, description, startD, startH, startM, endD, endH, endM)){
+
+        }
        appointment.setType(aptType.getText());
        appointment.setLocation(aptLocation.getText());
        appointment.setTitle(aptTitle.getText());
-       appointment.setContact_id(contactDao.getContactId(aptContactName.getText()));
+       appointment.setContact_id(contactDao.getContactId(contactList.getValue()));
        appointment.setDescription(aptDescription.getText());
        appointment.setStart(DateTimeConverter.formatTime(startDate.getValue(), startHr.getValue(), startMin.getValue()));
        appointment.setEnd(DateTimeConverter.formatTime(endDate.getValue(), endHr.getValue(), startMin.getValue()));
@@ -119,6 +143,8 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
        setScene(event, APPOINTMENT_RECORD_VIEW);
     }
 
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         aptID.setText(String.valueOf(appointment.getAppointment_id()));
@@ -126,16 +152,19 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
         aptDescription.setText(appointment.getDescription());
         aptLocation.setText(appointment.getLocation());
         aptType.setText(appointment.getType());
-        orgStart.setText(String.valueOf(appointment.getStart().toLocalDateTime().toLocalDate())); //fix me.. pass the DB saved start date
-        orgEnd.setText(String.valueOf(appointment.getEnd().toLocalDateTime().toLocalDate())); //fix me.. pass the DB saved start date
-        try {
-            aptContactName.setText(contactDao.findNameByID(appointment.getContact_id()));
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        String orgStartTime = appointment.getStart().toString();
+        String orgEndTime = appointment.getEnd().toString();
+        orgStart.setText(orgStartTime.substring(0, orgStartTime.length() - 2) + " - " + orgEndTime.substring(0, orgEndTime.length() - 2)); //fix me.. pass the DB saved start date
+
         custID.setText(String.valueOf(appointment.getCustomer_id()));
         userId.setText(String.valueOf(appointment.getUser_id()));
 
+        try {
+//            contactList.setItems(contactDao.findAll());
+            contactList.setValue(contactDao.findNameByID(appointment.getContact_id()));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         startHr.setItems(initHrs);
         startMin.setItems(initializeMinutes());
         endHr.setItems(initHrs);

@@ -36,6 +36,10 @@ public final class Validator {
         return checkStringEntry(str1) && checkStringEntry(str2);
     };
 
+    public static boolean isValidString(String str1, String str2, String str3, String str4){
+        return checkStringEntry(str1) && checkStringEntry(str2) && checkStringEntry(str3) && checkStringEntry(str4);
+    };
+
     public static boolean checkStringEntry(String str1){
         boolean isValid = false;
         if(str1.length() != 0 && !str1.isEmpty() && str1 != null){
@@ -136,6 +140,15 @@ public final class Validator {
 
     public static boolean isValidName(String name){
         Pattern p = Pattern.compile("^[a-zA-Z]+\\s[a-zA-Z]+$");//match only letters and one space between
+        if(name == null){
+            return false;
+        }
+        Matcher m = p.matcher(name);
+        return m.matches();
+    }
+
+    public static boolean isValidString(String name){
+        Pattern p = Pattern.compile("[a-zA-Z]+\\s+$");//match only letters and one space between
         if(name == null){
             return false;
         }
