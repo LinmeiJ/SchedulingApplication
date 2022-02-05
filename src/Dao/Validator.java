@@ -100,6 +100,12 @@ public final class Validator {
         infoAlert.setHeaderText(message + " Successfully!");
         infoAlert.showAndWait();
     }
+
+    public static void displayInfo(String message) {
+        infoAlert.setTitle("Information");
+        infoAlert.setHeaderText(message);
+        infoAlert.showAndWait();
+    }
     /**
      * This method generates a message to confirm whether the end user want to delete a selected item.
      */

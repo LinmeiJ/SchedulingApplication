@@ -110,15 +110,9 @@ public class UpdateCustomerController implements Initializable, CommonUseHelperI
 
     private void updateCustInfo(ActionEvent event) {
         try {
-            String name = custNameField.getText();
-            String address = addressField.getText();
-            String phone = phoneField.getText();
-            String postCode = zipCodeField.getText();
-            String div = division.getValue();
-            isAnyChange = detectAnyChange(name, address, phone, postCode, div);
-            if (!isAnyChange) {
-                if (areValidInputs(name, address, phone, postCode)) {
-                    getCustomerUpdatedInfo(name, address, phone, postCode);
+            if (detectAnyChange(event)) {
+                if (areValidInputs(custNameField.getText(), addressField.getText(), phoneField.getText(), zipCodeField.getText())) {
+                    getCustomerUpdatedInfo(custNameField.getText(), addressField.getText(), phoneField.getText(), zipCodeField.getText());
                     customerDao.update(selectedCust);
                     Validator.displaySuccess("Update");
                     isSaved = true;
@@ -127,12 +121,20 @@ public class UpdateCustomerController implements Initializable, CommonUseHelperI
                     setScene(event, UPDATE_CUSTOMER_VIEW);
                 }
             }
-            } catch(SQLException | RuntimeException e){
-                e.printStackTrace();
+            else {
+                Validator.displayInfo("No change is found.");
             }
+        } catch(SQLException | RuntimeException e){
+            e.printStackTrace();
+        }
     }
 
-    private boolean detectAnyChange(String name, String address, String phone, String postCode, String div) {
+    private boolean detectAnyChange(ActionEvent event) {
+            String name = custNameField.getText();
+            String address = addressField.getText();
+            String phone = phoneField.getText();
+            String postCode = zipCodeField.getText();
+            String div = division.getValue();
         return name.equals(selectedCust.getCustomer_name()) && address.equals(selectedCust.getAddress())
         && phone.equals(selectedCust.getPhone()) && postCode.equals(selectedCust.getPostal_code())
         && div.equals(getCustomerDivision().get(0)) ? false : true;
@@ -156,7 +158,7 @@ public class UpdateCustomerController implements Initializable, CommonUseHelperI
 
     @FXML
     void updateAptClicked(ActionEvent event){
-        if(isSaved || isAnyChange) {
+        if(!detectAnyChange(event)) {
             setScene(event, APPOINTMENT_RECORD_VIEW);
         }else{
             Validator.displayUnsavedInfo("Please save customer's information before add/update the appointments");
