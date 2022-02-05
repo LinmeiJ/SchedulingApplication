@@ -12,12 +12,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
+import javafx.util.Callback;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -85,7 +84,7 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
     private ComboBox<String> startMin;
 
     @FXML
-    private ChoiceBox<String> contactList;
+    private ComboBox<String> contactList;
 
     @FXML
     private Label userId;
@@ -144,31 +143,57 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
        setScene(event, APPOINTMENT_RECORD_VIEW);
     }
 
-
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        initFields();
+        initLastAptDateTime();
+
+        try {
+            initContact();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        disabledWeekends();
+    }
+
+    private void initFields() {
         aptID.setText(String.valueOf(appointment.getAppointment_id()));
         aptTitle.setText(appointment.getTitle());
         aptDescription.setText(appointment.getDescription());
         aptLocation.setText(appointment.getLocation());
         aptType.setText(appointment.getType());
-        String orgStartTime = appointment.getStart().toString();
-        String orgEndTime = appointment.getEnd().toString();
-        orgStart.setText(orgStartTime.substring(0, orgStartTime.length() - 2) + " - " + orgEndTime.substring(0, orgEndTime.length() - 2)); //fix me.. pass the DB saved start date
 
         custID.setText(String.valueOf(appointment.getCustomer_id()));
         userId.setText(String.valueOf(appointment.getUser_id()));
+    }
 
-        try {
-//            contactList.setItems(contactDao.findAll());
-            contactList.setValue(contactDao.findNameByID(appointment.getContact_id()));
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    private void initContact() throws SQLException {
+        contactList.setValue(contactDao.findNameByID(appointment.getContact_id()));
+        contactList.setItems(contactDao.findAll());
+    }
+
+    private void initLastAptDateTime() {
+        LocalDateTime startDateTime = appointment.getStart().toLocalDateTime();
+        startDate.setValue(startDateTime.toLocalDate());
+        startHr.setValue(String.valueOf(startDateTime.getHour()));
+        startMin.setValue(String.valueOf(startDateTime.getMinute()));
+
+        LocalDateTime endDateTime = appointment.getStart().toLocalDateTime();
+
+        endDate.setValue(endDateTime.toLocalDate());
+        endHr.setValue(String.valueOf(endDateTime.getHour()));
+        endMin.setValue(String.valueOf(endDateTime.getMinute()));
+
         startHr.setItems(initHrs);
         startMin.setItems(initializeMinutes());
         endHr.setItems(initHrs);
         endMin.setItems(initializeMinutes());
+    }
+
+    private void disabledWeekends() {
+        Callback<DatePicker, DateCell> startDayCellFactory= this.getDayCellFactory();
+        startDate.setDayCellFactory(startDayCellFactory);
+        Callback<DatePicker, DateCell> endDayCellFactory= this.getDayCellFactory();
+        endDate.setDayCellFactory(endDayCellFactory);
     }
 }

@@ -108,16 +108,15 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        startDate.setValue(LocalDate.of(2016, 7, 25));
+        startDate.setValue(LocalDate.now());
         startDate.setShowWeekNumbers(true);
-        endDate.setValue(LocalDate.of(2016, 7, 25));
+        endDate.setValue(LocalDate.now());
         endDate.setShowWeekNumbers(true);
 
-        // Factory to create Cell of DatePicker
         Callback<DatePicker, DateCell> startDayCellFactory= this.getDayCellFactory();
         startDate.setDayCellFactory(startDayCellFactory);
         Callback<DatePicker, DateCell> endDayCellFactory= this.getDayCellFactory();
-        startDate.setDayCellFactory(endDayCellFactory);
+        endDate.setDayCellFactory(endDayCellFactory);
 
         startHr.setItems(initHrs);
         startMinute.setItems(initializeMinutes());

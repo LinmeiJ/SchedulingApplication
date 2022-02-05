@@ -2,6 +2,7 @@ package controller;
 
 import Dao.AppointmentDaoImpl;
 import Dao.Validator;
+import converter.DateTimeConverter;
 import dbConnection.JDBCConnection;
 import entity.Appointment;
 import javafx.collections.FXCollections;
@@ -16,6 +17,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -137,10 +140,10 @@ public class AppointmentRecordController extends JDBCConnection implements Initi
                 aptDataTable.addAll(appointmentDao.findAllByCustId(AddNewAppointmentController.newCustID));
                 AddNewCustomerController.isNewCust = false;
             }else if(isMonthFilter){
-                aptDataTable.addAll(appointmentDao.findAllByCurrentMonth(CustomerRecordController.selectedCust.getCustomer_id()));
+                aptDataTable.addAll(getAptsForCurrentMonth(appointmentDao.findAllByCustId(CustomerRecordController.selectedCust.getCustomer_id())));
                 isMonthFilter = false;
             }else if(isWeekFilter){
-//                aptDataTable.addAll(appointmentDao.findAllByCurrentWeek(CustomerRecordController.selectedCust.getCustomer_id()));
+                aptDataTable.addAll(getAptsForCurrentWeek(appointmentDao.findAllByCustId(CustomerRecordController.selectedCust.getCustomer_id())));
                 isWeekFilter = false;
             }
             else {
@@ -150,6 +153,34 @@ public class AppointmentRecordController extends JDBCConnection implements Initi
             logger.log(Level.WARNING, "initialize() throws an exception", this.getClass().getName());
         }
     }
+
+    private ObservableList<Appointment>  getAptsForCurrentMonth(ObservableList<Appointment> appointments) {
+        ObservableList<Appointment> aptByMonth = FXCollections.observableArrayList();
+        Month currentMonth = LocalDate.now().getMonth();
+        for(Appointment apt : appointments){
+            if(apt.getStart().toLocalDateTime().toLocalDate().getMonth().equals(currentMonth)){
+                aptByMonth.add(apt);
+            }
+        }
+        return aptByMonth;
+    }
+
+    private ObservableList<Appointment> getAptsForCurrentWeek(ObservableList<Appointment> appointments) {
+       ObservableList<Appointment> aptByWeek = FXCollections.observableArrayList();
+
+       LocalDate monday = DateTimeConverter.getMondayDate();
+       LocalDate sunday = DateTimeConverter.getSundayDate();
+
+       for(Appointment apt : appointments){
+           if(apt.getStart().toLocalDateTime().toLocalDate().compareTo(monday) >= 0 &&
+                   apt.getStart().toLocalDateTime().toLocalDate().compareTo(sunday) <= 0){
+               aptByWeek.add(apt);
+           }
+       }
+      return aptByWeek;
+    }
+
+
 
     private void initCols() {
         aptID.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));

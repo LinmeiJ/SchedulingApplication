@@ -43,15 +43,6 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
     public ObservableList<Appointment> findAllByCustId(long customerId) throws SQLException {
         ResultSet rs = findRawDataFromDB("SELECT Appointment_ID, Title, a.Description, Location, a.Type, a.Start, a.End, User_ID, Contact_ID FROM appointments as a WHERE Customer_ID = " + customerId);
         convertToObj(customerId, rs);
-        if(AppointmentRecordController.isWeekFilter){
-            Month currentMonth = LocalDate.now().getMonth();
-            System.out.println(currentMonth);
-        }else if(AppointmentRecordController.isMonthFilter){
-//            Week currentWeek = LocalDate.now().getDayOfWeek();
-        }else{
-
-        }
-
         return allAppointment;
     }
 
@@ -64,7 +55,6 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
             String location =  rs.getString("location");
             String type =  rs.getString("type");
             Timestamp startDateTime = DateTimeConverter.convertUTCToLocal(String.valueOf(rs.getTimestamp("start")));
-            System.out.println(startDateTime.toLocalDateTime());
             Timestamp endDateTime = DateTimeConverter.convertUTCToLocal(String.valueOf(rs.getTimestamp("end")));
             long contactId = rs.getLong("contact_id");
             long userId = rs.getLong("user_id");

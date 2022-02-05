@@ -87,7 +87,6 @@ public interface CommonUseHelperIfc {
                         if (item.getDayOfWeek() == DayOfWeek.SATURDAY
                                 || item.getDayOfWeek() == DayOfWeek.SUNDAY) {
                             setDisable(true);
-                            setStyle("-fx-background-color: #ffc0cb;");
                         }
                     }
                 };

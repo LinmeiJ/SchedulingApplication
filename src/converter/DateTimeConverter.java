@@ -11,9 +11,7 @@ import java.util.Date;
 import java.util.TimeZone;
 
 public class DateTimeConverter {
-
-    public static LocalDate monday;
-    public static LocalDate sunday;
+    private static  LocalDate today = LocalDate.now();
 
     public static Timestamp convertedTimeTOUTC() {
 
@@ -23,7 +21,6 @@ public class DateTimeConverter {
     public static Timestamp getUserLocalDateTime() {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss zzz");
         Timestamp dateTime = new Timestamp(System.currentTimeMillis());
-        System.out.println(formatter.format(dateTime));
         return dateTime;
     }
 
@@ -60,9 +57,19 @@ public class DateTimeConverter {
         return Timestamp.valueOf(formatter.format(localTime.atZone(ZoneId.systemDefault()).withZoneSameInstant(ZoneId.of("UTC"))));
     }
 
-    public static void findCurrentWeekStartAndEndDate(Timestamp timestamp) {
-        monday = LocalDate.now();
-        sunday = LocalDate.now();
+    public static LocalDate getMondayDate() {
+        LocalDate monday = today;
+        while (monday.getDayOfWeek() != DayOfWeek.MONDAY) {
+            monday = monday.minusDays(1);
+        }
+        return monday;
     }
 
+    public static LocalDate getSundayDate() {
+        LocalDate sunday = today;
+        while (sunday.getDayOfWeek() != DayOfWeek.SUNDAY) {
+            sunday = sunday.plusDays(1);
+        }
+        return sunday;
+    }
 }
