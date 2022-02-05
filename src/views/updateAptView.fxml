@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="619.0" prefWidth="1103.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.UpdateAppointmentController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="619.0" prefWidth="1103.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.UpdateAppointmentController">
    <children>
       <AnchorPane layoutX="106.0" layoutY="49.0" prefHeight="522.0" prefWidth="813.0">
          <children>
@@ -39,7 +39,7 @@
             </Label>
             <TextField fx:id="aptType" layoutX="85.0" layoutY="219.0" prefHeight="26.0" prefWidth="179.0" />
             <Label layoutX="-24.0" layoutY="274.0" text="Contact Name" />
-            <ComboBox fx:id="contactList" editable="true" layoutX="82.0" layoutY="271.0"  prefWidth="150.0" />
+            <ComboBox fx:id="contactList" editable="true" layoutX="82.0" layoutY="271.0" prefWidth="150.0" />
             <Label layoutX="-11.0" layoutY="312.0" text="Description">
                <font>
                   <Font size="14.0" />
@@ -63,6 +63,7 @@
             <Label fx:id="custID" layoutX="97.0" layoutY="476.0" prefHeight="18.0" prefWidth="54.0" />
             <Label layoutX="172.0" layoutY="476.0" text="User ID:" />
             <Label fx:id="userId" layoutX="231.0" layoutY="476.0" prefHeight="18.0" prefWidth="54.0" />
+            <Label layoutX="638.0" layoutY="55.0" prefHeight="18.0" prefWidth="210.0" text="Office Hour: 8AM - 10PM, EST" />
          </children>
       </AnchorPane>
       <Button fx:id="saveUpdates" layoutX="973.0" layoutY="476.0" mnemonicParsing="false" onAction="#saveUpdateClicked" prefHeight="44.0" prefWidth="94.0" text="Save">

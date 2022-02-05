@@ -1,12 +1,10 @@
 package converter;
 
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
@@ -71,5 +69,15 @@ public class DateTimeConverter {
             sunday = sunday.plusDays(1);
         }
         return sunday;
+    }
+
+    public static String getHr(int hr){
+        String hour = String.valueOf(hr);
+        return hour.length() == 1 ? "0" + hour : hour;
+    }
+
+    public static String getMint(int m){
+        String minute = String.valueOf(m);
+        return minute.length() == 1 ? "0" + minute : minute;
     }
 }

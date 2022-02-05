@@ -175,14 +175,13 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
     private void initLastAptDateTime() {
         LocalDateTime startDateTime = appointment.getStart().toLocalDateTime();
         startDate.setValue(startDateTime.toLocalDate());
-        startHr.setValue(String.valueOf(startDateTime.getHour()));
-        startMin.setValue(String.valueOf(startDateTime.getMinute()));
+        startHr.setValue(DateTimeConverter.getHr(startDateTime.getHour()));
+        startMin.setValue(DateTimeConverter.getMint(startDateTime.getMinute()));
 
         LocalDateTime endDateTime = appointment.getStart().toLocalDateTime();
-
         endDate.setValue(endDateTime.toLocalDate());
-        endHr.setValue(String.valueOf(endDateTime.getHour()));
-        endMin.setValue(String.valueOf(endDateTime.getMinute()));
+        endHr.setValue(DateTimeConverter.getHr(endDateTime.getHour()));
+        endMin.setValue(DateTimeConverter.getMint(endDateTime.getMinute()));
 
         startHr.setItems(initHrs);
         startMin.setItems(initializeMinutes());
