@@ -70,8 +70,8 @@ public class AppointmentRecordController extends JDBCConnection implements Initi
     ObservableList<Appointment> aptDataTable = FXCollections.observableArrayList();
     AppointmentDaoImpl appointmentDao = new AppointmentDaoImpl();
     public static Appointment selecteApt;
-    private static boolean isMonthFilter = false;
-    private static boolean isWeekFilter = false;
+    public static boolean isMonthFilter = false;
+    public static boolean isWeekFilter = false;
 
     @FXML
     void addNewClicked(ActionEvent event) throws IOException {
@@ -140,7 +140,7 @@ public class AppointmentRecordController extends JDBCConnection implements Initi
                 aptDataTable.addAll(appointmentDao.findAllByCurrentMonth(CustomerRecordController.selectedCust.getCustomer_id()));
                 isMonthFilter = false;
             }else if(isWeekFilter){
-                aptDataTable.addAll(appointmentDao.findAllByCurrentWeek(CustomerRecordController.selectedCust.getCustomer_id()));
+//                aptDataTable.addAll(appointmentDao.findAllByCurrentWeek(CustomerRecordController.selectedCust.getCustomer_id()));
                 isWeekFilter = false;
             }
             else {
