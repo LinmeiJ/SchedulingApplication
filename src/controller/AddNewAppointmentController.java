@@ -8,12 +8,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.util.Callback;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
@@ -106,6 +108,17 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        startDate.setValue(LocalDate.of(2016, 7, 25));
+        startDate.setShowWeekNumbers(true);
+        endDate.setValue(LocalDate.of(2016, 7, 25));
+        endDate.setShowWeekNumbers(true);
+
+        // Factory to create Cell of DatePicker
+        Callback<DatePicker, DateCell> startDayCellFactory= this.getDayCellFactory();
+        startDate.setDayCellFactory(startDayCellFactory);
+        Callback<DatePicker, DateCell> endDayCellFactory= this.getDayCellFactory();
+        startDate.setDayCellFactory(endDayCellFactory);
+
         startHr.setItems(initHrs);
         startMinute.setItems(initializeMinutes());
         endHr.setItems(initHrs);
