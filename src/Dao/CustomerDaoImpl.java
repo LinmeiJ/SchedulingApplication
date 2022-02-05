@@ -1,5 +1,6 @@
 package Dao;
 
+import controller.CustomerRecordController;
 import dbConnection.JDBCConnection;
 import entity.Customer;
 import javafx.collections.FXCollections;
@@ -12,7 +13,6 @@ import java.sql.SQLException;
 public class CustomerDaoImpl extends JDBCConnection implements ServiceIfc<Customer> {
     FirstLevelDivisionDaoImpl firstLevelDivisionDao = new FirstLevelDivisionDaoImpl();
     AppointmentDaoImpl aptDao = new AppointmentDaoImpl();
-    public   Customer customer;
     private  ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
 
     public ObservableList<Customer> findAll() throws SQLException {
@@ -24,7 +24,7 @@ public class CustomerDaoImpl extends JDBCConnection implements ServiceIfc<Custom
             String postalCode =  rs.getString("Postal_Code");
             String phoneNum = rs.getString("Phone");
             long div_id = rs.getLong("Division_ID");
-            customer = new Customer(id, name, address, postalCode, phoneNum, firstLevelDivisionDao.findById(div_id));
+            Customer customer = new Customer(id, name, address, postalCode, phoneNum, firstLevelDivisionDao.findById(div_id));
             allCustomers.add(customer);
         }
         return allCustomers;
@@ -70,16 +70,18 @@ public class CustomerDaoImpl extends JDBCConnection implements ServiceIfc<Custom
 
     @Override
     public void update(Customer customer) {
-        String sql = "UPDATE customers SET Customer_Name=?, Address=?, Postal_Code=?, Phone=?, Last_Update=?, Last_Updated_By=?, Division_ID=? WHERE Customer_ID = " + customer.getCustomer_id();
+        String sql = "UPDATE customers SET Customer_Name=?, Address=?, Postal_Code=?, Phone=?, Last_Update=?, Last_Updated_By=?, Create_Date=?, Created_By=?, Division_ID=? WHERE Customer_ID = " + CustomerRecordController.selectedCust.getCustomer_id();
         try {
             PreparedStatement preparedStatement = JDBCConnection.connection.prepareStatement(sql);
             preparedStatement.setString(1, customer.getCustomer_name());
             preparedStatement.setString(2, customer.getAddress());
             preparedStatement.setString(3, customer.getPostal_code());
             preparedStatement.setString(4, customer.getPhone());
-            preparedStatement.setString(5, String.valueOf(customer.getLast_update()));
+            preparedStatement.setTimestamp(5, customer.getLast_update());
             preparedStatement.setString(6, customer.getLast_updated_by());
-            preparedStatement.setString(7, String.valueOf(customer.getDivision_id()));
+            preparedStatement.setTimestamp(7, customer.getCreate_date());
+            preparedStatement.setString(8,customer.getCreated_by());
+            preparedStatement.setString(9, String.valueOf(customer.getDivision_id()));
 
             preparedStatement.execute();
         } catch (SQLException e) {

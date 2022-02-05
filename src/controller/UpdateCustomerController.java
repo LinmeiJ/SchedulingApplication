@@ -113,7 +113,7 @@ public class UpdateCustomerController implements Initializable, CommonUseHelperI
             if (detectAnyChange(event)) {
                 if (areValidInputs(custNameField.getText(), addressField.getText(), phoneField.getText(), zipCodeField.getText())) {
                     getCustomerUpdatedInfo(custNameField.getText(), addressField.getText(), phoneField.getText(), zipCodeField.getText());
-                    customerDao.update(selectedCust);
+                    customerDao.update(customer);
                     Validator.displaySuccess("Update");
                     isSaved = true;
                 } else {
@@ -158,7 +158,7 @@ public class UpdateCustomerController implements Initializable, CommonUseHelperI
 
     @FXML
     void updateAptClicked(ActionEvent event){
-        if(!detectAnyChange(event)) {
+        if(!detectAnyChange(event) || isSaved) {
             setScene(event, APPOINTMENT_RECORD_VIEW);
         }else{
             Validator.displayUnsavedInfo("Please save customer's information before add/update the appointments");
