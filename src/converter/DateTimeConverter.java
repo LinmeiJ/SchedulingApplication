@@ -11,19 +11,23 @@ import java.util.Date;
 import java.util.TimeZone;
 
 public class DateTimeConverter {
-    public static Timestamp convertedTimeTOUTC(){
+
+    public static LocalDate monday;
+    public static LocalDate sunday;
+
+    public static Timestamp convertedTimeTOUTC() {
 
         return null;
     }
 
-    public static Timestamp getUserLocalDateTime(){
-        SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss zzz");
+    public static Timestamp getUserLocalDateTime() {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss zzz");
         Timestamp dateTime = new Timestamp(System.currentTimeMillis());
         System.out.println(formatter.format(dateTime));
         return dateTime;
     }
 
-    public static String getTimeZoneID(){
+    public static String getTimeZoneID() {
         TimeZone timeZone = TimeZone.getDefault();
         return timeZone.getID();
     }
@@ -51,9 +55,14 @@ public class DateTimeConverter {
 
     }
 
-    public static Timestamp convertLocalTimeToUTC(LocalDateTime localTime){
+    public static Timestamp convertLocalTimeToUTC(LocalDateTime localTime) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         return Timestamp.valueOf(formatter.format(localTime.atZone(ZoneId.systemDefault()).withZoneSameInstant(ZoneId.of("UTC"))));
+    }
+
+    public static void findCurrentWeekStartAndEndDate(Timestamp timestamp) {
+        monday = LocalDate.now();
+        sunday = LocalDate.now();
     }
 
 }
