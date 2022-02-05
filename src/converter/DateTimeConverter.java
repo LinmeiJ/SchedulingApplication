@@ -46,7 +46,7 @@ public class DateTimeConverter {
         String str = dateValue.toString() + " " + hrValue + ":" + minuteValue + ":00";
         LocalDateTime dateTime = LocalDateTime.parse(str, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        return Timestamp.valueOf(formatter.format(dateTime.atZone(ZoneId.of("America/New_York")).withZoneSameInstant(ZoneId.of("UTC"))));
+        return Timestamp.valueOf(formatter.format(dateTime.atZone(ZoneId.systemDefault()).withZoneSameInstant(ZoneId.of("UTC"))));
 
     }
 
