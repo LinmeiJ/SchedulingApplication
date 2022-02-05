@@ -60,9 +60,11 @@ public class UpdateCustomerController implements Initializable, CommonUseHelperI
 
     CountryId ctryID;
     private boolean isSaved = false;
-    private static Customer customer = CustomerRecordController.selectedCust;;
+    private Customer selectedCust = CustomerRecordController.selectedCust;;
     private CustomerDaoImpl customerDao = new CustomerDaoImpl();
     private FirstLevelDivisionDaoImpl divisionDao = new FirstLevelDivisionDaoImpl();
+    private Customer customer = new Customer();
+    private  boolean isAnyChange = false;
 
     @FXML
     void canadaSelected(ActionEvent event) {
@@ -104,7 +106,6 @@ public class UpdateCustomerController implements Initializable, CommonUseHelperI
     @FXML
     void saveUpdateClicked(ActionEvent event) throws SQLException {
         updateCustInfo(event);
-        isSaved = true;
     }
 
     private void updateCustInfo(ActionEvent event) {
@@ -113,17 +114,28 @@ public class UpdateCustomerController implements Initializable, CommonUseHelperI
             String address = addressField.getText();
             String phone = phoneField.getText();
             String postCode = zipCodeField.getText();
-            if (areValidInputs(name, address, phone, postCode)) {
-                getCustomerUpdatedInfo(name, address, phone, postCode);
-                customerDao.update(customer);
-                Validator.displaySuccess("Update");
-            } else {
-                Validator.displayInvalidInput("Contain invalid entry! E.g: name only contains alphabets and a space, phone number and zipcode has to be only digits.");
-                setScene(event, UPDATE_CUSTOMER_VIEW);
+            String div = division.getValue();
+            isAnyChange = detectAnyChange(name, address, phone, postCode, div);
+            if (!isAnyChange) {
+                if (areValidInputs(name, address, phone, postCode)) {
+                    getCustomerUpdatedInfo(name, address, phone, postCode);
+                    customerDao.update(selectedCust);
+                    Validator.displaySuccess("Update");
+                    isSaved = true;
+                } else {
+                    Validator.displayInvalidInput("Contain invalid entry! E.g: name only contains alphabets and a space, phone number and zipcode has to be only digits.");
+                    setScene(event, UPDATE_CUSTOMER_VIEW);
+                }
             }
-        } catch (SQLException | RuntimeException e) {
-            e.printStackTrace();
-        }
+            } catch(SQLException | RuntimeException e){
+                e.printStackTrace();
+            }
+    }
+
+    private boolean detectAnyChange(String name, String address, String phone, String postCode, String div) {
+        return name.equals(selectedCust.getCustomer_name()) && address.equals(selectedCust.getAddress())
+        && phone.equals(selectedCust.getPhone()) && postCode.equals(selectedCust.getPostal_code())
+        && div.equals(getCustomerDivision().get(0)) ? false : true;
     }
 
     private void getCustomerUpdatedInfo(String name, String address, String phone, String postCode) throws SQLException {
@@ -144,7 +156,7 @@ public class UpdateCustomerController implements Initializable, CommonUseHelperI
 
     @FXML
     void updateAptClicked(ActionEvent event){
-        if(isSaved) {
+        if(isSaved || isAnyChange) {
             setScene(event, APPOINTMENT_RECORD_VIEW);
         }else{
             Validator.displayUnsavedInfo("Please save customer's information before add/update the appointments");
@@ -153,23 +165,23 @@ public class UpdateCustomerController implements Initializable, CommonUseHelperI
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        custId.setText(String.valueOf(customer.getCustomer_id()));
-        custNameField.setText(customer.getCustomer_name());
-        phoneField.setText(customer.getPhone());
-        addressField.setText(customer.getAddress());
-        zipCodeField.setText(customer.getPostal_code());
+        custId.setText(String.valueOf(selectedCust.getCustomer_id()));
+        custNameField.setText(selectedCust.getCustomer_name());
+        phoneField.setText(selectedCust.getPhone());
+        addressField.setText(selectedCust.getAddress());
+        zipCodeField.setText(selectedCust.getPostal_code());
         division.setValue(getCustomerDivision().get(0));
         getCountry();
     }
 
     private ObservableList<String> getCustomerDivision() {
         ObservableList<String> divisionList = FXCollections.observableArrayList();
-        divisionList.add(customer.getFirstLevelDivision().getDivision());
+        divisionList.add(selectedCust.getFirstLevelDivision().getDivision());
         return divisionList;
     }
 
     private void getCountry(){
-       Long ctyId = customer.getFirstLevelDivision().getCountry_id();
+       Long ctyId = selectedCust.getFirstLevelDivision().getCountry_id();
        ctryID = ctyId == 1 ? CountryId.US : ctyId == 2 ? CountryId.UK : CountryId.CANADA;
        switch (ctryID){
            case US:

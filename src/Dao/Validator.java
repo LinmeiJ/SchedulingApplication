@@ -39,6 +39,10 @@ public final class Validator {
     public static boolean isValidString(String str1, String str2, String str3, String str4){
         return checkStringEntry(str1) && checkStringEntry(str2) && checkStringEntry(str3) && checkStringEntry(str4);
     };
+    public static boolean isValidString(String str1, String str2, String str3){
+        return checkStringEntry(str1) && checkStringEntry(str2) && checkStringEntry(str3);
+    };
+
 
     public static boolean checkStringEntry(String str1){
         boolean isValid = false;

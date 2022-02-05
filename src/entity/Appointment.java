@@ -15,7 +15,7 @@ public class Appointment {
     private String Created_by;
     private Timestamp last_update;
     private String last_updated_by;
-    private long customer_id; // this is a fk
+    private long customer_id;
     private long contact_id;
     private long user_id;
 
@@ -29,6 +29,22 @@ public class Appointment {
         this.type = type;
         this.start = start;
         this.end = end;
+        this.customer_id = customer_id;
+        this.contact_id = contact_id;
+        this.user_id = user_id;
+    }
+
+    public Appointment(String title, String description, String location, String type, Timestamp start, Timestamp end, Timestamp created_date, String created_by, Timestamp last_update, String last_updated_by, long customer_id, long contact_id, long user_id) {
+        this.title = title;
+        this.description = description;
+        this.location = location;
+        this.type = type;
+        this.start = start;
+        this.end = end;
+        Created_date = created_date;
+        Created_by = created_by;
+        this.last_update = last_update;
+        this.last_updated_by = last_updated_by;
         this.customer_id = customer_id;
         this.contact_id = contact_id;
         this.user_id = user_id;

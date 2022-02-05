@@ -17,6 +17,7 @@ import javafx.util.Callback;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -106,8 +107,8 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
         exit(event, cancelBtn);
     }
 
-    private boolean areValidInput(String type, String location, String title, String description, LocalDate startD, String startH, String startM, LocalDate endD, String endH, String endM) {
-        return Validator.isValidString(type, location, title, description) && startD != null && endD != null && Validator.isValidString(startH, startM, endH, endM);
+    private boolean areValidInput(String type, String location, String title, String description, LocalDate startD, String startH, String startM, LocalDate endD, String endH, String endM, String contact) {
+        return Validator.isValidString(type, location, title) && description != null && contact != null && startD != null && endD != null && Validator.isValidString(startH, startM, endH, endM);
     }
     @FXML
     void saveUpdateClicked(ActionEvent event) throws SQLException, IOException {
@@ -121,26 +122,39 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
         LocalDate endD = endDate.getValue();
         String endH = endHr.getValue();
         String endM = endMin.getValue();
-        if(areValidInput(type, location, title, description, startD, startH, startM, endD, endH, endM)){
-
+        String contact =  contactList.getValue();
+        if(!areValidInput(type, location, title, description, startD, startH, startM, endD, endH, endM, contact)){
+            Validator.displayInvalidInput("Invalid input. \n requires:\n" +
+                    "Only alphabets are allowed for Type, Location, Title and all fields can not be empty");
         }
-       appointment.setType(aptType.getText());
-       appointment.setLocation(aptLocation.getText());
-       appointment.setTitle(aptTitle.getText());
-       appointment.setContact_id(contactDao.getContactId(contactList.getValue()));
-       appointment.setDescription(aptDescription.getText());
-       appointment.setStart(DateTimeConverter.convertAptTimeToUTC(startD, startH, startM));
-       appointment.setEnd(DateTimeConverter.convertAptTimeToUTC(endD,endH, endM));
-       appointment.setCreated_date(Timestamp.valueOf(LocalDateTime.now()));
-       appointment.setCreated_by(UserDaoImpl.userName);
-       appointment.setLast_update(Timestamp.valueOf(LocalDateTime.now()));
-       appointment.setLast_updated_by(UserDaoImpl.userName);
-       appointment.setCustomer_id(CustomerRecordController.selectedCust.getCustomer_id());
-       appointment.setUser_id(UserDaoImpl.userId);
+        else{
+            getAptsRecordForm(event, type, location, title, description, startD, startH, startM, endD, endH, endM, contact);
+        }
+    }
 
-       appointmentDao.update(appointment);
-       Validator.displaySuccess("Appointment is saved");
-       setScene(event, APPOINTMENT_RECORD_VIEW);
+    private void getAptsRecordForm(ActionEvent event, String type, String location, String title, String description, LocalDate startD, String startH, String startM, LocalDate endD, String endH, String endM, String contactName) throws SQLException {
+//        appointment.setType(type);
+//        appointment.setLocation(location);
+//        appointment.setTitle(title);
+//        appointment.setDescription(description);
+//        appointment.setStart(DateTimeConverter.convertAptTimeToUTC(startD, startH, startM));
+//        appointment.setEnd(DateTimeConverter.convertAptTimeToUTC(endD, endH, endM));
+//
+//        appointment.setCreated_date(Timestamp.valueOf(LocalDateTime.now()));
+//        appointment.setCreated_by(UserDaoImpl.userName);
+//        appointment.setLast_update(Timestamp.valueOf(LocalDateTime.now()));
+//        appointment.setLast_updated_by(UserDaoImpl.userName);
+//        appointment.setCustomer_id(CustomerRecordController.selectedCust.getCustomer_id());
+//        appointment.setUser_id(UserDaoImpl.userId);
+//        appointment.setContact_id(contactDao.getContactId(contactName));
+        Timestamp currentTime = Timestamp.valueOf(LocalDateTime.now());
+        Timestamp start = DateTimeConverter.convertAptTimeToUTC(startD, startH, startM);
+        Timestamp end = DateTimeConverter.convertAptTimeToUTC(endD, endH, endM);
+        long custId = CustomerRecordController.selectedCust.getCustomer_id();
+        long contactId = contactDao.getContactId(contactName);
+
+        appointmentDao.update(new Appointment(title, description, location, type, start, end, currentTime, UserDaoImpl.userName, currentTime, UserDaoImpl.userName, custId, contactId, UserDaoImpl.userId));
+        setScene(event, APPOINTMENT_RECORD_VIEW);
     }
 
     @Override

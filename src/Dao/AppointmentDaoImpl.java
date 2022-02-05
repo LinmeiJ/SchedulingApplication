@@ -56,6 +56,7 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
             String type =  rs.getString("type");
             Timestamp startDateTime = DateTimeConverter.convertUTCToLocal(String.valueOf(rs.getTimestamp("start")));
             Timestamp endDateTime = DateTimeConverter.convertUTCToLocal(String.valueOf(rs.getTimestamp("end")));
+
             long contactId = rs.getLong("contact_id");
             long userId = rs.getLong("user_id");
 
@@ -72,13 +73,14 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
             preparedStatement.setTimestamp(6, appointment.getEnd());
             preparedStatement.setTimestamp(7, Timestamp.valueOf(LocalDateTime.now()));
             preparedStatement.setString(8, UserDaoImpl.userName);
-            preparedStatement.setTimestamp(9, Timestamp.valueOf("2022-02-04 03:08:00"));
+            preparedStatement.setTimestamp(9, Timestamp.valueOf(LocalDateTime.now()));
             preparedStatement.setString(10, UserDaoImpl.userName);
 
             preparedStatement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        Validator.displaySuccess("Appointment is updated");
     }
 
     private PreparedStatement getPreparedStatement(Appointment appointment, String sql) throws SQLException {
@@ -126,5 +128,6 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
         preparedStatement.setString(10, appointment.getLast_updated_by());
 
         preparedStatement.execute();
+        Validator.displaySuccess("Appointment is saved");
     }
 }
