@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane cache="true" prefHeight="656.0" prefWidth="1236.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AppointmentRecordController">
+<AnchorPane cache="true" prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AppointmentRecordController">
     <children>
         <Label alignment="CENTER" graphicTextGap="105.0" layoutX="145.0" layoutY="20.0" prefHeight="30.0" prefWidth="843.0" text="Appointments" textAlignment="CENTER" textFill="#5e2d2d">
             <font>
@@ -49,17 +49,12 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
                 </TableView>
-            <Button layoutX="692.0" layoutY="414.0" mnemonicParsing="false" onAction="#addNewClicked" prefHeight="30.0" prefWidth="144.0" text="Add New Apt">
+            <Button fx:id="backBtn" layoutX="966.0" layoutY="421.0" mnemonicParsing="false" onAction="#backExitClicked" prefHeight="30.0" prefWidth="55.0" text="Back">
                <font>
                   <Font size="14.0" />
                </font>
             </Button>
-            <Button layoutX="861.0" layoutY="414.0" mnemonicParsing="false" onAction="#updateClicked" prefHeight="30.0" prefWidth="133.0" text="Update">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Button>
-            <Button layoutX="1020.0" layoutY="414.0" mnemonicParsing="false" onAction="#deleteClicked" prefHeight="30.0" prefWidth="110.0" text="Delete">
+              <Button fx:id="exitBtn" layoutX="1049.0" layoutY="424.0" mnemonicParsing="false" onAction="#exitBtnClicked" prefHeight="30.0" prefWidth="55.0" text="Exit">
                <font>
                   <Font size="14.0" />
                </font>
@@ -69,11 +64,17 @@
                 <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
             </opaqueInsets>
         </AnchorPane>
-        <Button fx:id="exitBtn" layoutX="1131.0" layoutY="46.0" mnemonicParsing="false" onAction="#exitBtnClicked" prefHeight="30.0" prefWidth="55.0" text="Exit">
+      <Button layoutX="671.0" layoutY="46.0" mnemonicParsing="false" onAction="#addNewClicked" prefHeight="30.0" prefWidth="144.0" text="Add New Apt">
          <font>
             <Font size="14.0" />
-         </font></Button>
-      <Button fx:id="backBtn" layoutX="1047.0" layoutY="46.0" mnemonicParsing="false" onAction="#backExitClicked" prefHeight="30.0" prefWidth="55.0" text="Back">
+         </font>
+      </Button>
+      <Button layoutX="827.0" layoutY="46.0" mnemonicParsing="false" onAction="#updateClicked" prefHeight="30.0" prefWidth="133.0" text="Update">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Button layoutX="971.0" layoutY="46.0" mnemonicParsing="false" onAction="#deleteClicked" prefHeight="30.0" prefWidth="110.0" text="Delete">
          <font>
             <Font size="14.0" />
          </font>
@@ -82,7 +83,4 @@
    <cursor>
       <Cursor fx:constant="DEFAULT" />
    </cursor>
-   <padding>
-      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-   </padding>
 </AnchorPane>

@@ -1,13 +1,10 @@
-package converter;
+package calendar;
 
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.TimeZone;
 

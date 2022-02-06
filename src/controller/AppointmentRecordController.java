@@ -2,7 +2,7 @@ package controller;
 
 import Dao.AppointmentDaoImpl;
 import Dao.Validator;
-import converter.DateTimeConverter;
+import calendar.DateTimeConverter;
 import dbConnection.JDBCConnection;
 import entity.Appointment;
 import javafx.collections.FXCollections;

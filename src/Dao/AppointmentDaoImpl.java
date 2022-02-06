@@ -1,16 +1,13 @@
 package Dao;
 
-import controller.AppointmentRecordController;
-import converter.DateTimeConverter;
+import calendar.DateTimeConverter;
 import dbConnection.JDBCConnection;
 import entity.Appointment;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -128,7 +125,7 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
         Validator.displaySuccess("Appointment is saved");
     }
 
-    public String getUpcomingApts(){
+    public String getAllUpcomingApts(){
         String message = "";
         List<Appointment> upcomingApt = null;
         try {
@@ -147,5 +144,28 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
             }
         }
         return message;
+    }
+
+    public List<Appointment> findByContactId(Appointment apt){
+        List<Appointment> scheduleListByContactID = new ArrayList<>();
+        try{
+            ResultSet rs = findRawDataFromDB("Select Appointment_ID, Start, End FROM client_schedule.appointments WHERE Contact_ID = " + apt.getContact_id());
+            while(rs.next()){
+                long aptId = rs.getLong("appointment_id");
+                Timestamp start = rs.getTimestamp("start");
+                Timestamp end = rs.getTimestamp("end");
+                Appointment appointmentSchedule = new Appointment(aptId, start, end);
+                scheduleListByContactID.add(appointmentSchedule);
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+      return scheduleListByContactID;
+    }
+
+    public boolean isDoubleBooking(Appointment apt){
+        List<Appointment> scheduleList = findByContactId(apt);
+
+        return false;
     }
 }

@@ -1,6 +1,5 @@
 package main;
 
-import converter.DateTimeConverter;
 import dbConnection.JDBCConnection;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -8,10 +7,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.sql.SQLOutput;
-import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.ResourceBundle;

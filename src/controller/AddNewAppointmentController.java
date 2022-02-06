@@ -1,9 +1,8 @@
 package controller;
 
 import Dao.*;
-import converter.DateTimeConverter;
+import calendar.DateTimeConverter;
 import entity.Appointment;
-import entity.Contact;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -13,8 +12,6 @@ import javafx.util.Callback;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.sql.Time;
-import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ResourceBundle;

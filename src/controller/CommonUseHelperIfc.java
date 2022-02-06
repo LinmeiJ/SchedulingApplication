@@ -68,7 +68,7 @@ public interface CommonUseHelperIfc {
         for(int i = 0; i <= 60 ;){
             if(i < 10){  initMinutes.add("0" + i);}
             else initMinutes.add(String.valueOf(i));
-            i = i + 10;
+            i = i + 15;
         }
         return initMinutes;
     }

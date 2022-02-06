@@ -3,8 +3,7 @@ package controller;
 import Dao.AppointmentDaoImpl;
 import Dao.UserDaoImpl;
 import Dao.Validator;
-import converter.DateTimeConverter;
-import entity.Appointment;
+import calendar.DateTimeConverter;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -80,7 +79,7 @@ public class LoginController extends Location implements Initializable, CommonUs
     }
 
     private void displayUpcomingAptsAlert() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION, "Upcoming appointment:\n\n " + appointmentDao.getUpcomingApts(), ButtonType.OK);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, "Upcoming appointment:\n\n " + appointmentDao.getAllUpcomingApts(), ButtonType.OK);
         alert.showAndWait()
                 .filter(res -> res == ButtonType.OK);
     }
