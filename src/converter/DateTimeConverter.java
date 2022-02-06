@@ -1,20 +1,18 @@
 package converter;
 
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.TimeZone;
 
 public class DateTimeConverter {
-    private static  LocalDate today = LocalDate.now();
-
-    public static Timestamp convertedTimeTOUTC() {
-
-        return null;
-    }
+    public static  LocalDateTime today = LocalDateTime.now();
 
     public static Timestamp getUserLocalDateTime() {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss zzz");
@@ -56,7 +54,7 @@ public class DateTimeConverter {
     }
 
     public static LocalDate getMondayDate() {
-        LocalDate monday = today;
+        LocalDate monday = today.toLocalDate();
         while (monday.getDayOfWeek() != DayOfWeek.MONDAY) {
             monday = monday.minusDays(1);
         }
@@ -64,7 +62,7 @@ public class DateTimeConverter {
     }
 
     public static LocalDate getSundayDate() {
-        LocalDate sunday = today;
+        LocalDate sunday = today.toLocalDate();
         while (sunday.getDayOfWeek() != DayOfWeek.SUNDAY) {
             sunday = sunday.plusDays(1);
         }
@@ -79,5 +77,13 @@ public class DateTimeConverter {
     public static String getMint(int m){
         String minute = String.valueOf(m);
         return minute.length() == 1 ? "0" + minute : minute;
+    }
+
+    public static boolean isWithin15mins(Timestamp timestamp){
+        System.out.println(timestamp.toLocalDateTime());
+        System.out.println(today);
+        System.out.println(timestamp.toLocalDateTime().until(today, ChronoUnit.MINUTES));
+        System.out.println(timestamp.toLocalDateTime().until(today, ChronoUnit.MINUTES) <= 15);
+        return timestamp.toLocalDateTime().until(today, ChronoUnit.HOURS) <= 15 && timestamp.toLocalDateTime().until(today, ChronoUnit.MINUTES) >=0;
     }
 }

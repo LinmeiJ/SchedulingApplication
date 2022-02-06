@@ -1,18 +1,18 @@
 package controller;
 
+import Dao.AppointmentDaoImpl;
 import Dao.UserDaoImpl;
 import Dao.Validator;
 import converter.DateTimeConverter;
+import entity.Appointment;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.*;
 import java.util.logging.Logger;
 
@@ -47,13 +47,15 @@ public class LoginController extends Location implements Initializable, CommonUs
     private String name;
     private String userPassword;
     private final static Logger LOGGER = Logger.getLogger(LoggerUtil.class.getName());
+    private AppointmentDaoImpl appointmentDao = new AppointmentDaoImpl();
 
     @FXML
-    void login(ActionEvent event) throws IOException {
+    void login(ActionEvent event) throws IOException, SQLException {
         name = (userNameField.getText());
         userPassword = (passwordField.getText());
 
         if(UserDaoImpl.findByUserName(name, userPassword)) {
+            displayUpcomingAptsAlert();
             setScene(event, CUSTOMER_RECORD_VIEW);
 
         }else{
@@ -76,5 +78,12 @@ public class LoginController extends Location implements Initializable, CommonUs
         exitId.setText(language.getString("exit"));
         loginBtn.setText(language.getString("loginBtn"));
     }
+
+    private void displayUpcomingAptsAlert() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, "Upcoming appointment:\n\n " + appointmentDao.getUpcomingApts(), ButtonType.OK);
+        alert.showAndWait()
+                .filter(res -> res == ButtonType.OK);
+    }
+
 }
 

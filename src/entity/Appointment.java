@@ -50,6 +50,12 @@ public class Appointment {
         this.user_id = user_id;
     }
 
+    public Appointment(long aptId, Timestamp startDateTime, Timestamp endDateTime) {
+        this.appointment_id = aptId;
+        this.start = startDateTime;
+        this.end = endDateTime;
+    }
+
     public String getTitle() {
         return title;
     }

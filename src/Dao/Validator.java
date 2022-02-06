@@ -176,7 +176,7 @@ public final class Validator {
     }
 
     public static boolean isValidAddress(String address){
-        Pattern p = Pattern.compile("^\\d+\\s[a-zA-Z]+,\\s[a-zA-Z]+$"); //formatted it as how US address looks like
+        Pattern p = Pattern.compile("^\\d+[a-zA-Z\\s,]+$");
         if (address == null) {
             return false;
         }

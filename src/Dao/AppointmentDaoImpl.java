@@ -11,34 +11,32 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<Appointment>{
     private Appointment appointment;
     private ObservableList<Appointment> allAppointment = FXCollections.observableArrayList();
 
     @Override
-    public ObservableList<Appointment> findAll() {
-        return null;
+    public ObservableList<Appointment> findAll() throws SQLException {
+        ResultSet rs = findRawDataFromDB("SELECT Appointment_ID, Start, End FROM appointments");
+        while (rs.next()) {
+            long aptId = rs.getLong("appointment_id");
+            Timestamp startDateTime = DateTimeConverter.convertUTCToLocal(String.valueOf(rs.getTimestamp("start")));
+            Timestamp endDateTime = DateTimeConverter.convertUTCToLocal(String.valueOf(rs.getTimestamp("end")));
+
+            appointment = new Appointment(aptId, startDateTime, endDateTime);
+            allAppointment.add(appointment);
+        }
+        return allAppointment;
     }
 
     @Override
     public Appointment findById(long id) {
         return null;
     }
-
-    public ObservableList<Appointment> findAllByCurrentMonth(long customerId) throws SQLException {
-        String startYrMonth = "2020-05"; // fix me the timezone difference
-        ResultSet rs = findRawDataFromDB("select * from appointments where Customer_ID = " + customerId + " AND start like '" + startYrMonth +"%'");
-        convertToObj(customerId, rs);
-        return allAppointment;
-    }
-
-//    public ObservableList<Appointment> findAllByCurrentWeek(long customerId) throws SQLException {
-//        String sql = "SELECT * FROM appointments WHERE YEARWEEK(start)=YEARWEEK(NOW()) AND  Customer_ID = " + customerId; // fix me the time zone difference;
-//        ResultSet rs = findRawDataFromDB(sql);
-//        convertToObj(customerId, rs);
-//        return allAppointment;
-//    }
 
     public ObservableList<Appointment> findAllByCustId(long customerId) throws SQLException {
         ResultSet rs = findRawDataFromDB("SELECT Appointment_ID, Title, a.Description, Location, a.Type, a.Start, a.End, User_ID, Contact_ID FROM appointments as a WHERE Customer_ID = " + customerId);
@@ -101,7 +99,6 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
     public void delete(Appointment appointment) {
         try {
             statement = connection.createStatement();
-//            String sql = "DELETE FROM customers WHERE Customer_ID = "+ appointment.getAppointment_id();
             String sql = "DELETE FROM appointments WHERE Appointment_ID = "+ appointment.getAppointment_id();
 
             statement.executeUpdate(sql);
@@ -129,5 +126,26 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
 
         preparedStatement.execute();
         Validator.displaySuccess("Appointment is saved");
+    }
+
+    public String getUpcomingApts(){
+        String message = "";
+        List<Appointment> upcomingApt = null;
+        try {
+            upcomingApt = findAll()
+                    .stream()
+                    .filter(apt -> DateTimeConverter.isWithin15mins(apt.getStart()))
+                    .collect(Collectors.toList());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        if(upcomingApt.size() == 0){
+            message = "There is no upcoming appointment.";
+        }else{
+            for(Appointment apt : upcomingApt) {
+                message = message + "\n" + "Upcoming Appointment ID: " + apt.getAppointment_id() + "/Start: " + apt.getStart();
+            }
+        }
+        return message;
     }
 }
