@@ -11,6 +11,8 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.TimeZone;
 
+import static java.time.temporal.ChronoUnit.MINUTES;
+
 public class DateTimeConverter {
     public static  LocalDateTime today = LocalDateTime.now();
 
@@ -79,11 +81,8 @@ public class DateTimeConverter {
         return minute.length() == 1 ? "0" + minute : minute;
     }
 
+    // give 16 minutes instead of 15 to avoid a difference in just few seconds
     public static boolean isWithin15mins(Timestamp timestamp){
-        System.out.println(timestamp.toLocalDateTime());
-        System.out.println(today);
-        System.out.println(timestamp.toLocalDateTime().until(today, ChronoUnit.MINUTES));
-        System.out.println(timestamp.toLocalDateTime().until(today, ChronoUnit.MINUTES) <= 15);
-        return timestamp.toLocalDateTime().until(today, ChronoUnit.HOURS) <= 15 && timestamp.toLocalDateTime().until(today, ChronoUnit.MINUTES) >=0;
+        return (MINUTES.between(today, timestamp.toLocalDateTime()) >= 0 && MINUTES.between(today, timestamp.toLocalDateTime()) <= 16);
     }
 }
