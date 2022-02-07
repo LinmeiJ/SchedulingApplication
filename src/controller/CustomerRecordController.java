@@ -1,7 +1,7 @@
 package controller;
 
-import Dao.CustomerDaoImpl;
-import Dao.Validator;
+import dao.CustomerDaoImpl;
+import dao.Validator;
 import entity.Customer;
 import enums.CountryId;
 import javafx.beans.property.SimpleStringProperty;

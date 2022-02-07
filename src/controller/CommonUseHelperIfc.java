@@ -1,6 +1,6 @@
 package controller;
 
-import Dao.Validator;
+import dao.Validator;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -27,7 +27,9 @@ public interface CommonUseHelperIfc {
      String UPDATE_CUSTOMER_VIEW = "../views/updateCustView.fxml";
      String UPDATE_APPOINTMENT_VIEW = "../views/updateAptView.fxml";
      String APPOINTMENT_RECORD_VIEW = "../views/aptRecordView.fxml";
-     ObservableList<String> initHrs = FXCollections.observableArrayList(Arrays.asList("08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22"));
+     ObservableList<String> estHr = FXCollections.observableArrayList(Arrays.asList("08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22"));
+//     ObservableList<String> utctHr = FXCollections.observableArrayList(Arrays.asList("08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22"));
+//     <String> utctHr = FXCollections.observableArrayList(Arrays.asList("08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22"));
 
     /**
      * This method closes the the program.

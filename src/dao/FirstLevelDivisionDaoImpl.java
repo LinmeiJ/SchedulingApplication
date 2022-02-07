@@ -1,4 +1,4 @@
-package Dao;
+package dao;
 
 import controller.CustomerRecordController;
 import dbConnection.JDBCConnection;

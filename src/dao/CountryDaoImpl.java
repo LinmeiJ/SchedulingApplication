@@ -1,4 +1,4 @@
-package Dao;
+package dao;
 
 import dbConnection.JDBCConnection;
 import entity.Country;

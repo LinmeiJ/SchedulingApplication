@@ -1,10 +1,10 @@
 package controller;
 
-import Dao.CustomerDaoImpl;
-import Dao.FirstLevelDivisionDaoImpl;
-import Dao.UserDaoImpl;
+import dao.CustomerDaoImpl;
+import dao.FirstLevelDivisionDaoImpl;
+import dao.UserDaoImpl;
 
-import Dao.Validator;
+import dao.Validator;
 import dbConnection.JDBCConnection;
 import entity.Customer;
 import enums.CountryId;

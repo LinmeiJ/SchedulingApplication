@@ -1,8 +1,6 @@
-package Dao;
+package dao;
 
 import dbConnection.JDBCConnection;
-import entity.Contact;
-import entity.Customer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 

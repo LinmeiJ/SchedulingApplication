@@ -1,9 +1,9 @@
 package controller;
-import Dao.AppointmentDaoImpl;
-import Dao.ContactDaoImpl;
-import Dao.UserDaoImpl;
-import Dao.Validator;
-import calendar.DateTimeConverter;
+import dao.AppointmentDaoImpl;
+import dao.ContactDaoImpl;
+import dao.UserDaoImpl;
+import dao.Validator;
+import dateUtil.DateTimeConverter;
 import dbConnection.JDBCConnection;
 import entity.Appointment;
 import javafx.collections.FXCollections;
@@ -196,9 +196,10 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
         endHr.setValue(DateTimeConverter.getHr(endDateTime.getHour()));
         endMin.setValue(DateTimeConverter.getMint(endDateTime.getMinute()));
 
-        startHr.setItems(initHrs);
+        startHr.setItems(estHr);
+        //startHr.setItems(DateTimeConverter.convertToLocalHr(estHR));
         startMin.setItems(initializeMinutes());
-        endHr.setItems(initHrs);
+        endHr.setItems(estHr);
         endMin.setItems(initializeMinutes());
     }
 

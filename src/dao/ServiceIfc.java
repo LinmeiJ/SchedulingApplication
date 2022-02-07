@@ -1,9 +1,7 @@
-package Dao;
+package dao;
 
-import entity.Customer;
 import javafx.collections.ObservableList;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public interface ServiceIfc<T> {

@@ -1,4 +1,6 @@
-package calendar;
+package dateUtil;
+
+import javafx.collections.ObservableList;
 
 import java.sql.Timestamp;
 import java.text.DateFormat;
@@ -82,4 +84,15 @@ public class DateTimeConverter {
     public static boolean isWithin15mins(Timestamp timestamp){
         return (MINUTES.between(today, timestamp.toLocalDateTime()) >= 0 && MINUTES.between(today, timestamp.toLocalDateTime()) <= 16);
     }
+
+//    public static ObservableList<String> convertEstHrToLocalHr(ObservableList<String> estHr){
+//        DateFormat localTimeFormat = new SimpleDateFormat("HH");
+//        localTimeFormat.setTimeZone(TimeZone.getTimeZone("EST"));
+//        Date date = localTimeFormat.parse(timestamp);
+//        DateFormat currentTFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        currentTFormat.setTimeZone(TimeZone.getTimeZone(getTimeZoneID()));
+//        localDate = Timestamp.valueOf(currentTFormat.format(date));
+//    }
+
+
 }

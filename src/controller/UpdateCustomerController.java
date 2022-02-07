@@ -1,9 +1,9 @@
 package controller;
 
-import Dao.CustomerDaoImpl;
-import Dao.FirstLevelDivisionDaoImpl;
-import Dao.UserDaoImpl;
-import Dao.Validator;
+import dao.CustomerDaoImpl;
+import dao.FirstLevelDivisionDaoImpl;
+import dao.UserDaoImpl;
+import dao.Validator;
 import entity.Customer;
 import enums.CountryId;
 import javafx.collections.FXCollections;

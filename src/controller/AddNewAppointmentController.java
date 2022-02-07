@@ -1,7 +1,7 @@
 package controller;
 
-import Dao.*;
-import calendar.DateTimeConverter;
+import dao.*;
+import dateUtil.DateTimeConverter;
 import entity.Appointment;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -115,9 +115,9 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
         Callback<DatePicker, DateCell> endDayCellFactory= this.getDayCellFactory();
         endDate.setDayCellFactory(endDayCellFactory);
 
-        startHr.setItems(initHrs);
+        startHr.setItems(estHr);
         startMinute.setItems(initializeMinutes());
-        endHr.setItems(initHrs);
+        endHr.setItems(estHr);
         endMinute.setItems(initializeMinutes());
         try {
             contactList.setItems(contactDao.findAll());

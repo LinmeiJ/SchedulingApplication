@@ -1,10 +1,5 @@
 package entity;
 
-import Dao.CustomerDaoImpl;
-import controller.AddNewCustomerController;
-import controller.CustomerRecordController;
-import javafx.scene.control.Button;
-
 import java.sql.Timestamp;
 
 public class Customer {

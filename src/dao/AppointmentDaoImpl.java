@@ -1,6 +1,6 @@
-package Dao;
+package dao;
 
-import calendar.DateTimeConverter;
+import dateUtil.DateTimeConverter;
 import dbConnection.JDBCConnection;
 import entity.Appointment;
 import javafx.collections.FXCollections;
