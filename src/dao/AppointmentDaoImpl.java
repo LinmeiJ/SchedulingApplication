@@ -1,5 +1,6 @@
 package dao;
 
+import dateUtil.BookingAvailability;
 import dateUtil.DateTimeConverter;
 import dbConnection.JDBCConnection;
 import entity.Appointment;
@@ -7,6 +8,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,8 +23,8 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
         ResultSet rs = findRawDataFromDB("SELECT Appointment_ID, Start, End FROM appointments");
         while (rs.next()) {
             long aptId = rs.getLong("appointment_id");
-            Timestamp startDateTime = DateTimeConverter.convertUTCToLocal(String.valueOf(rs.getTimestamp("start")));
-            Timestamp endDateTime = DateTimeConverter.convertUTCToLocal(String.valueOf(rs.getTimestamp("end")));
+            Timestamp startDateTime = DateTimeConverter.convertUTCToEST(rs.getTimestamp("start"));
+            Timestamp endDateTime = DateTimeConverter.convertUTCToEST(rs.getTimestamp("end"));
 
             appointment = new Appointment(aptId, startDateTime, endDateTime);
             allAppointment.add(appointment);
@@ -66,9 +68,9 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
         try {
             PreparedStatement preparedStatement = getPreparedStatement(appointment, sql);
             preparedStatement.setTimestamp(6, appointment.getEnd());
-            preparedStatement.setTimestamp(7, Timestamp.valueOf(LocalDateTime.now()));
+            preparedStatement.setTimestamp(7, DateTimeConverter.convertLocalTimeToUTC(LocalDateTime.now()));
             preparedStatement.setString(8, UserDaoImpl.userName);
-            preparedStatement.setTimestamp(9, Timestamp.valueOf(LocalDateTime.now()));
+            preparedStatement.setTimestamp(9, DateTimeConverter.convertLocalTimeToUTC(LocalDateTime.now()));
             preparedStatement.setString(10, UserDaoImpl.userName);
 
             preparedStatement.execute();
@@ -146,14 +148,14 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
         return message;
     }
 
-    public List<Appointment> findByContactId(Appointment apt){
+    public List<Appointment> findByContactId(long contactId){
         List<Appointment> scheduleListByContactID = new ArrayList<>();
         try{
-            ResultSet rs = findRawDataFromDB("Select Appointment_ID, Start, End FROM client_schedule.appointments WHERE Contact_ID = " + apt.getContact_id());
+            ResultSet rs = findRawDataFromDB("Select Appointment_ID, Start, End FROM client_schedule.appointments WHERE Contact_ID = " + contactId);
             while(rs.next()){
                 long aptId = rs.getLong("appointment_id");
-                Timestamp start = rs.getTimestamp("start");
-                Timestamp end = rs.getTimestamp("end");
+                Timestamp start = DateTimeConverter.convertUTCToEST(rs.getTimestamp("start"));
+                Timestamp end = DateTimeConverter.convertUTCToEST(rs.getTimestamp("end"));
                 Appointment appointmentSchedule = new Appointment(aptId, start, end);
                 scheduleListByContactID.add(appointmentSchedule);
             }
@@ -163,9 +165,21 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
       return scheduleListByContactID;
     }
 
-    public boolean isDoubleBooking(Appointment apt){
-        List<Appointment> scheduleList = findByContactId(apt);
+    public boolean isDoubleBooking(long contactId, LocalDate start, String startH, String startM, LocalDate end, String endH, String endM){
+        List<Appointment> scheduleList = findByContactId(contactId);
+        Timestamp aptStartTime = DateTimeConverter.convertAptTimeToEST(start, startH, startM);
+        Timestamp aptEndTime = DateTimeConverter.convertAptTimeToEST(end, endH, endM);
 
+        List<Appointment> sameDateScheduleList = filterByDate(scheduleList, aptStartTime);
+        BookingAvailability.isDoubleBooking(sameDateScheduleList, start, end);
         return false;
+    }
+
+    public List<Appointment> filterByDate(List<Appointment> scheduleList, Timestamp aptStartTime){
+        LocalDate date = aptStartTime.toLocalDateTime().toLocalDate();
+        List<Appointment> sameDateScheduledList = scheduleList.stream()
+                .filter(apt -> apt.getStart().toLocalDateTime().toLocalDate().equals(date))
+                .collect(Collectors.toList());
+        return sameDateScheduledList;
     }
 }

@@ -121,17 +121,20 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
         LocalDate endD = endDate.getValue();
         String endH = endHr.getValue();
         String endM = endMin.getValue();
-        String contact =  contactList.getValue();
-        if(!areValidInput(type, location, title, description, startD, startH, startM, endD, endH, endM, contact)){
+        String contactName =  contactList.getValue();
+        long contactId = contactDao.getContactId(contactName);
+
+        if(!areValidInput(type, location, title, description, startD, startH, startM, endD, endH, endM, contactName)){
             Validator.displayInvalidInput("Invalid input. \n requires:\n" +
                     "Only alphabets are allowed for Type, Location, Title and all fields can not be empty");
         }
+        else if(appointmentDao.isDoubleBooking(contactId, startD, startH, startM, endD, endH, endM)){}
         else{
-            getAptsRecordForm(event, type, location, title, description, startD, startH, startM, endD, endH, endM, contact);
+            getAptsRecordForm(event, type, location, title, description, startD, startH, startM, endD, endH, endM, contactId);
         }
     }
 
-    private void getAptsRecordForm(ActionEvent event, String type, String location, String title, String description, LocalDate startD, String startH, String startM, LocalDate endD, String endH, String endM, String contactName) throws SQLException {
+    private void getAptsRecordForm(ActionEvent event, String type, String location, String title, String description, LocalDate startD, String startH, String startM, LocalDate endD, String endH, String endM, long contactId) throws SQLException {
 //        appointment.setType(type);
 //        appointment.setLocation(location);
 //        appointment.setTitle(title);
@@ -150,7 +153,6 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
         Timestamp start = DateTimeConverter.convertAptTimeToUTC(startD, startH, startM);
         Timestamp end = DateTimeConverter.convertAptTimeToUTC(endD, endH, endM);
         long custId = CustomerRecordController.selectedCust.getCustomer_id();
-        long contactId = contactDao.getContactId(contactName);
 
         appointmentDao.update(new Appointment(title, description, location, type, start, end, currentTime, UserDaoImpl.userName, currentTime, UserDaoImpl.userName, custId, contactId, UserDaoImpl.userId));
         setScene(event, APPOINTMENT_RECORD_VIEW);

@@ -3,6 +3,7 @@ package dateUtil;
 import entity.Appointment;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
@@ -36,20 +37,35 @@ public class BookingAvailability {
     }
 
 //    public static boolean isDoubleBooking(List<Appointment> bookedApts, Appointment newApt){
-public static void isDoubleBooking(){
+    public static void isDoubleBooking(List<Appointment> scheduleList, LocalDate start, LocalDate end) {
+        initTimeSlots();
+        Map<String, LocalTime> availableTimeSlots = new TreeMap<>();
+        Appointment apt = new Appointment();
+        apt.setStart(Timestamp.valueOf(LocalDateTime.of(2022, 02, 07, 01, 30)));
+        apt.setEnd(Timestamp.valueOf(LocalDateTime.of(2022, 02, 07, 02, 30)));
+        LocalTime startTime = apt.getStart().toLocalDateTime().toLocalTime();
+        LocalTime endTime = apt.getEnd().toLocalDateTime().toLocalTime();
+        long aptDuration = MINUTES.between(apt.getStart().toLocalDateTime(), apt.getEnd().toLocalDateTime());
+        long timeSlotsTaken = aptDuration / 15;
+        System.out.println(aptDuration);
+        // 1. find if the startTime in the map
+        // 2. if found, increment the index by timeSlotsTaken
+        // 3. save those timeslots to the new map
 
-//        List<Player> playersOfTeam = players.stream()
-//                .filter(player -> player.getTeam().equals(teamName))
-//                .collect(Collectors.toList());
+        // 4. continue loop and mark the timeslots until end
 
-//        for(Appointment apt : bookedApts){
-    Appointment apt = new Appointment();
-            apt.setStart(Timestamp.valueOf(LocalDateTime.of(2022, 02, 07, 01, 30)));
-            apt.setEnd(Timestamp.valueOf(LocalDateTime.of(2022, 02, 07, 02, 30)));
+        // 5. loop through the new map
+        // 6. list the keys that the value is null
+        // 7. print the timeslot based on the key value
+        // 8. convert to local time, then display on the screen.
 
-            long aptDuration = MINUTES.between(apt.getStart().toLocalDateTime(), apt.getEnd().toLocalDateTime());
-            System.out.println(aptDuration);
+//        for (String treeKey : treemap.keySet()){
+//            if(){
+//
+//            }
 //        }
+
+    //        }
     }
 
     public static void findAvailability(){

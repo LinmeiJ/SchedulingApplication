@@ -1,6 +1,7 @@
 package main;
 
 import dateUtil.BookingAvailability;
+import dateUtil.DateTimeConverter;
 import dbConnection.JDBCConnection;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -8,6 +9,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -17,7 +20,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        BookingAvailability.isDoubleBooking();
+//        BookingAvailability.isDoubleBooking();
 //        BookingAvailability.initTimeSlots();
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(LOGIN_VIEW_PATH)),  ResourceBundle.getBundle("resource/language", getLocale()));
         primaryStage.setScene(new Scene(root, 800, 800));

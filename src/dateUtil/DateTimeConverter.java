@@ -1,6 +1,6 @@
 package dateUtil;
 
-import javafx.collections.ObservableList;
+import enums.TimeZoneOption;
 
 import java.sql.Timestamp;
 import java.text.DateFormat;
@@ -13,26 +13,39 @@ import java.util.TimeZone;
 import static java.time.temporal.ChronoUnit.MINUTES;
 
 public class DateTimeConverter {
-    public static  LocalDateTime today = LocalDateTime.now();
+    public static  LocalDateTime TODAY = LocalDateTime.now();
+    public static String FORMAT = "yyyy-MM-dd HH:mm:ss";
+    public static  DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern(FORMAT);
 
-    public static Timestamp getUserLocalDateTime() {
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss zzz");
-        Timestamp dateTime = new Timestamp(System.currentTimeMillis());
-        return dateTime;
-    }
 
     public static String getTimeZoneID() {
         TimeZone timeZone = TimeZone.getDefault();
         return timeZone.getID();
     }
 
+    public static Timestamp convertLocalTimeToUTC(LocalDateTime localDateTime) {
+        return Timestamp.valueOf(FORMATTER.format(localDateTime.atZone(ZoneId.systemDefault()).withZoneSameInstant(ZoneId.of(TimeZoneOption.UTC.name()))));
+    }
+
+    public static Timestamp convertAptTimeToEST(LocalDate dateValue, String hrValue, String minuteValue) {
+        String str = dateValue.toString() + " " + hrValue + ":" + minuteValue + ":00";
+        LocalDateTime dateTime = LocalDateTime.parse(str, FORMATTER);
+        return Timestamp.valueOf(FORMATTER.format(dateTime.atZone(ZoneId.systemDefault()).withZoneSameInstant(ZoneId.of(TimeZoneOption.EST.name()))));
+    }
+
+    public static Timestamp convertAptTimeToUTC(LocalDate dateValue, String hrValue, String minuteValue) {
+        String str = dateValue.toString() + " " + hrValue + ":" + minuteValue + ":00";
+
+        LocalDateTime dateTime = LocalDateTime.parse(str, FORMATTER);
+        return Timestamp.valueOf(FORMATTER.format(dateTime.atZone(ZoneId.systemDefault()).withZoneSameInstant(ZoneId.of(TimeZoneOption.UTC.name()))));
+    }
+
     public static Timestamp convertUTCToLocal(String timestamp) {
         Timestamp localDate = null;
         try {
-            DateFormat localTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            localTimeFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-            Date date = localTimeFormat.parse(timestamp);
-            DateFormat currentTFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            DateFormat currentTFormat = new SimpleDateFormat(FORMAT);
+            currentTFormat.setTimeZone(TimeZone.getTimeZone(TimeZoneOption.UTC.name()));
+            Date date = currentTFormat.parse(timestamp);
             currentTFormat.setTimeZone(TimeZone.getTimeZone(getTimeZoneID()));
             localDate = Timestamp.valueOf(currentTFormat.format(date));
         } catch (Exception e) {
@@ -41,21 +54,36 @@ public class DateTimeConverter {
         return localDate;
     }
 
-    public static Timestamp convertAptTimeToUTC(LocalDate dateValue, String hrValue, String minuteValue) {
-        String str = dateValue.toString() + " " + hrValue + ":" + minuteValue + ":00";
-        LocalDateTime dateTime = LocalDateTime.parse(str, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        return Timestamp.valueOf(formatter.format(dateTime.atZone(ZoneId.systemDefault()).withZoneSameInstant(ZoneId.of("UTC"))));
-
+    public static Timestamp convertESTToLocal(String timestamp) {
+        Timestamp localDate = null;
+        try {
+            DateFormat currentTFormat = new SimpleDateFormat(FORMAT);
+            currentTFormat.setTimeZone(TimeZone.getTimeZone(TimeZoneOption.EST.name()));
+            Date date = currentTFormat.parse(timestamp);
+            currentTFormat.setTimeZone(TimeZone.getTimeZone(getTimeZoneID()));
+            localDate = Timestamp.valueOf(currentTFormat.format(date));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return localDate;
     }
 
-    public static Timestamp convertLocalTimeToUTC(LocalDateTime localTime) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        return Timestamp.valueOf(formatter.format(localTime.atZone(ZoneId.systemDefault()).withZoneSameInstant(ZoneId.of("UTC"))));
+    public static Timestamp convertUTCToEST(Timestamp timestamp){
+        Timestamp localDate = null;
+        try {
+            DateFormat timeFormat = new SimpleDateFormat(FORMAT);
+            timeFormat.setTimeZone(TimeZone.getTimeZone(TimeZoneOption.UTC.name()));
+            Date date = timeFormat.parse(String.valueOf(timestamp));
+            timeFormat.setTimeZone(TimeZone.getTimeZone(TimeZoneOption.EST.name()));
+            localDate = Timestamp.valueOf(timeFormat.format(date));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return localDate;
     }
 
     public static LocalDate getMondayDate() {
-        LocalDate monday = today.toLocalDate();
+        LocalDate monday = TODAY.toLocalDate();
         while (monday.getDayOfWeek() != DayOfWeek.MONDAY) {
             monday = monday.minusDays(1);
         }
@@ -63,7 +91,7 @@ public class DateTimeConverter {
     }
 
     public static LocalDate getSundayDate() {
-        LocalDate sunday = today.toLocalDate();
+        LocalDate sunday = TODAY.toLocalDate();
         while (sunday.getDayOfWeek() != DayOfWeek.SUNDAY) {
             sunday = sunday.plusDays(1);
         }
@@ -82,17 +110,6 @@ public class DateTimeConverter {
 
     // give 16 minutes instead of 15 to avoid a difference in just few seconds
     public static boolean isWithin15mins(Timestamp timestamp){
-        return (MINUTES.between(today, timestamp.toLocalDateTime()) >= 0 && MINUTES.between(today, timestamp.toLocalDateTime()) <= 16);
+        return (MINUTES.between(TODAY, timestamp.toLocalDateTime()) >= 0 && MINUTES.between(TODAY, timestamp.toLocalDateTime()) <= 16);
     }
-
-//    public static ObservableList<String> convertEstHrToLocalHr(ObservableList<String> estHr){
-//        DateFormat localTimeFormat = new SimpleDateFormat("HH");
-//        localTimeFormat.setTimeZone(TimeZone.getTimeZone("EST"));
-//        Date date = localTimeFormat.parse(timestamp);
-//        DateFormat currentTFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//        currentTFormat.setTimeZone(TimeZone.getTimeZone(getTimeZoneID()));
-//        localDate = Timestamp.valueOf(currentTFormat.format(date));
-//    }
-
-
 }
