@@ -171,8 +171,8 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
         Timestamp aptEndTime = DateTimeConverter.convertAptTimeToEST(end, endH, endM);
 
         List<Appointment> sameDateScheduleList = filterByDate(scheduleList, aptStartTime);
-        BookingAvailability.isDoubleBooking(sameDateScheduleList, start, end);
-        return false;
+        BookingAvailability.isDoubleBooking(sameDateScheduleList, aptStartTime, aptEndTime);
+        return false; //fix me
     }
 
     public List<Appointment> filterByDate(List<Appointment> scheduleList, Timestamp aptStartTime){
