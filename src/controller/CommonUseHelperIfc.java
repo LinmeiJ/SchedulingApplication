@@ -67,7 +67,7 @@ public interface CommonUseHelperIfc {
     default ObservableList<String> initializeMinutes(){
         ObservableList<String> initMinutes = FXCollections.observableArrayList();
 
-        for(int i = 0; i <= 60 ;){
+        for(int i = 0; i <= 45;){
             if(i < 10){  initMinutes.add("0" + i);}
             else initMinutes.add(String.valueOf(i));
             i = i + 15;

@@ -23,8 +23,8 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
         ResultSet rs = findRawDataFromDB("SELECT Appointment_ID, Start, End FROM appointments");
         while (rs.next()) {
             long aptId = rs.getLong("appointment_id");
-            Timestamp startDateTime = DateTimeConverter.convertUTCToEST(rs.getTimestamp("start"));
-            Timestamp endDateTime = DateTimeConverter.convertUTCToEST(rs.getTimestamp("end"));
+            Timestamp startDateTime = DateTimeConverter.convertUTCToLocal(String.valueOf(rs.getTimestamp("start")));
+            Timestamp endDateTime = DateTimeConverter.convertUTCToLocal(String.valueOf(rs.getTimestamp("end")));
 
             appointment = new Appointment(aptId, startDateTime, endDateTime);
             allAppointment.add(appointment);
@@ -138,11 +138,12 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        System.out.println(upcomingApt);
         if(upcomingApt.size() == 0){
             message = "There is no upcoming appointment.";
         }else{
             for(Appointment apt : upcomingApt) {
-                message = message + "\n" + "Upcoming Appointment ID: " + apt.getAppointment_id() + "/Start: " + apt.getStart();
+                message = message + "\n" + "Appointment ID: " + apt.getAppointment_id() + ",    Start: " + apt.getStart();
             }
         }
         return message;
@@ -171,8 +172,8 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
         Timestamp aptEndTime = DateTimeConverter.convertAptTimeToEST(end, endH, endM);
 
         List<Appointment> sameDateScheduleList = filterByDate(scheduleList, aptStartTime);
-        BookingAvailability.isDoubleBooking(sameDateScheduleList, aptStartTime, aptEndTime);
-        return false; //fix me
+        return BookingAvailability.checkBookingStatus(sameDateScheduleList, aptStartTime, aptEndTime);
+//        return false; //fix me
     }
 
     public List<Appointment> filterByDate(List<Appointment> scheduleList, Timestamp aptStartTime){

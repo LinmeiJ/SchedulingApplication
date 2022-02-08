@@ -101,7 +101,11 @@ public class AppointmentRecordController extends JDBCConnection implements Initi
     @FXML
     void updateClicked(ActionEvent event) throws IOException {
         selecteApt = appointmentTable.getSelectionModel().getSelectedItem();
-        setScene(event, UPDATE_APPOINTMENT_VIEW);
+        if(selecteApt != null) {
+            setScene(event, UPDATE_APPOINTMENT_VIEW);
+        }else{
+            Validator.displayInvalidInput("Please select a row/appointment to update");
+        }
     }
 
     @FXML

@@ -9,9 +9,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="619.0" prefWidth="1103.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.UpdateAppointmentController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="619.0" prefWidth="1103.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.UpdateAppointmentController">
    <children>
-      <AnchorPane layoutX="106.0" layoutY="49.0" prefHeight="522.0" prefWidth="813.0">
+      <AnchorPane layoutX="112.0" layoutY="49.0" prefHeight="522.0" prefWidth="813.0">
          <children>
             <Label prefHeight="27.0" prefWidth="231.0" text="Update Appointment Info">
                <font>
@@ -48,16 +48,16 @@
             <Label fx:id="orgStart" layoutX="479.0" layoutY="103.0" prefHeight="18.0" prefWidth="300.0" />
             <TextArea fx:id="aptDescription" layoutX="74.0" layoutY="322.0" prefHeight="108.0" prefWidth="536.0" />
             <Label layoutX="357.0" layoutY="100.0" prefHeight="18.0" prefWidth="71.0" text="New Start: " />
-            <DatePicker fx:id="startDate" layoutX="442.0" layoutY="99.0" prefHeight="26.0" prefWidth="155.0" />
+            <DatePicker fx:id="startDate" layoutX="442.0" layoutY="99.0" onAction="#newStartDateTriggered" prefHeight="26.0" prefWidth="155.0" />
             <Label layoutX="606.0" layoutY="103.0" text="HH:MM" />
             <ComboBox fx:id="startHr" layoutX="652.0" layoutY="99.0" prefHeight="26.0" prefWidth="88.0" />
-            <Label layoutX="731.0" layoutY="186.0" text=":" />
+            <Label layoutX="741.0" layoutY="103.0" prefHeight="18.0" prefWidth="4.0" text=":" />
             <ComboBox fx:id="startMin" layoutX="760.0" layoutY="99.0" prefHeight="26.0" prefWidth="88.0" />
             <Label layoutX="361.0" layoutY="154.0" prefHeight="18.0" prefWidth="64.0" text="New End:" />
-            <DatePicker fx:id="endDate" layoutX="442.0" layoutY="150.0" prefHeight="26.0" prefWidth="155.0" />
+            <DatePicker fx:id="endDate" layoutX="442.0" layoutY="150.0" onAction="#endDateTriggered" prefHeight="26.0" prefWidth="155.0" />
             <Label layoutX="606.0" layoutY="154.0" text="HH:MM" />
             <ComboBox fx:id="endHr" layoutX="652.0" layoutY="150.0" prefHeight="26.0" prefWidth="88.0" />
-            <Label layoutX="729.0" layoutY="227.0" text=":" />
+            <Label layoutX="743.0" layoutY="154.0" text=":" />
             <ComboBox fx:id="endMin" layoutX="760.0" layoutY="150.0" prefHeight="26.0" prefWidth="88.0" />
             <Label layoutX="16.0" layoutY="476.0" text="Customer ID:" />
             <Label fx:id="custID" layoutX="97.0" layoutY="476.0" prefHeight="18.0" prefWidth="54.0" />
@@ -66,7 +66,7 @@
             <Label layoutX="638.0" layoutY="55.0" prefHeight="18.0" prefWidth="210.0" text="Office Hour: 8AM - 10PM, EST" />
          </children>
       </AnchorPane>
-      <Button fx:id="saveUpdates" layoutX="973.0" layoutY="476.0" mnemonicParsing="false" onAction="#saveUpdateClicked" prefHeight="44.0" prefWidth="94.0" text="Save">
+      <Button fx:id="saveUpdates" layoutX="973.0" layoutY="476.0" mnemonicParsing="false" onAction="#updateClicked" prefHeight="44.0" prefWidth="94.0" text="Save">
          <font>
             <Font size="20.0" />
          </font></Button>

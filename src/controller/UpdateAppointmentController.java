@@ -3,6 +3,7 @@ import dao.AppointmentDaoImpl;
 import dao.ContactDaoImpl;
 import dao.UserDaoImpl;
 import dao.Validator;
+import dateUtil.BookingAvailability;
 import dateUtil.DateTimeConverter;
 import dbConnection.JDBCConnection;
 import entity.Appointment;
@@ -20,6 +21,8 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 public class UpdateAppointmentController extends JDBCConnection implements Initializable, CommonUseHelperIfc {
@@ -110,7 +113,7 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
         return Validator.isValidString(type, location, title) && description != null && contact != null && startD != null && endD != null && Validator.isValidString(startH, startM, endH, endM);
     }
     @FXML
-    void saveUpdateClicked(ActionEvent event) throws SQLException, IOException {
+    void updateClicked(ActionEvent event) throws SQLException, IOException {
         String type = aptType.getText();
         String location = aptLocation.getText();
         String title = aptTitle.getText();
@@ -128,27 +131,15 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
             Validator.displayInvalidInput("Invalid input. \n requires:\n" +
                     "Only alphabets are allowed for Type, Location, Title and all fields can not be empty");
         }
-        else if(appointmentDao.isDoubleBooking(contactId, startD, startH, startM, endD, endH, endM)){}
+        else if(appointmentDao.isDoubleBooking(contactId, startD, startH, startM, endD, endH, endM)){
+            System.out.println("Sorry, the time you have selected is booked, please choose a different time.");
+        }
         else{
             getAptsRecordForm(event, type, location, title, description, startD, startH, startM, endD, endH, endM, contactId);
         }
     }
 
     private void getAptsRecordForm(ActionEvent event, String type, String location, String title, String description, LocalDate startD, String startH, String startM, LocalDate endD, String endH, String endM, long contactId) throws SQLException {
-//        appointment.setType(type);
-//        appointment.setLocation(location);
-//        appointment.setTitle(title);
-//        appointment.setDescription(description);
-//        appointment.setStart(DateTimeConverter.convertAptTimeToUTC(startD, startH, startM));
-//        appointment.setEnd(DateTimeConverter.convertAptTimeToUTC(endD, endH, endM));
-//
-//        appointment.setCreated_date(Timestamp.valueOf(LocalDateTime.now()));
-//        appointment.setCreated_by(UserDaoImpl.userName);
-//        appointment.setLast_update(Timestamp.valueOf(LocalDateTime.now()));
-//        appointment.setLast_updated_by(UserDaoImpl.userName);
-//        appointment.setCustomer_id(CustomerRecordController.selectedCust.getCustomer_id());
-//        appointment.setUser_id(UserDaoImpl.userId);
-//        appointment.setContact_id(contactDao.getContactId(contactName));
         Timestamp currentTime = Timestamp.valueOf(LocalDateTime.now());
         Timestamp start = DateTimeConverter.convertAptTimeToUTC(startD, startH, startM);
         Timestamp end = DateTimeConverter.convertAptTimeToUTC(endD, endH, endM);

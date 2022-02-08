@@ -30,7 +30,7 @@ public class DateTimeConverter {
     public static Timestamp convertAptTimeToEST(LocalDate dateValue, String hrValue, String minuteValue) {
         String str = dateValue.toString() + " " + hrValue + ":" + minuteValue + ":00";
         LocalDateTime dateTime = LocalDateTime.parse(str, FORMATTER);
-        return Timestamp.valueOf(FORMATTER.format(dateTime.atZone(ZoneId.systemDefault()).withZoneSameInstant(ZoneId.of(TimeZoneOption.EST.name()))));
+        return Timestamp.valueOf(FORMATTER.format(dateTime.atZone(ZoneId.systemDefault()).withZoneSameInstant(ZoneId.of(String.valueOf(TimeZoneOption.EST), ZoneId.SHORT_IDS))));
     }
 
     public static Timestamp convertAptTimeToUTC(LocalDate dateValue, String hrValue, String minuteValue) {
@@ -58,7 +58,7 @@ public class DateTimeConverter {
         Timestamp localDate = null;
         try {
             DateFormat currentTFormat = new SimpleDateFormat(FORMAT);
-            currentTFormat.setTimeZone(TimeZone.getTimeZone(TimeZoneOption.EST.name()));
+            currentTFormat.setTimeZone(TimeZone.getTimeZone(ZoneId.of(String.valueOf(TimeZoneOption.EST), ZoneId.SHORT_IDS)));
             Date date = currentTFormat.parse(timestamp);
             currentTFormat.setTimeZone(TimeZone.getTimeZone(getTimeZoneID()));
             localDate = Timestamp.valueOf(currentTFormat.format(date));
@@ -74,7 +74,7 @@ public class DateTimeConverter {
             DateFormat timeFormat = new SimpleDateFormat(FORMAT);
             timeFormat.setTimeZone(TimeZone.getTimeZone(TimeZoneOption.UTC.name()));
             Date date = timeFormat.parse(String.valueOf(timestamp));
-            timeFormat.setTimeZone(TimeZone.getTimeZone(TimeZoneOption.EST.name()));
+            timeFormat.setTimeZone(TimeZone.getTimeZone(ZoneId.of(String.valueOf(TimeZoneOption.EST), ZoneId.SHORT_IDS)));
             localDate = Timestamp.valueOf(timeFormat.format(date));
         } catch (Exception e) {
             e.printStackTrace();
