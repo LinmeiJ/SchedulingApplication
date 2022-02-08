@@ -3,10 +3,10 @@ import dao.AppointmentDaoImpl;
 import dao.ContactDaoImpl;
 import dao.UserDaoImpl;
 import dao.Validator;
-import dateUtil.BookingAvailability;
 import dateUtil.DateTimeConverter;
 import dbConnection.JDBCConnection;
 import entity.Appointment;
+import enums.Views;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -21,8 +21,6 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.Map;
 import java.util.ResourceBundle;
 
 public class UpdateAppointmentController extends JDBCConnection implements Initializable, CommonUseHelperIfc {
@@ -97,11 +95,11 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
     private ContactDaoImpl contactDao = new ContactDaoImpl();
     ObservableList<String> contact = FXCollections.observableArrayList();
 
-    Appointment appointment = AppointmentRecordController.selecteApt;
+    Appointment appointment = AppointmentRecordController.selectApt;
 
     @FXML
     void backToRecordPage(ActionEvent event) throws IOException {
-        setScene(event,APPOINTMENT_RECORD_VIEW);
+        setScene(event, Views.APPOINTMENT_RECORD_VIEW.getView());
     }
 
     @FXML
@@ -146,7 +144,7 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
         long custId = CustomerRecordController.selectedCust.getCustomer_id();
 
         appointmentDao.update(new Appointment(title, description, location, type, start, end, currentTime, UserDaoImpl.userName, currentTime, UserDaoImpl.userName, custId, contactId, UserDaoImpl.userId));
-        setScene(event, APPOINTMENT_RECORD_VIEW);
+        setScene(event, Views.APPOINTMENT_RECORD_VIEW.getView());
     }
 
     @Override

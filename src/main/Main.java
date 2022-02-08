@@ -4,6 +4,7 @@ import dao.AppointmentDaoImpl;
 import dateUtil.BookingAvailability;
 import dateUtil.DateTimeConverter;
 import dbConnection.JDBCConnection;
+import enums.Views;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -18,11 +19,9 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class Main extends Application {
-    public static String LOGIN_VIEW_PATH = "../views/loginView.fxml";
-
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(LOGIN_VIEW_PATH)),  ResourceBundle.getBundle("resource/language", getLocale()));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(Views.LOGIN_VIEW_PATH.getView())),  ResourceBundle.getBundle("resource/language", getLocale()));
         primaryStage.setScene(new Scene(root, 800, 800));
         primaryStage.show();
         JDBCConnection.openConnection();

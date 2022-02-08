@@ -21,16 +21,7 @@ import java.time.LocalDate;
 import java.util.Arrays;
 
 public interface CommonUseHelperIfc {
-     String ADD_NEW_CUSTOMER_VIEW = "../views/addNewCustomerView.fxml";
-     String CUSTOMER_RECORD_VIEW = "../views/customerRecordView.fxml";
-     String NEW_APT_VIEW = "../views/addNewAptView.fxml";
-     String UPDATE_CUSTOMER_VIEW = "../views/updateCustView.fxml";
-     String UPDATE_APPOINTMENT_VIEW = "../views/updateAptView.fxml";
-     String APPOINTMENT_RECORD_VIEW = "../views/aptRecordView.fxml";
      ObservableList<String> estHr = FXCollections.observableArrayList(Arrays.asList("08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22"));
-//     ObservableList<String> utctHr = FXCollections.observableArrayList(Arrays.asList("08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22"));
-//     <String> utctHr = FXCollections.observableArrayList(Arrays.asList("08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22"));
-
     /**
      * This method closes the the program.
      * It prompts a dialog window to ensure whether a user wants to exit.

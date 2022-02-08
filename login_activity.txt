@@ -1,3 +1,11 @@
 Date Time = 2022-02-08T00:46:34.444Z		User Name = test		Attempt Status = Success		Success Count = 1		Failed Count = 0
 Date Time = 2022-02-08T00:46:58.912Z		User Name = test		Attempt Status = Failed		Success Count = 0		Failed Count = 0		
 Date Time = 2022-02-08T00:47:03.113Z		User Name = test		Attempt Status = Success		Success Count = 1		Failed Count = 1		
+Date = 2022-02-08T01:06:32.679Z		User Name = test		Attempt Status = Success		Success Total Count = 1		Failed Total Count = 0		
+Date = 2022-02-08T01:43:34.244Z		User Name = test		Attempt Status = Success		Success Total Count = 1		Failed Total Count = 0		
+Date = 2022-02-08T02:13:58.41Z		User Name = test		Attempt Status = Success		Success Total Count = 1		Failed Total Count = 0		
+Date = 2022-02-08T02:14:58.892Z		User Name = test		Attempt Status = Success		Success Total Count = 1		Failed Total Count = 0		
+Date = 2022-02-08T02:15:25.616Z		User Name = test		Attempt Status = Failed		Success Total Count = 0		Failed Total Count = 0		
+Date = 2022-02-08T02:15:45.614Z		User Name = test		Attempt Status = Failed		Success Total Count = 0		Failed Total Count = 0		
+Date = 2022-02-08T02:16:25.91Z		User Name = test		Attempt Status = Failed		Success Total Count = 0		Failed Total Count = 1		
+Date = 2022-02-08T02:16:31.449Z		User Name = test		Attempt Status = Success		Success Total Count = 1		Failed Total Count = 2		

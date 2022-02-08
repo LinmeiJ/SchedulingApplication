@@ -5,6 +5,7 @@ import dao.Validator;
 import dateUtil.DateTimeConverter;
 import dbConnection.JDBCConnection;
 import entity.Appointment;
+import enums.Views;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -72,21 +73,21 @@ public class AppointmentRecordController extends JDBCConnection implements Initi
     private String[] filterOptions = {"By Month", "By Week"};
     ObservableList<Appointment> aptDataTable = FXCollections.observableArrayList();
     AppointmentDaoImpl appointmentDao = new AppointmentDaoImpl();
-    public static Appointment selecteApt;
+    public static Appointment selectApt;
     public static boolean isMonthFilter = false;
     public static boolean isWeekFilter = false;
 
     @FXML
     void addNewClicked(ActionEvent event) throws IOException {
-        setScene(event, NEW_APT_VIEW);
+        setScene(event, Views.NEW_APT_VIEW.getView());
     }
 
     @FXML
     void deleteClicked(ActionEvent event) throws IOException {
-        selecteApt = appointmentTable.getSelectionModel().getSelectedItem();
-        if(selecteApt != null) {
-            appointmentDao.delete(selecteApt);
-            aptDataTable.remove(selecteApt);
+        selectApt = appointmentTable.getSelectionModel().getSelectedItem();
+        if(selectApt != null) {
+            appointmentDao.delete(selectApt);
+            aptDataTable.remove(selectApt);
         }else{
             Validator.displayInvalidInput("Please select a row to delete");
         }
@@ -100,9 +101,9 @@ public class AppointmentRecordController extends JDBCConnection implements Initi
 
     @FXML
     void updateClicked(ActionEvent event) throws IOException {
-        selecteApt = appointmentTable.getSelectionModel().getSelectedItem();
-        if(selecteApt != null) {
-            setScene(event, UPDATE_APPOINTMENT_VIEW);
+        selectApt = appointmentTable.getSelectionModel().getSelectedItem();
+        if(selectApt != null) {
+            setScene(event, Views.UPDATE_APPOINTMENT_VIEW.getView());
         }else{
             Validator.displayInvalidInput("Please select a row/appointment to update");
         }
@@ -110,14 +111,14 @@ public class AppointmentRecordController extends JDBCConnection implements Initi
 
     @FXML
     void backExitClicked(ActionEvent event) throws IOException {
-        setScene(event, CUSTOMER_RECORD_VIEW);
+        setScene(event, Views.CUSTOMER_RECORD_VIEW.getView());
     }
     @FXML
     void filterByMonthSelected(ActionEvent event) throws SQLException, IOException {
         filterByWeek.setSelected(false);
         filterByMonth.setSelected(true);
         isMonthFilter = true;
-        setScene(event, APPOINTMENT_RECORD_VIEW);
+        setScene(event, Views.APPOINTMENT_RECORD_VIEW.getView());
     }
 
     @FXML
@@ -125,7 +126,7 @@ public class AppointmentRecordController extends JDBCConnection implements Initi
         filterByMonth.setSelected(false);
         filterByWeek.setSelected(true);
         isWeekFilter = true;
-        setScene(event, APPOINTMENT_RECORD_VIEW);
+        setScene(event, Views.APPOINTMENT_RECORD_VIEW.getView());
     }
 
 

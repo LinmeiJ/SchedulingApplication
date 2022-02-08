@@ -4,6 +4,7 @@ import dao.CustomerDaoImpl;
 import dao.Validator;
 import entity.Customer;
 import enums.CountryId;
+import enums.Views;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -48,6 +49,9 @@ public class CustomerRecordController implements Initializable, CommonUseHelperI
     @FXML
     private TableColumn<Customer, String> custDivision;
 
+    @FXML
+    private ComboBox<String> reports;
+
     public  CustomerDaoImpl customerDao = new CustomerDaoImpl();
     public  ObservableList<Customer> customersDataTable = FXCollections.observableArrayList();
     public static Customer selectedCust;
@@ -91,7 +95,7 @@ public class CustomerRecordController implements Initializable, CommonUseHelperI
         ctryId = countryId == 1? CountryId.US : countryId == 2? CountryId.UK : CountryId.CANADA;
 
         if(selectedCust != null) {
-            setScene(event, UPDATE_CUSTOMER_VIEW);
+            setScene(event, Views.UPDATE_CUSTOMER_VIEW.getView());
         }else{
             Validator.displayInvalidInput("Please select a row/customer to update");
         }
@@ -116,7 +120,7 @@ public class CustomerRecordController implements Initializable, CommonUseHelperI
         selectedCust = recordTable.getSelectionModel().getSelectedItem();
 
         if(selectedCust != null) {
-            setScene(event,  NEW_APT_VIEW);
+            setScene(event,  Views.NEW_APT_VIEW.getView());
         }else{
             Validator.displayInvalidInput("Please select a row/customer to update");
         }
@@ -124,7 +128,12 @@ public class CustomerRecordController implements Initializable, CommonUseHelperI
 
     @FXML
     void addNewCustomer(ActionEvent event) throws IOException {
-        setScene(event, ADD_NEW_CUSTOMER_VIEW);
+        setScene(event, Views.ADD_NEW_CUSTOMER_VIEW.getView());
+    }
+
+    @FXML
+    void reportsClicked(ActionEvent event) {
+        setScene(event, Views.REPORT_VIEW.getView());
     }
 
     @FXML
@@ -136,7 +145,7 @@ public class CustomerRecordController implements Initializable, CommonUseHelperI
     void listAptSelected(ActionEvent actionEvent) throws IOException {
         selectedCust =  recordTable.getSelectionModel().getSelectedItem();
         if(selectedCust != null) {
-            setScene(actionEvent, APPOINTMENT_RECORD_VIEW);
+            setScene(actionEvent, Views.APPOINTMENT_RECORD_VIEW.getView());
         }else{
             Validator.displayInvalidInput("Please select a row/customer to update");
         }

@@ -9,6 +9,7 @@ import dbConnection.JDBCConnection;
 import entity.Customer;
 import enums.CountryId;
 
+import enums.Views;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -96,7 +97,7 @@ public class AddNewCustomerController extends JDBCConnection implements Initiali
     @FXML
     void aptClicked(ActionEvent event) throws IOException, SQLException {
         addCust(event);
-        setScene(event, NEW_APT_VIEW);
+        setScene(event, Views.NEW_APT_VIEW.getView());
     }
 
     @FXML
@@ -128,7 +129,7 @@ public class AddNewCustomerController extends JDBCConnection implements Initiali
 
     @FXML
     void backToRecordPage(ActionEvent event) throws IOException {
-        setScene(event, CUSTOMER_RECORD_VIEW);
+        setScene(event, Views.CUSTOMER_RECORD_VIEW.getView());
     }
 
     @FXML

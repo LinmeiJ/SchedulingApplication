@@ -3,6 +3,7 @@ package controller;
 import dao.*;
 import dateUtil.DateTimeConverter;
 import entity.Appointment;
+import enums.Views;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -100,7 +101,7 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
 
         appointmentDao.save(appointment);
         Validator.displaySuccess("Appointment is saved");
-        setScene(event, APPOINTMENT_RECORD_VIEW);
+        setScene(event, Views.APPOINTMENT_RECORD_VIEW.getView());
     }
 
     @Override
@@ -132,6 +133,6 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
     }
 
     public void BackToLastViewIsClicked(ActionEvent actionEvent) throws IOException {
-        setScene(actionEvent, CUSTOMER_RECORD_VIEW);
+        setScene(actionEvent, Views.CUSTOMER_RECORD_VIEW.getView());
     }
 }

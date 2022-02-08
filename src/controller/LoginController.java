@@ -4,6 +4,7 @@ import dao.AppointmentDaoImpl;
 import dao.UserDaoImpl;
 import dao.Validator;
 import dateUtil.DateTimeConverter;
+import enums.Views;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -18,10 +19,8 @@ import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
-import java.util.logging.Logger;
 
 public class LoginController extends Location implements Initializable, CommonUseHelperIfc {
-
     @FXML
     private Label userName;
 
@@ -46,13 +45,12 @@ public class LoginController extends Location implements Initializable, CommonUs
     @FXML
     private Label signIn;
 
-
     public static ResourceBundle language;
     private String name;
     private String userPassword;
     private int successCount;
     private int failedCount;
-    private final static Logger LOGGER = Logger.getLogger(LoggerUtil.class.getName());
+
     private AppointmentDaoImpl appointmentDao = new AppointmentDaoImpl();
 
     @FXML
@@ -62,11 +60,11 @@ public class LoginController extends Location implements Initializable, CommonUs
 
         if(UserDaoImpl.findByUserName(name, userPassword)) {
             displayUpcomingAptsAlert();
-            setScene(event, CUSTOMER_RECORD_VIEW);
+            setScene(event, Views.CUSTOMER_RECORD_VIEW.getView());
             successCount++;
-            logLoginAttempt("Success");
+            loginAttempt("Success");
         }else{
-            logLoginAttempt("Failed");
+            loginAttempt("Failed");
             failedCount++;
             Validator.displayLoginInvalidInput(language.getString("userNotFound"));
 
@@ -95,18 +93,14 @@ public class LoginController extends Location implements Initializable, CommonUs
                 .filter(res -> res == ButtonType.OK);
     }
 
-
-    private void logLoginAttempt(String loginAttemps) {
-        DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
-        String time = formatter.format(OffsetDateTime.now().truncatedTo(ChronoUnit.MILLIS));
-        String username = userNameField.getText();
+    private void loginAttempt(String loginAttempts) {
         try {
             FileWriter fw = new FileWriter("login_activity.txt", true);
             BufferedWriter bw = new BufferedWriter(fw);
 
-            bw.write("Date = " + time + "\t\t");
-            bw.write("User Name = " + username + "\t\t");
-            bw.write("Attempt Status = " + loginAttemps + "\t\t");
+            bw.write("Date = " + DateTimeFormatter.ISO_DATE_TIME.format(OffsetDateTime.now().truncatedTo(ChronoUnit.MILLIS)) + "\t\t");
+            bw.write("User Name = " + userNameField.getText() + "\t\t");
+            bw.write("Attempt Status = " + loginAttempts + "\t\t");
             bw.write("Success Total Count = " + successCount + "\t\t");
             bw.write("Failed Total Count = " + failedCount + "\t\t");
 

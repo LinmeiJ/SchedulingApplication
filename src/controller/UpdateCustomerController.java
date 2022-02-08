@@ -6,6 +6,7 @@ import dao.UserDaoImpl;
 import dao.Validator;
 import entity.Customer;
 import enums.CountryId;
+import enums.Views;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -95,7 +96,7 @@ public class UpdateCustomerController implements Initializable, CommonUseHelperI
 
     @FXML
     void backToRecordPage(ActionEvent event) throws IOException {
-        setScene(event, CUSTOMER_RECORD_VIEW);
+        setScene(event, Views.CUSTOMER_RECORD_VIEW.getView());
     }
 
     @FXML
@@ -118,7 +119,7 @@ public class UpdateCustomerController implements Initializable, CommonUseHelperI
                     isSaved = true;
                 } else {
                     Validator.displayInvalidInput("Contain invalid entry.\n Example:\n Name: Lucy Wang\nAddress: 123 street name, city name \nPhone & Zip code are digits only");
-                    setScene(event, UPDATE_CUSTOMER_VIEW);
+                    setScene(event, Views.UPDATE_CUSTOMER_VIEW.getView());
                 }
             }
             else {
@@ -159,7 +160,7 @@ public class UpdateCustomerController implements Initializable, CommonUseHelperI
     @FXML
     void updateAptClicked(ActionEvent event){
         if(!detectAnyChange(event) || isSaved) {
-            setScene(event, APPOINTMENT_RECORD_VIEW);
+            setScene(event, Views.APPOINTMENT_RECORD_VIEW.getView());
         }else{
             Validator.displayUnsavedInfo("Please save customer's information before add/update the appointments");
         }
