@@ -22,7 +22,6 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-//        BookingAvailability.initTimeSlots();
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(LOGIN_VIEW_PATH)),  ResourceBundle.getBundle("resource/language", getLocale()));
         primaryStage.setScene(new Scene(root, 800, 800));
         primaryStage.show();

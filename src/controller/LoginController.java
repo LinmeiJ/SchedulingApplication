@@ -9,9 +9,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.OffsetDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.logging.Logger;
 
@@ -83,6 +88,30 @@ public class LoginController extends Location implements Initializable, CommonUs
         alert.showAndWait()
                 .filter(res -> res == ButtonType.OK);
     }
+
+    /**
+     * logs every log in attempt with a ISO timestamp, the attempted username, and whether the attempt was successful
+     *
+     * @param success whether the login attempt was successful
+     */
+    private void logLoginAttempt(boolean success) {
+        final DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
+        final String time = formatter.format(OffsetDateTime.now().truncatedTo(ChronoUnit.MILLIS));
+        final String username = userNameField.getText();
+        try {
+            final FileWriter fw = new FileWriter("login_activity.txt", true);
+            final BufferedWriter bw = new BufferedWriter(fw);
+            bw.write("time: " + time + "\t");
+            bw.write("username: " + username + "\t");
+            bw.write("success: " + success + "\t");
+            bw.newLine();
+            bw.close();
+        } catch (IOException ex) {
+            System.out.println("Failed to log invalid login attempt:");
+            System.out.println(ex.getMessage());
+        }
+    }
+
 
 }
 
