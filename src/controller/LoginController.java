@@ -50,6 +50,8 @@ public class LoginController extends Location implements Initializable, CommonUs
     public static ResourceBundle language;
     private String name;
     private String userPassword;
+    private int successCount;
+    private int failedCount;
     private final static Logger LOGGER = Logger.getLogger(LoggerUtil.class.getName());
     private AppointmentDaoImpl appointmentDao = new AppointmentDaoImpl();
 
@@ -61,9 +63,13 @@ public class LoginController extends Location implements Initializable, CommonUs
         if(UserDaoImpl.findByUserName(name, userPassword)) {
             displayUpcomingAptsAlert();
             setScene(event, CUSTOMER_RECORD_VIEW);
-
+            successCount++;
+            logLoginAttempt("Success");
         }else{
+            logLoginAttempt("Failed");
+            failedCount++;
             Validator.displayLoginInvalidInput(language.getString("userNotFound"));
+
         }
     }
 
@@ -89,29 +95,25 @@ public class LoginController extends Location implements Initializable, CommonUs
                 .filter(res -> res == ButtonType.OK);
     }
 
-    /**
-     * logs every log in attempt with a ISO timestamp, the attempted username, and whether the attempt was successful
-     *
-     * @param success whether the login attempt was successful
-     */
-    private void logLoginAttempt(boolean success) {
-        final DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
-        final String time = formatter.format(OffsetDateTime.now().truncatedTo(ChronoUnit.MILLIS));
-        final String username = userNameField.getText();
+
+    private void logLoginAttempt(String loginAttemps) {
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
+        String time = formatter.format(OffsetDateTime.now().truncatedTo(ChronoUnit.MILLIS));
+        String username = userNameField.getText();
         try {
-            final FileWriter fw = new FileWriter("login_activity.txt", true);
-            final BufferedWriter bw = new BufferedWriter(fw);
-            bw.write("time: " + time + "\t");
-            bw.write("username: " + username + "\t");
-            bw.write("success: " + success + "\t");
+            FileWriter fw = new FileWriter("login_activity.txt", true);
+            BufferedWriter bw = new BufferedWriter(fw);
+
+            bw.write("Date = " + time + "\t\t");
+            bw.write("User Name = " + username + "\t\t");
+            bw.write("Attempt Status = " + loginAttemps + "\t\t");
+            bw.write("Success Total Count = " + successCount + "\t\t");
+            bw.write("Failed Total Count = " + failedCount + "\t\t");
+
             bw.newLine();
             bw.close();
-        } catch (IOException ex) {
-            System.out.println("Failed to log invalid login attempt:");
-            System.out.println(ex.getMessage());
+        } catch (IOException e) {
+            System.out.println("Failed to log invalid login attempt:" + "Exception Message: " + e.getMessage());
         }
     }
-
-
 }
-
