@@ -37,9 +37,26 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
         return null;
     }
 
-    public ObservableList<Appointment> findAllByCustId(long customerId) throws SQLException {
-        ResultSet rs = findRawDataFromDB("SELECT Appointment_ID, Title, a.Description, Location, a.Type, a.Start, a.End, User_ID, Contact_ID FROM appointments as a WHERE Customer_ID = " + customerId);
-        convertToObj(customerId, rs);
+    public ObservableList<Appointment> findAllByCustId(long id) throws SQLException {
+        ResultSet rs = findRawDataFromDB("SELECT Appointment_ID, Title, a.Description, Location, a.Type, a.Start, a.End, User_ID, Contact_ID FROM appointments as a WHERE Customer_ID = " + id);
+        convertToObj(id, rs);
+        return allAppointment;
+    }
+
+    public ObservableList<Appointment> findAllByContactId(long id) throws SQLException {
+        ResultSet rs = findRawDataFromDB("SELECT Appointment_ID, Title, Location, Type, Start, End, Customer_ID FROM appointments WHERE Contact_ID = " + id);
+        while(rs.next()){
+            long aptId = rs.getLong("appointment_id");
+            String title = rs.getString("title");
+            String location =  rs.getString("location");
+            String type =  rs.getString("type");
+            Timestamp startDateTime = DateTimeConverter.convertUTCToLocal(String.valueOf(rs.getTimestamp("start")));
+            Timestamp endDateTime = DateTimeConverter.convertUTCToLocal(String.valueOf(rs.getTimestamp("end")));
+            long customerId = rs.getLong("Customer_id");
+
+            appointment  = new Appointment(aptId, title, location, type, startDateTime, endDateTime, customerId);
+            allAppointment.add(appointment);
+        }
         return allAppointment;
     }
 

@@ -1,7 +1,6 @@
 package enums;
 
 public enum AppointmentType {
-
     PlanningSession("Planning Session"),
     DeBriefing("De-Briefing");
 

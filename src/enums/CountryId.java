@@ -1,7 +1,6 @@
 package enums;
 
 public enum CountryId {
-
     US(1),
     UK(2),
     CANADA(3);

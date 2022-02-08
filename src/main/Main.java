@@ -19,6 +19,7 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class Main extends Application {
+
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(Views.LOGIN_VIEW_PATH.getView())),  ResourceBundle.getBundle("resource/language", getLocale()));
