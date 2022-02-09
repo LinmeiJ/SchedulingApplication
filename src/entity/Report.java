@@ -3,6 +3,7 @@ package entity;
 public class Report {
     private String month;
     private String type;
+    private String country;
     private int count;
 
     public Report(String type, int count) {
@@ -33,6 +34,14 @@ public class Report {
 
     public void setCount(int count) {
         this.count = count;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
     }
 
     @Override
