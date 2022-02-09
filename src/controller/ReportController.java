@@ -11,12 +11,11 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -44,6 +43,59 @@ public class ReportController implements Initializable, CommonUseHelperIfc{
     private ListView<Customer> CountCountByCountry;
 
     @FXML
+    private TableColumn<Appointment, String> Description;
+
+    @FXML
+    private TableColumn<Appointment, Timestamp> Start;
+
+    @FXML
+    private TableColumn<Appointment, String> Title;
+
+    @FXML
+    private TableColumn<Appointment, String> Type;
+
+    @FXML
+    private TableColumn<Appointment, Long> aptID;
+
+    @FXML
+    private ComboBox<String> contactList;
+
+    @FXML
+    private TableColumn<Appointment, String> countOption;
+
+    @FXML
+    private TableColumn<Appointment, String> countryName;
+
+    @FXML
+    private TableColumn<Appointment, Long> custId;
+
+    @FXML
+    private TableColumn<Appointment, Timestamp> end;
+
+    @FXML
+    private ComboBox<String> monthTypeCombo;
+
+    @FXML
+    private TableColumn<Customer, Long> totalCountCustomers;
+
+    @FXML
+    private TableColumn<Appointment, Long> typeMonthOption;
+
+    private boolean isReportOneMonth;
+    private boolean isReportOneType;
+    private boolean isReportTwoContact;
+
+    @FXML
+    void contactNameIsSelected(ActionEvent event) {
+
+    }
+
+    @FXML
+    void monthTypeBtnSelected(ActionEvent event) {
+
+    }
+
+    @FXML
     void backIsSelected(ActionEvent event) {
         setScene(event, Views.CUSTOMER_RECORD_VIEW.getView());
     }
@@ -53,24 +105,8 @@ public class ReportController implements Initializable, CommonUseHelperIfc{
         exit(event, exit);
     }
 
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        try {
-            ObservableList<Report> reportOne = reportDao.getCountByType();
-            aptCountList.setItems(reportOne);
-            List<Integer> allContactId = contactDao.findAllContactId();
-//            ObservableList<Appointment> reportTwo;
-////            for(Integer i : allContactId){
-//            for(int i = 0; i < allContactId.size(); i++){
-//                reportTwo = appointmentDao.findAllByContactId(allContactId.get(i));
-//            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+
     }
-
-
-
-
 }
