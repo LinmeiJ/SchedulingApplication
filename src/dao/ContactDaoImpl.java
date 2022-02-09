@@ -13,10 +13,12 @@ public class ContactDaoImpl extends JDBCConnection {
     AppointmentDaoImpl appointmentDao = new AppointmentDaoImpl();
     ObservableList<String> allContacts = FXCollections.observableArrayList();
     public long getContactId(String name) throws SQLException {
+        long id = 0;
         ResultSet rs = findRawDataFromDB("SELECT Contact_ID FROM contacts WHERE Contact_Name = '" + name + "'");
-        while(rs.next())
-            return rs.getLong("contact_id");
-        return 0;
+        while(rs.next()){
+            id = rs.getLong("contact_id");
+        }
+        return id;
     }
 
     public String findNameByID(long contact_id) throws SQLException {

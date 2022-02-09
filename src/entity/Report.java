@@ -5,11 +5,14 @@ public class Report {
     private String type;
     private String country;
     private int count;
+    private int ctrCount;
 
     public Report(String type, int count) {
-        this.month =  month;
         this.type = type;
         this.count = count;
+    }
+
+    public Report() {
     }
 
     public String getMonth() {
@@ -44,8 +47,16 @@ public class Report {
         this.country = country;
     }
 
-    @Override
-    public String toString(){
-        return "Type: "+ this.type + "\t\t" + "Count: " + this.count + "\n================================================================";
+    public int getCtrCount() {
+        return ctrCount;
     }
+
+    public void setCtrCount(int ctrCount) {
+        this.ctrCount = ctrCount;
+    }
+
+//    @Override
+//    public String toString(){
+//        return "Type: "+ this.type + "\t\t" + "Count: " + this.count + "\n================================================================";
+//    }
 }

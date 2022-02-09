@@ -13,6 +13,7 @@ public class Country {
     private String created_by;
     private Timestamp last_update;
     private String last_updated_by;
+    private Long count;
 
     public Country(long country_id, String country, Timestamp create_date, String created_by, Timestamp last_update, String last_updated_by) {
         this.country_id = country_id;
@@ -21,6 +22,10 @@ public class Country {
         this.created_by = created_by;
         this.last_update = last_update;
         this.last_updated_by = last_updated_by;
+    }
+
+    public Country() {
+
     }
 
     public long getCountry_id() {
@@ -69,5 +74,13 @@ public class Country {
 
     public void setCountry_id(long country_id) {
         this.country_id = country_id;
+    }
+
+    public Long getCount() {
+        return count;
+    }
+
+    public void setCount(Long count) {
+        this.count = count;
     }
 }

@@ -4,28 +4,24 @@ import dao.AppointmentDaoImpl;
 import dao.ContactDaoImpl;
 import dao.ReportDaoImpl;
 import entity.Appointment;
+import entity.Country;
 import entity.Customer;
 import entity.Report;
 import enums.Views;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class ReportController implements Initializable, CommonUseHelperIfc{
-    ReportDaoImpl reportDao = new ReportDaoImpl();
-    ContactDaoImpl contactDao = new ContactDaoImpl();
-    AppointmentDaoImpl appointmentDao = new AppointmentDaoImpl();
-
-    @FXML
-    private Label reportType;
 
     @FXML
     private Button exit;
@@ -34,25 +30,16 @@ public class ReportController implements Initializable, CommonUseHelperIfc{
     private Button back;
 
     @FXML
-    private ListView<Report> aptCountList;
+    private TableColumn<Appointment, String> description;
 
     @FXML
-    private ListView<Appointment> ScheduleByContact;
+    private TableColumn<Appointment, Timestamp> start;
 
     @FXML
-    private ListView<Customer> CountCountByCountry;
+    private TableColumn<Appointment, String> title;
 
     @FXML
-    private TableColumn<Appointment, String> Description;
-
-    @FXML
-    private TableColumn<Appointment, Timestamp> Start;
-
-    @FXML
-    private TableColumn<Appointment, String> Title;
-
-    @FXML
-    private TableColumn<Appointment, String> Type;
+    private TableColumn<Appointment, String> type;
 
     @FXML
     private TableColumn<Appointment, Long> aptID;
@@ -61,38 +48,62 @@ public class ReportController implements Initializable, CommonUseHelperIfc{
     private ComboBox<String> contactList;
 
     @FXML
-    private TableColumn<Appointment, String> countOption;
+    private TableColumn<Report, String> countOption;
 
     @FXML
-    private TableColumn<Appointment, String> countryName;
+    private TableColumn<Country, String> countryName;
 
     @FXML
-    private TableColumn<Appointment, Long> custId;
+    private TableColumn<Report, Long> custId;
 
     @FXML
     private TableColumn<Appointment, Timestamp> end;
 
     @FXML
+    private TableColumn<Report, String> typeMonthOption;
+
+    @FXML
+    private TableColumn<Report, Integer> typeMonthCount;
+
+    @FXML
     private ComboBox<String> monthTypeCombo;
 
     @FXML
-    private TableColumn<Customer, Long> totalCountCustomers;
+    private TableColumn<Country, Long> totalCountCustomers;
 
     @FXML
-    private TableColumn<Appointment, Long> typeMonthOption;
+    private TableView<Report> reportOne;
+    @FXML
+    private TableView<Appointment> reportTwo;
+    @FXML
+    private TableView<Country> reportThree;
 
-    private boolean isReportOneMonth;
-    private boolean isReportOneType;
-    private boolean isReportTwoContact;
+    private static boolean isReportOneByMonth = true;
+    private static boolean isReportOneByType;
+    private static boolean isReportTwoContact;
+    private static String contactName;
+    private ReportDaoImpl reportDao = new ReportDaoImpl();
+    ContactDaoImpl contactDao = new ContactDaoImpl();
+    AppointmentDaoImpl appointmentDao = new AppointmentDaoImpl();
+
 
     @FXML
-    void contactNameIsSelected(ActionEvent event) {
-
+    void contactNameIsSelected(ActionEvent event) throws SQLException {
+        contactName =contactList.getValue();
+        isReportTwoContact = true;
+        setScene(event, Views.REPORT_VIEW.getView());
     }
 
     @FXML
     void monthTypeBtnSelected(ActionEvent event) {
-
+        if(monthTypeCombo.getValue().equals("Type")){
+            isReportOneByMonth = false;
+            isReportOneByType = true;
+        }else{
+            isReportOneByType = false;
+            isReportOneByMonth = true;
+        }
+        setScene(event, Views.REPORT_VIEW.getView());
     }
 
     @FXML
@@ -107,6 +118,43 @@ public class ReportController implements Initializable, CommonUseHelperIfc{
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        monthTypeCombo.setItems(FXCollections.observableArrayList("Month","Type"));
+        try {
+            if(isReportOneByMonth){
+                monthTypeCombo.setValue("Month");
+                typeMonthCount .setCellValueFactory(new PropertyValueFactory<>("count"));
+                typeMonthOption.setCellValueFactory(new PropertyValueFactory<>("month"));
+                reportOne.setItems(reportDao.getCountByMonth());
+            }
+            else if(isReportOneByType){
+                monthTypeCombo.setValue("Type");
+                typeMonthCount .setCellValueFactory(new PropertyValueFactory<>("count"));
+                typeMonthOption.setCellValueFactory(new PropertyValueFactory<>("Type"));
+                reportOne.setItems(reportDao.getCountByType());
+            }
 
+            ObservableList<String> contacts = contactDao.findAll();
+            contactList.setItems(contacts);
+
+            if(contactName != null) {
+                aptID.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
+                title.setCellValueFactory(new PropertyValueFactory<>("title"));
+                type.setCellValueFactory(new PropertyValueFactory<>("type"));
+                description.setCellValueFactory(new PropertyValueFactory<>("description"));
+                start.setCellValueFactory(new PropertyValueFactory<>("start"));
+                end.setCellValueFactory(new PropertyValueFactory<>("end"));
+                custId.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
+                contactList.setValue(contactName);
+                reportTwo.setItems(appointmentDao.findAllByContactId(contactDao.getContactId(contactName)));
+            }
+
+            countryName.setCellValueFactory(new PropertyValueFactory<>("country"));
+            totalCountCustomers.setCellValueFactory(new PropertyValueFactory<>("count"));
+            reportThree.setItems(reportDao.getCustCountByCountry());
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
