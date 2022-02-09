@@ -3,7 +3,7 @@ package controller;
 import dao.AppointmentDaoImpl;
 import dao.UserDaoImpl;
 import dao.Validator;
-import dateUtil.DateTimeConverter;
+import dateTimeUtil.DateTimeConverter;
 import enums.Views;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

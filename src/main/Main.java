@@ -1,8 +1,5 @@
 package main;
 
-import dao.AppointmentDaoImpl;
-import dateUtil.BookingAvailability;
-import dateUtil.DateTimeConverter;
 import dbConnection.JDBCConnection;
 import enums.Views;
 import javafx.application.Application;
@@ -11,9 +8,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.ResourceBundle;

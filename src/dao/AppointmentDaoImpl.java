@@ -1,7 +1,7 @@
 package dao;
 
-import dateUtil.BookingAvailability;
-import dateUtil.DateTimeConverter;
+import dateTimeUtil.BookingAvailability;
+import dateTimeUtil.DateTimeConverter;
 import dbConnection.JDBCConnection;
 import entity.Appointment;
 import javafx.collections.FXCollections;

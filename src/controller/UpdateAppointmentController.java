@@ -3,7 +3,7 @@ import dao.AppointmentDaoImpl;
 import dao.ContactDaoImpl;
 import dao.UserDaoImpl;
 import dao.Validator;
-import dateUtil.DateTimeConverter;
+import dateTimeUtil.DateTimeConverter;
 import dbConnection.JDBCConnection;
 import entity.Appointment;
 import enums.Views;

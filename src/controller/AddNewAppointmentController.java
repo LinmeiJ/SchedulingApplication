@@ -1,7 +1,7 @@
 package controller;
 
 import dao.*;
-import dateUtil.DateTimeConverter;
+import dateTimeUtil.DateTimeConverter;
 import entity.Appointment;
 import enums.Views;
 import javafx.event.ActionEvent;

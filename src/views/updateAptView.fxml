@@ -48,13 +48,13 @@
             <Label fx:id="orgStart" layoutX="479.0" layoutY="103.0" prefHeight="18.0" prefWidth="300.0" />
             <TextArea fx:id="aptDescription" layoutX="74.0" layoutY="322.0" prefHeight="108.0" prefWidth="536.0" />
             <Label layoutX="357.0" layoutY="100.0" prefHeight="18.0" prefWidth="71.0" text="New Start: " />
-            <DatePicker fx:id="startDate" layoutX="442.0" layoutY="99.0" onAction="#newStartDateTriggered" prefHeight="26.0" prefWidth="155.0" />
+            <DatePicker fx:id="startDate" layoutX="442.0" layoutY="99.0" prefHeight="26.0" prefWidth="155.0" />
             <Label layoutX="606.0" layoutY="103.0" text="HH:MM" />
             <ComboBox fx:id="startHr" layoutX="652.0" layoutY="99.0" prefHeight="26.0" prefWidth="88.0" />
             <Label layoutX="741.0" layoutY="103.0" prefHeight="18.0" prefWidth="4.0" text=":" />
             <ComboBox fx:id="startMin" layoutX="760.0" layoutY="99.0" prefHeight="26.0" prefWidth="88.0" />
             <Label layoutX="361.0" layoutY="154.0" prefHeight="18.0" prefWidth="64.0" text="New End:" />
-            <DatePicker fx:id="endDate" layoutX="442.0" layoutY="150.0" onAction="#endDateTriggered" prefHeight="26.0" prefWidth="155.0" />
+            <DatePicker fx:id="endDate" layoutX="442.0" layoutY="150.0" prefHeight="26.0" prefWidth="155.0" />
             <Label layoutX="606.0" layoutY="154.0" text="HH:MM" />
             <ComboBox fx:id="endHr" layoutX="652.0" layoutY="150.0" prefHeight="26.0" prefWidth="88.0" />
             <Label layoutX="743.0" layoutY="154.0" text=":" />
