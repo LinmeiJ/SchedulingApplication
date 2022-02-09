@@ -56,16 +56,14 @@ public class Appointment {
         this.end = endDateTime;
     }
 
-    public Appointment(long aptId, String title, String location, String type, Timestamp startDateTime, Timestamp endDateTime, long customerId) {
+    public Appointment(long aptId, String title, String location, String type, Timestamp start, Timestamp end, long customerId) {
+        this.appointment_id = aptId;
         this.title = title;
         this.location = location;
         this.type = type;
         this.start = start;
         this.end = end;
-        this.last_update = last_update;
-        this.last_updated_by = last_updated_by;
-        this.customer_id = customer_id;
-        this.contact_id = contact_id;
+        this.customer_id = customerId;
     }
 
     public String getTitle() {
@@ -177,9 +175,9 @@ public class Appointment {
         this.customer_id = customer_id;
     }
 
-    @Override
-    public String toString(){
-        return "AppointmentID=" + this.appointment_id + "\t Title=" + this.title + "\t Type=" + this.type + "\t Description=" + this.description + "\t Appointment Time=" + this.start + "_" + this.end + "";
-    }
+//    @Override
+//    public String toString(){
+//        return "AppointmentID=" + this.appointment_id + "\t Title=" + this.title + "\t Type=" + this.type + "\t Description=" + this.description + "\t Appointment Time=" + this.start + "_" + this.end + "";
+//    }
 
 }

@@ -3,6 +3,7 @@ package controller;
 import dao.AppointmentDaoImpl;
 import dao.ContactDaoImpl;
 import dao.ReportDaoImpl;
+import dao.Validator;
 import entity.Appointment;
 import entity.Country;
 import entity.Customer;
@@ -145,13 +146,17 @@ public class ReportController implements Initializable, CommonUseHelperIfc{
                 end.setCellValueFactory(new PropertyValueFactory<>("end"));
                 custId.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
                 contactList.setValue(contactName);
-                reportTwo.setItems(appointmentDao.findAllByContactId(contactDao.getContactId(contactName)));
+                long id = contactDao.getContactId(contactName);
+                if(id == 0){
+                    Validator.displayInfo("there is no appointments.");
+                }else {
+                    reportTwo.setItems(appointmentDao.findAllByContactId(id));
+                }
             }
 
             countryName.setCellValueFactory(new PropertyValueFactory<>("country"));
             totalCountCustomers.setCellValueFactory(new PropertyValueFactory<>("count"));
             reportThree.setItems(reportDao.getCustCountByCountry());
-
 
         } catch (SQLException e) {
             e.printStackTrace();
