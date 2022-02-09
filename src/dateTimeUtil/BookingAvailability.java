@@ -30,6 +30,25 @@ public class BookingAvailability {
         return treeMap;
     }
 
+    private static List<LocalTime> testing() {
+        List<LocalTime> initTime = new ArrayList<>();
+        int hr = 8, minute = 00;
+
+        for (int i = 0; i <= 56; i++) {
+            if (minute == 60) {
+                minute = 00;
+                hr++;
+            }
+            initTime.add(LocalTime.of(hr, minute));
+            if (hr == 22) {
+                break;
+            }
+            minute = minute + 15;
+        }
+        return initTime;
+    }
+
+
     public static boolean checkBookingStatus(List<Appointment> scheduleList, Timestamp start, Timestamp end) {
         Map<Integer, LocalTime> allDayTimeSlots = initTimeSlots();
         Set<Map.Entry<Integer, LocalTime>> allTimeSlotsSet = allDayTimeSlots.entrySet();
