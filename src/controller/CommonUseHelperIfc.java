@@ -20,8 +20,17 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.Arrays;
 
+/**
+ * This interface sets up few default methods that can be extended in multiple classes.
+ *
+ * @author Linmei M.
+ */
 public interface CommonUseHelperIfc {
+    /**
+     * Initialize the office hour.
+     */
      ObservableList<String> estHr = FXCollections.observableArrayList(Arrays.asList("08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22"));
+
     /**
      * This method closes the the program.
      * It prompts a dialog window to ensure whether a user wants to exit.
@@ -41,7 +50,6 @@ public interface CommonUseHelperIfc {
      *
      * @param event an event indicates a component-defined action occurred
      * @param s     the file path where the fxml is located at
-     * @throws IOException it happens when the fxml file is not found
      */
     default void setScene(ActionEvent event, String s){
         Parent parent = null;
@@ -55,6 +63,10 @@ public interface CommonUseHelperIfc {
         }
     }
 
+    /**
+     * Initialize minutes
+     * @return  returns a list of minutes from 00 - 45
+     */
     default ObservableList<String> initializeMinutes(){
         ObservableList<String> initMinutes = FXCollections.observableArrayList();
 
@@ -66,6 +78,10 @@ public interface CommonUseHelperIfc {
         return initMinutes;
     }
 
+    /**
+     * Lambda expression 1: disabled the date picker for weekends.
+     * @return  a Callback
+     */
     default Callback<DatePicker, DateCell> getDayCellFactory() {
 
         final Callback<DatePicker, DateCell> dayCellFactory = new Callback<DatePicker, DateCell>() {

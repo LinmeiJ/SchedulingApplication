@@ -49,7 +49,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
                 </TableView>
-            <Button fx:id="backBtn" layoutX="966.0" layoutY="421.0" mnemonicParsing="false" onAction="#backExitClicked" prefHeight="30.0" prefWidth="55.0" text="Back">
+            <Button fx:id="backBtn" layoutX="966.0" layoutY="421.0" mnemonicParsing="false" onAction="#backClicked" prefHeight="30.0" prefWidth="55.0" text="Back">
                <font>
                   <Font size="14.0" />
                </font>

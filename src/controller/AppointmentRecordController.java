@@ -14,9 +14,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.Month;
@@ -24,66 +22,67 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * This class provides a data control flow between displaying appointment record view and database tables
+ *
+ * @author Linmei M.
+ */
 public class AppointmentRecordController extends JDBCConnection implements Initializable, CommonUseHelperIfc {
-
     @FXML
     private TableColumn<Appointment, String> aptContact;
-
     @FXML
     private TableColumn<Appointment, Long> aptCustID;
-
     @FXML
     private TableColumn<Appointment, String> aptDescription;
-
     @FXML
     private TableColumn<Appointment, Timestamp> aptStartDateTime;
-
     @FXML
     private TableColumn<Appointment, Timestamp> aptEndDateTime;
-
     @FXML
     private TableColumn<Appointment, Long> aptID;
-
     @FXML
     private TableColumn<Appointment, String> aptLocation;
-
     @FXML
     private TableColumn<Appointment, String> aptTitle;
-
     @FXML
     private TableColumn<Appointment, String> aptType;
-
     @FXML
     private TableColumn<Appointment, Long> aptUserID;
-
     @FXML
     private TableView<Appointment> appointmentTable;
-
     @FXML
     private Button exitBtn;
-
     @FXML
     private RadioButton filterByMonth;
-
     @FXML
     private RadioButton filterByWeek;
 
-
     Logger logger = Logger.getLogger(this.getClass().getName());
-    private String[] filterOptions = {"By Month", "By Week"};
     ObservableList<Appointment> aptDataTable = FXCollections.observableArrayList();
     AppointmentDaoImpl appointmentDao = new AppointmentDaoImpl();
-    public static Appointment selectApt;
+
+    private String[] filterOptions = {"By Month", "By Week"};
     public static boolean isMonthFilter = false;
     public static boolean isWeekFilter = false;
+    public static Appointment selectApt;
 
+    /**
+     * This method receives an action of going to adding a new appointment view.
+     *
+     * @param event an event indicates a component-defined action occurred.
+     * */
     @FXML
-    void addNewClicked(ActionEvent event) throws IOException {
+    void addNewClicked(ActionEvent event){
         setScene(event, Views.NEW_APT_VIEW.getView());
     }
 
+    /**
+     * This method deletes selected appointment row
+     *
+     * @param event an event indicates a component-defined action occurred.
+     * */
     @FXML
-    void deleteClicked(ActionEvent event) throws IOException {
+    void deleteClicked(ActionEvent event){
         selectApt = appointmentTable.getSelectionModel().getSelectedItem();
         if(selectApt != null) {
             appointmentDao.delete(selectApt);
@@ -93,14 +92,23 @@ public class AppointmentRecordController extends JDBCConnection implements Initi
         }
     }
 
+    /**
+     * This method exits the view.
+     *
+     * @param event an event indicates a component-defined action occurred.
+     * */
     @FXML
     void exitBtnClicked(ActionEvent event) {
         exit(event, exitBtn);
     }
 
-
+    /**
+     * This method receives an update action event and lead user to the update appointment view.
+     *
+     * @param event an event indicates a component-defined action occurred.
+     * */
     @FXML
-    void updateClicked(ActionEvent event) throws IOException {
+    void updateClicked(ActionEvent event) {
         selectApt = appointmentTable.getSelectionModel().getSelectedItem();
         if(selectApt != null) {
             setScene(event, Views.UPDATE_APPOINTMENT_VIEW.getView());
@@ -109,35 +117,56 @@ public class AppointmentRecordController extends JDBCConnection implements Initi
         }
     }
 
+    /**
+     * This method sets the scene to the previous scene.
+     *
+     * @param event an event indicates a component-defined action occurred.
+     **/
     @FXML
-    void backExitClicked(ActionEvent event) throws IOException {
+    void backClicked(ActionEvent event) {
         setScene(event, Views.CUSTOMER_RECORD_VIEW.getView());
     }
+
+    /**
+     * When filtering by month radio button is selected, this method receives the action and reset the week radio button.
+     * @param event an event indicates a component-defined action occurred.
+     */
     @FXML
-    void filterByMonthSelected(ActionEvent event) throws SQLException, IOException {
+    void filterByMonthSelected(ActionEvent event){
         filterByWeek.setSelected(false);
         filterByMonth.setSelected(true);
         isMonthFilter = true;
         setScene(event, Views.APPOINTMENT_RECORD_VIEW.getView());
     }
 
+    /**
+     * When filtering by week radio button is selected, this method receives the action and reset the month radio button.
+     * @param event an event indicates a component-defined action occurred.
+     */
     @FXML
-    void filterByWeekSelected(ActionEvent event) throws IOException {
+    void filterByWeekSelected(ActionEvent event){
         filterByMonth.setSelected(false);
         filterByWeek.setSelected(true);
         isWeekFilter = true;
         setScene(event, Views.APPOINTMENT_RECORD_VIEW.getView());
     }
 
-
+    /**
+     * Initialize appointment record table based on customer ID.
+     * @param url The location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resourceBundle The resources used to localize the root object, or null if the root object was not localized.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         filterByMonth.setSelected(false);
         filterByWeek.setSelected(false);
         initTable();
-        loadData();
+        appointmentTable.setItems(aptDataTable);
     }
 
+    /**
+     * Initialize the appointment table based on the filters.
+     */
     private void initTable() {
         initCols();
         try {
@@ -159,6 +188,11 @@ public class AppointmentRecordController extends JDBCConnection implements Initi
         }
     }
 
+    /**
+     * This method sets up the appointment list filtering by current month
+     * @param appointments an appointment list of all months
+     * @return an appointment list of current month
+     */
     private ObservableList<Appointment>  getAptsForCurrentMonth(ObservableList<Appointment> appointments) {
         ObservableList<Appointment> aptByMonth = FXCollections.observableArrayList();
         Month currentMonth = LocalDate.now().getMonth();
@@ -170,6 +204,11 @@ public class AppointmentRecordController extends JDBCConnection implements Initi
         return aptByMonth;
     }
 
+    /**
+     * This method sets up the appointment list filtering by current week
+     * @param appointments an appointment list of all weeks
+     * @return an appointment list of current week
+     */
     private ObservableList<Appointment> getAptsForCurrentWeek(ObservableList<Appointment> appointments) {
        ObservableList<Appointment> aptByWeek = FXCollections.observableArrayList();
 
@@ -185,8 +224,9 @@ public class AppointmentRecordController extends JDBCConnection implements Initi
       return aptByWeek;
     }
 
-
-
+    /**
+     * Initialize the appointment record table columns.
+     */
     private void initCols() {
         aptID.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
         aptTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
@@ -199,19 +239,5 @@ public class AppointmentRecordController extends JDBCConnection implements Initi
         aptCustID.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
         aptUserID.setCellValueFactory(new PropertyValueFactory<>("user_id"));
         aptContact.setCellValueFactory(new PropertyValueFactory<>("contact_id"));
-
-//        editableCol();
-    }
-//
-//    private void editableCol() {
-//        aptTitle.setCellFactory(TextFieldTableCell.forTableColumn());
-//        aptTitle.setOnEditCommit( e ->{
-//            e.getTableView().getItems().get(e.getTablePosition().getRow()).setTitle(e.getNewValue());
-//        });
-//        appointmentTable.setEditable(true);
-//    }
-
-    private void loadData() {
-        appointmentTable.setItems(aptDataTable);
     }
 }
