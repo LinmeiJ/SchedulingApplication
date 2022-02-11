@@ -110,9 +110,6 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
         exit(event, cancelBtn);
     }
 
-    private boolean areValidInput(String type, String location, String title, String description, LocalDate startD, String startH, String startM, LocalDate endD, String endH, String endM, String contact) {
-        return Validator.isValidString(type, location, title) && description != null && contact != null && startD != null && endD != null && Validator.isValidString(startH, startM, endH, endM);
-    }
     @FXML
     void updateClicked(ActionEvent event) throws SQLException, IOException {
         String type = aptType.getText();
@@ -213,5 +210,9 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
         startDate.setDayCellFactory(startDayCellFactory);
         Callback<DatePicker, DateCell> endDayCellFactory= this.getDayCellFactory();
         endDate.setDayCellFactory(endDayCellFactory);
+    }
+
+    private boolean areValidInput(String type, String location, String title, String description, LocalDate startD, String startH, String startM, LocalDate endD, String endH, String endM, String contact) {
+        return Validator.isValidString(type, location, title) && description != null && contact != null && startD != null && endD != null && Validator.isValidString(startH, startM, endH, endM);
     }
 }
