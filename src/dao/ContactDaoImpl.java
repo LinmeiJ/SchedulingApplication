@@ -1,14 +1,11 @@
 package dao;
 
 import dbConnection.JDBCConnection;
-import entity.Contact;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * This class contains logics for the data flow between the controller and the contacts table in the database.
@@ -73,25 +70,4 @@ public class ContactDaoImpl extends JDBCConnection{
         }
         return allContacts;
     }
-
-//    public List<Integer> findAllContactId() throws SQLException {
-//        List<Integer> contactIds = new ArrayList<>();
-//        ResultSet rs = findRawDataFromDB("SELECT contact_ID FROM contacts");
-//        while(rs.next()){
-//            Integer id = rs.getInt("contact_id");
-//            contactIds.add(id);
-//        }
-//        return contactIds;
-//    }
-
-//    public ObservableList<String> findAllContactReport(){
-//        try {
-//            List<Integer> allContactId = findAllContactId();
-//            for(Integer id : allContactId){
-//               appointmentDao.findAllById(id);
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//    }
 }
