@@ -15,6 +15,13 @@ import java.util.ResourceBundle;
 
 public class Main extends Application {
 
+    /**
+     * This class create the main/first scene.
+     *
+     * Javadoc location: InventoryManagementSystem/src/javadoc
+     *
+     * @author Linmei M.
+     */
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(Views.LOGIN_VIEW_PATH.getView())),  ResourceBundle.getBundle("resource/language", getLocale()));

@@ -20,28 +20,21 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 
-public class LoginController extends Location implements Initializable, CommonUseHelperIfc {
+public class LoginController implements Initializable, CommonUseHelperIfc {
     @FXML
     private Label userName;
-
     @FXML
     private TextField userNameField;
-
     @FXML
     private Label password;
-
     @FXML
     private PasswordField passwordField;
-
     @FXML
     private Button loginBtn;
-
     @FXML
     private Label locationField;
-
     @FXML
     private Button exitId;
-
     @FXML
     private Label signIn;
 
@@ -53,8 +46,12 @@ public class LoginController extends Location implements Initializable, CommonUs
 
     private AppointmentDaoImpl appointmentDao = new AppointmentDaoImpl();
 
+    /**
+     * This method received the log button action event with user inputs.
+     * @param event an event indicates a component-defined action occurred
+     */
     @FXML
-    void login(ActionEvent event) throws IOException, SQLException {
+    void login(ActionEvent event) {
         name = (userNameField.getText());
         userPassword = (passwordField.getText());
 
@@ -67,15 +64,25 @@ public class LoginController extends Location implements Initializable, CommonUs
             loginAttempt("Failed");
             failedCount++;
             Validator.displayLoginInvalidInput(language.getString("userNotFound"));
-
         }
     }
 
+    /**
+     * This method closes the the program.
+     * It prompts a dialog window to ensure whether a user wants to exit.
+     *
+     * @param event an event indicates a component-defined action occurred
+     */
     @FXML
     void exitClicked(ActionEvent event) {
         exit(event, exitId);
     }
 
+    /**
+     * Initializes the Login view window and translates it based on user local language setting.
+     * @param url The location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resourceBundle The resources used to localize the root object, or null if the root object was not localized.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.language = resourceBundle;
@@ -87,12 +94,21 @@ public class LoginController extends Location implements Initializable, CommonUs
         loginBtn.setText(language.getString("loginBtn"));
     }
 
+    /**
+     * Displays whether there is an upcoming appointment.
+     * <P>
+     *     Lambda expression 2
+     * </P>
+     */
     private void displayUpcomingAptsAlert() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION, "Upcoming appointment:\n\n " + appointmentDao.getAllUpcomingApts(), ButtonType.OK);
         alert.showAndWait()
                 .filter(res -> res == ButtonType.OK);
     }
 
+    /**
+     *  Logs user attempt into a file called login_activity.txt
+     */
     private void loginAttempt(String loginAttempts) {
         try {
             FileWriter fw = new FileWriter("login_activity.txt", true);

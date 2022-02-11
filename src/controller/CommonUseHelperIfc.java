@@ -79,7 +79,12 @@ public interface CommonUseHelperIfc {
     }
 
     /**
-     * Lambda expression 1: disabled the date picker for weekends.
+     * Disables weekends options for the date picker.
+     *
+     * <P>
+     *  Lambda Expression 1
+     * </P>
+     *
      * @return  a Callback
      */
     default Callback<DatePicker, DateCell> getDayCellFactory() {
