@@ -18,7 +18,6 @@ public class Main extends Application {
     /**
      * This class create the main/first scene.
      *
-     * Javadoc location: InventoryManagementSystem/src/javadoc
      *
      * @author Linmei M.
      */
@@ -32,6 +31,7 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         launch(args);
+//        JDBCConnection.closeConnection();
     }
 
     private Locale getLocale() {

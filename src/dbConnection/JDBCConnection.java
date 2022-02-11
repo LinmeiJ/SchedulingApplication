@@ -1,9 +1,12 @@
 package dbConnection;
 
-import controller.AddNewCustomerController;
-
 import java.sql.*;
 
+/**
+ * This method opens and closes the connection between the application and Mysql database
+ *
+ * @Author Linmei M.
+ */
 public abstract class JDBCConnection {
     private static final String protocol = "jdbc";
     private static final String vendor = ":mysql:";
@@ -18,25 +21,15 @@ public abstract class JDBCConnection {
     public static Statement statement;
     public static ResultSet result;
 
+    /**
+     * This method opens the connection between the application and Mysql database
+     */
     public static void openConnection()
     {
         try {
             Class.forName(driver); // Locate Driver
             connection = DriverManager.getConnection(jdbcUrl, userName, password); // Reference Connection object
-//            System.out.println(connection + "Connection successful!");
             statement = connection.createStatement(); //create a statement
-//            String sql = "select * from users";
-//           ResultSet rs =  statement.executeQuery(sql);
-//            while(rs.next()){
-//                System.out.println(rs.getInt("User_id") + " "
-//                        +rs.getString("User_Name") + " "
-//                        + rs.getString("Password") + " "
-//                        + rs.getString("Create_Date") + " "
-//                        + rs.getString("Created_By") + " "
-//                        + rs.getString("Last_Update") + " "
-//                        + rs.getString("Last_Updated_By")+" ");
-//
-//            }
         }
         catch(Exception e)
         {
@@ -44,6 +37,9 @@ public abstract class JDBCConnection {
         }
     }
 
+    /**
+     * This method closes the connection between the application and the Mysql databse
+     */
     public static void closeConnection() {
         try {
             connection.close();
@@ -55,6 +51,11 @@ public abstract class JDBCConnection {
         }
     }
 
+    /**
+     * A common used method that is used for classes in dao to query the tables from Database.
+     * @param sql a query
+     * @return a raw result data
+     */
     public ResultSet findRawDataFromDB(String sql){
         try {
             statement = connection.createStatement();
