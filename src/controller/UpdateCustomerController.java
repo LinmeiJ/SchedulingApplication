@@ -47,7 +47,8 @@ public class UpdateCustomerController implements Initializable, CommonUseHelperI
     @FXML
     private Button cancelBtn;
 
-    private Customer selectedCust = CustomerRecordController.selectedCust;;
+    private Customer selectedCust = CustomerRecordController.selectedCust;
+    ;
     private CustomerDaoImpl customerDao = new CustomerDaoImpl();
     private FirstLevelDivisionDaoImpl divisionDao = new FirstLevelDivisionDaoImpl();
     private Customer customer = new Customer();
@@ -55,8 +56,9 @@ public class UpdateCustomerController implements Initializable, CommonUseHelperI
     public CountryId ctryID;
 
     /**
-     *  Indicates the Canada radio button is selected and set that button to ture and re-select the rest of radio buttons, then
-     *  displays all the divisions in the Canada.
+     * Indicates the Canada radio button is selected and set that button to ture and re-select the rest of radio buttons, then
+     * displays all the divisions in the Canada.
+     *
      * @param event an event indicates a component-defined action occurred.
      */
     @FXML
@@ -67,31 +69,34 @@ public class UpdateCustomerController implements Initializable, CommonUseHelperI
     }
 
     /**
-     *  Indicates the England radio button is selected and set that button to ture and re-select the rest of radio buttons, then
-     *  displays all the divisions in the England.
+     * Indicates the England radio button is selected and set that button to ture and re-select the rest of radio buttons, then
+     * displays all the divisions in the England.
+     *
      * @param event an event indicates a component-defined action occurred.
      */
     @FXML
     void englandSelected(ActionEvent event) {
         setCountry(false, true, false);
-        CustomerRecordController.ctryId  = CountryId.UK;
+        CustomerRecordController.ctryId = CountryId.UK;
         division.setItems(divisionDao.getAllDivisions());
     }
 
     /**
-     *  Indicates the US radio button is selected and set that button to ture and re-select the rest of radio buttons, then
-     *  displays all the divisions in the U.S.
+     * Indicates the US radio button is selected and set that button to ture and re-select the rest of radio buttons, then
+     * displays all the divisions in the U.S.
+     *
      * @param event an event indicates a component-defined action occurred.
      */
     @FXML
     void uSSelected(ActionEvent event) {
-        CustomerRecordController.ctryId  = CountryId.US;
-        setSelectedRadioBtn(true,false, false);
+        CustomerRecordController.ctryId = CountryId.US;
+        setSelectedRadioBtn(true, false, false);
         division.setItems(divisionDao.getAllDivisions());
     }
 
     /**
      * This method helps to select the radio that is selected by the user and the re-select the rest of radio buttons.
+     *
      * @param us the US radio button
      * @param en the UK radio button
      * @param ca the CA raido button
@@ -104,6 +109,7 @@ public class UpdateCustomerController implements Initializable, CommonUseHelperI
 
     /**
      * This method sets the scene to the previous scene.
+     *
      * @param event an event indicates a component-defined action occurred.
      **/
     @FXML
@@ -113,8 +119,9 @@ public class UpdateCustomerController implements Initializable, CommonUseHelperI
 
     /**
      * This method exits the view.
+     *
      * @param event an event indicates a component-defined action occurred.
-     * */
+     */
     @FXML
     void exitBtnClicked(ActionEvent event) {
         exit(event, cancelBtn);
@@ -122,6 +129,7 @@ public class UpdateCustomerController implements Initializable, CommonUseHelperI
 
     /**
      * The save button clicked action is received here, then call the updateCustInfo method to update the customer information.
+     *
      * @param event an event indicates a component-defined action occurred.
      */
     @FXML
@@ -130,46 +138,47 @@ public class UpdateCustomerController implements Initializable, CommonUseHelperI
     }
 
     private void updateCustInfo(ActionEvent event) {
-            if (detectAnyChange(event)) {
-                if (areValidInputs(custNameField.getText(), addressField.getText(), phoneField.getText(), zipCodeField.getText())) {
-                    getCustomerUpdatedInfo(custNameField.getText(), addressField.getText(), phoneField.getText(), zipCodeField.getText());
-                    customerDao.update(customer);
-                    Validator.displaySuccess("Update");
-                    isSaved = true;
-                } else {
-                    Validator.displayInvalidInput("Contain invalid entry.\n Example:\n Name: Lucy Wang\nAddress: 123 street name, city name \nPhone & Zip code are digits only");
-                    setScene(event, Views.UPDATE_CUSTOMER_VIEW.getView());
-                }
+        if (detectAnyChange(event)) {
+            if (areValidInputs(custNameField.getText(), addressField.getText(), phoneField.getText(), zipCodeField.getText())) {
+                getCustomerUpdatedInfo(custNameField.getText(), addressField.getText(), phoneField.getText(), zipCodeField.getText());
+                customerDao.update(customer);
+                Validator.displaySuccess("Update");
+                isSaved = true;
+            } else {
+                Validator.displayInvalidInput("Contain invalid entry.\n Example:\n Name: Lucy Wang\nAddress: 123 street name, city name \nPhone & Zip code are digits only");
+                setScene(event, Views.UPDATE_CUSTOMER_VIEW.getView());
             }
-            else {
-                Validator.displayInfo("No change is found.");
-            }
+        } else {
+            Validator.displayInfo("No change is found.");
+        }
     }
 
     /**
      * This method detects whether there is a change occurs
+     *
      * @param event an event indicates a component-defined action occurred.
      * @return boolean if there is a change find, return true, otherwise returns false.
      */
     private boolean detectAnyChange(ActionEvent event) {
-            String name = custNameField.getText();
-            String address = addressField.getText();
-            String phone = phoneField.getText();
-            String postCode = zipCodeField.getText();
-            String div = division.getValue();
+        String name = custNameField.getText();
+        String address = addressField.getText();
+        String phone = phoneField.getText();
+        String postCode = zipCodeField.getText();
+        String div = division.getValue();
         return name.equals(selectedCust.getCustomer_name()) && address.equals(selectedCust.getAddress())
-        && phone.equals(selectedCust.getPhone()) && postCode.equals(selectedCust.getPostal_code())
-        && div.equals(getCustomerDivision().get(0)) ? false : true;
+                && phone.equals(selectedCust.getPhone()) && postCode.equals(selectedCust.getPostal_code())
+                && div.equals(getCustomerDivision().get(0)) ? false : true;
     }
 
     /**
      * Update a customer object based on the input user provides
-     * @param name the customer name
-     * @param address the customer address
-     * @param phone the customer phone
+     *
+     * @param name     the customer name
+     * @param address  the customer address
+     * @param phone    the customer phone
      * @param postCode the customer entered postcode
      */
-    private void getCustomerUpdatedInfo(String name, String address, String phone, String postCode){
+    private void getCustomerUpdatedInfo(String name, String address, String phone, String postCode) {
         customer.setCustomer_name(name);
         customer.setAddress(address);
         customer.setPhone(phone);
@@ -178,18 +187,15 @@ public class UpdateCustomerController implements Initializable, CommonUseHelperI
         customer.setCreate_date(Timestamp.valueOf(LocalDateTime.now()));
         customer.setLast_update(Timestamp.valueOf(LocalDateTime.now()));
         customer.setLast_updated_by(UserDaoImpl.userName);
-        try {
-            customer.setDivision_id(divisionDao.findIdByDivisionName(division.getValue()));
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        customer.setDivision_id(divisionDao.findIdByDivisionName(division.getValue()));
     }
 
     /**
      * This method validates the user input
-     * @param name the user name can only be alphabets with space between
-     * @param address the user address can not contain special characters
-     * @param phone the user phone can not contain special characters
+     *
+     * @param name     the user name can only be alphabets with space between
+     * @param address  the user address can not contain special characters
+     * @param phone    the user phone can not contain special characters
      * @param postCode the user post code can not contain special characters
      * @return
      */
@@ -199,20 +205,22 @@ public class UpdateCustomerController implements Initializable, CommonUseHelperI
 
     /**
      * This method give an option for user to also update the same customers appointment.
+     *
      * @param event an event indicates a component-defined action occurred.
      */
     @FXML
-    void updateAptClicked(ActionEvent event){
-        if(!detectAnyChange(event) || isSaved) {
+    void updateAptClicked(ActionEvent event) {
+        if (!detectAnyChange(event) || isSaved) {
             setScene(event, Views.APPOINTMENT_RECORD_VIEW.getView());
-        }else{
+        } else {
             Validator.displayUnsavedInfo("Please save customer's information before add/update the appointments");
         }
     }
 
     /**
      * Initialize the customer previous info.
-     * @param url The location used to resolve relative paths for the root object, or null if the location is not known.
+     *
+     * @param url            The location used to resolve relative paths for the root object, or null if the location is not known.
      * @param resourceBundle The resources used to localize the root object, or null if the root object was not localized.
      */
     @Override
@@ -228,6 +236,7 @@ public class UpdateCustomerController implements Initializable, CommonUseHelperI
 
     /**
      * This method gets the division list based on the previous saved country ID
+     *
      * @return ObservableList<String> a list of division names
      */
     private ObservableList<String> getCustomerDivision() {
@@ -240,27 +249,28 @@ public class UpdateCustomerController implements Initializable, CommonUseHelperI
      * This method gets the country that stored in the database based on the selected customer row.
      * then sets them as the default choice.
      */
-    private void getCountry(){
-       Long ctyId = selectedCust.getFirstLevelDivision().getCountry_id();
-       ctryID = ctyId == 1 ? CountryId.US : ctyId == 2 ? CountryId.UK : CountryId.CANADA;
-       switch (ctryID){
-           case US:
-               setCountry(true, false, false);
-               break;
-           case UK:
-               setCountry(false, true, false);
-               break;
-           case CANADA:
-               setCountry(false, false, true);
-               break;
-           default:
-               System.out.println("something wrong, country is not find");
-               break;
-       }
+    private void getCountry() {
+        Long ctyId = selectedCust.getFirstLevelDivision().getCountry_id();
+        ctryID = ctyId == 1 ? CountryId.US : ctyId == 2 ? CountryId.UK : CountryId.CANADA;
+        switch (ctryID) {
+            case US:
+                setCountry(true, false, false);
+                break;
+            case UK:
+                setCountry(false, true, false);
+                break;
+            case CANADA:
+                setCountry(false, false, true);
+                break;
+            default:
+                System.out.println("something wrong, country is not find");
+                break;
+        }
     }
 
     /**
      * Sets a default country button
+     *
      * @param us the US radio button
      * @param en the UK radio button
      * @param ca the CA radio button

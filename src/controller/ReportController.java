@@ -27,7 +27,7 @@ import java.util.ResourceBundle;
  *
  * @author Linmei M.
  */
-public class ReportController implements Initializable, CommonUseHelperIfc{
+public class ReportController implements Initializable, CommonUseHelperIfc {
     @FXML
     private Button exit;
     @FXML
@@ -72,28 +72,30 @@ public class ReportController implements Initializable, CommonUseHelperIfc{
     AppointmentDaoImpl appointmentDao = new AppointmentDaoImpl();
 
     /**
-     *  When a contact name is select in filter by a user, this method takes in the action
-     *  and displays the total appointment count by the selected contact name.
+     * When a contact name is select in filter by a user, this method takes in the action
+     * and displays the total appointment count by the selected contact name.
+     *
      * @param event an event indicates a component-defined action occurred.
      */
     @FXML
     void contactNameIsSelected(ActionEvent event) throws SQLException {
-        contactName =contactList.getValue();
+        contactName = contactList.getValue();
         isReportTwoContact = true;
         setScene(event, Views.REPORT_VIEW.getView());
     }
 
     /**
-     *  When any of the Type or Month filter is select by the user, this method takes in the action
-     *  and displays the total appointment count by type or month based on the input.
+     * When any of the Type or Month filter is select by the user, this method takes in the action
+     * and displays the total appointment count by type or month based on the input.
+     *
      * @param event an event indicates a component-defined action occurred.
      */
     @FXML
     void monthTypeBtnSelected(ActionEvent event) {
-        if(monthTypeCombo.getValue().equals("Type")){
+        if (monthTypeCombo.getValue().equals("Type")) {
             isReportOneByMonth = false;
             isReportOneByType = true;
-        }else{
+        } else {
             isReportOneByType = false;
             isReportOneByMonth = true;
         }
@@ -102,6 +104,7 @@ public class ReportController implements Initializable, CommonUseHelperIfc{
 
     /**
      * This method sets the scene to the previous scene.
+     *
      * @param event an event indicates a component-defined action occurred.
      **/
     @FXML
@@ -113,7 +116,7 @@ public class ReportController implements Initializable, CommonUseHelperIfc{
      * This method exits the view.
      *
      * @param event an event indicates a component-defined action occurred.
-     * */
+     */
     @FXML
     void existIsSelected(ActionEvent event) {
         exit(event, exit);
@@ -122,53 +125,49 @@ public class ReportController implements Initializable, CommonUseHelperIfc{
     /**
      * Initialize the report view window. set month as default for report one and count the customer total by country name.
      * <p>
-     *     Report three : count customer total by country name.
+     * Report three : count customer total by country name.
      * </p>
-     * @param url The location used to resolve relative paths for the root object, or null if the location is not known.
+     *
+     * @param url            The location used to resolve relative paths for the root object, or null if the location is not known.
      * @param resourceBundle The resources used to localize the root object, or null if the root object was not localized.
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        monthTypeCombo.setItems(FXCollections.observableArrayList("Month","Type"));
-        try {
-            if(isReportOneByMonth){
-                monthTypeCombo.setValue("Month");
-                typeMonthCount .setCellValueFactory(new PropertyValueFactory<>("count"));
-                typeMonthOption.setCellValueFactory(new PropertyValueFactory<>("month"));
-                reportOne.setItems(reportDao.getCountByMonth());
-            }
-            else if(isReportOneByType){
-                monthTypeCombo.setValue("Type");
-                typeMonthCount .setCellValueFactory(new PropertyValueFactory<>("count"));
-                typeMonthOption.setCellValueFactory(new PropertyValueFactory<>("Type"));
-                reportOne.setItems(reportDao.getCountByType());
-            }
+        monthTypeCombo.setItems(FXCollections.observableArrayList("Month", "Type"));
 
-            ObservableList<String> contacts = contactDao.findAll();
-            contactList.setItems(contacts);
-
-            if(contactName != null) {
-                aptID.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
-                title.setCellValueFactory(new PropertyValueFactory<>("title"));
-                type.setCellValueFactory(new PropertyValueFactory<>("type"));
-                description.setCellValueFactory(new PropertyValueFactory<>("description"));
-                start.setCellValueFactory(new PropertyValueFactory<>("start"));
-                end.setCellValueFactory(new PropertyValueFactory<>("end"));
-                custId.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
-                contactList.setValue(contactName);
-                long id = contactDao.getContactId(contactName);
-                if(id == 0){
-                    Validator.displayInfo("there is no appointments.");
-                }else {
-                    reportTwo.setItems(appointmentDao.findAllByContactId(id));
-                }
-            }
-            countryName.setCellValueFactory(new PropertyValueFactory<>("country"));
-            totalCountCustomers.setCellValueFactory(new PropertyValueFactory<>("count"));
-            reportThree.setItems(reportDao.getCustCountByCountry());
-
-        } catch (SQLException e) {
-            e.printStackTrace();
+        if (isReportOneByMonth) {
+            monthTypeCombo.setValue("Month");
+            typeMonthCount.setCellValueFactory(new PropertyValueFactory<>("count"));
+            typeMonthOption.setCellValueFactory(new PropertyValueFactory<>("month"));
+            reportOne.setItems(reportDao.getCountByMonth());
+        } else if (isReportOneByType) {
+            monthTypeCombo.setValue("Type");
+            typeMonthCount.setCellValueFactory(new PropertyValueFactory<>("count"));
+            typeMonthOption.setCellValueFactory(new PropertyValueFactory<>("Type"));
+            reportOne.setItems(reportDao.getCountByType());
         }
+
+        ObservableList<String> contacts = contactDao.findAll();
+        contactList.setItems(contacts);
+
+        if (contactName != null) {
+            aptID.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
+            title.setCellValueFactory(new PropertyValueFactory<>("title"));
+            type.setCellValueFactory(new PropertyValueFactory<>("type"));
+            description.setCellValueFactory(new PropertyValueFactory<>("description"));
+            start.setCellValueFactory(new PropertyValueFactory<>("start"));
+            end.setCellValueFactory(new PropertyValueFactory<>("end"));
+            custId.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
+            contactList.setValue(contactName);
+            long id = contactDao.getContactId(contactName);
+            if (id == 0) {
+                Validator.displayInfo("there is no appointments.");
+            } else {
+                reportTwo.setItems(appointmentDao.findAllByContactId(id));
+            }
+        }
+        countryName.setCellValueFactory(new PropertyValueFactory<>("country"));
+        totalCountCustomers.setCellValueFactory(new PropertyValueFactory<>("count"));
+        reportThree.setItems(reportDao.getCustCountByCountry());
     }
 }

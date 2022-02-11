@@ -60,10 +60,11 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
 
     /**
      * getting the date from user, validates the user inputs, and save the input to database.
+     *
      * @param event JavaFX button press event
      */
     @FXML
-    void saveIsClicked(ActionEvent event){
+    void saveIsClicked(ActionEvent event) {
         String title = aptTitleField.getText();
         String description = aptDescriptionField.getText();
         String type = aptTypeField.getText();
@@ -77,38 +78,35 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
         String endM = endMinute.getValue();
         String contactName = contactList.getValue();
         long contactId = 0;
-        try {
-            contactId = contactDao.getContactId(contactName);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        contactId = contactDao.getContactId(contactName);
 
-        if(!areValidInput(type, location, title, description, startD, startH, startM, endD, endH, endM, contactName)){
+        if (!areValidInput(type, location, title, description, startD, startH, startM, endD, endH, endM, contactName)) {
             Validator.displayInvalidInput("Invalid input. \n requires:\n" +
                     "Only alphabets are allowed for Type, Location, Title and all fields can not be empty");
-        }else if(appointmentDao.isDoubleBooking(contactId, startD, startH, startM, endD, endH, endM)){
+        } else if (appointmentDao.isDoubleBooking(contactId, startD, startH, startM, endD, endH, endM)) {
             Validator.displayInfo("Sorry, the time you have selected is booked, please select a different time. Available Time listed here (in EST timezone): \n" + getAvailableTime());
-        }else{
+        } else {
             saveNewAppointment(event, title, description, type, location, startD, startH, startM, endD, endH, endM, contactId);
         }
     }
+
     /**
      * Saves all user inputs after the validations
      *
-     * @param event an event indicates a component-defined action occurred.
-     * @param title title field input
+     * @param event       an event indicates a component-defined action occurred.
+     * @param title       title field input
      * @param description description field input
-     * @param type type field input
-     * @param location location field input
-     * @param startD start date field input
-     * @param startH start hour field input
-     * @param startM start minute field input
-     * @param endD end date field input
-     * @param endH end hour field input
-     * @param endM end minute field input
-     * @param contactId contact ID
+     * @param type        type field input
+     * @param location    location field input
+     * @param startD      start date field input
+     * @param startH      start hour field input
+     * @param startM      start minute field input
+     * @param endD        end date field input
+     * @param endH        end hour field input
+     * @param endM        end minute field input
+     * @param contactId   contact ID
      */
-    private void saveNewAppointment(ActionEvent event, String title, String description, String type, String location, LocalDate startD, String startH, String startM, LocalDate endD, String endH, String endM, long contactId){
+    private void saveNewAppointment(ActionEvent event, String title, String description, String type, String location, LocalDate startD, String startH, String startM, LocalDate endD, String endH, String endM, long contactId) {
         appointment = new Appointment();
 
         appointment.setTitle(title);
@@ -123,29 +121,26 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
         appointment.setLast_update(DateTimeConverter.convertLocalTimeToUTC(LocalDateTime.now()));
         appointment.setLast_updated_by(UserDaoImpl.userName);
 
-        try {
-            if (AddNewCustomerController.isNewCust) {
+        if (AddNewCustomerController.isNewCust) {
 
-                newCustID = customerDao.findIdByNameAndDivisionId(AddNewCustomerController.customer.getCustomer_name(), AddNewCustomerController.customer.getDivision_id());
-                appointment.setCustomer_id(newCustID);
-            } else {
-                appointment.setCustomer_id(CustomerRecordController.selectedCust.getCustomer_id());
-            }
-            appointment.setUser_id(UserDaoImpl.userId);
-            appointment.setContact_id(contactId);
-
-            appointmentDao.save(appointment);
-            Validator.displaySuccess("Appointment is saved");
-            setScene(event, Views.APPOINTMENT_RECORD_VIEW.getView());
-        } catch (SQLException e) {
-            e.printStackTrace();
+            newCustID = customerDao.findIdByNameAndDivisionId(AddNewCustomerController.customer.getCustomer_name(), AddNewCustomerController.customer.getDivision_id());
+            appointment.setCustomer_id(newCustID);
+        } else {
+            appointment.setCustomer_id(CustomerRecordController.selectedCust.getCustomer_id());
         }
+        appointment.setUser_id(UserDaoImpl.userId);
+        appointment.setContact_id(contactId);
+
+        appointmentDao.save(appointment);
+        Validator.displaySuccess("Appointment is saved");
+        setScene(event, Views.APPOINTMENT_RECORD_VIEW.getView());
     }
 
     /**
      * This method exits the view.
+     *
      * @param event an event indicates a component-defined action occurred.
-     * */
+     */
     @FXML
     void existIsClicked(ActionEvent event) {
         exit(event, exitBtn);
@@ -153,27 +148,27 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
 
     /**
      * This method sets the scene to the previous scene.
+     *
      * @param actionEvent an event indicates a component-defined action occurred.
      **/
-    public void backToLastViewIsClicked(ActionEvent actionEvent){
+    public void backToLastViewIsClicked(ActionEvent actionEvent) {
         setScene(actionEvent, Views.CUSTOMER_RECORD_VIEW.getView());
     }
 
     /**
-     *  Validates user input by checking the input can not be null or whether meet certain requirements.
+     * Validates user input by checking the input can not be null or whether meet certain requirements.
      *
-     * @param title title field input.
+     * @param title       title field input.
      * @param description description field input.
-     * @param type type field input.
-     * @param location location field input.
-     * @param startD start date field input.
-     * @param startH start hour field input.
-     * @param startM start minute field input.
-     * @param endD end date field input.
-     * @param endH end hour field input.
-     * @param endM end minute field input.
-     * @param contact contact ID.
-     *
+     * @param type        type field input.
+     * @param location    location field input.
+     * @param startD      start date field input.
+     * @param startH      start hour field input.
+     * @param startM      start minute field input.
+     * @param endD        end date field input.
+     * @param endH        end hour field input.
+     * @param endM        end minute field input.
+     * @param contact     contact ID.
      * @return boolean not valid returns a false, otherwise returns a true.
      */
     private boolean areValidInput(String type, String location, String title, String description, LocalDate startD, String startH, String startM, LocalDate endD, String endH, String endM, String contact) {
@@ -184,16 +179,17 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
         String availableTime = "";
         Iterator iteratorMap = BookingAvailability.availableTimeToDisplay.entrySet().iterator();
         while (iteratorMap.hasNext()) {
-            Map.Entry mapElement = (Map.Entry)iteratorMap.next();
+            Map.Entry mapElement = (Map.Entry) iteratorMap.next();
             availableTime = availableTime + mapElement.getKey() + " To "
-                    + mapElement.getValue() +"\n";
+                    + mapElement.getValue() + "\n";
         }
         return availableTime;
     }
 
     /**
      * Initialize all the required fields for creating a new appointment view.
-     * @param url The location used to resolve relative paths for the root object, or null if the location is not known.
+     *
+     * @param url            The location used to resolve relative paths for the root object, or null if the location is not known.
      * @param resourceBundle The resources used to localize the root object, or null if the root object was not localized.
      */
     @Override
@@ -212,10 +208,8 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
         startMinute.setItems(initializeMinutes());
         endHr.setItems(estHr);
         endMinute.setItems(initializeMinutes());
-        try {
-            contactList.setItems(contactDao.findAll());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+
+        contactList.setItems(contactDao.findAll());
+
     }
 }

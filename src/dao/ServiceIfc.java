@@ -4,10 +4,12 @@ import javafx.collections.ObservableList;
 
 import java.sql.SQLException;
 
+/**
+ * A contact that most of the dao class needs to implement them
+ * @param <T> any entity types
+ */
 public interface ServiceIfc<T> {
-    ObservableList<T> findAll() throws SQLException;
-    T findById(long id);
     void update(T obj);
-    void delete(T obj) throws SQLException;
-    void save(T obj) throws SQLException;
+    void delete(T obj);
+    void save(T obj);
 }

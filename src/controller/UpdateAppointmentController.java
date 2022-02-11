@@ -68,17 +68,19 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
 
     /**
      * This method sets the scene to the previous scene.
+     *
      * @param event an event indicates a component-defined action occurred.
      **/
     @FXML
-    void backToRecordPage(ActionEvent event){
+    void backToRecordPage(ActionEvent event) {
         setScene(event, Views.APPOINTMENT_RECORD_VIEW.getView());
     }
 
     /**
      * This method exits the program.
+     *
      * @param event an event indicates a component-defined action occurred.
-     * */
+     */
     @FXML
     void exitBtnClicked(ActionEvent event) {
         exit(event, cancelBtn);
@@ -86,6 +88,7 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
 
     /**
      * The method updates an existing appointment
+     *
      * @param event an event indicates a component-defined action occurred.
      */
     @FXML
@@ -102,19 +105,15 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
         String endM = endMin.getValue();
         String contactName = contactList.getValue();
         long contactId = 0;
-        try {
-            contactId = contactDao.getContactId(contactName);
+        contactId = contactDao.getContactId(contactName);
 
-            if (!areValidInput(type, location, title, description, startD, startH, startM, endD, endH, endM, contactName)) {
-                Validator.displayInvalidInput("Invalid input. \n requires:\n" +
-                        "Only alphabets are allowed for Type, Location, Title and all fields can not be empty");
-            } else if (appointmentDao.isDoubleBooking(contactId, startD, startH, startM, endD, endH, endM)) {
-                Validator.displayInfo("Sorry, the time you have selected is booked, please select a different time. Available Time listed here (in EST timezone): \n" + getAvailableTime());
-            } else {
-                updateAptRecordForm(event, type, location, title, description, startD, startH, startM, endD, endH, endM, contactId);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        if (!areValidInput(type, location, title, description, startD, startH, startM, endD, endH, endM, contactName)) {
+            Validator.displayInvalidInput("Invalid input. \n requires:\n" +
+                    "Only alphabets are allowed for Type, Location, Title and all fields can not be empty");
+        } else if (appointmentDao.isDoubleBooking(contactId, startD, startH, startM, endD, endH, endM)) {
+            Validator.displayInfo("Sorry, the time you have selected is booked, please select a different time. Available Time listed here (in EST timezone): \n" + getAvailableTime());
+        } else {
+            updateAptRecordForm(event, type, location, title, description, startD, startH, startM, endD, endH, endM, contactId);
         }
     }
 
@@ -125,29 +124,30 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
         String availableTime = "";
         Iterator iteratorMap = BookingAvailability.availableTimeToDisplay.entrySet().iterator();
         while (iteratorMap.hasNext()) {
-            Map.Entry mapElement = (Map.Entry)iteratorMap.next();
+            Map.Entry mapElement = (Map.Entry) iteratorMap.next();
             availableTime = availableTime + mapElement.getKey() + " To "
-                    + mapElement.getValue() +"\n";
+                    + mapElement.getValue() + "\n";
         }
         return availableTime;
     }
 
     /**
      * This method updates the selected appointment.
-     * @param event JavaFX event that passed in from the log in button. it is there for later to transition from this view to the next view
-     * @param title title field input
+     *
+     * @param event       JavaFX event that passed in from the log in button. it is there for later to transition from this view to the next view
+     * @param title       title field input
      * @param description description field input
-     * @param type type field input
-     * @param location location field input
-     * @param startD start date field input
-     * @param startH start hour field input
-     * @param startM start minute field input
-     * @param endD end date field input
-     * @param endH end hour field input
-     * @param endM end minute field input
-     * @param contactId contact ID
-     * */
-    private void updateAptRecordForm(ActionEvent event, String type, String location, String title, String description, LocalDate startD, String startH, String startM, LocalDate endD, String endH, String endM, long contactId){
+     * @param type        type field input
+     * @param location    location field input
+     * @param startD      start date field input
+     * @param startH      start hour field input
+     * @param startM      start minute field input
+     * @param endD        end date field input
+     * @param endH        end hour field input
+     * @param endM        end minute field input
+     * @param contactId   contact ID
+     */
+    private void updateAptRecordForm(ActionEvent event, String type, String location, String title, String description, LocalDate startD, String startH, String startM, LocalDate endD, String endH, String endM, long contactId) {
         Timestamp currentTime = Timestamp.valueOf(LocalDateTime.now());
         Timestamp start = DateTimeConverter.convertAptTimeToUTC(startD, startH, startM);
         Timestamp end = DateTimeConverter.convertAptTimeToUTC(endD, endH, endM);
@@ -159,7 +159,8 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
 
     /**
      * Display the original appointment information and user can later update directly on the top of those fields.
-     * @param url The location used to resolve relative paths for the root object, or null if the location is not known.
+     *
+     * @param url            The location used to resolve relative paths for the root object, or null if the location is not known.
      * @param resourceBundle The resources used to localize the root object, or null if the root object was not localized.
      */
     @Override
@@ -188,12 +189,9 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
      * Initialize the list of contact for user to select.
      */
     private void initContact() {
-        try {
-            contactList.setValue(contactDao.findNameByID(appointment.getContact_id()));
-            contactList.setItems(contactDao.findAll());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        contactList.setValue(contactDao.findNameByID(appointment.getContact_id()));
+        contactList.setItems(contactDao.findAll());
+
     }
 
     /**
@@ -220,24 +218,25 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
      * This method disabled the weekends option in the date picker.
      */
     private void disabledWeekends() {
-        Callback<DatePicker, DateCell> startDayCellFactory= this.getDayCellFactory();
+        Callback<DatePicker, DateCell> startDayCellFactory = this.getDayCellFactory();
         startDate.setDayCellFactory(startDayCellFactory);
-        Callback<DatePicker, DateCell> endDayCellFactory= this.getDayCellFactory();
+        Callback<DatePicker, DateCell> endDayCellFactory = this.getDayCellFactory();
         endDate.setDayCellFactory(endDayCellFactory);
     }
 
     /**
      * This method validates user inputs.
-     * @param title title field input
+     *
+     * @param title       title field input
      * @param description description field input
-     * @param type type field input
-     * @param location location field input
-     * @param startD start date field input
-     * @param startH start hour field input
-     * @param startM start minute field input
-     * @param endD end date field input
-     * @param endH end hour field input
-     * @param endM end minute field input
+     * @param type        type field input
+     * @param location    location field input
+     * @param startD      start date field input
+     * @param startH      start hour field input
+     * @param startM      start minute field input
+     * @param endD        end date field input
+     * @param endH        end hour field input
+     * @param endM        end minute field input
      * @return boolean if all input are valid returns a ture, otherwise, returns a false.
      */
     private boolean areValidInput(String type, String location, String title, String description, LocalDate startD, String startH, String startM, LocalDate endD, String endH, String endM, String contact) {
