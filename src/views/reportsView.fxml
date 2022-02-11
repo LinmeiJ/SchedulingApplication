@@ -36,10 +36,10 @@
                   <TableColumn fx:id="aptID" prefWidth="98.40001678466797" text="Appointment" />
                   <TableColumn fx:id="title" prefWidth="51.999969482421875" text="Title" />
                   <TableColumn fx:id="type" prefWidth="90.39996337890625" text="Type" />
-                  <TableColumn fx:id="description" prefWidth="186.40005493164062" text="Description" />
-                  <TableColumn fx:id="start" prefWidth="119.199951171875" text="Start Date Time" />
-                  <TableColumn fx:id="end" prefWidth="92.800048828125" text="End Date Time" />
-                  <TableColumn fx:id="custId" prefWidth="91.199951171875" text="Customer ID" />
+                  <TableColumn fx:id="description" prefWidth="137.0" text="Description" />
+                  <TableColumn fx:id="start" prefWidth="150.0" text="Start Date Time" />
+                  <TableColumn fx:id="end" prefWidth="113.0" text="End Date Time" />
+                  <TableColumn fx:id="custId" prefWidth="84.0" text="Customer ID" />
                </columns>
             </TableView>
          </children>

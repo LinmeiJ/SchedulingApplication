@@ -3,6 +3,7 @@ import dao.AppointmentDaoImpl;
 import dao.ContactDaoImpl;
 import dao.UserDaoImpl;
 import dao.Validator;
+import dateTimeUtil.BookingAvailability;
 import dateTimeUtil.DateTimeConverter;
 import dbConnection.JDBCConnection;
 import entity.Appointment;
@@ -21,6 +22,8 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 public class UpdateAppointmentController extends JDBCConnection implements Initializable, CommonUseHelperIfc {
@@ -130,11 +133,22 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
                     "Only alphabets are allowed for Type, Location, Title and all fields can not be empty");
         }
         else if(appointmentDao.isDoubleBooking(contactId, startD, startH, startM, endD, endH, endM)){
-            System.out.println("Sorry, the time you have selected is booked, please choose a different time.");
+            Validator.displayInfo("Sorry, the time you have selected is booked, please select a different time. Available Time listed here (in EST timezone): \n" + getAvailableTime());
         }
         else{
             getAptsRecordForm(event, type, location, title, description, startD, startH, startM, endD, endH, endM, contactId);
         }
+    }
+
+    private String getAvailableTime() {
+        String availableTime = "";
+        Iterator iteratorMap = BookingAvailability.availableTimeToDisplay.entrySet().iterator();
+        while (iteratorMap.hasNext()) {
+            Map.Entry mapElement = (Map.Entry)iteratorMap.next();
+            availableTime = availableTime + mapElement.getKey() + " To "
+                    + mapElement.getValue() +"\n";
+        }
+        return availableTime;
     }
 
     private void getAptsRecordForm(ActionEvent event, String type, String location, String title, String description, LocalDate startD, String startH, String startM, LocalDate endD, String endH, String endM, long contactId) throws SQLException {

@@ -10,7 +10,7 @@ import static java.time.temporal.ChronoUnit.MINUTES;
 
 public class BookingAvailability {
 
-    public static Map<Integer, LocalTime> availableAllDayTimeSlots = initTimeSlots();
+    public static Map<LocalTime, LocalTime> availableTimeToDisplay;
 
     public static Map<Integer, LocalTime> initTimeSlots(){
         Map<Integer, LocalTime> treeMap = new TreeMap<>();
@@ -50,57 +50,44 @@ public class BookingAvailability {
 
 
     public static boolean checkBookingStatus(List<Appointment> scheduleList, Timestamp start, Timestamp end) {
-        Map<Integer, LocalTime> allDayTimeSlots = initTimeSlots();
-        Set<Map.Entry<Integer, LocalTime>> allTimeSlotsSet = allDayTimeSlots.entrySet();
-        Map.Entry<Integer, LocalTime>[] allTimeSlots = allTimeSlotsSet.toArray(new Map.Entry[allTimeSlotsSet.size()]);
+        availableTimeToDisplay = new HashMap<>();
+        List<LocalTime> availableTimeSlots = testing();
 
-        Set<Map.Entry<Integer, LocalTime>> availableTimeSlotSet = availableAllDayTimeSlots.entrySet();
-        Map.Entry<Integer, LocalTime>[] availableTimeSlots = availableTimeSlotSet.toArray(new Map.Entry[availableTimeSlotSet.size()]);
-        int index = 0;
-
-        for (Appointment apt : scheduleList) {
-            long aptDuration = MINUTES.between(apt.getStart().toLocalDateTime().toLocalTime(), apt.getEnd().toLocalDateTime().toLocalTime()); // find duration
-            long timeSlotsTaken = 0;
-            if (aptDuration >= 0) {
-                timeSlotsTaken = aptDuration / 15;
-
-                for (index = 0; index < allTimeSlots.length; index++) {
-                    try {
-                        System.out.println(availableTimeSlots[index].getValue());
-                        System.out.println(apt.getStart().toLocalDateTime().toLocalTime());
-                        if (availableTimeSlots[index].getValue().equals(apt.getStart().toLocalDateTime().toLocalTime())) {
-                            for (int i = index; i <= index + timeSlotsTaken; i++) {
-//                                availableTimeSlots[i].setValue(null);
-                                availableAllDayTimeSlots.remove(availableTimeSlots[i].getKey());
-//                                    index = i + 1;
-                            }
-                            break;
-                        }
-                    } catch (NullPointerException e) {
-                        e.printStackTrace();
-                        continue;
+        //getting availableTimeSlots by excluding the ones that already been booked
+        for (int i = 0; i < scheduleList.size(); i++) {
+            long aptDuration = MINUTES.between(scheduleList.get(i).getStart().toLocalDateTime().toLocalTime(), scheduleList.get(i).getEnd().toLocalDateTime().toLocalTime());
+            long durationCount = aptDuration / 15;
+            A:
+            for (int j = 0; j < availableTimeSlots.size(); ) {
+                if (availableTimeSlots.get(j).equals(scheduleList.get(i).getStart().toLocalDateTime().toLocalTime())) {
+                    for (int k = j; k <= j + durationCount; k++) {
+                        availableTimeSlots.remove(j);
                     }
+                    break A;
                 }
+                j++;
             }
-
         }
-//        availableAllDayTimeSlots.forEach((key, value) -> System.out.println(key + " " + value));
-        if(start != null || end != null) {
-            long newAptDuration = MINUTES.between(start.toLocalDateTime().toLocalTime(), end.toLocalDateTime().toLocalTime());
-            long aptDuration = newAptDuration / 15;
 
-            List<LocalTime> splitTime = new ArrayList<>();
+
+        if (start != null || end != null) {
+            // figure out which timeslot the user would like to book
+            long newAptDuration = MINUTES.between(start.toLocalDateTime().toLocalTime(), end.toLocalDateTime().toLocalTime());
+            long newAptDurationCount = newAptDuration / 15;
+
+            // split the appoint to get ready for checking availability
+            List<LocalTime> splitTime = new ArrayList<>(); // this is the list time slots user wants to book
 
             int incrementTime = 0;
-            for (int i = 0; i <= aptDuration; i++) {
+            for (int index = 0; index <= newAptDurationCount; index++) {
                 splitTime.add(start.toLocalDateTime().toLocalTime().plusMinutes(incrementTime));
                 incrementTime += 15;
             }
 
-            for (LocalTime localTime : splitTime) {
-                if (!availableAllDayTimeSlots.containsValue(localTime)) {
-                    System.out.println("Double booking");
-                    displayAvailableTime(availableAllDayTimeSlots);
+            //check whether user wanted timeslots available in the availableTimeSlots list
+            for (LocalTime time : splitTime) {
+                if (!availableTimeSlots.contains(time)) {
+                    displayAvailableTime(availableTimeSlots);
                     return true;
                 }
             }
@@ -108,57 +95,26 @@ public class BookingAvailability {
         return false;
     }
 
-    private static void displayAvailableTime(Map<Integer, LocalTime> availableAllDayTimeSlots) {
-        Map<LocalTime, LocalTime> availableTimeToDisplay = new HashMap<>();
 
-
-        Set<Map.Entry<Integer, LocalTime>> availableTimeSlotSet = availableAllDayTimeSlots.entrySet();
-        Map.Entry<Integer, LocalTime>[] availableTimeSlots = availableTimeSlotSet.toArray(new Map.Entry[availableTimeSlotSet.size()]);
+    private static void displayAvailableTime(List<LocalTime> availableAllDayTimeSlots) {
 
         int index;
-        LocalTime temp = availableTimeSlots[0].getValue();
+        LocalTime temp = availableAllDayTimeSlots.get(0);
+        for (index = 0; index < availableAllDayTimeSlots.size();) {
+            if (index > availableAllDayTimeSlots.size() - 2) {
+                availableTimeToDisplay.put(temp, availableAllDayTimeSlots.get(index));
+                break;
+            }
+            else if(availableAllDayTimeSlots.get(index).plusMinutes(15).equals(availableAllDayTimeSlots.get(index + 1))) {
+                index++;
+            }
+            else {
+                availableTimeToDisplay.put(temp, availableAllDayTimeSlots.get(index));
 
-        for (index = 1; index < availableTimeSlots.length; index++) {
-            if(availableTimeSlots[index].getValue().plusMinutes(15).equals(availableTimeSlots[index - 1].getValue())){
-                continue;
-            }else{
-                availableTimeToDisplay.put(temp, availableTimeSlots[index].getValue());
-                temp = availableTimeSlots[index].getValue();
+                temp = availableAllDayTimeSlots.get(index + 1);
+                index++;
             }
         }
-
-        availableTimeToDisplay.forEach((key, value) -> System.out.println("display time: " + key + " " + value));
-
-////        Set<Map.Entry<Integer, LocalTime>> availableTimeSlotSet = availableAllDayTimeSlots.entrySet();
-////        Map.Entry<Integer, LocalTime>[] availableTimeSlots = availableTimeSlotSet.toArray(new Map.Entry[availableTimeSlotSet.size()]);
-//        Set<Map.Entry<Integer, LocalTime> > entries
-//                = availableAllDayTimeSlots.entrySet();
-//
-//        for (Map.Entry<Integer, LocalTime> entry : availableAllDayTimeSlots.entrySet()) {
-//            LocalTime value = entry.getValue();
-//            Integer key = entry.getKey();
-//        }
-//
-//        Map<LocalTime, LocalTime> availableTime = new HashMap<>();
-//        LocalTime value;
-//        LocalTime key;
-//        int placeHolder = 0;
-//
-////        for(int i = 0; i < availableTimeSlots.size(); i++){
-//////            long aptDuration = MINUTES.between(availableAllDayTimeSlots.get(i),  availableAllDayTimeSlots.get(i+1));
-////            placeHolder = availableAllDayTimeSlots.;
-////            key = availableAllDayTimeSlots.get(placeHolder + 1);
-////            if(i != availableAllDayTimeSlots.size() - 1){
-////                if(!availableAllDayTimeSlots.get(i).plusMinutes(15).equals(availableAllDayTimeSlots.get(i+1))){
-////                    value = availableAllDayTimeSlots.get(i);
-////                    placeHolder = i + 1;
-////                    availableTime.put(key, value);
-////                }
-////            }
-////        }
-//        availableTime.entrySet().forEach(entry -> {
-//            System.out.println("Times that are available:" + entry.getKey() + " To " + entry.getValue());
-//        });
-
+//   availableTimeToDisplay.forEach((key, value) -> System.out.println("display time: " + key + " " + value));
     }
 }

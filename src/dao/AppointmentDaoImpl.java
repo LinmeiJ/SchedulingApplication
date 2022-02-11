@@ -172,6 +172,8 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
             ResultSet rs = findRawDataFromDB("Select Appointment_ID, Start, End FROM client_schedule.appointments WHERE Contact_ID = " + contactId);
             while(rs.next()){
                 long aptId = rs.getLong("appointment_id");
+                Timestamp s = rs.getTimestamp("start");
+                Timestamp e = rs.getTimestamp("end");
                 Timestamp start = DateTimeConverter.convertUTCToEST(rs.getTimestamp("start"));
                 Timestamp end = DateTimeConverter.convertUTCToEST(rs.getTimestamp("end"));
                 Appointment appointmentSchedule = new Appointment(aptId, start, end);
