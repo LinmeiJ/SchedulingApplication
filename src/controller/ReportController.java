@@ -22,11 +22,14 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ResourceBundle;
 
+/**
+ * This class provides a data control flow for generating reports between the report UI and the database
+ *
+ * @author Linmei M.
+ */
 public class ReportController implements Initializable, CommonUseHelperIfc{
     @FXML
     private Button exit;
-    @FXML
-    private Button back;
     @FXML
     private TableColumn<Appointment, String> description;
     @FXML
@@ -39,8 +42,6 @@ public class ReportController implements Initializable, CommonUseHelperIfc{
     private TableColumn<Appointment, Long> aptID;
     @FXML
     private ComboBox<String> contactList;
-    @FXML
-    private TableColumn<Report, String> countOption;
     @FXML
     private TableColumn<Country, String> countryName;
     @FXML
@@ -73,7 +74,6 @@ public class ReportController implements Initializable, CommonUseHelperIfc{
     /**
      *  When a contact name is select in filter by a user, this method takes in the action
      *  and displays the total appointment count by the selected contact name.
-     *
      * @param event an event indicates a component-defined action occurred.
      */
     @FXML
@@ -86,7 +86,6 @@ public class ReportController implements Initializable, CommonUseHelperIfc{
     /**
      *  When any of the Type or Month filter is select by the user, this method takes in the action
      *  and displays the total appointment count by type or month based on the input.
-     *
      * @param event an event indicates a component-defined action occurred.
      */
     @FXML
@@ -103,7 +102,6 @@ public class ReportController implements Initializable, CommonUseHelperIfc{
 
     /**
      * This method sets the scene to the previous scene.
-     *
      * @param event an event indicates a component-defined action occurred.
      **/
     @FXML

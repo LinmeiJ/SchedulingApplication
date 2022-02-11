@@ -67,8 +67,7 @@ public class AppointmentRecordController extends JDBCConnection implements Initi
     public static Appointment selectApt;
 
     /**
-     * This method receives an action of going to adding a new appointment view.
-     *
+     * This method receives an action of going to the adding a new appointment view.
      * @param event an event indicates a component-defined action occurred.
      * */
     @FXML
@@ -78,7 +77,6 @@ public class AppointmentRecordController extends JDBCConnection implements Initi
 
     /**
      * This method deletes selected appointment row
-     *
      * @param event an event indicates a component-defined action occurred.
      * */
     @FXML
@@ -93,8 +91,7 @@ public class AppointmentRecordController extends JDBCConnection implements Initi
     }
 
     /**
-     * This method exits the view.
-     *
+     * This method exits the program.
      * @param event an event indicates a component-defined action occurred.
      * */
     @FXML
@@ -104,7 +101,6 @@ public class AppointmentRecordController extends JDBCConnection implements Initi
 
     /**
      * This method receives an update action event and lead user to the update appointment view.
-     *
      * @param event an event indicates a component-defined action occurred.
      * */
     @FXML
@@ -119,7 +115,6 @@ public class AppointmentRecordController extends JDBCConnection implements Initi
 
     /**
      * This method sets the scene to the previous scene.
-     *
      * @param event an event indicates a component-defined action occurred.
      **/
     @FXML
@@ -141,7 +136,7 @@ public class AppointmentRecordController extends JDBCConnection implements Initi
 
     /**
      * When filtering by week radio button is selected, this method receives the action and reset the month radio button.
-     * @param event an event indicates a component-defined action occurred.
+     *  @param event an event indicates a component-defined action occurred.
      */
     @FXML
     void filterByWeekSelected(ActionEvent event){

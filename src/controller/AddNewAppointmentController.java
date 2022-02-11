@@ -60,11 +60,10 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
 
     /**
      * getting the date from user, validates the user inputs, and save the input to database.
-     *
      * @param event JavaFX button press event
      */
     @FXML
-    void saveIsClicked(ActionEvent event) throws SQLException, IOException {
+    void saveIsClicked(ActionEvent event){
         String title = aptTitleField.getText();
         String description = aptDescriptionField.getText();
         String type = aptTypeField.getText();
@@ -77,7 +76,12 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
         String endH = endHr.getValue();
         String endM = endMinute.getValue();
         String contactName = contactList.getValue();
-        long contactId = contactDao.getContactId(contactName);
+        long contactId = 0;
+        try {
+            contactId = contactDao.getContactId(contactName);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         if(!areValidInput(type, location, title, description, startD, startH, startM, endD, endH, endM, contactName)){
             Validator.displayInvalidInput("Invalid input. \n requires:\n" +
@@ -91,7 +95,7 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
     /**
      * Saves all user inputs after the validations
      *
-     * @param event JavaFX event that passed in from the log in button. it is there for later to transition from this view to the next view
+     * @param event an event indicates a component-defined action occurred.
      * @param title title field input
      * @param description description field input
      * @param type type field input
@@ -140,9 +144,7 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
 
     /**
      * This method exits the view.
-     *
      * @param event an event indicates a component-defined action occurred.
-     *
      * */
     @FXML
     void existIsClicked(ActionEvent event) {
@@ -151,9 +153,7 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
 
     /**
      * This method sets the scene to the previous scene.
-     *
      * @param actionEvent an event indicates a component-defined action occurred.
-     * @throws IOException catch the exception when the fxml file is not found.
      **/
     public void backToLastViewIsClicked(ActionEvent actionEvent){
         setScene(actionEvent, Views.CUSTOMER_RECORD_VIEW.getView());

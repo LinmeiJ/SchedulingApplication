@@ -34,7 +34,6 @@ public interface CommonUseHelperIfc {
     /**
      * This method closes the the program.
      * It prompts a dialog window to ensure whether a user wants to exit.
-     *
      * @param event an event indicates a component-defined action occurred
      */
     default void exit(ActionEvent event, Button exitId) {
@@ -47,7 +46,6 @@ public interface CommonUseHelperIfc {
 
     /**
      * set a scene based on this particular action and fxml path passed over to the params.
-     *
      * @param event an event indicates a component-defined action occurred
      * @param s     the file path where the fxml is located at
      */
@@ -80,11 +78,9 @@ public interface CommonUseHelperIfc {
 
     /**
      * Disables weekends options for the date picker.
-     *
      * <P>
      *  Lambda Expression 1
      * </P>
-     *
      * @return  a Callback
      */
     default Callback<DatePicker, DateCell> getDayCellFactory() {

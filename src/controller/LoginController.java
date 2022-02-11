@@ -14,12 +14,16 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 
+/**
+ * This class provides a data control flow for validating a user log in credential between the log in UI and the user data table
+ *
+ * @author Linmei M.
+ */
 public class LoginController implements Initializable, CommonUseHelperIfc {
     @FXML
     private Label userName;
@@ -70,7 +74,6 @@ public class LoginController implements Initializable, CommonUseHelperIfc {
     /**
      * This method closes the the program.
      * It prompts a dialog window to ensure whether a user wants to exit.
-     *
      * @param event an event indicates a component-defined action occurred
      */
     @FXML

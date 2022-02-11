@@ -56,7 +56,7 @@ public class AddNewCustomerController extends JDBCConnection implements Initiali
     /**
      *  Indicates the Canada radio button is selected and set that button to ture and re-select the rest of radio buttons, then
      *  displays all the divisions in the Canada.
-     * @param event
+     * @param event an event indicates a component-defined action occurred.
      */
     @FXML
     void canadaSelected(ActionEvent event) {
@@ -68,7 +68,7 @@ public class AddNewCustomerController extends JDBCConnection implements Initiali
     /**
      *  Indicates the England radio button is selected and set that button to ture and re-select the rest of radio buttons, then
      *  displays all the divisions in the England.
-     * @param event
+     * @param event an event indicates a component-defined action occurred.
      */
     @FXML
     void englandSelected(ActionEvent event) {
@@ -80,7 +80,7 @@ public class AddNewCustomerController extends JDBCConnection implements Initiali
     /**
      *  Indicates the US radio button is selected and set that button to ture and re-select the rest of radio buttons, then
      *  displays all the divisions in the U.S.
-     * @param event
+     * @param event an event indicates a component-defined action occurred.
      */
     @FXML
     void uSSelected(ActionEvent event) {
@@ -112,7 +112,6 @@ public class AddNewCustomerController extends JDBCConnection implements Initiali
     }
     /**
      * The save button clicked action is received here, then call the addCust() method to add the customer information.
-     *
      * @param event an event indicates a component-defined action occurred.
      */
     @FXML
@@ -145,7 +144,6 @@ public class AddNewCustomerController extends JDBCConnection implements Initiali
 
     /**
      * This method sets the scene to the previous scene.
-     *
      * @param event an event indicates a component-defined action occurred.
      **/
     @FXML
@@ -155,7 +153,6 @@ public class AddNewCustomerController extends JDBCConnection implements Initiali
 
     /**
      * This method exits the view.
-     *
      * @param event an event indicates a component-defined action occurred.
      * */
     @FXML
