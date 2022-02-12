@@ -172,7 +172,7 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
      * @return boolean not valid returns a false, otherwise returns a true.
      */
     private boolean areValidInput(String type, String location, String title, String description, LocalDate startD, String startH, String startM, LocalDate endD, String endH, String endM, String contact) {
-        return Validator.isValidString(type, location, title) && description != null && contact != null && startD != null && endD != null && Validator.isValidString(startH, startM, endH, endM);
+        return Validator.isValidString(type, location, title) && description.length() > 0 && contact != null && startD != null && endD != null && startM != null && startH != null && endM != null && endH != null;
     }
 
     private String getAvailableTime() {

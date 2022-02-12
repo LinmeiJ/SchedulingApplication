@@ -130,19 +130,19 @@ public class AddNewCustomerController extends JDBCConnection implements Initiali
      **/
     private void addCust(ActionEvent event, String view) {
         String name = addCustNameField.getText();
-        String address =  addAddressField.getText();
+        String address = addAddressField.getText();
         String phone = addPhoneField.getText();
         String zipcode = addZipCodeField.getText();
         long divisionId = divisionDao.findIdByDivisionName(divisionList.getValue());
 
-        if(areValidInputs(name, address, phone, zipcode) && divisionList.getValue() != null
+        if (areValidInputs(name, address, phone, zipcode) && divisionList.getValue() != null
                 && (USAId != null || canadaId != null || englandId != null)) {
             setCustomer(name, address, phone, zipcode, divisionId);
             isNewCust = true;
             customerDao.save(customer);
             Validator.displaySuccess("Add the customer");
             setScene(event, view);
-        }else{
+        } else {
             Validator.displayInvalidInput("Contain invalid entry Or fields can not be empty.\n Example:\n Name: Lucy Wang\nAddress: 123 street name, city name \nPhone & Zip code are digits only");
         }
     }
@@ -201,6 +201,7 @@ public class AddNewCustomerController extends JDBCConnection implements Initiali
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         divisionList.setPromptText("Division List");
+        CustomerRecordController.ctryId = null;
         divisionList.setItems(divisionDao.getAllDivisions());
     }
 }

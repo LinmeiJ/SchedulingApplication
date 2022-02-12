@@ -231,6 +231,7 @@ public class UpdateCustomerController implements Initializable, CommonUseHelperI
         addressField.setText(selectedCust.getAddress());
         zipCodeField.setText(selectedCust.getPostal_code());
         division.setValue(getCustomerDivision().get(0));
+        division.setItems(divisionDao.getAllDivisions());
         getCountry();
     }
 
