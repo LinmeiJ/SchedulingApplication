@@ -7,6 +7,9 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="619.0" prefWidth="1103.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.UpdateAppointmentController">
@@ -64,6 +67,27 @@
             <Label layoutX="172.0" layoutY="476.0" text="User ID:" />
             <Label fx:id="userId" layoutX="231.0" layoutY="476.0" prefHeight="18.0" prefWidth="54.0" />
             <Label layoutX="638.0" layoutY="55.0" prefHeight="18.0" prefWidth="210.0" text="Office Hour: 8AM - 10PM, EST" />
+            <Label layoutX="320.0" layoutY="65.0" prefHeight="20.0" prefWidth="286.0" text="EST Timezone Office Hour: 8 AM - 10 PM" textOverrun="WORD_ELLIPSIS">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <textFill>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="1.0" green="1.0" blue="1.0" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </textFill>
+            </Label>
          </children>
       </AnchorPane>
       <Button fx:id="saveUpdates" layoutX="973.0" layoutY="476.0" mnemonicParsing="false" onAction="#updateClicked" prefHeight="44.0" prefWidth="94.0" text="Save">

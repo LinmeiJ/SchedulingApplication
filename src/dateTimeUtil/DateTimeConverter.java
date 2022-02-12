@@ -2,7 +2,6 @@ package dateTimeUtil;
 
 import enums.TimeZoneOption;
 
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -83,17 +82,20 @@ public class DateTimeConverter {
     }
 
     public static Timestamp convertESTToLocal(String timestamp) {
-        Timestamp localDate = null;
+        timestamp = timestamp.replace("T", " ") + ":00";
+
+
+        Timestamp localDateTime = null;
         try {
             DateFormat currentTFormat = new SimpleDateFormat(FORMAT);
-            currentTFormat.setTimeZone(TimeZone.getTimeZone(ZoneId.of(String.valueOf(TimeZoneOption.EST), ZoneId.SHORT_IDS)));
+            currentTFormat.setTimeZone(TimeZone.getTimeZone(TimeZoneOption.EST.name()));
             Date date = currentTFormat.parse(timestamp);
             currentTFormat.setTimeZone(TimeZone.getTimeZone(getTimeZoneID()));
-            localDate = Timestamp.valueOf(currentTFormat.format(date));
+            localDateTime = Timestamp.valueOf(currentTFormat.format(date));
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return localDate;
+        return localDateTime;
     }
 
     /**
@@ -197,6 +199,7 @@ public class DateTimeConverter {
      */
     public static String getOfficeHourOfTheDay(LocalDate dateValue){
         LocalDateTime estOfficeHrOfTheDay = LocalDateTime.of(dateValue, LocalTime.of(8, 0));
-        return String.valueOf(convertESTToLocal(String.valueOf(estOfficeHrOfTheDay)));
+        String str = String.valueOf(convertESTToLocal(String.valueOf(estOfficeHrOfTheDay)));
+        return str.substring(0, str.length() - 2);
     }
 }
