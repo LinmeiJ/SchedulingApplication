@@ -29,7 +29,8 @@ public interface CommonUseHelperIfc {
     /**
      * Initialize the office hour.
      */
-     ObservableList<String> estHr = FXCollections.observableArrayList(Arrays.asList("08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22"));
+     ObservableList<String> estHr = FXCollections.observableArrayList(
+             Arrays.asList("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24"));
 
     /**
      * This method closes the the program.
@@ -104,5 +105,4 @@ public interface CommonUseHelperIfc {
         };
         return dayCellFactory;
     }
-
 }

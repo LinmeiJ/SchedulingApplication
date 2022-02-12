@@ -1,6 +1,8 @@
 package dateTimeUtil;
 
 import enums.TimeZoneOption;
+
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -11,10 +13,11 @@ import java.util.TimeZone;
 import static java.time.temporal.ChronoUnit.MINUTES;
 
 public class DateTimeConverter {
-    public static  LocalDateTime TODAY = LocalDateTime.now();
-    public static String FORMAT = "yyyy-MM-dd HH:mm:ss";
-    public static  DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern(FORMAT);
-
+    private static  LocalDateTime TODAY = LocalDateTime.now();
+    private static String FORMAT = "yyyy-MM-dd HH:mm:ss";
+    private static  DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern(FORMAT);
+    private static LocalTime officeOpenTime = LocalTime.of(8, 00);
+    private static LocalTime officeCloseTime = LocalTime.of(22, 00);
 
     /**
      * This method gets a timezone based on user local setting
@@ -56,7 +59,6 @@ public class DateTimeConverter {
      */
     public static Timestamp convertAptTimeToUTC(LocalDate dateValue, String hrValue, String minuteValue) {
         String str = dateValue.toString() + " " + hrValue + ":" + minuteValue + ":00";
-
         LocalDateTime dateTime = LocalDateTime.parse(str, FORMATTER);
         return Timestamp.valueOf(FORMATTER.format(dateTime.atZone(ZoneId.systemDefault()).withZoneSameInstant(ZoneId.of(TimeZoneOption.UTC.name()))));
     }
@@ -80,19 +82,19 @@ public class DateTimeConverter {
         return localDate;
     }
 
-//    public static Timestamp convertESTToLocal(String timestamp) {
-//        Timestamp localDate = null;
-//        try {
-//            DateFormat currentTFormat = new SimpleDateFormat(FORMAT);
-//            currentTFormat.setTimeZone(TimeZone.getTimeZone(ZoneId.of(String.valueOf(TimeZoneOption.EST), ZoneId.SHORT_IDS)));
-//            Date date = currentTFormat.parse(timestamp);
-//            currentTFormat.setTimeZone(TimeZone.getTimeZone(getTimeZoneID()));
-//            localDate = Timestamp.valueOf(currentTFormat.format(date));
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return localDate;
-//    }
+    public static Timestamp convertESTToLocal(String timestamp) {
+        Timestamp localDate = null;
+        try {
+            DateFormat currentTFormat = new SimpleDateFormat(FORMAT);
+            currentTFormat.setTimeZone(TimeZone.getTimeZone(ZoneId.of(String.valueOf(TimeZoneOption.EST), ZoneId.SHORT_IDS)));
+            Date date = currentTFormat.parse(timestamp);
+            currentTFormat.setTimeZone(TimeZone.getTimeZone(getTimeZoneID()));
+            localDate = Timestamp.valueOf(currentTFormat.format(date));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return localDate;
+    }
 
     /**
      * This method converts a UTC time to an EST time
@@ -165,5 +167,36 @@ public class DateTimeConverter {
      */
     public static boolean isWithin15mins(Timestamp timestamp){
         return (MINUTES.between(TODAY, timestamp.toLocalDateTime()) >= 0 && MINUTES.between(TODAY, timestamp.toLocalDateTime()) <= 16);
+    }
+
+    public static boolean isWithinOfficeHour(LocalDate dateValue, String hrValue, String minuteValue){
+        Timestamp aptDateTime = convertAptTimeToEST(dateValue, hrValue, minuteValue);
+        LocalDateTime officeOpenDateTime = LocalDateTime.of(dateValue, officeOpenTime);
+        LocalDateTime officeCloseDateTime = LocalDateTime.of(dateValue, officeCloseTime);
+        return checkOfficeDateTime(aptDateTime.toLocalDateTime(), officeOpenDateTime, officeCloseDateTime);
+    }
+
+    /**
+     * This method checks whether user appointment is within EST office hour.
+     * @param aptDateTime the time the user wishes to book
+     * @param officeOpenDateTime the time when office opens
+     * @param officeCloseDateTime the time when office closes
+     * @return true if the appointment is within EST office hour, false when out of office hour.
+     */
+    private static boolean checkOfficeDateTime(LocalDateTime aptDateTime, LocalDateTime officeOpenDateTime, LocalDateTime officeCloseDateTime) {
+        if(aptDateTime.isBefore(officeOpenDateTime) || aptDateTime.isAfter(officeCloseDateTime)){
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * This method generates a local time for user to identify the EST starting office hour based on the local date
+     * @param dateValue  the date user wish to book
+     * @return a date time of the EST office start hour for that day in terms of user local hour time.
+     */
+    public static String getOfficeHourOfTheDay(LocalDate dateValue){
+        LocalDateTime estOfficeHrOfTheDay = LocalDateTime.of(dateValue, LocalTime.of(8, 0));
+        return String.valueOf(convertESTToLocal(String.valueOf(estOfficeHrOfTheDay)));
     }
 }

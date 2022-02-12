@@ -110,6 +110,10 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
         if (!areValidInput(type, location, title, description, startD, startH, startM, endD, endH, endM, contactName)) {
             Validator.displayInvalidInput("Invalid input. \n requires:\n" +
                     "Only alphabets are allowed for Type, Location, Title and all fields can not be empty");
+        } else if(!DateTimeConverter.isWithinOfficeHour(startD, startH,startM)){
+            Validator.displayInfo("Sorry, the time you wish to book is out of the EST office hour. The day of the office hour starts "
+                    + DateTimeConverter.getOfficeHourOfTheDay(startD)
+                    + " on your day today. Please select a time again.");
         } else if (appointmentDao.isDoubleBooking(contactId, startD, startH, startM, endD, endH, endM)) {
             Validator.displayInfo("Sorry, the time you have selected is booked, please select a different time. Available Time listed here (in EST timezone): \n" + getAvailableTime());
         } else {

@@ -122,7 +122,6 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
         appointment.setLast_updated_by(UserDaoImpl.userName);
 
         if (AddNewCustomerController.isNewCust) {
-
             newCustID = customerDao.findIdByNameAndDivisionId(AddNewCustomerController.customer.getCustomer_name(), AddNewCustomerController.customer.getDivision_id());
             appointment.setCustomer_id(newCustID);
         } else {
