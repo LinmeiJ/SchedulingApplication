@@ -113,11 +113,12 @@ public class Appointment {
      * @param end        an appointment end time
      * @param customerId a customer who made this appointment
      */
-    public Appointment(long aptId, String title, String location, String type, Timestamp start, Timestamp end, long customerId) {
+    public Appointment(long aptId, String title, String location, String description, String type, Timestamp start, Timestamp end, long customerId) {
         this.appointment_id = aptId;
         this.title = title;
         this.location = location;
         this.type = type;
+        this.description = description;
         this.start = start;
         this.end = end;
         this.customer_id = customerId;

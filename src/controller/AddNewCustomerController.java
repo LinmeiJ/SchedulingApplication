@@ -19,7 +19,6 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 
 import java.net.URL;
-import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ResourceBundle;
@@ -106,16 +105,15 @@ public class AddNewCustomerController extends JDBCConnection implements Initiali
         canadaId.setSelected(ca);
     }
 
-    /**
-     * Add a new appointment button action is received here, then set the scene as adding a new appointment view
-     *
-     * @param event an event indicates a component-defined action occurred.
-     */
-    @FXML
-    void aptClicked(ActionEvent event) {
-        addCust(event);
-        setScene(event, Views.NEW_APT_VIEW.getView());
-    }
+//    /**
+//     * Add a new appointment button action is received here, then set the scene as adding a new appointment view
+//     *
+//     * @param event an event indicates a component-defined action occurred.
+//     */
+//    @FXML
+//    void aptClicked(ActionEvent event) {
+//        addCust(event, Views.ADD_NEW_APT_VIEW.getView());
+//    }
 
     /**
      * The save button clicked action is received here, then call the addCust() method to add the customer information.
@@ -124,26 +122,54 @@ public class AddNewCustomerController extends JDBCConnection implements Initiali
      */
     @FXML
     void saveCustClicked(ActionEvent event) {
-        addCust(event);
-        Validator.displaySuccess("Add");
+        addCust(event, Views.ADD_NEW_CUSTOMER_VIEW.getView());
     }
 
     /**
      * Create a customer based on user input and save it to the database.
      **/
-    private void addCust(ActionEvent event) {
-        customer.setCustomer_name(addCustNameField.getText());
-        customer.setAddress(addAddressField.getText());
-        customer.setPhone(addPhoneField.getText());
-        customer.setPostal_code(addZipCodeField.getText());
+    private void addCust(ActionEvent event, String view) {
+        String name = addCustNameField.getText();
+        String address = addAddressField.getText();
+        String phone = addPhoneField.getText();
+        String zipcode = addZipCodeField.getText();
+        long divisionId = divisionDao.findIdByDivisionName(divisionList.getValue());
+
+        if (areValidInputs(name, address, phone, zipcode) && divisionList.getValue() != null
+                && (USAId != null || canadaId != null || englandId != null)) {
+            setCustomer(name, address, phone, zipcode, divisionId);
+            isNewCust = true;
+            customerDao.save(customer);
+            Validator.displaySuccess("Add the customer");
+            setScene(event, view);
+        } else {
+            Validator.displayInvalidInput("Contain invalid entry Or fields can not be empty.\n Example:\n Name: Lucy Wang\nAddress: 123 street name, city name \nPhone & Zip code are digits only");
+        }
+    }
+
+    private void setCustomer(String name, String address, String phone, String zipcode, long divisionId) {
+        customer.setCustomer_name(name);
+        customer.setAddress(address);
+        customer.setPhone(phone);
+        customer.setPostal_code(zipcode);
         customer.setCreated_by(UserDaoImpl.userName);
         customer.setCreate_date(Timestamp.valueOf(LocalDateTime.now()));
         customer.setLast_update(Timestamp.valueOf(LocalDateTime.now()));
         customer.setLast_updated_by(UserDaoImpl.userName);
-        customer.setDivision_id(divisionDao.findIdByDivisionName(divisionList.getValue()));
-        isNewCust = true;
-        customerDao.save(customer);
-        setScene(event, Views.ADD_NEW_CUSTOMER_VIEW.getView());
+        customer.setDivision_id(divisionId);
+    }
+
+    /**
+     * This method validates the user input
+     *
+     * @param name     the user name can only be alphabets with space between
+     * @param address  the user address can not contain special characters
+     * @param phone    the user phone can not contain special characters
+     * @param postCode the user post code can not contain special characters
+     * @return
+     */
+    private boolean areValidInputs(String name, String address, String phone, String postCode) {
+        return Validator.isValidName(name) && Validator.isValidAddress(address) && Validator.isValidPhoneNumber(phone) && Validator.isValidZipCode(postCode);
     }
 
     /**
@@ -175,6 +201,7 @@ public class AddNewCustomerController extends JDBCConnection implements Initiali
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         divisionList.setPromptText("Division List");
+        CustomerRecordController.ctryId = null;
         divisionList.setItems(divisionDao.getAllDivisions());
     }
 }

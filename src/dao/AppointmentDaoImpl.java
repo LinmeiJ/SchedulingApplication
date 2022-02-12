@@ -62,18 +62,19 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
      * @return a list of appointments
      */
     public ObservableList<Appointment> findAllByContactId(long id) {
-        ResultSet rs = findRawDataFromDB("SELECT Appointment_ID, Title, Location, Type, Start, End, Customer_ID FROM appointments WHERE Contact_ID = " + id);
+        ResultSet rs = findRawDataFromDB("SELECT Appointment_ID, Title, Description, Location, Type, Start, End, Customer_ID FROM appointments WHERE Contact_ID = " + id);
         try {
             while (rs.next()) {
                 long aptId = rs.getLong("appointment_id");
                 String title = rs.getString("title");
                 String location = rs.getString("location");
                 String type = rs.getString("type");
+                String description = rs.getString("description");
                 Timestamp startDateTime = DateTimeConverter.convertUTCToLocal(String.valueOf(rs.getTimestamp("start")));
                 Timestamp endDateTime = DateTimeConverter.convertUTCToLocal(String.valueOf(rs.getTimestamp("end")));
                 long customerId = rs.getLong("Customer_id");
 
-                appointment = new Appointment(aptId, title, location, type, startDateTime, endDateTime, customerId);
+                appointment = new Appointment(aptId, title, location, type, description, startDateTime, endDateTime, customerId);
                 allAppointment.add(appointment);
             }
         } catch (SQLException e) {

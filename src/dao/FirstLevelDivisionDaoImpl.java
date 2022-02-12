@@ -78,6 +78,29 @@ public class FirstLevelDivisionDaoImpl extends JDBCConnection {
         return divisions;
     }
 
+    /**
+     * This method gets all the divisions based on a country ID that no duplicate allowed
+     *
+     * @return a list of divisions
+     */
+//    public ObservableList<String> getAllDivisions() {
+//        ObservableList<String> divisions = FXCollections.observableArrayList();
+//        CountryId id = CustomerRecordController.ctryId;
+//        String specificCtyDivisionQuery = "SELECT DISTINCT Division FROM first_level_divisions WHERE Country_ID = ";
+//        String allCtyDivisionQuery = "SELECT DISTINCT Division FROM first_level_divisions";
+//
+//        ResultSet rs = (CustomerRecordController.ctryId != null) ? findRawDataFromDB(specificCtyDivisionQuery + CustomerRecordController.ctryId.getId()) : findRawDataFromDB(allCtyDivisionQuery);
+//
+//        try {
+//            while (rs.next()) {
+//                divisions.add(rs.getString("Division"));
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return divisions;
+//    }
+
     /** This method maps table columns from the database and save it as a FirstLevelDivision object
      * @param rs a raw data that returned from the firstLevelDivision table
      * @return a FirstLevelDivision object

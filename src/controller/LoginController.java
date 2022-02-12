@@ -68,6 +68,7 @@ public class LoginController implements Initializable, CommonUseHelperIfc {
             loginAttempt("Failed");
             failedCount++;
             Validator.displayLoginInvalidInput(language.getString("userNotFound"));
+//            setScene(event, Views.CUSTOMER_RECORD_VIEW.getView());
         }
     }
 
