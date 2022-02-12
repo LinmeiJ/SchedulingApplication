@@ -61,7 +61,6 @@ public class AppointmentRecordController extends JDBCConnection implements Initi
     ObservableList<Appointment> aptDataTable = FXCollections.observableArrayList();
     AppointmentDaoImpl appointmentDao = new AppointmentDaoImpl();
 
-    private String[] filterOptions = {"By Month", "By Week"};
     public static boolean isMonthFilter = false;
     public static boolean isWeekFilter = false;
     public static Appointment selectApt;

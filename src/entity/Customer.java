@@ -27,12 +27,6 @@ public class Customer {
         this.postal_code = postal_code;
         this.phone = phone;
         this.firstLevelDivision = firstLevelDivision;
-//        this.delete = delete;
-//        this.update = update;
-//        delete.setOnAction(e -> {
-//            CustomerDaoImpl customerDao = new CustomerDaoImpl();
-//            customerDao.delete(this.customer_id);
-//        });
     }
 
     public long getCustomer_id() {
