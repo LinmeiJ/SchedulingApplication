@@ -8,7 +8,7 @@ package enums;
 public enum Views {
     ADD_NEW_CUSTOMER_VIEW("../views/addNewCustomerView.fxml"),
     CUSTOMER_RECORD_VIEW("../views/customerRecordView.fxml"),
-    NEW_APT_VIEW("../views/addNewAptView.fxml"),
+    ADD_NEW_APT_VIEW("../views/addNewAptView.fxml"),
     UPDATE_CUSTOMER_VIEW("../views/updateCustView.fxml"),
     UPDATE_APPOINTMENT_VIEW("../views/updateAptView.fxml"),
     APPOINTMENT_RECORD_VIEW("../views/aptRecordView.fxml"),

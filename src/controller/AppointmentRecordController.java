@@ -71,7 +71,7 @@ public class AppointmentRecordController extends JDBCConnection implements Initi
      * */
     @FXML
     void addNewClicked(ActionEvent event){
-        setScene(event, Views.NEW_APT_VIEW.getView());
+        setScene(event, Views.ADD_NEW_APT_VIEW.getView());
     }
 
     /**

@@ -54,10 +54,10 @@ public class CustomerRecordController implements Initializable, CommonUseHelperI
     @FXML
     void UpdateSelected(ActionEvent event){
         selectedCust =  recordTable.getSelectionModel().getSelectedItem();
-        long countryId = selectedCust.getFirstLevelDivision().getCountry_id();
-        ctryId = countryId == 1? CountryId.US : countryId == 2? CountryId.UK : CountryId.CANADA;
 
         if(selectedCust != null) {
+            long countryId = selectedCust.getFirstLevelDivision().getCountry_id();
+            ctryId = countryId == 1? CountryId.US : countryId == 2? CountryId.UK : CountryId.CANADA;
             setScene(event, Views.UPDATE_CUSTOMER_VIEW.getView());
         }else{
             Validator.displayInvalidInput("Please select a row/customer to update");
@@ -91,9 +91,9 @@ public class CustomerRecordController implements Initializable, CommonUseHelperI
         selectedCust = recordTable.getSelectionModel().getSelectedItem();
 
         if(selectedCust != null) {
-            setScene(event,  Views.NEW_APT_VIEW.getView());
+            setScene(event,  Views.ADD_NEW_APT_VIEW.getView());
         }else{
-            Validator.displayInvalidInput("Please select a row/customer to update");
+            Validator.displayInvalidInput("Please select a row/customer to update or Add");
         }
     }
 

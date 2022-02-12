@@ -77,7 +77,7 @@ public final class Validator {
      */
     public static void displayLoginInvalidInput(String msg) {
         errorAlert.setTitle(LoginController.language.getString("error"));
-        errorAlert.setHeaderText(LoginController.language.getString("Invalid input"));
+        errorAlert.setHeaderText(LoginController.language.getString("invalidInput"));
         errorAlert.setContentText(msg);
         errorAlert.showAndWait();
     }
