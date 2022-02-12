@@ -3,6 +3,11 @@ package entity;
 import java.sql.Date;
 import java.sql.Timestamp;
 
+/**
+ * An entity class that maps the columns of the appointments
+ *
+ * @Author Linmei M.
+ */
 public class Appointment {
     private long appointment_id;
     private String title;

@@ -1,5 +1,8 @@
 package entity;
 
+/**
+ * An entity that maps the contacts table columns
+ */
 public class Contact {
     private int contact_id;
     private String contact_name;

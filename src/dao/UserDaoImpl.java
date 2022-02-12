@@ -16,7 +16,10 @@ public class UserDaoImpl extends JDBCConnection {
     public static long userId;
 
     /**
-     * This method finds a user name by user input name and user input password
+     * This method finds a username by user input name and user input password
+     * <p>
+     *     Lambda expression 3
+     * </p>
      * @param name user input name
      * @param userPassword user input password
      * @return true if the user is find, otherwise return false.

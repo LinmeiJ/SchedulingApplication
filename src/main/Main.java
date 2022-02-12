@@ -13,6 +13,11 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
+/**
+ * This is the class where the application starts
+ *
+ * @Author Linmei M.
+ */
 public class Main extends Application {
 
     /**
@@ -34,6 +39,10 @@ public class Main extends Application {
 //        JDBCConnection.closeConnection();
     }
 
+    /**
+     * This method gets the locale based language.
+     * @return
+     */
     private Locale getLocale() {
         Locale currentLocale = Locale.getDefault();
         if(currentLocale.equals( new Locale("en", "GB"))){
