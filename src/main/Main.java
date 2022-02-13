@@ -1,6 +1,5 @@
 package main;
 
-import dateTimeUtil.DateTimeConverter;
 import dbConnection.JDBCConnection;
 import enums.Views;
 import javafx.application.Application;
@@ -16,7 +15,7 @@ import java.util.ResourceBundle;
 /**
  * This is the class where the application starts
  *
- * @Author Linmei M.
+ * @author Linmei M.
  */
 public class Main extends Application {
 
@@ -41,7 +40,7 @@ public class Main extends Application {
 
     /**
      * This method gets the locale based language.
-     * @return
+     * @return current locale
      */
     private Locale getLocale() {
         Locale currentLocale = Locale.getDefault();

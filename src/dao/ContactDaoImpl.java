@@ -10,7 +10,7 @@ import java.sql.SQLException;
 /**
  * This class contains logics for the data flow between the controller and the contacts table in the database.
  *
- * @Linmei M.
+ * @author Linmei M.
  */
 public class ContactDaoImpl extends JDBCConnection{
     ObservableList<String> allContacts = FXCollections.observableArrayList();

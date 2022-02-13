@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 /**
  * An entity that maps the customers table from the database
  *
- * @Author Linmei M.
+ * @author Linmei M.
  */
 public class Customer {
     private long customer_id;
@@ -27,7 +27,7 @@ public class Customer {
     }
 
     /**
-     * A contructor that accepts 6 instance variables
+     * A constructor that accepts 6 instance variables
      * @param customer_id a customer ID
      * @param customer_name a customer name
      * @param address the address of the customer
@@ -188,13 +188,13 @@ public class Customer {
         return firstLevelDivision;
     }
 
-    /**
-     * A setter that sets the FirstLevelDivision object
-     * @param firstLevelDivision a FirstLevelDivision object
-     */
-    public void setFirstLevelDivision(FirstLevelDivision firstLevelDivision) {
-        this.firstLevelDivision = firstLevelDivision;
-    }
+//    /**
+//     * A setter that sets the FirstLevelDivision object
+//     * @param firstLevelDivision a FirstLevelDivision object
+//     */
+//    public void setFirstLevelDivision(FirstLevelDivision firstLevelDivision) {
+//        this.firstLevelDivision = firstLevelDivision;
+//    }
 
     /**
      * A getter that gets the Division ID

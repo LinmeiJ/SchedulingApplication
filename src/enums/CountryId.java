@@ -2,6 +2,8 @@ package enums;
 
 /**
  * There are 3 locations for this business owner - the U.S, the Canada, and the U.K.
+ *
+ * @author Linmei M.
  */
 public enum CountryId {
     US(1),

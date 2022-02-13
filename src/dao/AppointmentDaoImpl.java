@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 /**
  * This class contains logics for the data flow between the controller and the appointments table in the database.
  *
- * @Linmei M.
+ * @author Linmei M.
  */
 public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<Appointment>{
     private Appointment appointment;

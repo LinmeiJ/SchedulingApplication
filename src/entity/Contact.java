@@ -1,7 +1,9 @@
 package entity;
 
 /**
- * An entity that maps the contacts table columns
+ * An entity that maps the contacts table columns.
+ *
+ * @author Linmei M.
  */
 public class Contact {
     private int contact_id;

@@ -4,7 +4,6 @@ import enums.TimeZoneOption;
 
 import java.sql.Timestamp;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
@@ -12,6 +11,10 @@ import java.util.Date;
 import java.util.TimeZone;
 import static java.time.temporal.ChronoUnit.MINUTES;
 
+/**
+ * This class converts different timezones or data time related logics.
+ * @author Linmei M.
+ */
 public class DateTimeConverter {
     private static  LocalDateTime TODAY = LocalDateTime.now();
     private static String FORMAT = "yyyy-MM-dd HH:mm:ss";

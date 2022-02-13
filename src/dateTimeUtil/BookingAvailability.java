@@ -10,7 +10,7 @@ import static java.time.temporal.ChronoUnit.MINUTES;
 /**
  * This contains logics to determine whether a new or updated appointment is already been booked. All the times in used in this class are based on EST timezone
  *
- * @Author Linmei M.
+ * @author Linmei M.
  */
 public class BookingAvailability {
 

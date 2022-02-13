@@ -14,7 +14,7 @@ import java.sql.SQLException;
 /**
  * This class contains logics for the data flow between the controller and the customers table in the database.
  *
- * @Linmei M.
+ * @author Linmei M.
  */
 public class CustomerDaoImpl extends JDBCConnection implements ServiceIfc<Customer> {
 

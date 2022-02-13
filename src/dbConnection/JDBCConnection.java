@@ -5,7 +5,7 @@ import java.sql.*;
 /**
  * This method opens and closes the connection between the application and Mysql database
  *
- * @Author Linmei M.
+ * @author Linmei M.
  */
 public abstract class JDBCConnection {
     private static final String protocol = "jdbc";

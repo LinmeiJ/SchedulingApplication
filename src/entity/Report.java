@@ -1,7 +1,9 @@
 package entity;
 
 /**
- * A class that created for generating reports
+ * A class that created for generating reports.
+ *
+ * @author Linmei M.
  */
 public class Report {
     private String month;

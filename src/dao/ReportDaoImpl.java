@@ -12,7 +12,7 @@ import java.sql.SQLException;
 /**
  * This class contains logics for getting data from multiple tables in the database for reports
  *
- * @Linmei M.
+ * @author Linmei M.
  */
 public class ReportDaoImpl extends JDBCConnection {
     ObservableList<Report> reports = FXCollections.observableArrayList();
@@ -74,7 +74,7 @@ public class ReportDaoImpl extends JDBCConnection {
                 String country = rs.getString("country");
                 long count = rs.getInt("count");
                 Country ctr = new Country();
-                ctr.setCountry(country);
+                ctr.setCountryName(country);
                 ctr.setCount(count);
                 ctry.add(ctr);
             }

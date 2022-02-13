@@ -14,7 +14,7 @@ import java.sql.Timestamp;
 /**
  * This class contains logics for the data flow between the controller and the first level divisions table in the database.
  *
- * @Linmei M.
+ * @author Linmei M.
  */
 public class FirstLevelDivisionDaoImpl extends JDBCConnection {
 
