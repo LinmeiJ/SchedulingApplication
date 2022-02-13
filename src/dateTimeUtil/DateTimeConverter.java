@@ -5,6 +5,7 @@ import enums.TimeZoneOption;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
@@ -82,15 +83,23 @@ public class DateTimeConverter {
         return localDate;
     }
 
+    /**
+     * This method converts a EST data time to user local date time
+     * @param timestamp an EST date time
+     * @return a local date time
+     */
     public static Timestamp convertESTToLocal(String timestamp) {
         Timestamp localDate = null;
         try {
+            TimeZone timeZone = TimeZone.getDefault();
             DateFormat currentTFormat = new SimpleDateFormat(FORMAT);
-            currentTFormat.setTimeZone(TimeZone.getTimeZone(ZoneId.of(String.valueOf(TimeZoneOption.EST), ZoneId.SHORT_IDS)));
-            Date date = currentTFormat.parse(timestamp);
-            currentTFormat.setTimeZone(TimeZone.getTimeZone(getTimeZoneID()));
-            localDate = Timestamp.valueOf(currentTFormat.format(date));
-        } catch (Exception e) {
+            currentTFormat.setTimeZone(timeZone);
+            if(timestamp != null){
+                Date date = currentTFormat.parse(timestamp);
+            }
+
+
+        } catch (ParseException e) {
             e.printStackTrace();
         }
         return localDate;

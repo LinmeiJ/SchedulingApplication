@@ -20,6 +20,7 @@ import java.net.URL;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -113,11 +114,35 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
             Validator.displayInfo("Sorry, the time you wish to book is out of the EST office hour. The day of the office hour starts "
                     + DateTimeConverter.getOfficeHourOfTheDay(startD)
                     + " on your day today. Please select a time again.");
-        } else if (appointmentDao.isDoubleBooking(contactId, startD, startH, startM, endD, endH, endM)) {
+        }else if(!isValidAppointmentTime(startD, startH, startM, endD, endH, endM)){
+
+        }
+        else if (appointmentDao.isDoubleBooking(contactId, startD, startH, startM, endD, endH, endM)) {
             Validator.displayInfo("Sorry, the time you have selected is booked, please select a different time. Available Time listed here (in EST timezone): \n" + getAvailableTime());
         } else {
             updateAptRecordForm(event, type, location, title, description, startD, startH, startM, endD, endH, endM, contactId);
         }
+    }
+
+    /**
+     * Validate whether the appointment time is valid. if the end date time is before the start date time for example, it results an invalid appointment time.
+     * @param startD
+     * @param startH
+     * @param startM
+     * @param endD
+     * @param endH
+     * @param endM
+     * @return
+     */
+    private boolean isValidAppointmentTime(LocalDate startD, String startH, String startM, LocalDate endD, String endH, String endM) {
+        LocalTime startTime = LocalTime.of(Integer.parseInt(startH), Integer.parseInt(startM));
+        LocalTime endTime = LocalTime.of(Integer.parseInt(endH), Integer.parseInt(endM));
+        LocalDateTime startDateTime = LocalDateTime.of(startD, startTime);
+        LocalDateTime endDateTime =  LocalDateTime.of(endD, endTime);
+        if(endDateTime.isAfter(startDateTime) && !LocalDateTime.now().isBefore(startDateTime)){
+            return true;
+        }
+        return false;
     }
 
     /**
