@@ -100,7 +100,6 @@ public class DateTimeConverter {
             e.printStackTrace();
         }
         return localDateTime;
-
     }
 
     /**
