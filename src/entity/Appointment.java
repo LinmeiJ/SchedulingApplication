@@ -125,6 +125,7 @@ public class Appointment {
 
     /**
      * A getter for the title
+     *
      * @return a title of the appointment
      */
     public String getTitle() {
@@ -133,6 +134,7 @@ public class Appointment {
 
     /**
      * A setter for the title
+     *
      * @param title title of the appointment
      */
     public void setTitle(String title) {
@@ -141,6 +143,7 @@ public class Appointment {
 
     /**
      * A getter for the description
+     *
      * @return a description of the appointment
      */
     public String getDescription() {
@@ -149,6 +152,7 @@ public class Appointment {
 
     /**
      * A setter for the description
+     *
      * @param description the description of the appointment
      */
     public void setDescription(String description) {
@@ -157,6 +161,7 @@ public class Appointment {
 
     /**
      * A getter for the location
+     *
      * @return a location of the appointment
      */
     public String getLocation() {
@@ -165,6 +170,7 @@ public class Appointment {
 
     /**
      * A setter for the location
+     *
      * @param location the location of the appointment
      */
     public void setLocation(String location) {
@@ -173,6 +179,7 @@ public class Appointment {
 
     /**
      * A getter for the type
+     *
      * @return a type of the appointment
      */
     public String getType() {
@@ -181,6 +188,7 @@ public class Appointment {
 
     /**
      * A setter for the type
+     *
      * @param type the type of the appointment
      */
     public void setType(String type) {
@@ -189,6 +197,7 @@ public class Appointment {
 
     /**
      * A getter for the start date time
+     *
      * @return a start date time of the appointment
      */
     public Timestamp getStart() {
@@ -197,6 +206,7 @@ public class Appointment {
 
     /**
      * A setter for the start time
+     *
      * @param start the start time of the appointment
      */
     public void setStart(Timestamp start) {
@@ -205,6 +215,7 @@ public class Appointment {
 
     /**
      * A getter for the end date time
+     *
      * @return a end date time of the appointment
      */
     public Timestamp getEnd() {
@@ -213,6 +224,7 @@ public class Appointment {
 
     /**
      * A setter for the end time
+     *
      * @param end end time of the appointment
      */
     public void setEnd(Timestamp end) {
@@ -221,6 +233,7 @@ public class Appointment {
 
     /**
      * A getter for the created date
+     *
      * @return a created date of the appointment
      */
     public Timestamp getCreated_date() {
@@ -229,6 +242,7 @@ public class Appointment {
 
     /**
      * A setter for the created date
+     *
      * @param created_date the created date of the appointment
      */
     public void setCreated_date(Timestamp created_date) {
@@ -237,6 +251,7 @@ public class Appointment {
 
     /**
      * A getter for the created by
+     *
      * @return a created by of the appointment
      */
     public String getCreated_by() {
@@ -245,6 +260,7 @@ public class Appointment {
 
     /**
      * A setter for the created by
+     *
      * @param created_by the user who created the appointment
      */
     public void setCreated_by(String created_by) {
@@ -253,6 +269,7 @@ public class Appointment {
 
     /**
      * A getter for the last update
+     *
      * @return a last update of the appointment
      */
     public Timestamp getLast_update() {
@@ -261,6 +278,7 @@ public class Appointment {
 
     /**
      * A setter for the last update
+     *
      * @param last_update last update of the appointment
      */
     public void setLast_update(Timestamp last_update) {
@@ -269,6 +287,7 @@ public class Appointment {
 
     /**
      * A getter for the last updated by
+     *
      * @return a last updated by of the appointment
      */
     public String getLast_updated_by() {
@@ -277,6 +296,7 @@ public class Appointment {
 
     /**
      * A setter for the last updated by
+     *
      * @param last_updated_by last updated by of the appointment
      */
     public void setLast_updated_by(String last_updated_by) {
@@ -285,6 +305,7 @@ public class Appointment {
 
     /**
      * A getter for the customer ID
+     *
      * @return a customer ID of the appointment
      */
     public long getCustomer_id() {
@@ -293,6 +314,7 @@ public class Appointment {
 
     /**
      * A setter for the customer ID
+     *
      * @param customer_id customer ID of the appointment
      */
     public void setCustomer_id(long customer_id) {
@@ -301,6 +323,7 @@ public class Appointment {
 
     /**
      * A getter for the contact ID
+     *
      * @return a contact ID of the appointment
      */
     public long getContact_id() {
@@ -309,6 +332,7 @@ public class Appointment {
 
     /**
      * A setter for the contact ID
+     *
      * @param contact_id contact ID of the appointment
      */
     public void setContact_id(long contact_id) {
@@ -317,6 +341,7 @@ public class Appointment {
 
     /**
      * A getter for the user ID
+     *
      * @return a user ID of the appointment
      */
     public long getUser_id() {
@@ -325,6 +350,7 @@ public class Appointment {
 
     /**
      * A setter for the user ID
+     *
      * @param user_id user ID  of the appointment
      */
     public void setUser_id(long user_id) {
@@ -333,6 +359,7 @@ public class Appointment {
 
     /**
      * A getter for the appointment ID
+     *
      * @return a appointment ID of the appointment
      */
     public long getAppointment_id() {

@@ -20,7 +20,8 @@ public class Report {
 
     /**
      * A constructor that accepts 2 instance variables
-     * @param type a type of the appointment
+     *
+     * @param type  a type of the appointment
      * @param count a total count of the types of appointments
      */
     public Report(String type, int count) {
@@ -30,6 +31,7 @@ public class Report {
 
     /**
      * A getter that gets the month
+     *
      * @return a name of the month
      */
     public String getMonth() {
@@ -38,6 +40,7 @@ public class Report {
 
     /**
      * A setter that sets the month
+     *
      * @param month a name of the month
      */
     public void setMonth(String month) {
@@ -46,6 +49,7 @@ public class Report {
 
     /**
      * A getter that gets the type
+     *
      * @return a type of appointment
      */
     public String getType() {
@@ -54,6 +58,7 @@ public class Report {
 
     /**
      * A setter that sets the type
+     *
      * @param type a type of appointment
      */
     public void setType(String type) {
@@ -62,6 +67,7 @@ public class Report {
 
     /**
      * A getter to get the total a count
+     *
      * @return a total count
      */
     public int getCount() {
@@ -70,6 +76,7 @@ public class Report {
 
     /**
      * A setter that sets the total count
+     *
      * @param count
      */
     public void setCount(int count) {
@@ -78,6 +85,7 @@ public class Report {
 
     /**
      * A getter that gets the country name
+     *
      * @return a country name
      */
     public String getCountry() {
@@ -86,6 +94,7 @@ public class Report {
 
     /**
      * A setter that sets the country name
+     *
      * @param country a country name
      */
     public void setCountry(String country) {
@@ -94,6 +103,7 @@ public class Report {
 
     /**
      * A getter that gets the country count
+     *
      * @return total count
      */
     public int getCtrCount() {
@@ -102,6 +112,7 @@ public class Report {
 
     /**
      * A setter that sets the count by country
+     *
      * @param ctrCount a total count by country
      */
     public void setCtrCount(int ctrCount) {

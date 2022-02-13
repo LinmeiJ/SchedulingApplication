@@ -14,9 +14,9 @@ import java.sql.Timestamp;
  */
 public class CountryDaoImpl extends JDBCConnection {
 
-    public Country findById(long id){
+    public Country findById(long id) {
         Country country = null;
-        try{
+        try {
             ResultSet rs = getData(id);
             country = assignObject(rs);
         } catch (SQLException e) {
@@ -27,10 +27,10 @@ public class CountryDaoImpl extends JDBCConnection {
 
     private Country assignObject(ResultSet rs) throws SQLException {
         Country country = null;
-        while(rs.next()){
+        while (rs.next()) {
             long id = rs.getLong("Country_ID");
             String countryName = rs.getString("Country");
-            Timestamp createdDate =  rs.getTimestamp("Create_Date");
+            Timestamp createdDate = rs.getTimestamp("Create_Date");
             String createdBy = rs.getString("Created_By");
             Timestamp lastUpdate = rs.getTimestamp("Last_Update");
             String lastUpdateBy = rs.getString("Last_updated_By");
@@ -42,7 +42,7 @@ public class CountryDaoImpl extends JDBCConnection {
 
     private ResultSet getData(long id) throws SQLException {
         statement = connection.createStatement();
-        String sql = "SELECT * FROM countries WHERE Country_ID = '"+ id + "'";
+        String sql = "SELECT * FROM countries WHERE Country_ID = '" + id + "'";
         return statement.executeQuery(sql);
     }
 }

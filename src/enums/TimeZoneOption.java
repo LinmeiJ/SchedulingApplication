@@ -6,5 +6,5 @@ package enums;
  * @author Linmei M.
  */
 public enum TimeZoneOption {
-     UTC, EST
+    UTC, EST
 }

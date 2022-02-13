@@ -19,6 +19,7 @@ public class ReportDaoImpl extends JDBCConnection {
 
     /**
      * THis method gets all the types with each type total counts from the appointment table
+     *
      * @return a list of total count grouped by type
      */
     public ObservableList<Report> getCountByType() {
@@ -39,6 +40,7 @@ public class ReportDaoImpl extends JDBCConnection {
 
     /**
      * This method finds total count of appointments by month
+     *
      * @return a list of appointments and grouped by month
      */
     public ObservableList<Report> getCountByMonth() {
@@ -60,6 +62,7 @@ public class ReportDaoImpl extends JDBCConnection {
 
     /**
      * This method find total count of customers by country
+     *
      * @return a list of total count of customers and grouped by country
      */
     public ObservableList<Country> getCustCountByCountry() {

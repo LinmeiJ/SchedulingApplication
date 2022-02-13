@@ -51,6 +51,7 @@ public class LoginController implements Initializable, CommonUseHelperIfc {
 
     /**
      * This method received the log button action event with user inputs.
+     *
      * @param event an event indicates a component-defined action occurred
      */
     @FXML
@@ -58,12 +59,12 @@ public class LoginController implements Initializable, CommonUseHelperIfc {
         name = (userNameField.getText());
         userPassword = (passwordField.getText());
 
-        if(UserDaoImpl.findByUserName(name, userPassword)) {
+        if (UserDaoImpl.findByUserName(name, userPassword)) {
             displayUpcomingAptsAlert();
             setScene(event, Views.CUSTOMER_RECORD_VIEW.getView());
             successCount++;
             loginAttempt("Success");
-        }else{
+        } else {
             loginAttempt("Failed");
             failedCount++;
             Validator.displayLoginInvalidInput(language.getString("userNotFound"));
@@ -74,6 +75,7 @@ public class LoginController implements Initializable, CommonUseHelperIfc {
     /**
      * This method closes the the program.
      * It prompts a dialog window to ensure whether a user wants to exit.
+     *
      * @param event an event indicates a component-defined action occurred
      */
     @FXML
@@ -83,7 +85,8 @@ public class LoginController implements Initializable, CommonUseHelperIfc {
 
     /**
      * Initializes the Login view window and translates it based on user local language setting.
-     * @param url The location used to resolve relative paths for the root object, or null if the location is not known.
+     *
+     * @param url            The location used to resolve relative paths for the root object, or null if the location is not known.
      * @param resourceBundle The resources used to localize the root object, or null if the root object was not localized.
      */
     @Override
@@ -99,8 +102,8 @@ public class LoginController implements Initializable, CommonUseHelperIfc {
 
     /**
      * Displays whether there is an upcoming appointment.
-     * <P>
-     *     Lambda expression 2
+     * <p>
+     * Lambda expression 2
      * </P>
      */
     private void displayUpcomingAptsAlert() {
@@ -110,7 +113,7 @@ public class LoginController implements Initializable, CommonUseHelperIfc {
     }
 
     /**
-     *  Logs user attempt into a file called login_activity.txt
+     * Logs user attempt into a file called login_activity.txt
      */
     private void loginAttempt(String loginAttempts) {
         try {

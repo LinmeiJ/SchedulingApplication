@@ -19,9 +19,10 @@ public class UserDaoImpl extends JDBCConnection {
     /**
      * This method finds a username by user input name and user input password
      * <p>
-     *     Lambda expression 3
+     * Lambda expression 3
      * </p>
-     * @param name user input name
+     *
+     * @param name         user input name
      * @param userPassword user input password
      * @return true if the user is find, otherwise return false.
      */
@@ -32,7 +33,7 @@ public class UserDaoImpl extends JDBCConnection {
             PreparedStatement preparedStatement = JDBCConnection.connection.prepareStatement(sql);
             preparedStatement.execute();
             result = statement.executeQuery(sql);
-            while(result.next()) {
+            while (result.next()) {
                 userId = result.getLong("user_id");
                 isUserFind = Validator.validateUserLogin(result.getString("password"), userPassword);
             }

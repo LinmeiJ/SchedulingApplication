@@ -28,12 +28,13 @@ public interface CommonUseHelperIfc {
     /**
      * Initialize the office hour.
      */
-     ObservableList<String> estHr = FXCollections.observableArrayList(
-             Arrays.asList("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24"));
+    ObservableList<String> estHr = FXCollections.observableArrayList(
+            Arrays.asList("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24"));
 
     /**
      * This method closes the the program.
      * It prompts a dialog window to ensure whether a user wants to exit.
+     *
      * @param event an event indicates a component-defined action occurred
      */
     default void exit(ActionEvent event, Button exitId) {
@@ -46,10 +47,11 @@ public interface CommonUseHelperIfc {
 
     /**
      * set a scene based on this particular action and fxml path passed over to the params.
+     *
      * @param event an event indicates a component-defined action occurred
      * @param s     the file path where the fxml is located at
      */
-    default void setScene(ActionEvent event, String s){
+    default void setScene(ActionEvent event, String s) {
         Parent parent = null;
         try {
             parent = FXMLLoader.load(getClass().getResource(s));
@@ -63,14 +65,16 @@ public interface CommonUseHelperIfc {
 
     /**
      * Initialize minutes
-     * @return  returns a list of minutes from 00 - 45
+     *
+     * @return returns a list of minutes from 00 - 45
      */
-    default ObservableList<String> initializeMinutes(){
+    default ObservableList<String> initializeMinutes() {
         ObservableList<String> initMinutes = FXCollections.observableArrayList();
 
-        for(int i = 0; i <= 45;){
-            if(i < 10){  initMinutes.add("0" + i);}
-            else initMinutes.add(String.valueOf(i));
+        for (int i = 0; i <= 45; ) {
+            if (i < 10) {
+                initMinutes.add("0" + i);
+            } else initMinutes.add(String.valueOf(i));
             i = i + 15;
         }
         return initMinutes;
@@ -78,10 +82,11 @@ public interface CommonUseHelperIfc {
 
     /**
      * Disables weekends options for the date picker.
-     * <P>
-     *  Lambda Expression 1
+     * <p>
+     * Lambda Expression 1
      * </P>
-     * @return  a Callback
+     *
+     * @return a Callback
      */
     default Callback<DatePicker, DateCell> getDayCellFactory() {
 

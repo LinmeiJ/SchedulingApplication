@@ -28,11 +28,12 @@ public class Customer {
 
     /**
      * A constructor that accepts 6 instance variables
-     * @param customer_id a customer ID
-     * @param customer_name a customer name
-     * @param address the address of the customer
-     * @param postal_code the postal code of the customer
-     * @param phone the phone od the customer
+     *
+     * @param customer_id        a customer ID
+     * @param customer_name      a customer name
+     * @param address            the address of the customer
+     * @param postal_code        the postal code of the customer
+     * @param phone              the phone od the customer
      * @param firstLevelDivision the firstLevelDivision object
      */
     public Customer(long customer_id, String customer_name, String address, String postal_code, String phone, FirstLevelDivision firstLevelDivision) {
@@ -46,6 +47,7 @@ public class Customer {
 
     /**
      * A getter that gets the customer ID
+     *
      * @return a customer ID
      */
     public long getCustomer_id() {
@@ -54,6 +56,7 @@ public class Customer {
 
     /**
      * A getter that gets the customer name
+     *
      * @return a customer name
      */
     public String getCustomer_name() {
@@ -62,6 +65,7 @@ public class Customer {
 
     /**
      * A setting that sets the customer name
+     *
      * @param customer_name a customer name
      */
     public void setCustomer_name(String customer_name) {
@@ -70,6 +74,7 @@ public class Customer {
 
     /**
      * A getter that gets an address
+     *
      * @return an address
      */
     public String getAddress() {
@@ -78,6 +83,7 @@ public class Customer {
 
     /**
      * A setter that sets an address
+     *
      * @param address an address
      */
     public void setAddress(String address) {
@@ -86,6 +92,7 @@ public class Customer {
 
     /**
      * A getter that gets a postal code
+     *
      * @return a postal code
      */
     public String getPostal_code() {
@@ -94,6 +101,7 @@ public class Customer {
 
     /**
      * A setter that sets the postal code
+     *
      * @param postal_code postal_code
      */
     public void setPostal_code(String postal_code) {
@@ -102,6 +110,7 @@ public class Customer {
 
     /**
      * A getter that gets a phone number
+     *
      * @return a phone number
      */
     public String getPhone() {
@@ -110,6 +119,7 @@ public class Customer {
 
     /**
      * A setter that sets a phone number
+     *
      * @param phone a phone number
      */
     public void setPhone(String phone) {
@@ -118,6 +128,7 @@ public class Customer {
 
     /**
      * A getter that gets a created date
+     *
      * @return a created date
      */
     public Timestamp getCreate_date() {
@@ -126,6 +137,7 @@ public class Customer {
 
     /**
      * A setter that sets a created date
+     *
      * @param create_date a created date
      */
     public void setCreate_date(Timestamp create_date) {
@@ -134,6 +146,7 @@ public class Customer {
 
     /**
      * A getter that gets a name of who created this customer info
+     *
      * @return a name
      */
     public String getCreated_by() {
@@ -142,6 +155,7 @@ public class Customer {
 
     /**
      * A setter that sets a name that who created this customer info
+     *
      * @param created_by a name
      */
     public void setCreated_by(String created_by) {
@@ -150,6 +164,7 @@ public class Customer {
 
     /**
      * A getter that gets the last updated time
+     *
      * @return a date time
      */
     public Timestamp getLast_update() {
@@ -158,6 +173,7 @@ public class Customer {
 
     /**
      * A setter that sets the last updated date time
+     *
      * @param last_update a date time
      */
     public void setLast_update(Timestamp last_update) {
@@ -166,6 +182,7 @@ public class Customer {
 
     /**
      * A getter that gets the name of who last updated the customer info
+     *
      * @return a name
      */
     public String getLast_updated_by() {
@@ -174,6 +191,7 @@ public class Customer {
 
     /**
      * A setter that sets the name of who last updated by
+     *
      * @param last_updated_by a name
      */
     public void setLast_updated_by(String last_updated_by) {
@@ -182,6 +200,7 @@ public class Customer {
 
     /**
      * A getter that gets the firstLevelDivision object
+     *
      * @return a FirstLevelDivision object
      */
     public FirstLevelDivision getFirstLevelDivision() {
@@ -198,6 +217,7 @@ public class Customer {
 
     /**
      * A getter that gets the Division ID
+     *
      * @return A division ID
      */
     public long getDivision_id() {
@@ -206,6 +226,7 @@ public class Customer {
 
     /**
      * A setter that sets the division ID
+     *
      * @param division_id a division ID
      */
     public void setDivision_id(long division_id) {

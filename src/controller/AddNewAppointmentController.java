@@ -81,14 +81,15 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
         if (!areValidInput(type, location, title, description, startD, startH, startM, endD, endH, endM, contactName)) {
             Validator.displayInvalidInput("Invalid input. \n requires:\n" +
                     "Only alphabets are allowed for Type, Location, Title and all fields can not be empty");
-        }else if(!Validator.isValidAppointmentTime(startD, startH, startM, endD, endH, endM)){
+        } else if (!Validator.isValidAppointmentTime(startD, startH, startM, endD, endH, endM)) {
             Validator.displayInfo("Sorry, your appointment can be in the past or the appointment ending can not be before the appointment starting time. Try again please.");
-        } else if(!DateTimeConverter.isWithinOfficeHour(startD, startH,startM)){
+        } else if (!DateTimeConverter.isWithinOfficeHour(startD, startH, startM)) {
             Validator.displayInfo("Sorry, The time you wish to book is out of the EST timezone office hour. \nThe office hour starts "
                     + DateTimeConverter.getOfficeHourOfTheDay(startD)
-                    + " on your day today. Please select a time again.");
-        }else if (appointmentDao.isDoubleBooking(contactId, startD, startH, startM, endD, endH, endM)) {
-            Validator.displayInfo("Sorry, the time you have selected is booked, please select a different time. \nAvailable office hours in EST timezone for the same date is below: \n" + getAvailableTime());
+                    + " on your day today. Please select a different time.");
+        } else if (appointmentDao.isDoubleBooking(contactId, startD, startH, startM, endD, endH, endM)) {
+            Validator.displayInfo("Sorry, the time you have selected is booked, please select a different time. \nAvailable office hours in EST timezone for the same date is below: \n" + getAvailableTime()
+                    + "Keep in mind, the EST office hour starts at " + DateTimeConverter.getOfficeHourOfTheDay(startD) + " at your time for the same date");
         } else {
             saveNewAppointment(event, title, description, type, location, startD, startH, startM, endD, endH, endM, contactId);
         }

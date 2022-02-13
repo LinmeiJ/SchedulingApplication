@@ -22,12 +22,11 @@ public class Main extends Application {
     /**
      * This class create the main/first scene.
      *
-     *
      * @author Linmei M.
      */
     @Override
-    public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(Views.LOGIN_VIEW_PATH.getView())),  ResourceBundle.getBundle("resource/language", getLocale()));
+    public void start(Stage primaryStage) throws Exception {
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(Views.LOGIN_VIEW_PATH.getView())), ResourceBundle.getBundle("resource/language", getLocale()));
         primaryStage.setScene(new Scene(root, 800, 800));
         primaryStage.show();
         JDBCConnection.openConnection();
@@ -40,11 +39,12 @@ public class Main extends Application {
 
     /**
      * This method gets the locale based language.
+     *
      * @return current locale
      */
     private Locale getLocale() {
         Locale currentLocale = Locale.getDefault();
-        if(currentLocale.equals( new Locale("en", "GB"))){
+        if (currentLocale.equals(new Locale("en", "GB"))) {
             currentLocale = new Locale("en", "US");
         }
         return currentLocale;

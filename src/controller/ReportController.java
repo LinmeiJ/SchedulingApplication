@@ -164,7 +164,7 @@ public class ReportController implements Initializable, CommonUseHelperIfc {
                 reportTwo.setItems(appointmentDao.findAllByContactId(id));
             }
         }
-        countryName.setCellValueFactory(new PropertyValueFactory<>("country"));
+        countryName.setCellValueFactory(new PropertyValueFactory<>("countryName"));
         totalCountCustomers.setCellValueFactory(new PropertyValueFactory<>("count"));
         reportThree.setItems(reportDao.getCustCountByCountry());
     }

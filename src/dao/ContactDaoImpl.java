@@ -12,11 +12,12 @@ import java.sql.SQLException;
  *
  * @author Linmei M.
  */
-public class ContactDaoImpl extends JDBCConnection{
+public class ContactDaoImpl extends JDBCConnection {
     ObservableList<String> allContacts = FXCollections.observableArrayList();
 
     /**
      * This method gets the contact ID based on a contact name
+     *
      * @param name a contact name
      * @return a contact ID
      */
@@ -38,16 +39,17 @@ public class ContactDaoImpl extends JDBCConnection{
 
     /**
      * This method finds a contact name by giving a contact id
+     *
      * @param contact_id a contact id
      * @return a contact name
      */
-    public String findNameByID(long contact_id){
+    public String findNameByID(long contact_id) {
         ResultSet rs = findRawDataFromDB("SELECT Contact_Name FROM contacts WHERE Contact_ID = " + contact_id);
         try {
             while (rs.next()) {
                 return rs.getString("contact_name");
             }
-        }catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return "";
@@ -55,6 +57,7 @@ public class ContactDaoImpl extends JDBCConnection{
 
     /**
      * This method finds all contacts from the contacts table in the database
+     *
      * @return a list of contact names
      */
     public ObservableList<String> findAll() {

@@ -1,6 +1,7 @@
 package dateTimeUtil;
 
 import entity.Appointment;
+
 import java.sql.Timestamp;
 import java.time.LocalTime;
 import java.util.*;
@@ -22,6 +23,7 @@ public class BookingAvailability {
 
     /**
      * Initialize time slots based on office hour from EST 8am to 10pm with 15 minutes increase rule
+     *
      * @return a list of regular office time slots
      */
     private static List<LocalTime> initializedTimeSlots() {
@@ -44,9 +46,10 @@ public class BookingAvailability {
 
     /**
      * This method contains all logics that determine the double booking status
+     *
      * @param scheduleList a list that comes from the database and already been scheduled
-     * @param start the user input start localTime
-     * @param end the user input ent localTime
+     * @param start        the user input start localTime
+     * @param end          the user input ent localTime
      * @return true if time is already booked, otherwise returns false.
      */
     public static boolean checkBookingStatus(List<Appointment> scheduleList, Timestamp start, Timestamp end) {
@@ -65,7 +68,8 @@ public class BookingAvailability {
 
     /**
      * This method filters out already scheduled time slots
-     * @param scheduleList a set of times slots that already token
+     *
+     * @param scheduleList       a set of times slots that already token
      * @param availableTimeSlots all time slots from 8am to 10pm
      */
     private static void filterOutAlReadyBookedTimeSlots(List<Appointment> scheduleList, List<LocalTime> availableTimeSlots) {
@@ -88,8 +92,9 @@ public class BookingAvailability {
 
     /**
      * This method checks whether the time slot is already token
+     *
      * @param availableTimeSlots the available times slots for user to book
-     * @param splitTime a time slots a user wishes to book
+     * @param splitTime          a time slots a user wishes to book
      * @return ture if the time user wants is already token, otherwise return false.
      */
     private static boolean checksIfDoubleBooked(List<LocalTime> availableTimeSlots, List<LocalTime> splitTime) {
@@ -105,8 +110,9 @@ public class BookingAvailability {
 
     /**
      * This methods format the time slots based user input
+     *
      * @param start start localTime
-     * @param end end localTime
+     * @param end   end localTime
      * @return a list of time slots that user wishes to book.
      */
     private static List<LocalTime> getUserWantedTimeSlots(Timestamp start, Timestamp end) {
@@ -127,21 +133,20 @@ public class BookingAvailability {
 
     /**
      * This method formats the available times slots to used for displaying on the user interface
+     *
      * @param availableAllDayTimeSlots all available times slots to the user
      */
     private static void displayAvailableTime(List<LocalTime> availableAllDayTimeSlots) {
 
         int index;
         LocalTime temp = availableAllDayTimeSlots.get(0);
-        for (index = 0; index < availableAllDayTimeSlots.size();) {
+        for (index = 0; index < availableAllDayTimeSlots.size(); ) {
             if (index > availableAllDayTimeSlots.size() - 2) {
                 availableTimeToDisplay.put(temp, availableAllDayTimeSlots.get(index));
                 break;
-            }
-            else if(availableAllDayTimeSlots.get(index).plusMinutes(15).equals(availableAllDayTimeSlots.get(index + 1))) {
+            } else if (availableAllDayTimeSlots.get(index).plusMinutes(15).equals(availableAllDayTimeSlots.get(index + 1))) {
                 index++;
-            }
-            else {
+            } else {
                 availableTimeToDisplay.put(temp, availableAllDayTimeSlots.get(index));
 
                 temp = availableAllDayTimeSlots.get(index + 1);

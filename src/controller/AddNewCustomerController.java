@@ -142,7 +142,9 @@ public class AddNewCustomerController extends JDBCConnection implements Initiali
             Validator.displaySuccess("Add the customer");
             setScene(event, view);
         } else {
-            Validator.displayInvalidInput("Contain invalid entry Or fields can not be empty.\n\n Example:\n Name: Lucy Wang\nAddress: 123 street name, city name \nPhone(US and Canada: XXX-XXX-XXXX, UK: XX-XXX-XXX-XXXX)\nPostCode(US and Canada are digits only and UK format example: AF19B)");
+            Validator.displayInvalidInput("Contain invalid entry Or fields can not be empty.\n\n " +
+                    "Example:\n Name: Lucy Wang\nAddress: 123 street name, city name \nPhone(US and " +
+                    "Canada: XXX-XXX-XXXX, UK: XX-XXX-XXX-XXXX)\nPostCode(US and Canada are digits only and UK format example: AF19B)");
         }
     }
 

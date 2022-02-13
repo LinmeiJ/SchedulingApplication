@@ -20,10 +20,11 @@ public class CustomerDaoImpl extends JDBCConnection implements ServiceIfc<Custom
 
     private FirstLevelDivisionDaoImpl firstLevelDivisionDao = new FirstLevelDivisionDaoImpl();
     private AppointmentDaoImpl aptDao = new AppointmentDaoImpl();
-    private  ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
+    private ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
 
     /**
      * This method finds all customers from the customers table in database.
+     *
      * @return a list of all customers
      */
     public ObservableList<Customer> findAll() {
@@ -40,7 +41,7 @@ public class CustomerDaoImpl extends JDBCConnection implements ServiceIfc<Custom
                 Customer customer = new Customer(id, name, address, postalCode, phoneNum, firstLevelDivisionDao.findById(div_id));
                 allCustomers.add(customer);
             }
-        }catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return allCustomers;
@@ -48,13 +49,14 @@ public class CustomerDaoImpl extends JDBCConnection implements ServiceIfc<Custom
 
     /**
      * This method deletes a customer record from the customers table
+     *
      * @param customer a customer that wishes to be deleted
      */
     public void delete(Customer customer) {
         try {
             aptDao.deleteByCustID(customer.getCustomer_id());
             statement = connection.createStatement();
-            String sql = "DELETE FROM customers WHERE Customer_ID = "+ customer.getCustomer_id();
+            String sql = "DELETE FROM customers WHERE Customer_ID = " + customer.getCustomer_id();
             statement.executeUpdate(sql);
             allCustomers.remove(customer);
             Validator.displayDeleteConfirmation();
@@ -67,6 +69,7 @@ public class CustomerDaoImpl extends JDBCConnection implements ServiceIfc<Custom
 
     /**
      * This method saves a new customer to the database
+     *
      * @param customer a new customer info
      */
     public void save(Customer customer) {
@@ -91,6 +94,7 @@ public class CustomerDaoImpl extends JDBCConnection implements ServiceIfc<Custom
 
     /**
      * This method updates an existing customer and save it to the database
+     *
      * @param customer an existing customer
      */
     public void update(Customer customer) {
@@ -104,7 +108,7 @@ public class CustomerDaoImpl extends JDBCConnection implements ServiceIfc<Custom
             preparedStatement.setTimestamp(5, customer.getLast_update());
             preparedStatement.setString(6, customer.getLast_updated_by());
             preparedStatement.setTimestamp(7, customer.getCreate_date());
-            preparedStatement.setString(8,customer.getCreated_by());
+            preparedStatement.setString(8, customer.getCreated_by());
             preparedStatement.setString(9, String.valueOf(customer.getDivision_id()));
 
             preparedStatement.execute();
@@ -116,6 +120,7 @@ public class CustomerDaoImpl extends JDBCConnection implements ServiceIfc<Custom
 
     /**
      * This method finds an customer ID by customer name and a division ID
+     *
      * @param customerName
      * @param divisionId
      * @return a customer ID

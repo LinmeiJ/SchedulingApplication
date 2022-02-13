@@ -41,42 +41,48 @@ public final class Validator {
 
     /**
      * Validates 4 strings at a time
+     *
      * @param str1 a string
      * @param str2 a string
      * @param str3 a string
      * @param str4 a string
      * @return if they are all valid, returns a true, otherwise returns a false.
      */
-    public static boolean isValidString(String str1, String str2, String str3, String str4){
+    public static boolean isValidString(String str1, String str2, String str3, String str4) {
         return checkStringEntry(str1) && checkStringEntry(str2) && checkStringEntry(str3) && checkStringEntry(str4);
     }
 
     /**
      * validates 3 strings at a time
+     *
      * @param str1 a string
      * @param str2 a string
      * @param str3 a string
      * @return if they are all valid, returns a true, otherwise returns a false.
      */
-    public static boolean isValidString(String str1, String str2, String str3){
+    public static boolean isValidString(String str1, String str2, String str3) {
         return checkStringEntry(str1) && checkStringEntry(str2) && checkStringEntry(str3);
-    };
+    }
+
+    ;
 
     /**
      * Validates a string by checking whether it is empty or null
+     *
      * @param str1 a string
      * @return if the string is valid, returns ture, otherwise returns a false.
      */
-    public static boolean checkStringEntry(String str1){
+    public static boolean checkStringEntry(String str1) {
         boolean isValid = false;
-        if(str1.length() != 0 && !str1.isEmpty() && str1 != null){
-            isValid =  true;
+        if (str1.length() != 0 && !str1.isEmpty() && str1 != null) {
+            isValid = true;
         }
         return isValid;
     }
 
     /**
      * This method sets an error alert that displays to the end user for log in UI.
+     *
      * @param msg the message puts in the content of the alert dialog
      */
     public static void displayLoginInvalidInput(String msg) {
@@ -89,6 +95,7 @@ public final class Validator {
 
     /**
      * This method sets an error alert that displays to the end user for fields input.
+     *
      * @param msg the message puts in the content of the alert dialog
      */
     public static void displayInvalidInput(String msg) {
@@ -100,11 +107,12 @@ public final class Validator {
 
     /**
      * Validate user password by comparing the entered user password and the one from the database
-     * @param dbPassword a password saved from the database
+     *
+     * @param dbPassword   a password saved from the database
      * @param userPassword a password that entered by the user
      * @return if both password doesnt match, return false, otherwise, returns true.
      */
-    public static boolean validateUserLogin(String dbPassword, String userPassword){
+    public static boolean validateUserLogin(String dbPassword, String userPassword) {
         if (dbPassword.equals(userPassword)) {
             return true;
         }
@@ -123,6 +131,7 @@ public final class Validator {
 
     /**
      * This method display a successfully info message to the user UI
+     *
      * @param message a additional message that will be displayed on the screen
      */
     public static void displaySuccess(String message) {
@@ -133,6 +142,7 @@ public final class Validator {
 
     /**
      * This method display information to the user based on the message that is passed in
+     *
      * @param message a message that will be displayed on the screen
      */
     public static void displayInfo(String message) {
@@ -140,6 +150,7 @@ public final class Validator {
         infoAlert.setHeaderText(message);
         infoAlert.showAndWait();
     }
+
     /**
      * This method generates a message to confirm whether the end user want to delete a selected item.
      */
@@ -152,12 +163,13 @@ public final class Validator {
 
     /**
      * checks if the name matches only letters and a space between
+     *
      * @param name name that user inputs
      * @return true if it matches the requirement, otherwise returns false.
      */
-    public static boolean isValidName(String name){
+    public static boolean isValidName(String name) {
         Pattern p = Pattern.compile("^[a-zA-Z]+\\s[a-zA-Z]+$");//match only letters and one space between
-        if(name == null){
+        if (name == null) {
             return false;
         }
         Matcher m = p.matcher(name);
@@ -175,10 +187,11 @@ public final class Validator {
 
     /**
      * Check whether it is a valid phone number based on phone number only contains digits
+     *
      * @param phoneNumber a phone number user has entered
      * @return returns true if the requirement meets, otherwise return false.
      */
-    public static boolean isValidPhoneNumber(String phoneNumber){
+    public static boolean isValidPhoneNumber(String phoneNumber) {
         Pattern p = null;
         if (phoneNumber == null) {
             return false;
@@ -201,10 +214,11 @@ public final class Validator {
 
     /**
      * This method checks the address. the address can contain anything but special characters.
+     *
      * @param address the user input address
      * @return true if address is valid, otherwise false.
      */
-    public static boolean isValidAddress(String address){
+    public static boolean isValidAddress(String address) {
         Pattern p = Pattern.compile("^[#.0-9a-zA-Z\\s,-]+$");
         if (address == null) {
             return false;
@@ -215,15 +229,16 @@ public final class Validator {
 
     /**
      * validates a zipcode by checking zip code only contains digits
+     *
      * @param zipcode the user input zipcode
      * @return true if zipcode only contains digits, otherwise false
      */
-    public static boolean isValidZipCode(String zipcode){
+    public static boolean isValidZipCode(String zipcode) {
         if (zipcode == null) {
             return false;
         }
         Pattern p = null;
-        switch (CustomerRecordController.ctryId){
+        switch (CustomerRecordController.ctryId) {
             case US:
             case CANADA:
                 p = Pattern.compile("^\\d+$");
@@ -241,6 +256,7 @@ public final class Validator {
 
     /**
      * this method display an reminder message
+     *
      * @param msg an additional message that will be displayed on user screen
      */
     public static void displayUnsavedInfo(String msg) {
@@ -252,6 +268,7 @@ public final class Validator {
 
     /**
      * Validate whether the appointment time is valid. if the end date time is before the start date time for example, it results an invalid appointment time.
+     *
      * @param startD
      * @param startH
      * @param startM
@@ -264,8 +281,8 @@ public final class Validator {
         LocalTime startTime = LocalTime.of(Integer.parseInt(startH), Integer.parseInt(startM));
         LocalTime endTime = LocalTime.of(Integer.parseInt(endH), Integer.parseInt(endM));
         LocalDateTime startDateTime = LocalDateTime.of(startD, startTime);
-        LocalDateTime endDateTime =  LocalDateTime.of(endD, endTime);
-        if(endDateTime.isAfter(startDateTime) && !LocalDateTime.now().isBefore(startDateTime)){
+        LocalDateTime endDateTime = LocalDateTime.of(endD, endTime);
+        if (endDateTime.isAfter(startDateTime) && LocalDateTime.now().isBefore(startDateTime)) {
             return true;
         }
         return false;

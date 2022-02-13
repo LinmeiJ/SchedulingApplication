@@ -12,10 +12,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.*;
+
 /**
  * This class provides a data control flow between displaying customer record view and database tables
  *
@@ -39,8 +41,8 @@ public class CustomerRecordController implements Initializable, CommonUseHelperI
     @FXML
     private TableColumn<Customer, String> custDivision;
 
-    public  CustomerDaoImpl customerDao = new CustomerDaoImpl();
-    public  ObservableList<Customer> customersDataTable = FXCollections.observableArrayList();
+    public CustomerDaoImpl customerDao = new CustomerDaoImpl();
+    public ObservableList<Customer> customersDataTable = FXCollections.observableArrayList();
     public static Customer selectedCust;
     public static CountryId ctryId;
 
@@ -48,50 +50,51 @@ public class CustomerRecordController implements Initializable, CommonUseHelperI
 
     /**
      * This method receives an update action event and lead user to the update customer view.
+     *
      * @param event an event indicates a component-defined action occurred.
-     * */
+     */
     @FXML
-    void UpdateSelected(ActionEvent event){
-        selectedCust =  recordTable.getSelectionModel().getSelectedItem();
+    void UpdateSelected(ActionEvent event) {
+        selectedCust = recordTable.getSelectionModel().getSelectedItem();
 
-        if(selectedCust != null) {
+        if (selectedCust != null) {
             long countryId = selectedCust.getFirstLevelDivision().getCountry_id();
-            ctryId = countryId == 1? CountryId.US : countryId == 2? CountryId.UK : CountryId.CANADA;
+            ctryId = countryId == 1 ? CountryId.US : countryId == 2 ? CountryId.UK : CountryId.CANADA;
             setScene(event, Views.UPDATE_CUSTOMER_VIEW.getView());
-        }else{
+        } else {
             Validator.displayInvalidInput("Please select a row/customer to update");
         }
     }
 
     /**
      * This method deletes selected customer row
+     *
      * @param event an event indicates a component-defined action occurred.
-     * */
+     */
     @FXML
-    void deleteSelected(ActionEvent event){
+    void deleteSelected(ActionEvent event) {
         selectedCust = recordTable.getSelectionModel().getSelectedItem();
 
-        if(selectedCust != null) {
+        if (selectedCust != null) {
             customerDao.delete(selectedCust);
             customersDataTable.remove(selectedCust);
-        }
-        else
-        {
+        } else {
             Validator.displayInvalidInput("Please select a row to delete");
         }
     }
 
     /**
      * This method receives an action of going to the adding a new appointment view.
+     *
      * @param event an event indicates a component-defined action occurred.
-     * */
+     */
     @FXML
     void addNewAptSelected(ActionEvent event) throws IOException {
         selectedCust = recordTable.getSelectionModel().getSelectedItem();
 
-        if(selectedCust != null) {
-            setScene(event,  Views.ADD_NEW_APT_VIEW.getView());
-        }else{
+        if (selectedCust != null) {
+            setScene(event, Views.ADD_NEW_APT_VIEW.getView());
+        } else {
             Validator.displayInvalidInput("Please select a row/customer to update or Add");
         }
     }
@@ -100,7 +103,7 @@ public class CustomerRecordController implements Initializable, CommonUseHelperI
      * This method receives an action of going to the adding a new customer view.
      *
      * @param event an event indicates a component-defined action occurred.
-     * */
+     */
     @FXML
     void addNewCustomer(ActionEvent event) throws IOException {
         setScene(event, Views.ADD_NEW_CUSTOMER_VIEW.getView());
@@ -108,8 +111,9 @@ public class CustomerRecordController implements Initializable, CommonUseHelperI
 
     /**
      * This method receives an action of going to a view window where displays all the reports.
+     *
      * @param event an event indicates a component-defined action occurred.
-     * */
+     */
     @FXML
     void reportsClicked(ActionEvent event) {
         setScene(event, Views.REPORT_VIEW.getView());
@@ -117,8 +121,9 @@ public class CustomerRecordController implements Initializable, CommonUseHelperI
 
     /**
      * This method exits the program.
+     *
      * @param event an event indicates a component-defined action occurred.
-     * */
+     */
     @FXML
     void exitBtnClicked(ActionEvent event) {
         exit(event, exitId);
@@ -126,14 +131,15 @@ public class CustomerRecordController implements Initializable, CommonUseHelperI
 
     /**
      * This method lists all the appointment based on a selected customer row.
+     *
      * @param actionEvent an event indicates a component-defined action occurred.
      */
     @FXML
     void listAptSelected(ActionEvent actionEvent) {
-        selectedCust =  recordTable.getSelectionModel().getSelectedItem();
-        if(selectedCust != null) {
+        selectedCust = recordTable.getSelectionModel().getSelectedItem();
+        if (selectedCust != null) {
             setScene(actionEvent, Views.APPOINTMENT_RECORD_VIEW.getView());
-        }else{
+        } else {
             Validator.displayInvalidInput("Please select a row/customer to update");
         }
     }

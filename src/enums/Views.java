@@ -19,6 +19,7 @@ public enum Views {
 
     /**
      * A constructor for this class
+     *
      * @param view the list of views as above
      */
     Views(final String view) {
@@ -27,6 +28,7 @@ public enum Views {
 
     /**
      * A getter to retrieve the views.
+     *
      * @return a view path
      */
     public String getView() {

@@ -19,6 +19,7 @@ public class User {
 
     /**
      * A getter that get a user ID
+     *
      * @return a user ID
      */
     public int getUser_id() {
@@ -27,6 +28,7 @@ public class User {
 
     /**
      * A getter that gets a user name
+     *
      * @return a user name
      */
     public String getUser_name() {
@@ -35,6 +37,7 @@ public class User {
 
     /**
      * A setter that sets a user name
+     *
      * @param user_name a user name
      */
     public void setUser_name(String user_name) {
@@ -43,6 +46,7 @@ public class User {
 
     /**
      * A getter that gets a password
+     *
      * @return a password
      */
     public String getPassword() {
@@ -51,6 +55,7 @@ public class User {
 
     /**
      * A setter that sets a password
+     *
      * @param password a password
      */
     public void setPassword(String password) {
@@ -59,6 +64,7 @@ public class User {
 
     /**
      * A getter that gets the data of when the user is created.
+     *
      * @return a date of when the user is created
      */
     public Date getCreated_date() {
@@ -67,6 +73,7 @@ public class User {
 
     /**
      * A setter that sets the created date
+     *
      * @param created_date a created date
      */
     public void setCreated_date(Date created_date) {
@@ -75,6 +82,7 @@ public class User {
 
     /**
      * A getter that gets the name of who created the user
+     *
      * @return a name
      */
     public String getCreated_by() {
@@ -83,6 +91,7 @@ public class User {
 
     /**
      * A setter that sets the name of who created the user
+     *
      * @param created_by a name
      */
     public void setCreated_by(String created_by) {
@@ -91,6 +100,7 @@ public class User {
 
     /**
      * A getter that gets the data time of last time update
+     *
      * @return a date time
      */
     public Timestamp getLast_update() {
@@ -99,6 +109,7 @@ public class User {
 
     /**
      * A setter that sets the time of last time update
+     *
      * @param last_update a date time
      */
     public void setLast_update(Timestamp last_update) {
@@ -107,6 +118,7 @@ public class User {
 
     /**
      * A getter that gets the name of last updated by
+     *
      * @return a name
      */
     public String getLast_updated_by() {
@@ -115,6 +127,7 @@ public class User {
 
     /**
      * A setter that sets the name of who last updated the user
+     *
      * @param last_updated_by the name of last updated by
      */
     public void setLast_updated_by(String last_updated_by) {

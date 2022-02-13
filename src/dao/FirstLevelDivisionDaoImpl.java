@@ -101,7 +101,9 @@ public class FirstLevelDivisionDaoImpl extends JDBCConnection {
 //        return divisions;
 //    }
 
-    /** This method maps table columns from the database and save it as a FirstLevelDivision object
+    /**
+     * This method maps table columns from the database and save it as a FirstLevelDivision object
+     *
      * @param rs a raw data that returned from the firstLevelDivision table
      * @return a FirstLevelDivision object
      */

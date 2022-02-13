@@ -14,14 +14,20 @@ public enum CountryId {
 
     /**
      * a constructor for this enum class
+     *
      * @param id the country ID
      */
-    CountryId(final long id) { this.id = id; }
+    CountryId(final long id) {
+        this.id = id;
+    }
 
     /**
      * a getter for retrieving the country ID.
+     *
      * @return a country ID
      */
-    public long getId() { return id; }
+    public long getId() {
+        return id;
+    }
 
 }

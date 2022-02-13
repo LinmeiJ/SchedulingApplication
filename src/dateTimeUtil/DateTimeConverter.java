@@ -9,21 +9,24 @@ import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.TimeZone;
+
 import static java.time.temporal.ChronoUnit.MINUTES;
 
 /**
  * This class converts different timezones or data time related logics.
+ *
  * @author Linmei M.
  */
 public class DateTimeConverter {
-    private static  LocalDateTime TODAY = LocalDateTime.now();
+    private static LocalDateTime TODAY = LocalDateTime.now();
     private static String FORMAT = "yyyy-MM-dd HH:mm:ss";
-    private static  DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern(FORMAT);
+    private static DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern(FORMAT);
     private static LocalTime officeOpenTime = LocalTime.of(8, 00);
     private static LocalTime officeCloseTime = LocalTime.of(22, 00);
 
     /**
      * This method gets a timezone based on user local setting
+     *
      * @return a timezone id
      */
     public static String getTimeZoneID() {
@@ -33,6 +36,7 @@ public class DateTimeConverter {
 
     /**
      * This method converts local time to UTC time
+     *
      * @param localDateTime a time based on user local setting
      * @return a UTC time
      */
@@ -42,8 +46,9 @@ public class DateTimeConverter {
 
     /**
      * This method converts user wished appointment time to EST time
-     * @param dateValue  the date entered by the user
-     * @param hrValue the hour entered by the user
+     *
+     * @param dateValue   the date entered by the user
+     * @param hrValue     the hour entered by the user
      * @param minuteValue the minute entered by the user
      * @return an EST time
      */
@@ -55,8 +60,9 @@ public class DateTimeConverter {
 
     /**
      * This method converts a user entered appointment time to UTC time
-     * @param dateValue  the date entered by the user
-     * @param hrValue the hour entered by the user
+     *
+     * @param dateValue   the date entered by the user
+     * @param hrValue     the hour entered by the user
      * @param minuteValue the minute entered by the user
      * @return an UTC time
      */
@@ -68,6 +74,7 @@ public class DateTimeConverter {
 
     /**
      * This method converts a UTC time to user local time
+     *
      * @param timestamp a UTC time
      * @return a user local time
      */
@@ -87,6 +94,7 @@ public class DateTimeConverter {
 
     /**
      * This method converts a EST data time to user local date time
+     *
      * @param timestamp an EST date time
      * @return a local date time
      */
@@ -107,10 +115,11 @@ public class DateTimeConverter {
 
     /**
      * This method converts a UTC time to an EST time
+     *
      * @param timestamp a UTC time
      * @return an EST time
      */
-    public static Timestamp convertUTCToEST(Timestamp timestamp){
+    public static Timestamp convertUTCToEST(Timestamp timestamp) {
         Timestamp localDate = null;
         try {
             DateFormat timeFormat = new SimpleDateFormat(FORMAT);
@@ -126,6 +135,7 @@ public class DateTimeConverter {
 
     /**
      * This method finds the date of monday for the current week
+     *
      * @return the date of monday of the current week
      */
     public static LocalDate getMondayDate() {
@@ -138,6 +148,7 @@ public class DateTimeConverter {
 
     /**
      * This method finds the date of sunday for the current week
+     *
      * @return the date of sunday of the current week
      */
     public static LocalDate getSundayDate() {
@@ -150,20 +161,22 @@ public class DateTimeConverter {
 
     /**
      * This method convert hour to a string
+     *
      * @param hr an int type hour
      * @return a string type hour
      */
-    public static String getHr(int hr){
+    public static String getHr(int hr) {
         String hour = String.valueOf(hr);
         return hour.length() == 1 ? "0" + hour : hour;
     }
 
     /**
      * This method converts a minute to a string
+     *
      * @param m an int type minute
      * @return an string type minute
      */
-    public static String getMint(int m){
+    public static String getMint(int m) {
         String minute = String.valueOf(m);
         return minute.length() == 1 ? "0" + minute : minute;
     }
@@ -171,14 +184,15 @@ public class DateTimeConverter {
     /**
      * This method find times that is 15 minutes far away from current local time to a booked appointment time.
      * Give 16 minutes check point instead of 15 minutes to avoid a difference in just few seconds between 15 and 16 minutes
+     *
      * @param timestamp a booked time
      * @return true if it is within 15 minutes, otherwise returns false.
      */
-    public static boolean isWithin15mins(Timestamp timestamp){
+    public static boolean isWithin15mins(Timestamp timestamp) {
         return (MINUTES.between(TODAY, timestamp.toLocalDateTime()) >= 0 && MINUTES.between(TODAY, timestamp.toLocalDateTime()) <= 16);
     }
 
-    public static boolean isWithinOfficeHour(LocalDate dateValue, String hrValue, String minuteValue){
+    public static boolean isWithinOfficeHour(LocalDate dateValue, String hrValue, String minuteValue) {
         Timestamp aptDateTime = convertAptTimeToEST(dateValue, hrValue, minuteValue);
         LocalDateTime officeOpenDateTime = LocalDateTime.of(dateValue, officeOpenTime);
         LocalDateTime officeCloseDateTime = LocalDateTime.of(dateValue, officeCloseTime);
@@ -187,13 +201,14 @@ public class DateTimeConverter {
 
     /**
      * This method checks whether user appointment is within EST office hour.
-     * @param aptDateTime the time the user wishes to book
-     * @param officeOpenDateTime the time when office opens
+     *
+     * @param aptDateTime         the time the user wishes to book
+     * @param officeOpenDateTime  the time when office opens
      * @param officeCloseDateTime the time when office closes
      * @return true if the appointment is within EST office hour, false when out of office hour.
      */
     private static boolean checkOfficeDateTime(LocalDateTime aptDateTime, LocalDateTime officeOpenDateTime, LocalDateTime officeCloseDateTime) {
-        if(aptDateTime.isBefore(officeOpenDateTime) || aptDateTime.isAfter(officeCloseDateTime)){
+        if (aptDateTime.isBefore(officeOpenDateTime) || aptDateTime.isAfter(officeCloseDateTime)) {
             return false;
         }
         return true;
@@ -201,10 +216,11 @@ public class DateTimeConverter {
 
     /**
      * This method generates a local time for user to identify the EST starting office hour based on the local date
-     * @param dateValue  the date user wish to book
+     *
+     * @param dateValue the date user wish to book
      * @return a date time of the EST office start hour for that day in terms of user local hour time.
      */
-    public static String getOfficeHourOfTheDay(LocalDate dateValue){
+    public static String getOfficeHourOfTheDay(LocalDate dateValue) {
         LocalDateTime estOfficeHrOfTheDay = LocalDateTime.of(dateValue, LocalTime.of(8, 0));
         String str = String.valueOf(convertESTToLocal(String.valueOf(estOfficeHrOfTheDay)));
         return str.substring(0, str.length() - 2);

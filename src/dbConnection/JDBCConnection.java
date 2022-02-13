@@ -24,15 +24,12 @@ public abstract class JDBCConnection {
     /**
      * This method opens the connection between the application and Mysql database
      */
-    public static void openConnection()
-    {
+    public static void openConnection() {
         try {
             Class.forName(driver); // Locate Driver
             connection = DriverManager.getConnection(jdbcUrl, userName, password); // Reference Connection object
             statement = connection.createStatement(); //create a statement
-        }
-        catch(Exception e)
-        {
+        } catch (Exception e) {
             System.out.println("Error:" + e.getMessage());
         }
     }
@@ -44,19 +41,18 @@ public abstract class JDBCConnection {
         try {
             connection.close();
             System.out.println("Connection closed!");
-        }
-        catch(Exception e)
-        {
+        } catch (Exception e) {
             System.out.println("Error:" + e.getMessage());
         }
     }
 
     /**
      * A common used method that is used for classes in dao to query the tables from Database.
+     *
      * @param sql a query
      * @return a raw result data
      */
-    public ResultSet findRawDataFromDB(String sql){
+    public ResultSet findRawDataFromDB(String sql) {
         try {
             statement = connection.createStatement();
             result = statement.executeQuery(sql);
