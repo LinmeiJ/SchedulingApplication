@@ -88,8 +88,19 @@ public class DateTimeConverter {
      * @return a local date time
      */
     public static Timestamp convertESTToLocal(String timestamp) {
-        timestamp = timestamp.replace("T", " ") + ":00";Timestamp localDateTime = null;try {    DateFormat currentTFormat = new SimpleDateFormat(FORMAT);    currentTFormat.setTimeZone(TimeZone.getTimeZone(TimeZoneOption.EST.name()));    Date date = currentTFormat.parse(timestamp);    currentTFormat.setTimeZone(TimeZone.getTimeZone(getTimeZoneID()));    localDateTime = Timestamp.valueOf(currentTFormat.format(date));} catch (Exception e) {    e.printStackTrace();}return localDateTime;
+        timestamp = timestamp.replace("T", " ") + ":00";
 
+        Timestamp localDateTime = null;
+        try {
+            DateFormat currentTFormat = new SimpleDateFormat(FORMAT);
+            currentTFormat.setTimeZone(TimeZone.getTimeZone(TimeZoneOption.EST.name()));
+            Date date = currentTFormat.parse(timestamp);
+            currentTFormat.setTimeZone(TimeZone.getTimeZone(getTimeZoneID()));
+            localDateTime = Timestamp.valueOf(currentTFormat.format(date));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return localDateTime;
     }
 
     /**
