@@ -3,7 +3,6 @@ package controller;
 import dao.AppointmentDaoImpl;
 import dao.ContactDaoImpl;
 import dao.UserDaoImpl;
-import dao.Validator;
 import dateTimeUtil.BookingAvailability;
 import dateTimeUtil.DateTimeConverter;
 import dbConnection.JDBCConnection;

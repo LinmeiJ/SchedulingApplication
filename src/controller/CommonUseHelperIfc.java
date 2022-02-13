@@ -1,6 +1,5 @@
 package controller;
 
-import dao.Validator;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;

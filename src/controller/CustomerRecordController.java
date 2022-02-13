@@ -1,7 +1,6 @@
 package controller;
 
 import dao.CustomerDaoImpl;
-import dao.Validator;
 import entity.Customer;
 import enums.CountryId;
 import enums.Views;

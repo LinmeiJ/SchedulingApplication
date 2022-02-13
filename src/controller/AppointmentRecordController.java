@@ -1,7 +1,6 @@
 package controller;
 
 import dao.AppointmentDaoImpl;
-import dao.Validator;
 import dateTimeUtil.DateTimeConverter;
 import dbConnection.JDBCConnection;
 import entity.Appointment;

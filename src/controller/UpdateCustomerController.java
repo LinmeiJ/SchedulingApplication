@@ -3,7 +3,6 @@ package controller;
 import dao.CustomerDaoImpl;
 import dao.FirstLevelDivisionDaoImpl;
 import dao.UserDaoImpl;
-import dao.Validator;
 import entity.Customer;
 import enums.CountryId;
 import enums.Views;
@@ -15,7 +14,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 
 import java.net.URL;
-import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ResourceBundle;

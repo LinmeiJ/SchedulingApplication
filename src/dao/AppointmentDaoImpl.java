@@ -1,5 +1,6 @@
 package dao;
 
+import controller.Validator;
 import dateTimeUtil.BookingAvailability;
 import dateTimeUtil.DateTimeConverter;
 import dbConnection.JDBCConnection;

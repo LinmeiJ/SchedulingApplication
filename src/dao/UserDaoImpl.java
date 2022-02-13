@@ -1,5 +1,6 @@
 package dao;
 
+import controller.Validator;
 import dbConnection.JDBCConnection;
 
 import java.sql.PreparedStatement;

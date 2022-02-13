@@ -1,6 +1,7 @@
-package dao;
+package controller;
 
 import controller.LoginController;
+import enums.CountryId;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 
@@ -175,9 +176,21 @@ public final class Validator {
      * @return returns true if the requirement meets, otherwise return false.
      */
     public static boolean isValidPhoneNumber(String phoneNumber){
-        Pattern p = Pattern.compile("^\\d+$"); //as long as only digits
+        Pattern p = null;
         if (phoneNumber == null) {
             return false;
+        }
+        switch (CustomerRecordController.ctryId) {
+            case US:
+            case CANADA:
+                p = Pattern.compile("^\\d{3}-\\d{3}-\\d{4}$");
+                break;
+            case UK:
+                p = Pattern.compile("^\\d{2}-\\d{3}-\\d{3}-\\d{4}$");
+                break;
+            default:
+                Validator.displayInfo("Country can not be empty.");
+                break;
         }
         Matcher m = p.matcher(phoneNumber);
         return m.matches();
@@ -203,9 +216,21 @@ public final class Validator {
      * @return true if zipcode only contains digits, otherwise false
      */
     public static boolean isValidZipCode(String zipcode){
-        Pattern p = Pattern.compile("^\\d+$");
         if (zipcode == null) {
             return false;
+        }
+        Pattern p = null;
+        switch (CustomerRecordController.ctryId){
+            case US:
+            case CANADA:
+                p = Pattern.compile("^\\d+$");
+                break;
+            case UK:
+                p = Pattern.compile("^[A-Z]{1,2}[0-9]{2}[A-Z]$");
+                break;
+            default:
+                Validator.displayInfo("country ID is empty");
+                break;
         }
         Matcher m = p.matcher(zipcode);
         return m.matches();

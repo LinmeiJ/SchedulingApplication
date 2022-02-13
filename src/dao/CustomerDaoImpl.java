@@ -1,6 +1,7 @@
 package dao;
 
 import controller.CustomerRecordController;
+import controller.Validator;
 import dbConnection.JDBCConnection;
 import entity.Customer;
 import javafx.collections.FXCollections;
