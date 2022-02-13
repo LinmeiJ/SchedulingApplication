@@ -13,7 +13,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.*;
@@ -89,7 +88,7 @@ public class CustomerRecordController implements Initializable, CommonUseHelperI
      * @param event an event indicates a component-defined action occurred.
      */
     @FXML
-    void addNewAptSelected(ActionEvent event) throws IOException {
+    void addNewAptSelected(ActionEvent event) {
         selectedCust = recordTable.getSelectionModel().getSelectedItem();
 
         if (selectedCust != null) {
@@ -105,7 +104,7 @@ public class CustomerRecordController implements Initializable, CommonUseHelperI
      * @param event an event indicates a component-defined action occurred.
      */
     @FXML
-    void addNewCustomer(ActionEvent event) throws IOException {
+    void addNewCustomer(ActionEvent event) {
         setScene(event, Views.ADD_NEW_CUSTOMER_VIEW.getView());
     }
 

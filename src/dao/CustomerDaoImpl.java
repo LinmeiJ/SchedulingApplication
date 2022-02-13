@@ -18,8 +18,8 @@ import java.sql.SQLException;
  */
 public class CustomerDaoImpl extends JDBCConnection implements ServiceIfc<Customer> {
 
-    private FirstLevelDivisionDaoImpl firstLevelDivisionDao = new FirstLevelDivisionDaoImpl();
-    private AppointmentDaoImpl aptDao = new AppointmentDaoImpl();
+    private final FirstLevelDivisionDaoImpl firstLevelDivisionDao = new FirstLevelDivisionDaoImpl();
+    private final AppointmentDaoImpl aptDao = new AppointmentDaoImpl();
     private ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
 
     /**
@@ -121,8 +121,8 @@ public class CustomerDaoImpl extends JDBCConnection implements ServiceIfc<Custom
     /**
      * This method finds an customer ID by customer name and a division ID
      *
-     * @param customerName
-     * @param divisionId
+     * @param customerName a customer name
+     * @param divisionId a division ID
      * @return a customer ID
      */
     public long findIdByNameAndDivisionId(String customerName, long divisionId) {

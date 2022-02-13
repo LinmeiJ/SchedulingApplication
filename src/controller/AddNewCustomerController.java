@@ -48,8 +48,8 @@ public class AddNewCustomerController extends JDBCConnection implements Initiali
     private Button cancelBtn;
 
     public static Customer customer = new Customer();
-    private CustomerDaoImpl customerDao = new CustomerDaoImpl();
-    private FirstLevelDivisionDaoImpl divisionDao = new FirstLevelDivisionDaoImpl();
+    private final CustomerDaoImpl customerDao = new CustomerDaoImpl();
+    private final FirstLevelDivisionDaoImpl divisionDao = new FirstLevelDivisionDaoImpl();
     public static boolean isNewCust = false; // whether it is a new customer
 
     /**
@@ -167,7 +167,7 @@ public class AddNewCustomerController extends JDBCConnection implements Initiali
      * @param address  the user address can not contain special characters
      * @param phone    the user phone can not contain special characters
      * @param postCode the user post code can not contain special characters
-     * @return
+     * @return true if the inputs meet requirements, otherwise returns a false
      */
     private boolean areValidInputs(String name, String address, String phone, String postCode) {
         return Validator.isValidName(name) && Validator.isValidAddress(address) && Validator.isValidPhoneNumber(phone) && Validator.isValidZipCode(postCode);

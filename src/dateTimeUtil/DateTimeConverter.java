@@ -18,11 +18,11 @@ import static java.time.temporal.ChronoUnit.MINUTES;
  * @author Linmei M.
  */
 public class DateTimeConverter {
-    private static LocalDateTime TODAY = LocalDateTime.now();
-    private static String FORMAT = "yyyy-MM-dd HH:mm:ss";
-    private static DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern(FORMAT);
-    private static LocalTime officeOpenTime = LocalTime.of(8, 00);
-    private static LocalTime officeCloseTime = LocalTime.of(22, 00);
+    private static final LocalDateTime TODAY = LocalDateTime.now();
+    private static final String FORMAT = "yyyy-MM-dd HH:mm:ss";
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern(FORMAT);
+    private static final LocalTime officeOpenTime = LocalTime.of(8, 00);
+    private static final LocalTime officeCloseTime = LocalTime.of(22, 00);
 
     /**
      * This method gets a timezone based on user local setting
@@ -208,10 +208,7 @@ public class DateTimeConverter {
      * @return true if the appointment is within EST office hour, false when out of office hour.
      */
     private static boolean checkOfficeDateTime(LocalDateTime aptDateTime, LocalDateTime officeOpenDateTime, LocalDateTime officeCloseDateTime) {
-        if (aptDateTime.isBefore(officeOpenDateTime) || aptDateTime.isAfter(officeCloseDateTime)) {
-            return false;
-        }
-        return true;
+        return !aptDateTime.isBefore(officeOpenDateTime) && !aptDateTime.isAfter(officeCloseDateTime);
     }
 
     /**
@@ -222,7 +219,7 @@ public class DateTimeConverter {
      */
     public static String getOfficeHourOfTheDay(LocalDate dateValue) {
         LocalDateTime estOfficeHrOfTheDay = LocalDateTime.of(dateValue, LocalTime.of(8, 0));
-        String str = String.valueOf(convertESTToLocal(String.valueOf(estOfficeHrOfTheDay)));
-        return str.substring(0, str.length() - 2);
+        return String.valueOf(convertESTToLocal(String.valueOf(estOfficeHrOfTheDay)).toLocalDateTime().toLocalTime());
+
     }
 }

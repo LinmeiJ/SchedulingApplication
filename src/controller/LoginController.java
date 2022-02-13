@@ -42,12 +42,10 @@ public class LoginController implements Initializable, CommonUseHelperIfc {
     private Label signIn;
 
     public static ResourceBundle language;
-    private String name;
-    private String userPassword;
     private int successCount;
     private int failedCount;
 
-    private AppointmentDaoImpl appointmentDao = new AppointmentDaoImpl();
+    private final AppointmentDaoImpl appointmentDao = new AppointmentDaoImpl();
 
     /**
      * This method received the log button action event with user inputs.
@@ -56,8 +54,8 @@ public class LoginController implements Initializable, CommonUseHelperIfc {
      */
     @FXML
     void login(ActionEvent event) {
-        name = (userNameField.getText());
-        userPassword = (passwordField.getText());
+        String name = (userNameField.getText());
+        String userPassword = (passwordField.getText());
 
         if (UserDaoImpl.findByUserName(name, userPassword)) {
             displayUpcomingAptsAlert();
@@ -68,7 +66,6 @@ public class LoginController implements Initializable, CommonUseHelperIfc {
             loginAttempt("Failed");
             failedCount++;
             Validator.displayLoginInvalidInput(language.getString("userNotFound"));
-//            setScene(event, Views.CUSTOMER_RECORD_VIEW.getView());
         }
     }
 
@@ -92,6 +89,7 @@ public class LoginController implements Initializable, CommonUseHelperIfc {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.language = resourceBundle;
+
         locationField.setText(DateTimeConverter.getTimeZoneID());
         signIn.setText(language.getString("signIn"));
         userName.setText(language.getString("name"));

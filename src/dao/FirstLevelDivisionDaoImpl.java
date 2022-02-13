@@ -25,7 +25,7 @@ public class FirstLevelDivisionDaoImpl extends JDBCConnection {
      * @return a list of first level division
      */
     public FirstLevelDivision findById(long id) {
-        FirstLevelDivision firstLevelDivision = null;
+        FirstLevelDivision firstLevelDivision;
         ResultSet rs = findRawDataFromDB("SELECT * FROM first_level_divisions WHERE Division_ID = '" + id + "'");
         firstLevelDivision = mapObjMembers(rs);
         return firstLevelDivision;
@@ -39,7 +39,7 @@ public class FirstLevelDivisionDaoImpl extends JDBCConnection {
      */
     public long findIdByDivisionName(String divisionName) {
         long id = 0;
-        String countryName = (CustomerRecordController.ctryId == CountryId.US) ? String.valueOf(CustomerRecordController.ctryId).substring(0, 1)
+        String countryName = (CustomerRecordController.ctryId == CountryId.US) ? String.valueOf(CustomerRecordController.ctryId).charAt(0)
                 + "." + String.valueOf(CustomerRecordController.ctryId).substring(1) : String.valueOf(CustomerRecordController.ctryId);
 
         ResultSet rs = findRawDataFromDB("SELECT Division_Id from first_level_divisions where Country_Id = (SELECT Country_Id FROM client_schedule.countries where Country = '"
@@ -62,7 +62,6 @@ public class FirstLevelDivisionDaoImpl extends JDBCConnection {
      */
     public ObservableList<String> getAllDivisions() {
         ObservableList<String> divisions = FXCollections.observableArrayList();
-        CountryId id = CustomerRecordController.ctryId;
         String specificCtyDivisionQuery = "SELECT DISTINCT Division FROM first_level_divisions WHERE Country_ID = ";
         String allCtyDivisionQuery = "SELECT DISTINCT Division FROM first_level_divisions";
 
@@ -78,11 +77,11 @@ public class FirstLevelDivisionDaoImpl extends JDBCConnection {
         return divisions;
     }
 
-    /**
-     * This method gets all the divisions based on a country ID that no duplicate allowed
-     *
-     * @return a list of divisions
-     */
+//    /**
+//     * This method gets all the divisions based on a country ID that no duplicate allowed
+//     *
+//     * @return a list of divisions
+//     */
 //    public ObservableList<String> getAllDivisions() {
 //        ObservableList<String> divisions = FXCollections.observableArrayList();
 //        CountryId id = CustomerRecordController.ctryId;

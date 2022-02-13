@@ -1,9 +1,5 @@
 package dao;
 
-import javafx.collections.ObservableList;
-
-import java.sql.SQLException;
-
 /**
  * A contact that most of the dao class needs to implement them
  *

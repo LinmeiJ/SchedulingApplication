@@ -12,7 +12,6 @@ import java.sql.SQLException;
  * @author Linmei M.
  */
 public class UserDaoImpl extends JDBCConnection {
-
     public static String userName;
     public static long userId;
 

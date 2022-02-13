@@ -25,10 +25,7 @@ public class ContactDaoImpl extends JDBCConnection {
         long id = 0;
         ResultSet rs = findRawDataFromDB("SELECT Contact_ID FROM contacts WHERE Contact_Name = '" + name + "'");
         try {
-            while (true) {
-
-                if (!rs.next()) break;
-
+            while (rs.next()) {
                 id = rs.getLong("contact_id");
             }
         } catch (SQLException e) {
@@ -63,8 +60,7 @@ public class ContactDaoImpl extends JDBCConnection {
     public ObservableList<String> findAll() {
         ResultSet rs = findRawDataFromDB("SELECT contact_Name FROM contacts");
         try {
-            while (true) {
-                if (!rs.next()) break;
+            while (rs.next()) {
                 String name = rs.getString("contact_name");
                 allContacts.add(name);
             }

@@ -14,7 +14,6 @@ import javafx.util.Callback;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -49,10 +48,14 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
     private Button exitBtn;
     @FXML
     private ChoiceBox<String> contactList;
+    @FXML
+    private Label customerId;
+    @FXML
+    private Label userId;
 
-    private ContactDaoImpl contactDao = new ContactDaoImpl();
-    private CustomerDaoImpl customerDao = new CustomerDaoImpl();
-    private AppointmentDaoImpl appointmentDao = new AppointmentDaoImpl();
+    private final ContactDaoImpl contactDao = new ContactDaoImpl();
+    private final CustomerDaoImpl customerDao = new CustomerDaoImpl();
+    private final AppointmentDaoImpl appointmentDao = new AppointmentDaoImpl();
     private Appointment appointment;
     public static long newCustID; // new customer ID
 
@@ -75,21 +78,21 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
         String endH = endHr.getValue();
         String endM = endMinute.getValue();
         String contactName = contactList.getValue();
-        long contactId = 0;
+        long contactId;
         contactId = contactDao.getContactId(contactName);
 
         if (!areValidInput(type, location, title, description, startD, startH, startM, endD, endH, endM, contactName)) {
             Validator.displayInvalidInput("Invalid input. \n requires:\n" +
                     "Only alphabets are allowed for Type, Location, Title and all fields can not be empty");
         } else if (!Validator.isValidAppointmentTime(startD, startH, startM, endD, endH, endM)) {
-            Validator.displayInfo("Sorry, your appointment can be in the past or the appointment ending can not be before the appointment starting time. Try again please.");
+            Validator.displayInfo("Sorry, your appointment can not be in the past or the appointment ending can not be before the appointment starting time. Try again please.");
         } else if (!DateTimeConverter.isWithinOfficeHour(startD, startH, startM)) {
             Validator.displayInfo("Sorry, The time you wish to book is out of the EST timezone office hour. \nThe office hour starts "
                     + DateTimeConverter.getOfficeHourOfTheDay(startD)
-                    + " on your day today. Please select a different time.");
+                    + " on your local time. Please select a different time.");
         } else if (appointmentDao.isDoubleBooking(contactId, startD, startH, startM, endD, endH, endM)) {
             Validator.displayInfo("Sorry, the time you have selected is booked, please select a different time. \nAvailable office hours in EST timezone for the same date is below: \n" + getAvailableTime()
-                    + "Keep in mind, the EST office hour starts at " + DateTimeConverter.getOfficeHourOfTheDay(startD) + " at your time for the same date");
+                    + "Keep in mind, the EST office hour starts at " + DateTimeConverter.getOfficeHourOfTheDay(startD) + " at your time and open for 14 hours a day");
         } else {
             saveNewAppointment(event, title, description, type, location, startD, startH, startM, endD, endH, endM, contactId);
         }
@@ -214,6 +217,8 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
         endMinute.setItems(initializeMinutes());
 
         contactList.setItems(contactDao.findAll());
+        customerId.setText("Customer ID: " + CustomerRecordController.selectedCust.getCustomer_id() );
+        userId.setText("User ID: " + UserDaoImpl.userId );
 
     }
 }

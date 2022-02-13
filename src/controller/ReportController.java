@@ -63,11 +63,11 @@ public class ReportController implements Initializable, CommonUseHelperIfc {
 
     private static boolean isReportOneByMonth = true;
     private static boolean isReportOneByType;
-    private static boolean isReportTwoContact;
+//    private static boolean isReportTwoContact;
     private static String contactName;
-    private ReportDaoImpl reportDao = new ReportDaoImpl();
-    ContactDaoImpl contactDao = new ContactDaoImpl();
-    AppointmentDaoImpl appointmentDao = new AppointmentDaoImpl();
+    private final ReportDaoImpl reportDao = new ReportDaoImpl();
+    private final ContactDaoImpl contactDao = new ContactDaoImpl();
+    private final AppointmentDaoImpl appointmentDao = new AppointmentDaoImpl();
 
     /**
      * When a contact name is select in filter by a user, this method takes in the action
@@ -76,9 +76,9 @@ public class ReportController implements Initializable, CommonUseHelperIfc {
      * @param event an event indicates a component-defined action occurred.
      */
     @FXML
-    void contactNameIsSelected(ActionEvent event) throws SQLException {
+    void contactNameIsSelected(ActionEvent event){
         contactName = contactList.getValue();
-        isReportTwoContact = true;
+//        isReportTwoContact = true;
         setScene(event, Views.REPORT_VIEW.getView());
     }
 

@@ -52,7 +52,7 @@ public interface CommonUseHelperIfc {
      * @param s     the file path where the fxml is located at
      */
     default void setScene(ActionEvent event, String s) {
-        Parent parent = null;
+        Parent parent;
         try {
             parent = FXMLLoader.load(getClass().getResource(s));
             var scene = new Scene(parent);
@@ -90,8 +90,7 @@ public interface CommonUseHelperIfc {
      */
     default Callback<DatePicker, DateCell> getDayCellFactory() {
 
-        final Callback<DatePicker, DateCell> dayCellFactory = new Callback<DatePicker, DateCell>() {
-
+        final Callback<DatePicker, DateCell> dayCellFactory = new Callback<>() {
             @Override
             public DateCell call(final DatePicker datePicker) {
                 return new DateCell() {

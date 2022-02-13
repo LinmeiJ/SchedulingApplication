@@ -17,30 +17,35 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <Label layoutX="82.0" layoutY="87.0" text="Title">
+      <Label layoutX="67.0" layoutY="77.0" text="Appointment ID">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="aptTitleField" layoutX="168.0" layoutY="84.0" />
-      <Label layoutX="82.0" layoutY="139.0" text="Type">
+      <Label layoutX="84.0" layoutY="124.0" text="Title">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="aptTypeField" layoutX="168.0" layoutY="136.0" />
-      <Label layoutX="82.0" layoutY="193.0" text="Location">
+      <TextField fx:id="aptTitleField" layoutX="176.0" layoutY="122.0" prefHeight="25.0" prefWidth="164.0" />
+      <Label layoutX="82.0" layoutY="162.0" text="Type">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="aptLocationField" layoutX="176.0" layoutY="190.0" />
+      <TextField fx:id="aptTypeField" layoutX="176.0" layoutY="160.0" prefHeight="25.0" prefWidth="164.0" />
+      <Label layoutX="80.0" layoutY="207.0" text="Location">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <TextField fx:id="aptLocationField" layoutX="176.0" layoutY="204.0" prefHeight="25.0" prefWidth="164.0" />
       <Label layoutX="82.0" layoutY="247.0" text="Contact">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <ChoiceBox fx:id="contactList" layoutX="176.0" layoutY="244.0" prefHeight="26.0" prefWidth="135.0" />
+      <ChoiceBox fx:id="contactList" layoutX="176.0" layoutY="244.0" prefHeight="26.0" prefWidth="115.0" />
       <Label layoutX="480.0" layoutY="97.0" prefHeight="20.0" prefWidth="87.0" text="Description:">
          <font>
             <Font size="14.0" />
@@ -78,5 +83,8 @@
          <font>
             <Font size="14.0" />
          </font></Label>
+      <TextField disable="true" editable="false" layoutX="181.0" layoutY="75.0" prefHeight="25.0" prefWidth="158.0" promptText="auto generated - disabled" />
+      <Label fx:id="customerId" layoutX="70.0" layoutY="456.0" prefHeight="17.0" prefWidth="87.0" />
+      <Label fx:id="userId" layoutX="241.0" layoutY="456.0" prefHeight="17.0" prefWidth="72.0" />
    </children>
 </AnchorPane>

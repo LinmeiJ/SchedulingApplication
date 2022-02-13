@@ -124,6 +124,40 @@ public class Appointment {
     }
 
     /**
+     *
+     * @param appointment_id
+     * @param title
+     * @param description
+     * @param location
+     * @param type
+     * @param start
+     * @param end
+     * @param created_date
+     * @param created_by
+     * @param last_update
+     * @param last_updated_by
+     * @param customer_id
+     * @param contact_id
+     * @param user_id
+     */
+    public Appointment(long appointment_id, String title, String description, String location, String type, Timestamp start, Timestamp end, Timestamp created_date, String created_by, Timestamp last_update, String last_updated_by, long customer_id, long contact_id, long user_id) {
+        this.appointment_id = appointment_id;
+        this.title = title;
+        this.description = description;
+        this.location = location;
+        this.type = type;
+        this.start = start;
+        this.end = end;
+        Created_date = created_date;
+        Created_by = created_by;
+        this.last_update = last_update;
+        this.last_updated_by = last_updated_by;
+        this.customer_id = customer_id;
+        this.contact_id = contact_id;
+        this.user_id = user_id;
+    }
+
+    /**
      * A getter for the title
      *
      * @return a title of the appointment

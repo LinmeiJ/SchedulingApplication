@@ -1,11 +1,8 @@
 package controller;
 
-import controller.LoginController;
-import enums.CountryId;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -16,7 +13,7 @@ import java.util.regex.Pattern;
 /**
  * A class that contains a set of logic to validate input date or display messages to the user
  *
- * @Author Linmei M.
+ * @author Linmei M.
  */
 public final class Validator {
     /**
@@ -64,8 +61,6 @@ public final class Validator {
         return checkStringEntry(str1) && checkStringEntry(str2) && checkStringEntry(str3);
     }
 
-    ;
-
     /**
      * Validates a string by checking whether it is empty or null
      *
@@ -73,11 +68,7 @@ public final class Validator {
      * @return if the string is valid, returns ture, otherwise returns a false.
      */
     public static boolean checkStringEntry(String str1) {
-        boolean isValid = false;
-        if (str1.length() != 0 && !str1.isEmpty() && str1 != null) {
-            isValid = true;
-        }
-        return isValid;
+        return str1.length() != 0 && !str1.isEmpty() && str1 != null;
     }
 
     /**
@@ -91,7 +82,6 @@ public final class Validator {
         errorAlert.setContentText(msg);
         errorAlert.showAndWait();
     }
-
 
     /**
      * This method sets an error alert that displays to the end user for fields input.
@@ -113,10 +103,7 @@ public final class Validator {
      * @return if both password doesnt match, return false, otherwise, returns true.
      */
     public static boolean validateUserLogin(String dbPassword, String userPassword) {
-        if (dbPassword.equals(userPassword)) {
-            return true;
-        }
-        return false;
+        return dbPassword.equals(userPassword);
     }
 
     /**
@@ -175,15 +162,6 @@ public final class Validator {
         Matcher m = p.matcher(name);
         return m.matches();
     }
-
-//    public static boolean isValidString(String name){
-//        Pattern p = Pattern.compile("[a-zA-Z]+\\s+$");//match only letters and one space between
-//        if(name == null){
-//            return false;
-//        }
-//        Matcher m = p.matcher(name);
-//        return m.matches();
-//    }
 
     /**
      * Check whether it is a valid phone number based on phone number only contains digits
@@ -267,24 +245,21 @@ public final class Validator {
     }
 
     /**
-     * Validate whether the appointment time is valid. if the end date time is before the start date time for example, it results an invalid appointment time.
+     * Validate whether an appointment time is valid. if the end date time is before the start date time for example, it results an invalid appointment time.
      *
-     * @param startD
-     * @param startH
-     * @param startM
-     * @param endD
-     * @param endH
-     * @param endM
-     * @return
+     * @param startD an appointment starting date
+     * @param startH an appointment starting hour
+     * @param startM an appointment starting minute
+     * @param endD an appointment ending date
+     * @param endH an appointment ending hour
+     * @param endM an appointment ending minute
+     * @return true if the appointment time is valid, otherwise returns a false.
      */
     public static boolean isValidAppointmentTime(LocalDate startD, String startH, String startM, LocalDate endD, String endH, String endM) {
         LocalTime startTime = LocalTime.of(Integer.parseInt(startH), Integer.parseInt(startM));
         LocalTime endTime = LocalTime.of(Integer.parseInt(endH), Integer.parseInt(endM));
         LocalDateTime startDateTime = LocalDateTime.of(startD, startTime);
         LocalDateTime endDateTime = LocalDateTime.of(endD, endTime);
-        if (endDateTime.isAfter(startDateTime) && LocalDateTime.now().isBefore(startDateTime)) {
-            return true;
-        }
-        return false;
+        return endDateTime.isAfter(startDateTime) && LocalDateTime.now().isBefore(startDateTime);
     }
 }

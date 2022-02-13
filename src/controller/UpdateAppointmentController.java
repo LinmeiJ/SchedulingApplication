@@ -19,7 +19,6 @@ import java.net.URL;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -61,8 +60,8 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
     @FXML
     private Label userId;
 
-    private AppointmentDaoImpl appointmentDao = new AppointmentDaoImpl();
-    private ContactDaoImpl contactDao = new ContactDaoImpl();
+    private final AppointmentDaoImpl appointmentDao = new AppointmentDaoImpl();
+    private final ContactDaoImpl contactDao = new ContactDaoImpl();
     public Appointment appointment = AppointmentRecordController.selectApt;
 
     /**
@@ -103,21 +102,21 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
         String endH = endHr.getValue();
         String endM = endMin.getValue();
         String contactName = contactList.getValue();
-        long contactId = 0;
+        long contactId;
         contactId = contactDao.getContactId(contactName);
 
         if (!areValidInput(type, location, title, description, startD, startH, startM, endD, endH, endM, contactName)) {
             Validator.displayInvalidInput("Invalid input. \n requires:\n" +
                     "Only alphabets are allowed for Type, Location, Title and all fields can not be empty");
         } else if (!Validator.isValidAppointmentTime(startD, startH, startM, endD, endH, endM)) {
-            Validator.displayInfo("Your appointment can be in the past or your appointment ending time can not be before the appointment starting time. Please try again.");
+            Validator.displayInfo("Your appointment can not be in the past or your appointment ending time can not be before the appointment starting time. Please try again.");
         } else if (!DateTimeConverter.isWithinOfficeHour(startD, startH, startM)) {
             Validator.displayInfo("Sorry, The time you wish to book is out of the EST timezone office hour. \nThe office hour starts "
                     + DateTimeConverter.getOfficeHourOfTheDay(startD)
-                    + " on your day today. Please select a different time.");
+                    + " on your local time. Please select a different time.");
         } else if (appointmentDao.isDoubleBooking(contactId, startD, startH, startM, endD, endH, endM)) {
             Validator.displayInfo("Sorry, the time you have selected is booked, please select a different time. \nAvailable office hours in EST timezone for the same date is below: \n" + getAvailableTime()
-                    + "Keep in mind, the EST office hour starts at " + DateTimeConverter.getOfficeHourOfTheDay(startD) + " at your time for the same date");
+                    + "Keep in mind, the EST office hour starts at " + DateTimeConverter.getOfficeHourOfTheDay(startD) + " at your time and open for 14 hours a day");
         } else {
             updateAptRecordForm(event, type, location, title, description, startD, startH, startM, endD, endH, endM, contactId);
         }
@@ -159,7 +158,7 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
         Timestamp end = DateTimeConverter.convertAptTimeToUTC(endD, endH, endM);
         long custId = CustomerRecordController.selectedCust.getCustomer_id();
 
-        appointmentDao.update(new Appointment(title, description, location, type, start, end, currentTime, UserDaoImpl.userName, currentTime, UserDaoImpl.userName, custId, contactId, UserDaoImpl.userId));
+        appointmentDao.update(new Appointment(AppointmentRecordController.selectApt.getAppointment_id(), title, description, location, type, start, end, currentTime, UserDaoImpl.userName, currentTime, UserDaoImpl.userName, custId, contactId, UserDaoImpl.userId));
         setScene(event, Views.APPOINTMENT_RECORD_VIEW.getView());
     }
 

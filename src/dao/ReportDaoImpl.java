@@ -71,9 +71,7 @@ public class ReportDaoImpl extends JDBCConnection {
         String sql = "SELECT COUNT(Customer_ID) AS 'Count', Country FROM client_schedule.customers as c JOIN client_schedule.first_level_divisions as f ON c.Division_ID = f.Division_ID JOIN client_schedule.countries as cty ON f.Country_ID = cty.Country_ID Group by Country";
         ResultSet rs = findRawDataFromDB(sql);
         try {
-            while (true) {
-                if (!rs.next()) break;
-
+            while (rs.next()) {
                 String country = rs.getString("country");
                 long count = rs.getInt("count");
                 Country ctr = new Country();

@@ -32,8 +32,7 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
     public ObservableList<Appointment> findAll() {
         ResultSet rs = findRawDataFromDB("SELECT Appointment_ID, Start, End FROM appointments");
         try {
-            while (true) {
-                if (!rs.next()) break;
+            while (rs.next()) {
                 long aptId = rs.getLong("appointment_id");
                 Timestamp startDateTime = DateTimeConverter.convertUTCToLocal(String.valueOf(rs.getTimestamp("start")));
                 Timestamp endDateTime = DateTimeConverter.convertUTCToLocal(String.valueOf(rs.getTimestamp("end")));
@@ -95,9 +94,7 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
      */
     private void convertToObj(long customerId, ResultSet rs) {
         try {
-            while (true) {
-
-                if (!rs.next()) break;
+            while (rs.next()) {
                 long aptId = rs.getLong("appointment_id");
                 String title = rs.getString("title");
                 String description = rs.getString("description");
@@ -125,15 +122,27 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
     public void update(Appointment appointment) {
         String sql = "UPDATE appointments SET Title=?, Description=?, Location=?, Type=?, Start=?, End=?, Create_Date=?,Created_By=?, Last_Update=?, Last_Updated_By=?, Customer_ID=?, User_ID=?, Contact_ID=? WHERE Appointment_ID = " + appointment.getAppointment_id();
         try {
-            PreparedStatement preparedStatement = getPreparedStatement(appointment, sql);
+//            PreparedStatement preparedStatement = getPreparedStatement(appointment, sql);
+            PreparedStatement preparedStatement = JDBCConnection.connection.prepareStatement(sql);
+
+//            preparedStatement.setTimestamp(6, appointment.getEnd());
+            preparedStatement.setString(1, appointment.getTitle());
+            preparedStatement.setString(2, appointment.getDescription());
+            preparedStatement.setString(3, appointment.getLocation());
+            preparedStatement.setString(4, appointment.getType());
+            preparedStatement.setTimestamp(5, appointment.getStart());
             preparedStatement.setTimestamp(6, appointment.getEnd());
             preparedStatement.setTimestamp(7, DateTimeConverter.convertLocalTimeToUTC(LocalDateTime.now()));
             preparedStatement.setString(8, UserDaoImpl.userName);
             preparedStatement.setTimestamp(9, DateTimeConverter.convertLocalTimeToUTC(LocalDateTime.now()));
             preparedStatement.setString(10, UserDaoImpl.userName);
+            preparedStatement.setLong(11, appointment.getCustomer_id());
+            preparedStatement.setLong(12, appointment.getUser_id());
+            preparedStatement.setLong(13, appointment.getContact_id());
 
             preparedStatement.execute();
         } catch (SQLException e) {
+            System.out.println(e.getMessage());
             e.printStackTrace();
         }
         Validator.displaySuccess("Appointment is updated");
@@ -194,6 +203,7 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
         try {
             statement = connection.createStatement();
             String sql = "DELETE FROM appointments WHERE Customer_ID = " + id;
+            statement.executeUpdate(sql);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -227,7 +237,7 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
      */
     public String getAllUpcomingApts() {
         String message = "";
-        List<Appointment> upcomingApt = null;
+        List<Appointment> upcomingApt;
         upcomingApt = findAll()
                 .stream()
                 .filter(apt -> DateTimeConverter.isWithin15mins(apt.getStart()))
@@ -255,8 +265,6 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
             ResultSet rs = findRawDataFromDB("Select Appointment_ID, Start, End FROM client_schedule.appointments WHERE Contact_ID = " + contactId);
             while (rs.next()) {
                 long aptId = rs.getLong("appointment_id");
-                Timestamp s = rs.getTimestamp("start");
-                Timestamp e = rs.getTimestamp("end");
                 Timestamp start = DateTimeConverter.convertUTCToEST(rs.getTimestamp("start"));
                 Timestamp end = DateTimeConverter.convertUTCToEST(rs.getTimestamp("end"));
                 Appointment appointmentSchedule = new Appointment(aptId, start, end);
@@ -298,9 +306,8 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
      */
     public List<Appointment> filterByDate(List<Appointment> scheduleList, Timestamp aptStartTime) {
         LocalDate date = aptStartTime.toLocalDateTime().toLocalDate();
-        List<Appointment> sameDateScheduledList = scheduleList.stream()
+        return scheduleList.stream()
                 .filter(apt -> apt.getStart().toLocalDateTime().toLocalDate().equals(date))
                 .collect(Collectors.toList());
-        return sameDateScheduledList;
     }
 }

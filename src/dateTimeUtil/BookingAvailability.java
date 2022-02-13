@@ -61,7 +61,7 @@ public class BookingAvailability {
         if (start != null || end != null) {
             List<LocalTime> splitTime = getUserWantedTimeSlots(start, end);
 
-            if (checksIfDoubleBooked(availableTimeSlots, splitTime)) return true;
+            return checksIfDoubleBooked(availableTimeSlots, splitTime);
         }
         return false;
     }
@@ -74,12 +74,12 @@ public class BookingAvailability {
      */
     private static void filterOutAlReadyBookedTimeSlots(List<Appointment> scheduleList, List<LocalTime> availableTimeSlots) {
         //getting availableTimeSlots by excluding the ones that already been booked
-        for (int i = 0; i < scheduleList.size(); i++) {
-            long aptDuration = MINUTES.between(scheduleList.get(i).getStart().toLocalDateTime().toLocalTime(), scheduleList.get(i).getEnd().toLocalDateTime().toLocalTime());
+        for (Appointment appointment : scheduleList) {
+            long aptDuration = MINUTES.between(appointment.getStart().toLocalDateTime().toLocalTime(), appointment.getEnd().toLocalDateTime().toLocalTime());
             long durationCount = aptDuration / 15;
             A:
             for (int j = 0; j < availableTimeSlots.size(); ) {
-                if (availableTimeSlots.get(j).equals(scheduleList.get(i).getStart().toLocalDateTime().toLocalTime())) {
+                if (availableTimeSlots.get(j).equals(appointment.getStart().toLocalDateTime().toLocalTime())) {
                     for (int k = j; k <= j + durationCount; k++) {
                         availableTimeSlots.remove(j);
                     }

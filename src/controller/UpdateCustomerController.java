@@ -45,10 +45,9 @@ public class UpdateCustomerController implements Initializable, CommonUseHelperI
     @FXML
     private Button cancelBtn;
 
+    private final CustomerDaoImpl customerDao = new CustomerDaoImpl();
+    private final FirstLevelDivisionDaoImpl divisionDao = new FirstLevelDivisionDaoImpl();
     private Customer selectedCust = CustomerRecordController.selectedCust;
-    ;
-    private CustomerDaoImpl customerDao = new CustomerDaoImpl();
-    private FirstLevelDivisionDaoImpl divisionDao = new FirstLevelDivisionDaoImpl();
     private Customer customer = new Customer();
     private boolean isSaved = false;
     public CountryId ctryID;
@@ -163,9 +162,9 @@ public class UpdateCustomerController implements Initializable, CommonUseHelperI
         String phone = phoneField.getText();
         String postCode = zipCodeField.getText();
         String div = division.getValue();
-        return name.equals(selectedCust.getCustomer_name()) && address.equals(selectedCust.getAddress())
-                && phone.equals(selectedCust.getPhone()) && postCode.equals(selectedCust.getPostal_code())
-                && div.equals(getCustomerDivision().get(0)) ? false : true;
+        return !name.equals(selectedCust.getCustomer_name()) || !address.equals(selectedCust.getAddress())
+                || !phone.equals(selectedCust.getPhone()) || !postCode.equals(selectedCust.getPostal_code())
+                || !div.equals(getCustomerDivision().get(0));
     }
 
     /**
@@ -195,7 +194,7 @@ public class UpdateCustomerController implements Initializable, CommonUseHelperI
      * @param address  the user address can not contain special characters
      * @param phone    the user phone can not contain special characters
      * @param postCode the user post code can not contain special characters
-     * @return
+     * @return true if all inputs are valid, otherwise returns a false
      */
     private boolean areValidInputs(String name, String address, String phone, String postCode) {
         return Validator.isValidName(name) && Validator.isValidAddress(address) && Validator.isValidPhoneNumber(phone) && Validator.isValidZipCode(postCode);
@@ -249,7 +248,7 @@ public class UpdateCustomerController implements Initializable, CommonUseHelperI
      * then sets them as the default choice.
      */
     private void getCountry() {
-        Long ctyId = selectedCust.getFirstLevelDivision().getCountry_id();
+        long ctyId = selectedCust.getFirstLevelDivision().getCountry_id();
         ctryID = ctyId == 1 ? CountryId.US : ctyId == 2 ? CountryId.UK : CountryId.CANADA;
         switch (ctryID) {
             case US:
