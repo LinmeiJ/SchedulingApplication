@@ -50,13 +50,13 @@
             </Label>
             <Label fx:id="orgStart" layoutX="479.0" layoutY="103.0" prefHeight="18.0" prefWidth="300.0" />
             <TextArea fx:id="aptDescription" layoutX="74.0" layoutY="322.0" prefHeight="108.0" prefWidth="536.0" />
-            <Label layoutX="357.0" layoutY="100.0" prefHeight="18.0" prefWidth="71.0" text="New Start: " />
+            <Label layoutX="290.0" layoutY="100.0" prefHeight="18.0" prefWidth="150.0" text="New AptStart Date Time: " />
             <DatePicker fx:id="startDate" layoutX="442.0" layoutY="99.0" prefHeight="26.0" prefWidth="155.0" />
             <Label layoutX="606.0" layoutY="103.0" text="HH:MM" />
             <ComboBox fx:id="startHr" layoutX="652.0" layoutY="99.0" prefHeight="26.0" prefWidth="88.0" />
             <Label layoutX="741.0" layoutY="103.0" prefHeight="18.0" prefWidth="4.0" text=":" />
             <ComboBox fx:id="startMin" layoutX="760.0" layoutY="99.0" prefHeight="26.0" prefWidth="88.0" />
-            <Label layoutX="361.0" layoutY="154.0" prefHeight="18.0" prefWidth="64.0" text="New End:" />
+            <Label layoutX="291.0" layoutY="154.0" prefHeight="18.0" prefWidth="150.0" text="New Apt End Date Time:" />
             <DatePicker fx:id="endDate" layoutX="442.0" layoutY="150.0" prefHeight="26.0" prefWidth="155.0" />
             <Label layoutX="606.0" layoutY="154.0" text="HH:MM" />
             <ComboBox fx:id="endHr" layoutX="652.0" layoutY="150.0" prefHeight="26.0" prefWidth="88.0" />
@@ -66,8 +66,7 @@
             <Label fx:id="custID" layoutX="97.0" layoutY="476.0" prefHeight="18.0" prefWidth="54.0" />
             <Label layoutX="172.0" layoutY="476.0" text="User ID:" />
             <Label fx:id="userId" layoutX="231.0" layoutY="476.0" prefHeight="18.0" prefWidth="54.0" />
-            <Label layoutX="638.0" layoutY="55.0" prefHeight="18.0" prefWidth="210.0" text="Office Hour: 8AM - 10PM, EST" />
-            <Label layoutX="320.0" layoutY="65.0" prefHeight="20.0" prefWidth="286.0" text="EST Timezone Office Hour: 8 AM - 10 PM" textOverrun="WORD_ELLIPSIS">
+            <Label layoutX="284.0" layoutY="66.0" prefHeight="20.0" prefWidth="488.0" text="Office Hour is based on EST timezone from 8am to 22pm." textOverrun="WORD_ELLIPSIS">
                <font>
                   <Font size="14.0" />
                </font>
