@@ -38,12 +38,12 @@
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
                 </TableView>
-            <Button fx:id="addNew" layoutX="774.0" layoutY="54.0" mnemonicParsing="false" onAction="#addNewCustomer" prefHeight="30.0" prefWidth="176.0" text="Add A New Customer">
+            <Button fx:id="addNew" layoutX="775.0" layoutY="125.0" mnemonicParsing="false" onAction="#addNewCustomer" prefHeight="30.0" prefWidth="176.0" text="Add A New Customer">
                <font>
                   <Font size="14.0" />
                </font>
             </Button>
-            <Button fx:id="updateBtn" layoutX="797.0" layoutY="169.0" mnemonicParsing="false" onAction="#UpdateSelected" prefHeight="26.0" prefWidth="130.0" text="Update">
+            <Button fx:id="updateBtn" layoutX="756.0" layoutY="60.0" mnemonicParsing="false" onAction="#UpdateSelected" prefHeight="30.0" prefWidth="228.0" text="Update Customer/Appointment">
                <font>
                   <Font size="14.0" />
                </font>
@@ -53,12 +53,12 @@
                   <Font size="14.0" />
                </font>
             </Button>
-            <Button fx:id="addNewApt" layoutX="774.0" layoutY="109.0" mnemonicParsing="false" onAction="#addNewAptSelected" prefHeight="30.0" prefWidth="176.0" text="Add A New Appointment">
+            <Button fx:id="addNewApt" layoutX="774.0" layoutY="178.0" mnemonicParsing="false" onAction="#addNewAptSelected" prefHeight="30.0" prefWidth="176.0" text="Add A New Appointment">
                <font>
                   <Font size="14.0" />
                </font>
             </Button>
-            <Button fx:id="listApt" layoutX="718.0" mnemonicParsing="false" onAction="#listAptSelected" prefHeight="30.0" prefWidth="253.0" text="List All Appointment By Customer">
+            <Button fx:id="listApt" layoutX="736.0" layoutY="-1.0" mnemonicParsing="false" onAction="#listAptSelected" prefHeight="30.0" prefWidth="253.0" text="List All Appointment By Customer">
                <font>
                   <Font size="14.0" />
                </font>
