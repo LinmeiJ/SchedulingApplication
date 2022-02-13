@@ -55,6 +55,8 @@ public class AppointmentRecordController extends JDBCConnection implements Initi
     private RadioButton filterByMonth;
     @FXML
     private RadioButton filterByWeek;
+    @FXML
+    private RadioButton listAll;
 
     Logger logger = Logger.getLogger(this.getClass().getName());
     ObservableList<Appointment> aptDataTable = FXCollections.observableArrayList();
@@ -62,6 +64,7 @@ public class AppointmentRecordController extends JDBCConnection implements Initi
 
     public static boolean isMonthFilter = false;
     public static boolean isWeekFilter = false;
+    public static boolean listAllFilter = false;
     public static Appointment selectApt;
 
     /**
@@ -127,7 +130,7 @@ public class AppointmentRecordController extends JDBCConnection implements Initi
     @FXML
     void filterByMonthSelected(ActionEvent event){
         filterByWeek.setSelected(false);
-        filterByMonth.setSelected(true);
+        listAll.setSelected(false);
         isMonthFilter = true;
         setScene(event, Views.APPOINTMENT_RECORD_VIEW.getView());
     }
@@ -139,8 +142,19 @@ public class AppointmentRecordController extends JDBCConnection implements Initi
     @FXML
     void filterByWeekSelected(ActionEvent event){
         filterByMonth.setSelected(false);
-        filterByWeek.setSelected(true);
+        listAll.setSelected(false);
         isWeekFilter = true;
+        setScene(event, Views.APPOINTMENT_RECORD_VIEW.getView());
+    }
+
+    /**
+     * When filtering by listing all button is selected, this method receives the action and resets the record.
+     * @param event an event indicates a component-defined action occurred.
+     */
+    public void listAllSelected(ActionEvent event) {
+        filterByMonth.setSelected(false);
+        filterByWeek.setSelected(false);
+        listAllFilter = true;
         setScene(event, Views.APPOINTMENT_RECORD_VIEW.getView());
     }
 
@@ -167,14 +181,17 @@ public class AppointmentRecordController extends JDBCConnection implements Initi
                 aptDataTable.addAll(appointmentDao.findAllByCustId(AddNewAppointmentController.newCustID));
                 AddNewCustomerController.isNewCust = false;
             }else if(isMonthFilter){
+                filterByMonth.setSelected(true);
                 aptDataTable.addAll(getAptsForCurrentMonth(appointmentDao.findAllByCustId(CustomerRecordController.selectedCust.getCustomer_id())));
                 isMonthFilter = false;
             }else if(isWeekFilter){
+                filterByWeek.setSelected(true);
                 aptDataTable.addAll(getAptsForCurrentWeek(appointmentDao.findAllByCustId(CustomerRecordController.selectedCust.getCustomer_id())));
                 isWeekFilter = false;
-            }
-            else {
+            }else{
+                listAll.setSelected(true);
                 aptDataTable.addAll(appointmentDao.findAllByCustId(CustomerRecordController.selectedCust.getCustomer_id()));
+                listAllFilter = false;
             }
         } catch (Exception e) {
             logger.log(Level.WARNING, "initialize() throws an exception", this.getClass().getName());

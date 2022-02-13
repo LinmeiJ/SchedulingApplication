@@ -12,7 +12,7 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="619.0" prefWidth="1103.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.UpdateAppointmentController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.UpdateAppointmentController">
    <children>
       <AnchorPane layoutX="112.0" layoutY="49.0" prefHeight="522.0" prefWidth="813.0">
          <children>
@@ -50,13 +50,13 @@
             </Label>
             <Label fx:id="orgStart" layoutX="479.0" layoutY="103.0" prefHeight="18.0" prefWidth="300.0" />
             <TextArea fx:id="aptDescription" layoutX="74.0" layoutY="322.0" prefHeight="108.0" prefWidth="536.0" />
-            <Label layoutX="290.0" layoutY="100.0" prefHeight="18.0" prefWidth="150.0" text="New AptStart Date Time: " />
+            <Label layoutX="290.0" layoutY="100.0" prefHeight="18.0" prefWidth="150.0" text="Apt Start Date Time: " />
             <DatePicker fx:id="startDate" layoutX="442.0" layoutY="99.0" prefHeight="26.0" prefWidth="155.0" />
             <Label layoutX="606.0" layoutY="103.0" text="HH:MM" />
             <ComboBox fx:id="startHr" layoutX="652.0" layoutY="99.0" prefHeight="26.0" prefWidth="88.0" />
             <Label layoutX="741.0" layoutY="103.0" prefHeight="18.0" prefWidth="4.0" text=":" />
             <ComboBox fx:id="startMin" layoutX="760.0" layoutY="99.0" prefHeight="26.0" prefWidth="88.0" />
-            <Label layoutX="291.0" layoutY="154.0" prefHeight="18.0" prefWidth="150.0" text="New Apt End Date Time:" />
+            <Label layoutX="291.0" layoutY="154.0" prefHeight="18.0" prefWidth="150.0" text="Apt End Date Time:" />
             <DatePicker fx:id="endDate" layoutX="442.0" layoutY="150.0" prefHeight="26.0" prefWidth="155.0" />
             <Label layoutX="606.0" layoutY="154.0" text="HH:MM" />
             <ComboBox fx:id="endHr" layoutX="652.0" layoutY="150.0" prefHeight="26.0" prefWidth="88.0" />
@@ -66,7 +66,7 @@
             <Label fx:id="custID" layoutX="97.0" layoutY="476.0" prefHeight="18.0" prefWidth="54.0" />
             <Label layoutX="172.0" layoutY="476.0" text="User ID:" />
             <Label fx:id="userId" layoutX="231.0" layoutY="476.0" prefHeight="18.0" prefWidth="54.0" />
-            <Label layoutX="284.0" layoutY="66.0" prefHeight="20.0" prefWidth="488.0" text="Office Hour is based on EST timezone from 8am to 22pm." textOverrun="WORD_ELLIPSIS">
+            <Label layoutX="284.0" layoutY="66.0" prefHeight="20.0" prefWidth="263.0" text="Office Hour is from 8am to 22pm EST." textOverrun="WORD_ELLIPSIS">
                <font>
                   <Font size="14.0" />
                </font>

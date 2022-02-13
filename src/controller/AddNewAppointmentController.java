@@ -14,6 +14,7 @@ import javafx.util.Callback;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -80,7 +81,9 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
         if (!areValidInput(type, location, title, description, startD, startH, startM, endD, endH, endM, contactName)) {
             Validator.displayInvalidInput("Invalid input. \n requires:\n" +
                     "Only alphabets are allowed for Type, Location, Title and all fields can not be empty");
-        }  else if(!DateTimeConverter.isWithinOfficeHour(startD, startH,startM)){
+        }else if(!Validator.isValidAppointmentTime(startD, startH, startM, endD, endH, endM)){
+            Validator.displayInfo("Sorry, your appointment can be in the past or the appointment ending can not be before the appointment starting time. Try again please.");
+        } else if(!DateTimeConverter.isWithinOfficeHour(startD, startH,startM)){
             Validator.displayInfo("Sorry, The time you wish to book is out of the EST timezone office hour. \nThe office hour starts "
                     + DateTimeConverter.getOfficeHourOfTheDay(startD)
                     + " on your day today. Please select a time again.");

@@ -6,6 +6,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -245,5 +248,26 @@ public final class Validator {
         errorAlert.setHeaderText(("Please save before continuing!"));
         errorAlert.setContentText(msg);
         errorAlert.showAndWait();
+    }
+
+    /**
+     * Validate whether the appointment time is valid. if the end date time is before the start date time for example, it results an invalid appointment time.
+     * @param startD
+     * @param startH
+     * @param startM
+     * @param endD
+     * @param endH
+     * @param endM
+     * @return
+     */
+    public static boolean isValidAppointmentTime(LocalDate startD, String startH, String startM, LocalDate endD, String endH, String endM) {
+        LocalTime startTime = LocalTime.of(Integer.parseInt(startH), Integer.parseInt(startM));
+        LocalTime endTime = LocalTime.of(Integer.parseInt(endH), Integer.parseInt(endM));
+        LocalDateTime startDateTime = LocalDateTime.of(startD, startTime);
+        LocalDateTime endDateTime =  LocalDateTime.of(endD, endTime);
+        if(endDateTime.isAfter(startDateTime) && !LocalDateTime.now().isBefore(startDateTime)){
+            return true;
+        }
+        return false;
     }
 }

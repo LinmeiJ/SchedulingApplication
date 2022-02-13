@@ -74,7 +74,7 @@
       </Button>
       <Button fx:id="BackBtn" layoutX="816.0" layoutY="518.0" mnemonicParsing="false" onAction="#backToLastViewIsClicked" text="Back" />
       <Button fx:id="exitBtn" layoutX="892.0" layoutY="518.0" mnemonicParsing="false" onAction="#existIsClicked" text="Exit" />
-      <Label layoutX="57.0" layoutY="298.0" prefHeight="20.0" prefWidth="453.0" text="Office Hour is based on EST timezone from 8am to 22pm.">
+      <Label layoutX="57.0" layoutY="298.0" prefHeight="20.0" prefWidth="258.0" text="Office Hour is from 8am to 22pm EST.">
          <font>
             <Font size="14.0" />
          </font></Label>

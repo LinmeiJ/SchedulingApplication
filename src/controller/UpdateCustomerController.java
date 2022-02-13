@@ -143,7 +143,7 @@ public class UpdateCustomerController implements Initializable, CommonUseHelperI
                 Validator.displaySuccess("Update");
                 isSaved = true;
             } else {
-                Validator.displayInvalidInput("Contain invalid entry.\n Example:\n Name: Lucy Wang\nAddress: 123 street name, city name \nPhone & Zip code are digits only");
+                Validator.displayInvalidInput("Contain invalid entry Or fields can not be empty.\n\n Example:\n Name: Lucy Wang\nAddress: 123 street name, city name \nPhone(US and Canada: XXX-XXX-XXXX, UK: XX-XXX-XXX-XXXX)\nPostCode(US and Canada are digits only and UK format example: AF19B)");
                 setScene(event, Views.UPDATE_CUSTOMER_VIEW.getView());
             }
         } else {

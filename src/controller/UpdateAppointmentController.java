@@ -109,38 +109,17 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
         if (!areValidInput(type, location, title, description, startD, startH, startM, endD, endH, endM, contactName)) {
             Validator.displayInvalidInput("Invalid input. \n requires:\n" +
                     "Only alphabets are allowed for Type, Location, Title and all fields can not be empty");
-        } else if(!DateTimeConverter.isWithinOfficeHour(startD, startH,startM)){
+        }else if(!Validator.isValidAppointmentTime(startD, startH, startM, endD, endH, endM)){
+            Validator.displayInfo("Your appointment can be in the past or your appointment ending time can not be before the appointment starting time. Please try again.");
+        }else if(!DateTimeConverter.isWithinOfficeHour(startD, startH,startM)){
             Validator.displayInfo("Sorry, the time you wish to book is out of the EST office hour. The office hour starts "
                     + DateTimeConverter.getOfficeHourOfTheDay(startD)
                     + " on your day today. Please select a time again.");
-        }else if(!isValidAppointmentTime(startD, startH, startM, endD, endH, endM)){
-
         } else if (appointmentDao.isDoubleBooking(contactId, startD, startH, startM, endD, endH, endM)) {
             Validator.displayInfo("Sorry, the time you have selected is booked, please select a different time. \nAvailable office hours in EST timezone for the same date is below: \n" + getAvailableTime());
         } else {
             updateAptRecordForm(event, type, location, title, description, startD, startH, startM, endD, endH, endM, contactId);
         }
-    }
-
-    /**
-     * Validate whether the appointment time is valid. if the end date time is before the start date time for example, it results an invalid appointment time.
-     * @param startD
-     * @param startH
-     * @param startM
-     * @param endD
-     * @param endH
-     * @param endM
-     * @return
-     */
-    private boolean isValidAppointmentTime(LocalDate startD, String startH, String startM, LocalDate endD, String endH, String endM) {
-        LocalTime startTime = LocalTime.of(Integer.parseInt(startH), Integer.parseInt(startM));
-        LocalTime endTime = LocalTime.of(Integer.parseInt(endH), Integer.parseInt(endM));
-        LocalDateTime startDateTime = LocalDateTime.of(startD, startTime);
-        LocalDateTime endDateTime =  LocalDateTime.of(endD, endTime);
-        if(endDateTime.isAfter(startDateTime) && !LocalDateTime.now().isBefore(startDateTime)){
-            return true;
-        }
-        return false;
     }
 
     /**
@@ -229,7 +208,7 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
         startHr.setValue(DateTimeConverter.getHr(startDateTime.getHour()));
         startMin.setValue(DateTimeConverter.getMint(startDateTime.getMinute()));
 
-        LocalDateTime endDateTime = appointment.getStart().toLocalDateTime();
+        LocalDateTime endDateTime = appointment.getEnd().toLocalDateTime();
         endDate.setValue(endDateTime.toLocalDate());
         endHr.setValue(DateTimeConverter.getHr(endDateTime.getHour()));
         endMin.setValue(DateTimeConverter.getMint(endDateTime.getMinute()));
