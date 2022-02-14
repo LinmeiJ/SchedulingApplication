@@ -120,7 +120,7 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
     /**
      * THis method updates the appointment based on an appointment ID.
      *
-     * @param appointment  the appointment that needs to be updated
+     * @param appointment the appointment that needs to be updated
      * @throws SQLException An exception that provides information on a database access error or other errors.
      */
     public void update(Appointment appointment) throws SQLException {
@@ -274,8 +274,20 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
         return BookingAvailability.checkBookingStatus(sameDateScheduleList, aptStartTime, aptEndTime);
     }
 
+    /**
+     * This method checks whether the appointment schedule is changes or if it is a new appointment
+     * @param aptStartTime an appointment starting time
+     * @param aptEndTime an appointment ending time
+     * @return false when it is a new appointment or the appointment time is not changed, otherwise returns true.
+     */
     private boolean isAppointmentTimeUpdated(Timestamp aptStartTime, Timestamp aptEndTime) {
-        return aptStartTime.equals(AppointmentRecordController.selectApt.getStart()) && aptEndTime.equals(AppointmentRecordController.selectApt.getEnd());
+        try{
+            return aptStartTime.equals(AppointmentRecordController.selectApt.getStart()) && aptEndTime.equals(AppointmentRecordController.selectApt.getEnd());
+        }catch(NullPointerException e){
+            e.printStackTrace();
+        }finally {
+            return false;
+        }
     }
 
     /**

@@ -153,6 +153,5 @@ public class BookingAvailability {
                 index++;
             }
         }
-//   availableTimeToDisplay.forEach((key, value) -> System.out.println("display time: " + key + " " + value));
     }
 }

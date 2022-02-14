@@ -91,7 +91,7 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
                     + DateTimeConverter.getOfficeHourOfTheDay(startD)
                     + " on your local time. Please select a different time.");
         } else if (appointmentDao.isDoubleBooking(contactId, startD, startH, startM, endD, endH, endM)) {
-            Validator.displayInfo("Sorry, the time you have selected is booked, please select a different time. \nAvailable office hours in EST timezone for the same date is below: \n" + getAvailableTime()
+            Validator.displayInfo("Sorry, the time you have selected is booked, please select a different time. \nAvailable office hours for the same date in EST time(please check your localtime if you are not in EST timezone) is below: \n" + getAvailableTime()
                     + "Keep in mind, the EST office hour starts at " + DateTimeConverter.getOfficeHourOfTheDay(startD) + " at your time and open for 14 hours a day");
         } else {
             saveNewAppointment(event, title, description, type, location, startD, startH, startM, endD, endH, endM, contactId);
