@@ -139,7 +139,7 @@ public class UpdateCustomerController implements Initializable, CommonUseHelperI
             if (areValidInputs(custNameField.getText(), addressField.getText(), phoneField.getText(), zipCodeField.getText())) {
                 getCustomerUpdatedInfo(custNameField.getText(), addressField.getText(), phoneField.getText(), zipCodeField.getText());
                 customerDao.update(customer);
-                Validator.displaySuccess("Update");
+                Validator.displaySuccess("Updated");
                 isSaved = true;
             } else {
                 Validator.displayInvalidInput("Contain invalid entry Or fields can not be empty.\n\n Example:\n Name: Lucy Wang\nAddress: 123 street name, city name \nPhone(US and Canada: XXX-XXX-XXXX, UK: XX-XXX-XXX-XXXX)\nPostCode(US and Canada are digits only and UK format example: AF19B)");

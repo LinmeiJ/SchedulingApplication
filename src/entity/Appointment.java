@@ -432,4 +432,12 @@ public class Appointment {
     public void setContact(String contact) {
         this.contact_name = contact;
     }
+
+    /**
+     * A setter that sets an appointment ID
+     * @param appointment_id an appointment ID
+     */
+    public void setAppointment_id(long appointment_id) {
+        this.appointment_id = appointment_id;
+    }
 }

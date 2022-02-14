@@ -16,6 +16,7 @@ import javafx.scene.control.*;
 import javafx.util.Callback;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -115,8 +116,8 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
                     + DateTimeConverter.getOfficeHourOfTheDay(startD)
                     + " on your local time. Please select a different time.");
         } else if (appointmentDao.isDoubleBooking(contactId, startD, startH, startM, endD, endH, endM)) {
-                Validator.displayInfo("Sorry, the time you have selected is booked, please select a different time. \nAvailable office hours in EST timezone for the same date is below: \n" + getAvailableTime()
-                        + "Keep in mind, the EST office hour starts at " + DateTimeConverter.getOfficeHourOfTheDay(startD) + " at your time and open for 14 hours a day");
+            Validator.displayInfo("Sorry, the time you have selected is booked, please select a different time. \nAvailable office hours in EST timezone for the same date is below: \n" + getAvailableTime()
+                    + "Keep in mind, the EST office hour starts at " + DateTimeConverter.getOfficeHourOfTheDay(startD) + " at your time and open for 14 hours a day");
         } else {
             updateAptRecordForm(event, type, location, title, description, startD, startH, startM, endD, endH, endM, contactId);
         }
@@ -128,7 +129,7 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
     private String getAvailableTime() {
         String availableTime = "";
         Iterator iteratorMap = BookingAvailability.availableTimeToDisplay.entrySet().iterator();
-        while (iteratorMap.hasNext()) {
+        while(iteratorMap.hasNext()) {
             Map.Entry mapElement = (Map.Entry) iteratorMap.next();
             availableTime = availableTime + mapElement.getKey() + " To "
                     + mapElement.getValue() + "\n";
@@ -158,8 +159,13 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
         Timestamp end = DateTimeConverter.convertAptTimeToUTC(endD, endH, endM);
         long custId = CustomerRecordController.selectedCust.getCustomer_id();
 
-        appointmentDao.update(new Appointment(AppointmentRecordController.selectApt.getAppointment_id(), title, description, location, type, start, end, currentTime, UserDaoImpl.userName, currentTime, UserDaoImpl.userName, custId, contactId, UserDaoImpl.userId));
-        setScene(event, Views.APPOINTMENT_RECORD_VIEW.getView());
+        try {
+            appointmentDao.update(new Appointment(AppointmentRecordController.selectApt.getAppointment_id(), title, description, location, type, start, end, currentTime, UserDaoImpl.userName, currentTime, UserDaoImpl.userName, custId, contactId, UserDaoImpl.userId));
+            Validator.displaySuccess("Updated");
+            setScene(event, Views.APPOINTMENT_RECORD_VIEW.getView());
+        }catch(SQLException e){
+            Validator.displayInfo("The description may be too long, please be brief as possible as you can.");
+        }
     }
 
     /**

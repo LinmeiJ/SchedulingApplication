@@ -16,7 +16,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
-import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ResourceBundle;
 
@@ -63,7 +62,7 @@ public class ReportController implements Initializable, CommonUseHelperIfc {
 
     private static boolean isReportOneByMonth = true;
     private static boolean isReportOneByType;
-//    private static boolean isReportTwoContact;
+    //    private static boolean isReportTwoContact;
     private static String contactName;
     private final ReportDaoImpl reportDao = new ReportDaoImpl();
     private final ContactDaoImpl contactDao = new ContactDaoImpl();
@@ -76,9 +75,8 @@ public class ReportController implements Initializable, CommonUseHelperIfc {
      * @param event an event indicates a component-defined action occurred.
      */
     @FXML
-    void contactNameIsSelected(ActionEvent event){
+    void contactNameIsSelected(ActionEvent event) {
         contactName = contactList.getValue();
-//        isReportTwoContact = true;
         setScene(event, Views.REPORT_VIEW.getView());
     }
 

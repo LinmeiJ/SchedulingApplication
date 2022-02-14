@@ -5,7 +5,6 @@ import dateTimeUtil.DateTimeConverter;
 import dbConnection.JDBCConnection;
 import entity.Appointment;
 import enums.Views;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;

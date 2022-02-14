@@ -12,6 +12,7 @@ import javafx.scene.control.*;
 import javafx.util.Callback;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Iterator;
@@ -56,7 +57,6 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
     private final ContactDaoImpl contactDao = new ContactDaoImpl();
     private final CustomerDaoImpl customerDao = new CustomerDaoImpl();
     private final AppointmentDaoImpl appointmentDao = new AppointmentDaoImpl();
-    private Appointment appointment;
     public static long newCustID; // new customer ID
 
     /**
@@ -82,8 +82,8 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
         contactId = contactDao.getContactId(contactName);
 
         if (!areValidInput(type, location, title, description, startD, startH, startM, endD, endH, endM, contactName)) {
-            Validator.displayInvalidInput("Invalid input. \n requires:\n" +
-                    "Only alphabets are allowed for Type, Location, Title and all fields can not be empty");
+            Validator.displayInvalidInput("Invalid input. \n requires:\n\n" +
+                    "Only alphabets are allowed for Type, Location, Title \n and all fields can not be empty");
         } else if (!Validator.isValidAppointmentTime(startD, startH, startM, endD, endH, endM)) {
             Validator.displayInfo("Sorry, your appointment can not be in the past or the appointment ending can not be before the appointment starting time. Try again please.");
         } else if (!DateTimeConverter.isWithinOfficeHour(startD, startH, startM)) {
@@ -115,7 +115,7 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
      * @param contactId   contact ID
      */
     private void saveNewAppointment(ActionEvent event, String title, String description, String type, String location, LocalDate startD, String startH, String startM, LocalDate endD, String endH, String endM, long contactId) {
-        appointment = new Appointment();
+        Appointment appointment = new Appointment();
 
         appointment.setTitle(title);
         appointment.setDescription(description);
@@ -138,9 +138,13 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
         appointment.setUser_id(UserDaoImpl.userId);
         appointment.setContact_id(contactId);
 
-        appointmentDao.save(appointment);
-        Validator.displaySuccess("Appointment is saved");
-        setScene(event, Views.APPOINTMENT_RECORD_VIEW.getView());
+        try {
+            appointmentDao.save(appointment);
+            Validator.displaySuccess("Appointment is saved");
+            setScene(event, Views.APPOINTMENT_RECORD_VIEW.getView());
+        }catch(SQLException e) {
+            Validator.displayInfo("The description may be too long, please be brief as possible as you can.");
+        }
     }
 
     /**
@@ -217,8 +221,8 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
         endMinute.setItems(initializeMinutes());
 
         contactList.setItems(contactDao.findAll());
-        customerId.setText("Customer ID: " + CustomerRecordController.selectedCust.getCustomer_id() );
-        userId.setText("User ID: " + UserDaoImpl.userId );
+        customerId.setText("Customer ID: " + CustomerRecordController.selectedCust.getCustomer_id());
+        userId.setText("User ID: " + UserDaoImpl.userId);
 
     }
 }

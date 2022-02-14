@@ -14,7 +14,6 @@ import javafx.scene.control.DatePicker;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
-import java.io.IOException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -59,7 +58,7 @@ public interface CommonUseHelperIfc {
             var scene = new Scene(parent);
             var stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(scene);
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -90,7 +89,7 @@ public interface CommonUseHelperIfc {
      * @return a Callback
      */
     default Callback<DatePicker, DateCell> getDayCellFactory() {
-        final Callback<DatePicker, DateCell> dayCellFactory = new Callback<>() {
+        return new Callback<>() {
             @Override
             public DateCell call(final DatePicker datePicker) {
                 return new DateCell() {
@@ -106,6 +105,5 @@ public interface CommonUseHelperIfc {
                 };
             }
         };
-        return dayCellFactory;
     }
 }

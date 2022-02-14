@@ -88,7 +88,7 @@ public class LoginController implements Initializable, CommonUseHelperIfc {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        this.language = resourceBundle;
+        language = resourceBundle;
 
         locationField.setText(DateTimeConverter.getTimeZoneID());
         signIn.setText(language.getString("signIn"));

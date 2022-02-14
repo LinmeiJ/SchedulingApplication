@@ -43,7 +43,7 @@ public class ContactDaoImpl extends JDBCConnection {
     public String findNameByID(long contact_id) {
         ResultSet rs = findRawDataFromDB("SELECT Contact_Name FROM contacts WHERE Contact_ID = " + contact_id);
         try {
-            while (rs.next()) {
+            while(rs.next()) {
                 return rs.getString("contact_name");
             }
         } catch (SQLException e) {

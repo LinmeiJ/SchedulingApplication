@@ -104,16 +104,6 @@ public class AddNewCustomerController extends JDBCConnection implements Initiali
         canadaId.setSelected(ca);
     }
 
-//    /**
-//     * Add a new appointment button action is received here, then set the scene as adding a new appointment view
-//     *
-//     * @param event an event indicates a component-defined action occurred.
-//     */
-//    @FXML
-//    void aptClicked(ActionEvent event) {
-//        addCust(event, Views.ADD_NEW_APT_VIEW.getView());
-//    }
-
     /**
      * The save button clicked action is received here, then call the addCust() method to add the customer information.
      *
