@@ -22,6 +22,7 @@ public class Appointment {
     private long customer_id;
     private long contact_id;
     private long user_id;
+    private String contact_name;
 
     /**
      * A default contractor
@@ -155,6 +156,19 @@ public class Appointment {
         this.customer_id = customer_id;
         this.contact_id = contact_id;
         this.user_id = user_id;
+    }
+
+    public Appointment(long aptId, String title, String description, String location, String type, Timestamp startDateTime, Timestamp endDateTime, long customerId, String nameByID, long userId) {
+        this.appointment_id = aptId;
+        this.title = title;
+        this.description = description;
+        this.location = location;
+        this.type = type;
+        this.start = startDateTime;
+        this.end = endDateTime;
+        this.customer_id = customerId;
+        this.contact_name = nameByID;
+        this.user_id = userId;
     }
 
     /**
@@ -398,5 +412,21 @@ public class Appointment {
      */
     public long getAppointment_id() {
         return appointment_id;
+    }
+
+    /**
+     * A getter for getting the contact name
+     * @return a contact name
+     */
+    public String getContact_name() {
+        return contact_name;
+    }
+
+    /**
+     * A setter that sets a contact name
+     * @param contact a contact name
+     */
+    public void setContact(String contact) {
+        this.contact_name = contact;
     }
 }

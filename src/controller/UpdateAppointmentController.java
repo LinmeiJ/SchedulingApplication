@@ -115,8 +115,8 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
                     + DateTimeConverter.getOfficeHourOfTheDay(startD)
                     + " on your local time. Please select a different time.");
         } else if (appointmentDao.isDoubleBooking(contactId, startD, startH, startM, endD, endH, endM)) {
-            Validator.displayInfo("Sorry, the time you have selected is booked, please select a different time. \nAvailable office hours in EST timezone for the same date is below: \n" + getAvailableTime()
-                    + "Keep in mind, the EST office hour starts at " + DateTimeConverter.getOfficeHourOfTheDay(startD) + " at your time and open for 14 hours a day");
+                Validator.displayInfo("Sorry, the time you have selected is booked, please select a different time. \nAvailable office hours in EST timezone for the same date is below: \n" + getAvailableTime()
+                        + "Keep in mind, the EST office hour starts at " + DateTimeConverter.getOfficeHourOfTheDay(startD) + " at your time and open for 14 hours a day");
         } else {
             updateAptRecordForm(event, type, location, title, description, startD, startH, startM, endD, endH, endM, contactId);
         }

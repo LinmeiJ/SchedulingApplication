@@ -123,7 +123,7 @@ public final class Validator {
      */
     public static void displaySuccess(String message) {
         infoAlert.setTitle("Information");
-        infoAlert.setHeaderText(message + " Successfully!");
+        infoAlert.setHeaderText(message + " successfully!");
         infoAlert.showAndWait();
     }
 

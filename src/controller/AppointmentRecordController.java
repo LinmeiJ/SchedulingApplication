@@ -5,6 +5,7 @@ import dateTimeUtil.DateTimeConverter;
 import dbConnection.JDBCConnection;
 import entity.Appointment;
 import enums.Views;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -259,6 +260,6 @@ public class AppointmentRecordController extends JDBCConnection implements Initi
         aptEndDateTime.setCellValueFactory(new PropertyValueFactory<>("end"));
         aptCustID.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
         aptUserID.setCellValueFactory(new PropertyValueFactory<>("user_id"));
-        aptContact.setCellValueFactory(new PropertyValueFactory<>("contact_id"));
+        aptContact.setCellValueFactory(new PropertyValueFactory<>("contact_name"));
     }
 }

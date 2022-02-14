@@ -1,5 +1,6 @@
 package dao;
 
+import controller.AppointmentRecordController;
 import controller.Validator;
 import dateTimeUtil.BookingAvailability;
 import dateTimeUtil.DateTimeConverter;
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
  * @author Linmei M.
  */
 public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<Appointment> {
+    private ContactDaoImpl contactDao = new ContactDaoImpl();
     private Appointment appointment;
     private ObservableList<Appointment> allAppointment = FXCollections.observableArrayList();
 
@@ -106,7 +108,8 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
                 long contactId = rs.getLong("contact_id");
                 long userId = rs.getLong("user_id");
 
-                appointment = new Appointment(aptId, title, description, location, type, startDateTime, endDateTime, customerId, contactId, userId);
+                appointment = new Appointment(aptId, title, description, location, type, startDateTime, endDateTime, customerId, contactDao.findNameByID(contactId), userId);
+                appointment.setContact_id(contactId);
                 allAppointment.add(appointment);
             }
         } catch (SQLException e) {
@@ -122,10 +125,8 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
     public void update(Appointment appointment) {
         String sql = "UPDATE appointments SET Title=?, Description=?, Location=?, Type=?, Start=?, End=?, Create_Date=?,Created_By=?, Last_Update=?, Last_Updated_By=?, Customer_ID=?, User_ID=?, Contact_ID=? WHERE Appointment_ID = " + appointment.getAppointment_id();
         try {
-//            PreparedStatement preparedStatement = getPreparedStatement(appointment, sql);
             PreparedStatement preparedStatement = JDBCConnection.connection.prepareStatement(sql);
 
-//            preparedStatement.setTimestamp(6, appointment.getEnd());
             preparedStatement.setString(1, appointment.getTitle());
             preparedStatement.setString(2, appointment.getDescription());
             preparedStatement.setString(3, appointment.getLocation());
@@ -187,7 +188,7 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
 
             statement.executeUpdate(sql);
             Validator.displayDeleteConfirmation();
-            Validator.displaySuccess("Delete");
+            Validator.displaySuccess("The appointment ID " + appointment.getAppointment_id() + " and type as " + appointment.getType() + " is deleted");
         } catch (SQLException e) {
             System.out.println("something wrong with executing delete sql");
             e.printStackTrace();
@@ -242,7 +243,6 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
                 .stream()
                 .filter(apt -> DateTimeConverter.isWithin15mins(apt.getStart()))
                 .collect(Collectors.toList());
-        System.out.println(upcomingApt);
         if (upcomingApt.size() == 0) {
             message = "There is no upcoming appointment.";
         } else {
@@ -290,11 +290,19 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
      */
     public boolean isDoubleBooking(long contactId, LocalDate start, String startH, String startM, LocalDate end, String endH, String endM) {
         List<Appointment> scheduleList = findByContactId(contactId);
+        if(isAppointmentTimeUpdated(DateTimeConverter.convertAptTimeToUTC(start, startH, startM), DateTimeConverter.convertAptTimeToUTC(end, endH, endM))){
+            return false;
+        }
         Timestamp aptStartTime = DateTimeConverter.convertAptTimeToEST(start, startH, startM);
         Timestamp aptEndTime = DateTimeConverter.convertAptTimeToEST(end, endH, endM);
-
         List<Appointment> sameDateScheduleList = filterByDate(scheduleList, aptStartTime);
         return BookingAvailability.checkBookingStatus(sameDateScheduleList, aptStartTime, aptEndTime);
+    }
+
+    private boolean isAppointmentTimeUpdated(Timestamp aptStartTime, Timestamp aptEndTime) {
+        Timestamp s = AppointmentRecordController.selectApt.getStart();
+        Timestamp e = AppointmentRecordController.selectApt.getEnd();
+        return aptStartTime.equals(AppointmentRecordController.selectApt.getStart()) && aptEndTime.equals(AppointmentRecordController.selectApt.getEnd());
     }
 
     /**
