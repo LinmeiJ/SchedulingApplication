@@ -1,7 +1,7 @@
 package entity;
 
 /**
- * A class that created for generating reports.
+ * A class that created just for generating reports.
  *
  * @author Linmei M.
  */
@@ -77,7 +77,7 @@ public class Report {
     /**
      * A setter that sets the total count
      *
-     * @param count
+     * @param count the total count
      */
     public void setCount(int count) {
         this.count = count;

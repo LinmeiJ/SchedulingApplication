@@ -1,7 +1,7 @@
 package entity;
 
 /**
- * An entity that maps the contacts table columns.
+ * An entity class that maps the columns of the contacts table
  *
  * @author Linmei M.
  */

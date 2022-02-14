@@ -100,11 +100,12 @@ public class LoginController implements Initializable, CommonUseHelperIfc {
 
     /**
      * Displays whether there is an upcoming appointment.
+     *
      * <p>
-     * Lambda expression 2
+     * Lambda expression #2.
      * </P>
      */
-    private void displayUpcomingAptsAlert() {
+    protected void displayUpcomingAptsAlert() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION, "Upcoming appointment:\n\n " + appointmentDao.getAllUpcomingApts(), ButtonType.OK);
         alert.showAndWait()
                 .filter(res -> res == ButtonType.OK);

@@ -3,7 +3,7 @@ package entity;
 import java.sql.Timestamp;
 
 /**
- * An entity that maps the customers table from the database
+ * An entity class that maps the columns of the customers table
  *
  * @author Linmei M.
  */

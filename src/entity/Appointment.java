@@ -3,7 +3,7 @@ package entity;
 import java.sql.Timestamp;
 
 /**
- * An entity class that maps the columns of the appointments
+ * An entity class that maps the columns of the appointments table
  *
  * @author Linmei M.
  */
@@ -112,6 +112,8 @@ public class Appointment {
      * @param start      an appointment start time
      * @param end        an appointment end time
      * @param customerId a customer who made this appointment
+     * @param aptId an appointment ID
+     * @param description an appointment description
      */
     public Appointment(long aptId, String title, String location, String description, String type, Timestamp start, Timestamp end, long customerId) {
         this.appointment_id = aptId;
@@ -125,21 +127,22 @@ public class Appointment {
     }
 
     /**
+     * A constructor that accepts 15 instance variables
      *
-     * @param appointment_id
-     * @param title
-     * @param description
-     * @param location
-     * @param type
-     * @param start
-     * @param end
-     * @param created_date
-     * @param created_by
-     * @param last_update
-     * @param last_updated_by
-     * @param customer_id
-     * @param contact_id
-     * @param user_id
+     * @param appointment_id an appointment ID
+     * @param title an appointment title
+     * @param description an appointment description
+     * @param location an appointment location
+     * @param type an appointment type
+     * @param start an appointment start date time
+     * @param end an appointment end date time
+     * @param created_date an appointment created date
+     * @param created_by the user who created the appointment
+     * @param last_update the date of this appointment last updated
+     * @param last_updated_by the user who last updated this appointment
+     * @param customer_id a customer ID
+     * @param contact_id a contact ID
+     * @param user_id a user ID
      */
     public Appointment(long appointment_id, String title, String description, String location, String type, Timestamp start, Timestamp end, Timestamp created_date, String created_by, Timestamp last_update, String last_updated_by, long customer_id, long contact_id, long user_id) {
         this.appointment_id = appointment_id;

@@ -3,7 +3,7 @@ package entity;
 import java.sql.Timestamp;
 
 /**
- * An entity class for the country table
+ * An entity class that maps the columns of the countries table
  *
  * @author Linmei M.
  */
@@ -72,7 +72,7 @@ public class Country {
     /**
      * A setter for the count customers by the country
      *
-     * @param count
+     * @param count the total count
      */
     public void setCount(Long count) {
         this.count = count;

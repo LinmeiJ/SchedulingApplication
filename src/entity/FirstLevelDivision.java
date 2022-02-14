@@ -3,7 +3,7 @@ package entity;
 import java.sql.Timestamp;
 
 /**
- * An entity class tht maps the fist level division table from the database
+ * An entity class that maps the columns of the first level divisions table
  *
  * @author Linmei M.
  */

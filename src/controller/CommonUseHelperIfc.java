@@ -35,7 +35,8 @@ public interface CommonUseHelperIfc {
      * This method closes the the program.
      * It prompts a dialog window to ensure whether a user wants to exit.
      *
-     * @param event an event indicates a component-defined action occurred
+     * @param event  an event indicates a component-defined action occurred
+     * @param exitId the name of the exit button
      */
     default void exit(ActionEvent event, Button exitId) {
         Stage stage = (Stage) exitId.getScene().getWindow();
@@ -83,13 +84,12 @@ public interface CommonUseHelperIfc {
     /**
      * Disables weekends options for the date picker.
      * <p>
-     * Lambda Expression 1
+     * Lambda Expression #1.
      * </P>
      *
      * @return a Callback
      */
     default Callback<DatePicker, DateCell> getDayCellFactory() {
-
         final Callback<DatePicker, DateCell> dayCellFactory = new Callback<>() {
             @Override
             public DateCell call(final DatePicker datePicker) {

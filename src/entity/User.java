@@ -4,7 +4,7 @@ import java.sql.Date;
 import java.sql.Timestamp;
 
 /**
- * An entity class that maps the user table from the database
+ * An entity class that maps the columns of the users table
  *
  * @author Linmei M.
  */

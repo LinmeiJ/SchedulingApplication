@@ -20,7 +20,7 @@ import java.util.ResourceBundle;
 public class Main extends Application {
 
     /**
-     * This class create the main/first scene.
+     * This method create the main/first scene.
      *
      * @author Linmei M.
      */
@@ -32,9 +32,12 @@ public class Main extends Application {
         JDBCConnection.openConnection();
     }
 
+    /**
+     * This is where the applications launches.
+     * @param args It stores Java command line arguments and is an array of type java. lang. String class.
+     */
     public static void main(String[] args) {
         launch(args);
-//        JDBCConnection.closeConnection();
     }
 
     /**
