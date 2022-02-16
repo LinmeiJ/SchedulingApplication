@@ -15,9 +15,12 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 /**
  * This class provides a data control flow between the add new appointment view and database tables
@@ -62,6 +65,9 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
     /**
      * getting the date from user, validates the user inputs, and save the input to database.
      *
+     * <p>
+     *     lambda expression #1
+     * </p>
      * @param event JavaFX button press event
      */
     @FXML
@@ -78,8 +84,12 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
         String endH = endHr.getValue();
         String endM = endMinute.getValue();
         String contactName = contactList.getValue();
-        long contactId;
-        contactId = contactDao.getContactId(contactName);
+        long contactId = contactDao.getContactId(contactName);
+        //lambda expression #1
+        Function<LocalDate, String> localOfficeStartHr = hr -> {
+            LocalDateTime estOfficeHrOfTheDay = LocalDateTime.of(hr, LocalTime.of(8, 0));
+            return String.valueOf(DateTimeConverter.convertESTToLocal(String.valueOf(estOfficeHrOfTheDay)).toLocalDateTime().toLocalTime());
+        };
 
         if (!areValidInput(type, location, title, description, startD, startH, startM, endD, endH, endM, contactName)) {
             Validator.displayInvalidInput("Invalid input. \n requires:\n\n" +
@@ -92,7 +102,7 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
                     + " on your local time. Please select a different time.");
         } else if (appointmentDao.isDoubleBooking(contactId, startD, startH, startM, endD, endH, endM)) {
             Validator.displayInfo("Sorry, the time you have selected is booked, please select a different time. \nAvailable office hours for the same date in EST time(please check your localtime if you are not in EST timezone) is below: \n" + getAvailableTime()
-                    + "Keep in mind, the EST office hour starts at " + DateTimeConverter.getOfficeHourOfTheDay(startD) + " at your time and open for 14 hours a day");
+                    + "Keep in mind, the EST office hour starts at " + localOfficeStartHr.apply(startD) + " at your time and open for 14 hours a day");
         } else {
             saveNewAppointment(event, title, description, type, location, startD, startH, startM, endD, endH, endM, contactId);
         }

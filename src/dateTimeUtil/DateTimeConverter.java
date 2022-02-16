@@ -222,6 +222,5 @@ public class DateTimeConverter {
     public static String getOfficeHourOfTheDay(LocalDate dateValue) {
         LocalDateTime estOfficeHrOfTheDay = LocalDateTime.of(dateValue, LocalTime.of(8, 0));
         return String.valueOf(convertESTToLocal(String.valueOf(estOfficeHrOfTheDay)).toLocalDateTime().toLocalTime());
-
     }
 }

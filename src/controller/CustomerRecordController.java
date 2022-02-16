@@ -166,10 +166,6 @@ public class CustomerRecordController implements Initializable, CommonUseHelperI
 
     /**
      * Initialize the customer record table columns.
-     *
-     * <p>
-     *     Lambda expression #1
-     * </p>
      */
     private void initCols() {
         custID.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
