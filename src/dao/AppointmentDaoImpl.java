@@ -52,12 +52,11 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
     /**
      * This method finds all the appointment based a customer ID
      *
-     * @param id the customer ID
      * @return a list of appointment
      */
-    public ObservableList<Appointment> findAllByCustId(long id) {
-        ResultSet rs = findRawDataFromDB("SELECT Appointment_ID, Title, a.Description, Location, a.Type, a.Start, a.End, User_ID, Contact_ID FROM appointments as a WHERE Customer_ID = " + id);
-        convertToObj(id, rs);
+    public ObservableList<Appointment> findAllAppointment() {
+        ResultSet rs = findRawDataFromDB("SELECT Appointment_ID, Title, Description, Location, Type, Start, End, User_ID, Contact_ID, Customer_ID FROM appointments");
+        convertToObj(rs);
         return allAppointment;
     }
 
@@ -92,10 +91,9 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
     /**
      * This method accepts a raw data from the database then pass in and convert the data into an appointment object.
      *
-     * @param customerId the customer ID
      * @param rs         the raw data returned from database
      */
-    private void convertToObj(long customerId, ResultSet rs) {
+    private void convertToObj( ResultSet rs) {
         try {
             while (rs.next()) {
                 long aptId = rs.getLong("appointment_id");
@@ -106,8 +104,9 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
                 Timestamp startDateTime = DateTimeConverter.convertUTCToLocal(String.valueOf(rs.getTimestamp("start")));
                 Timestamp endDateTime = DateTimeConverter.convertUTCToLocal(String.valueOf(rs.getTimestamp("end")));
 
-                long contactId = rs.getLong("contact_id");
-                long userId = rs.getLong("user_id");
+                int contactId = rs.getInt("contact_id");
+                int userId = rs.getInt("user_id");
+                int customerId = rs.getInt("customer_id");
 
                 appointment = new Appointment(aptId, title, description, location, type, startDateTime, endDateTime, customerId, contactDao.findNameByID(contactId), userId);
                 appointment.setContact_id(contactId);
@@ -160,8 +159,6 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
             String sql = "DELETE FROM appointments WHERE Appointment_ID = " + appointment.getAppointment_id();
 
             statement.executeUpdate(sql);
-            Validator.displayDeleteConfirmation();
-            Validator.displaySuccess("The appointment ID " + appointment.getAppointment_id() + " and type as " + appointment.getType() + " is deleted");
         } catch (SQLException e) {
             System.out.println("something wrong with executing delete sql");
             e.printStackTrace();
@@ -275,7 +272,7 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
      * @return returns true when the time is available, otherwise, returns false.
      */
     public boolean isDoubleBooking(long contactId, LocalDate start, String startH, String startM, LocalDate end, String endH, String endM) {
-        List<Appointment> scheduleList = findByContactId(contactId);
+        List<Appointment> scheduleList = findByContactId(contactId);// fix me - get by customer
         if (AppointmentRecordController.selectApt != null) {
             if (isAppointmentTimeUpdated(DateTimeConverter.convertAptTimeToUTC(start, startH, startM), DateTimeConverter.convertAptTimeToUTC(end, endH, endM)))
             {

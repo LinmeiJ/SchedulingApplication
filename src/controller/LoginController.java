@@ -63,6 +63,7 @@ public class LoginController implements Initializable, CommonUseHelperIfc {
             setScene(event, Views.CUSTOMER_RECORD_VIEW.getView());
             successCount++;
             loginAttempt("Success");
+//            Locale.setDefault(new Locale("en", "US"));
         } else {
             loginAttempt("Failed");
             failedCount++;
@@ -108,7 +109,7 @@ public class LoginController implements Initializable, CommonUseHelperIfc {
      * Displays whether there is an upcoming appointment.
      *
      * <p>
-     * Lambda expression #2.
+     * Lambda expression #2. fix me - what the purpose and why use it!
      * </P>
      */
     protected void displayUpcomingAptsAlert() {

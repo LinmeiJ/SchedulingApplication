@@ -65,11 +65,6 @@
                 <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
             </opaqueInsets>
         </AnchorPane>
-      <Button layoutX="671.0" layoutY="46.0" mnemonicParsing="false" onAction="#addNewClicked" prefHeight="30.0" prefWidth="144.0" text="Add New Apt">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Button>
       <Button layoutX="827.0" layoutY="46.0" mnemonicParsing="false" onAction="#updateClicked" prefHeight="30.0" prefWidth="133.0" text="Update">
          <font>
             <Font size="14.0" />

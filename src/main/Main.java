@@ -27,7 +27,8 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(Views.LOGIN_VIEW_PATH.getView())), ResourceBundle.getBundle("resource/language", getLocale()));
-        primaryStage.setScene(new Scene(root, 800, 800));
+        primaryStage.setScene(new Scene(root));
+        primaryStage.centerOnScreen();
         primaryStage.show();
         JDBCConnection.openConnection();
     }
@@ -46,6 +47,7 @@ public class Main extends Application {
      * @return current locale
      */
     private Locale getLocale() {
+//        Locale.setDefault(new Locale("fr", "FR"));
         Locale currentLocale = Locale.getDefault();
         if (currentLocale.equals(new Locale("en", "GB"))) {
             currentLocale = new Locale("en", "US");

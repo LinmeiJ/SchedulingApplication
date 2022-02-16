@@ -135,12 +135,12 @@ public class CustomerRecordController implements Initializable, CommonUseHelperI
      */
     @FXML
     void listAptSelected(ActionEvent actionEvent) {
-        selectedCust = recordTable.getSelectionModel().getSelectedItem();
-        if (selectedCust != null) {
+//        selectedCust = recordTable.getSelectionModel().getSelectedItem();
+//        if (selectedCust != null) {
             setScene(actionEvent, Views.APPOINTMENT_RECORD_VIEW.getView());
-        } else {
-            Validator.displayInvalidInput("Please select a row/customer to update");
-        }
+//        } else {
+//            Validator.displayInvalidInput("Please select a row/customer to update");
+//        }
     }
 
     /**

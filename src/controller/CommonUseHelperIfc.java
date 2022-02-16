@@ -58,6 +58,7 @@ public interface CommonUseHelperIfc {
             var scene = new Scene(parent);
             var stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(scene);
+            stage.centerOnScreen();
         } catch (Exception e) {
             e.printStackTrace();
         }

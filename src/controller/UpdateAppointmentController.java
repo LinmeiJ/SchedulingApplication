@@ -159,7 +159,7 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
         Timestamp currentTime = Timestamp.valueOf(LocalDateTime.now());
         Timestamp start = DateTimeConverter.convertAptTimeToUTC(startD, startH, startM);
         Timestamp end = DateTimeConverter.convertAptTimeToUTC(endD, endH, endM);
-        long custId = CustomerRecordController.selectedCust.getCustomer_id();
+        long custId = AppointmentRecordController.selectApt.getCustomer_id();
 
         appointmentDao.update(new Appointment(AppointmentRecordController.selectApt.getAppointment_id(), title, description, location, type, start, end, currentTime, UserDaoImpl.userName, currentTime, UserDaoImpl.userName, custId, contactId, UserDaoImpl.userId));
         Validator.displaySuccess("updated ");

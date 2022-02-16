@@ -3,6 +3,7 @@ package controller;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.stage.Stage;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -154,10 +155,10 @@ public final class Validator {
     /**
      * This method generates a message to confirm whether the end user want to delete a selected item.
      */
-    public static void displayDeleteConfirmation() {
-        confirmAlert.setTitle("Parts");
+    public static void displayDeleteConfirmation() { // fix me - 1, change return not as void - boolean 2. passing a message
+        confirmAlert.setTitle("Message");
         confirmAlert.setHeaderText("Delete");
-        confirmAlert.setContentText("Are you sure you want to delete it?");
+        confirmAlert.setContentText("Are you sure you want to delete it?"); // fix me here to specify a string
         confirmResult = confirmAlert.showAndWait();
     }
 
@@ -275,4 +276,6 @@ public final class Validator {
         LocalDateTime endDateTime = LocalDateTime.of(endD, endTime);
         return endDateTime.isAfter(startDateTime) && LocalDateTime.now().isBefore(startDateTime);
     }
+
+
 }

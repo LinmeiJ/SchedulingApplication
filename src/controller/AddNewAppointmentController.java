@@ -71,7 +71,7 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
      * @param event JavaFX button press event
      */
     @FXML
-    void saveIsClicked(ActionEvent event) {
+    public void saveIsClicked(ActionEvent event) {
         String title = aptTitleField.getText();
         String description = aptDescriptionField.getText();
         String type = aptTypeField.getText();
@@ -85,7 +85,7 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
         String endM = endMinute.getValue();
         String contactName = contactList.getValue();
         long contactId = contactDao.getContactId(contactName);
-        //lambda expression #1
+        //lambda expression #1: fix me - give a purpose!
         Function<LocalDate, String> localOfficeStartHr = hr -> {
             LocalDateTime estOfficeHrOfTheDay = LocalDateTime.of(hr, LocalTime.of(8, 0));
             return String.valueOf(DateTimeConverter.convertESTToLocal(String.valueOf(estOfficeHrOfTheDay)).toLocalDateTime().toLocalTime());

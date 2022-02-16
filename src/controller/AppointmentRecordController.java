@@ -68,16 +68,6 @@ public class AppointmentRecordController extends JDBCConnection implements Initi
     public static Appointment selectApt;
 
     /**
-     * This method receives an action of going to the adding a new appointment view.
-     *
-     * @param event an event indicates a component-defined action occurred.
-     */
-    @FXML
-    void addNewClicked(ActionEvent event) {
-        setScene(event, Views.ADD_NEW_APT_VIEW.getView());
-    }
-
-    /**
      * This method deletes selected appointment row
      *
      * @param event an event indicates a component-defined action occurred.
@@ -86,12 +76,16 @@ public class AppointmentRecordController extends JDBCConnection implements Initi
     void deleteClicked(ActionEvent event) {
         selectApt = appointmentTable.getSelectionModel().getSelectedItem();
         if (selectApt != null) {
-            appointmentDao.delete(selectApt);
-            aptDataTable.remove(selectApt);
-        } else {
+            if (Validator.confirmResult.isPresent() && Validator.confirmResult.get() == ButtonType.OK) {
+                appointmentDao.delete(selectApt);
+                aptDataTable.remove(selectApt);
+                Validator.displaySuccess("The appointment ID " + selectApt.getAppointment_id() + " and type as " + selectApt.getType() + " is deleted");
+            }
+        }
+        else {
             Validator.displayInvalidInput("Please select a row to delete");
         }
-    }
+}
 
     /**
      * This method exits the program.
@@ -186,20 +180,20 @@ public class AppointmentRecordController extends JDBCConnection implements Initi
     private void initTable() {
         initCols();
         try {
-            if (AddNewCustomerController.isNewCust) {
-                aptDataTable.addAll(appointmentDao.findAllByCustId(AddNewAppointmentController.newCustID));
+            if (AddNewCustomerController.isNewCust) {//fix me
+//                aptDataTable.addAll(appointmentDao.findAllAppointment(AddNewAppointmentController.newCustID));
                 AddNewCustomerController.isNewCust = false;
-            } else if (isMonthFilter) {
+            } else if (isMonthFilter) {// fix me
                 filterByMonth.setSelected(true);
-                aptDataTable.addAll(getAptsForCurrentMonth(appointmentDao.findAllByCustId(CustomerRecordController.selectedCust.getCustomer_id())));
+//                aptDataTable.addAll(getAptsForCurrentMonth(appointmentDao.findAllAppointment(CustomerRecordController.selectedCust.getCustomer_id())));
                 isMonthFilter = false;
             } else if (isWeekFilter) {
-                filterByWeek.setSelected(true);
-                aptDataTable.addAll(getAptsForCurrentWeek(appointmentDao.findAllByCustId(CustomerRecordController.selectedCust.getCustomer_id())));
+                filterByWeek.setSelected(true); // fix me
+//                aptDataTable.addAll(getAptsForCurrentWeek(appointmentDao.findAllAppointment(CustomerRecordController.selectedCust.getCustomer_id())));
                 isWeekFilter = false;
             } else {
                 listAll.setSelected(true);
-                aptDataTable.addAll(appointmentDao.findAllByCustId(CustomerRecordController.selectedCust.getCustomer_id()));
+                aptDataTable.addAll(appointmentDao.findAllAppointment());
                 listAllFilter = false;
             }
         } catch (Exception e) {

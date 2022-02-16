@@ -140,7 +140,7 @@ public class DateTimeConverter {
      *
      * @return the date of monday of the current week
      */
-    public static LocalDate getMondayDate() {
+    public static LocalDate getMondayDate() { // fix me - last day of the week(Sat.)
         LocalDate monday = TODAY.toLocalDate();
         while (monday.getDayOfWeek() != DayOfWeek.MONDAY) {
             monday = monday.minusDays(1);
@@ -153,7 +153,7 @@ public class DateTimeConverter {
      *
      * @return the date of sunday of the current week
      */
-    public static LocalDate getSundayDate() {
+    public static LocalDate getSundayDate() { // fix me - first day of the week
         LocalDate sunday = TODAY.toLocalDate();
         while (sunday.getDayOfWeek() != DayOfWeek.SUNDAY) {
             sunday = sunday.plusDays(1);

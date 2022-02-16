@@ -58,7 +58,7 @@
                   <Font size="14.0" />
                </font>
             </Button>
-            <Button fx:id="listApt" layoutX="736.0" layoutY="-1.0" mnemonicParsing="false" onAction="#listAptSelected" prefHeight="30.0" prefWidth="253.0" text="List All Appointment By Customer">
+            <Button fx:id="listApt" layoutX="736.0" layoutY="-1.0" mnemonicParsing="false" onAction="#listAptSelected" prefHeight="30.0" prefWidth="253.0" text="List All Appointment">
                <font>
                   <Font size="14.0" />
                </font>
