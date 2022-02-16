@@ -155,6 +155,7 @@ public class ReportController implements Initializable, CommonUseHelperIfc {
             end.setCellValueFactory(new PropertyValueFactory<>("end"));
             custId.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
             contactList.setValue(contactName);
+
             long id = contactDao.getContactId(contactName);
             if (id == 0) {
                 Validator.displayInfo("there is no appointments.");

@@ -138,13 +138,10 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
         appointment.setUser_id(UserDaoImpl.userId);
         appointment.setContact_id(contactId);
 
-        try {
-            appointmentDao.save(appointment);
-            Validator.displaySuccess("Appointment is saved");
-            setScene(event, Views.APPOINTMENT_RECORD_VIEW.getView());
-        }catch(SQLException e) {
-            Validator.displayInfo("The description may be too long, please be brief as possible as you can.");
-        }
+        appointmentDao.save(appointment);
+        Validator.displaySuccess("Appointment is saved");
+        setScene(event, Views.APPOINTMENT_RECORD_VIEW.getView());
+
     }
 
     /**

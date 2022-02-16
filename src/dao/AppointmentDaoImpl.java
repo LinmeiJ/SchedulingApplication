@@ -121,27 +121,31 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
      * THis method updates the appointment based on an appointment ID.
      *
      * @param appointment the appointment that needs to be updated
-     * @throws SQLException An exception that provides information on a database access error or other errors.
      */
-    public void update(Appointment appointment) throws SQLException {
+    public void update(Appointment appointment) {
         String sql = "UPDATE appointments SET Title=?, Description=?, Location=?, Type=?, Start=?, End=?, Create_Date=?,Created_By=?, Last_Update=?, Last_Updated_By=?, Customer_ID=?, User_ID=?, Contact_ID=? WHERE Appointment_ID = " + appointment.getAppointment_id();
-        PreparedStatement preparedStatement = JDBCConnection.connection.prepareStatement(sql);
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = JDBCConnection.connection.prepareStatement(sql);
 
-        preparedStatement.setString(1, appointment.getTitle());
-        preparedStatement.setString(2, appointment.getDescription());
-        preparedStatement.setString(3, appointment.getLocation());
-        preparedStatement.setString(4, appointment.getType());
-        preparedStatement.setTimestamp(5, appointment.getStart());
-        preparedStatement.setTimestamp(6, appointment.getEnd());
-        preparedStatement.setTimestamp(7, DateTimeConverter.convertLocalTimeToUTC(LocalDateTime.now()));
-        preparedStatement.setString(8, UserDaoImpl.userName);
-        preparedStatement.setTimestamp(9, DateTimeConverter.convertLocalTimeToUTC(LocalDateTime.now()));
-        preparedStatement.setString(10, UserDaoImpl.userName);
-        preparedStatement.setLong(11, appointment.getCustomer_id());
-        preparedStatement.setLong(12, appointment.getUser_id());
-        preparedStatement.setLong(13, appointment.getContact_id());
+            preparedStatement.setString(1, appointment.getTitle());
+            preparedStatement.setString(2, appointment.getDescription());
+            preparedStatement.setString(3, appointment.getLocation());
+            preparedStatement.setString(4, appointment.getType());
+            preparedStatement.setTimestamp(5, appointment.getStart());
+            preparedStatement.setTimestamp(6, appointment.getEnd());
+            preparedStatement.setTimestamp(7, DateTimeConverter.convertLocalTimeToUTC(LocalDateTime.now()));
+            preparedStatement.setString(8, UserDaoImpl.userName);
+            preparedStatement.setTimestamp(9, DateTimeConverter.convertLocalTimeToUTC(LocalDateTime.now()));
+            preparedStatement.setString(10, UserDaoImpl.userName);
+            preparedStatement.setLong(11, appointment.getCustomer_id());
+            preparedStatement.setLong(12, appointment.getUser_id());
+            preparedStatement.setLong(13, appointment.getContact_id());
 
-        preparedStatement.execute();
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -184,25 +188,30 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
      * @param appointment an new appointment that need to save to the database.
      * @throws SQLException An exception that provides information on a database access error or other errors.
      */
-    public void save(Appointment appointment) throws SQLException {
+    public void save(Appointment appointment) {
         String sql = "INSERT INTO appointments VALUES(NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        PreparedStatement preparedStatement = JDBCConnection.connection.prepareStatement(sql);
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = JDBCConnection.connection.prepareStatement(sql);
 
-        preparedStatement.setString(1, appointment.getTitle());
-        preparedStatement.setString(2, appointment.getDescription());
-        preparedStatement.setString(3, appointment.getLocation());
-        preparedStatement.setString(4, appointment.getType());
-        preparedStatement.setTimestamp(5, appointment.getStart());
-        preparedStatement.setTimestamp(6, appointment.getEnd());
-        preparedStatement.setTimestamp(7, appointment.getCreated_date());
-        preparedStatement.setString(8, appointment.getCreated_by());
-        preparedStatement.setTimestamp(9, appointment.getLast_update());
-        preparedStatement.setString(10, appointment.getLast_updated_by());
-        preparedStatement.setLong(11, appointment.getCustomer_id());
-        preparedStatement.setLong(12, appointment.getUser_id());
-        preparedStatement.setLong(13, appointment.getContact_id());
+            preparedStatement.setString(1, appointment.getTitle());
+            preparedStatement.setString(2, appointment.getDescription());
+            preparedStatement.setString(3, appointment.getLocation());
+            preparedStatement.setString(4, appointment.getType());
+            preparedStatement.setTimestamp(5, appointment.getStart());
+            preparedStatement.setTimestamp(6, appointment.getEnd());
+            preparedStatement.setTimestamp(7, appointment.getCreated_date());
+            preparedStatement.setString(8, appointment.getCreated_by());
+            preparedStatement.setTimestamp(9, appointment.getLast_update());
+            preparedStatement.setString(10, appointment.getLast_updated_by());
+            preparedStatement.setLong(11, appointment.getCustomer_id());
+            preparedStatement.setLong(12, appointment.getUser_id());
+            preparedStatement.setLong(13, appointment.getContact_id());
 
-        preparedStatement.execute();
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -265,8 +274,8 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
      */
     public boolean isDoubleBooking(long contactId, LocalDate start, String startH, String startM, LocalDate end, String endH, String endM) {
         List<Appointment> scheduleList = findByContactId(contactId);
-        if (isAppointmentTimeUpdated(DateTimeConverter.convertAptTimeToUTC(start, startH, startM), DateTimeConverter.convertAptTimeToUTC(end, endH, endM))) {
-            return false;
+        if(AppointmentRecordController.selectApt != null){
+            return isAppointmentTimeUpdated(DateTimeConverter.convertAptTimeToUTC(start, startH, startM), DateTimeConverter.convertAptTimeToUTC(end, endH, endM));
         }
         Timestamp aptStartTime = DateTimeConverter.convertAptTimeToEST(start, startH, startM);
         Timestamp aptEndTime = DateTimeConverter.convertAptTimeToEST(end, endH, endM);
@@ -276,18 +285,14 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
 
     /**
      * This method checks whether the appointment schedule is changes or if it is a new appointment
+     *
      * @param aptStartTime an appointment starting time
-     * @param aptEndTime an appointment ending time
-     * @return false when it is a new appointment or the appointment time is not changed, otherwise returns true.
+     * @param aptEndTime   an appointment ending time
+     * @return false when the appointment time is not changed, otherwise returns true.
      */
     private boolean isAppointmentTimeUpdated(Timestamp aptStartTime, Timestamp aptEndTime) {
-        try{
-            return aptStartTime.equals(AppointmentRecordController.selectApt.getStart()) && aptEndTime.equals(AppointmentRecordController.selectApt.getEnd());
-        }catch(NullPointerException e){
-            e.printStackTrace();
-        }finally {
-            return false;
-        }
+        return !(aptStartTime.equals(AppointmentRecordController.selectApt.getStart())
+                && aptEndTime.equals(AppointmentRecordController.selectApt.getEnd()));
     }
 
     /**

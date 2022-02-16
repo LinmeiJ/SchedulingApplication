@@ -82,9 +82,6 @@ public interface CommonUseHelperIfc {
 
     /**
      * Disables weekends options for the date picker.
-     * <p>
-     * Lambda Expression #1.
-     * </P>
      *
      * @return a Callback
      */
@@ -96,7 +93,6 @@ public interface CommonUseHelperIfc {
                     @Override
                     public void updateItem(LocalDate item, boolean empty) {
                         super.updateItem(item, empty);
-
                         if (item.getDayOfWeek() == DayOfWeek.SATURDAY
                                 || item.getDayOfWeek() == DayOfWeek.SUNDAY) {
                             setDisable(true);
