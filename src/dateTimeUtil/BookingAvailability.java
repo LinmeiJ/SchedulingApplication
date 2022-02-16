@@ -99,6 +99,7 @@ public class BookingAvailability {
      */
     private static boolean checksIfDoubleBooked(List<LocalTime> availableTimeSlots, List<LocalTime> splitTime) {
         //check whether user wanted timeslots available in the availableTimeSlots list
+
         for (LocalTime time : splitTime) {
             if (!availableTimeSlots.contains(time)) {
                 displayAvailableTime(availableTimeSlots);

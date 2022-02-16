@@ -19,6 +19,7 @@ import java.net.URL;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -127,7 +128,9 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
      */
     private String getAvailableTime() {
         String availableTime = "";
-        Iterator iteratorMap = BookingAvailability.availableTimeToDisplay.entrySet().iterator();
+        Map<LocalTime, LocalTime> availableTimeToDisplay = BookingAvailability.availableTimeToDisplay;
+
+        Iterator iteratorMap = availableTimeToDisplay.entrySet().iterator();
         while(iteratorMap.hasNext()) {
             Map.Entry mapElement = (Map.Entry) iteratorMap.next();
             availableTime = availableTime + mapElement.getKey() + " To "

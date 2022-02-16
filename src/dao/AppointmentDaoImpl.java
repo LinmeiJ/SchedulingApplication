@@ -276,8 +276,11 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
      */
     public boolean isDoubleBooking(long contactId, LocalDate start, String startH, String startM, LocalDate end, String endH, String endM) {
         List<Appointment> scheduleList = findByContactId(contactId);
-        if(AppointmentRecordController.selectApt != null){
-            return isAppointmentTimeUpdated(DateTimeConverter.convertAptTimeToUTC(start, startH, startM), DateTimeConverter.convertAptTimeToUTC(end, endH, endM));
+        if (AppointmentRecordController.selectApt != null) {
+            if (isAppointmentTimeUpdated(DateTimeConverter.convertAptTimeToUTC(start, startH, startM), DateTimeConverter.convertAptTimeToUTC(end, endH, endM)))
+            {
+                return false;
+            }
         }
         Timestamp aptStartTime = DateTimeConverter.convertAptTimeToEST(start, startH, startM);
         Timestamp aptEndTime = DateTimeConverter.convertAptTimeToEST(end, endH, endM);
@@ -293,8 +296,8 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
      * @return false when the appointment time is not changed, otherwise returns true.
      */
     private boolean isAppointmentTimeUpdated(Timestamp aptStartTime, Timestamp aptEndTime) {
-        return !(aptStartTime.equals(AppointmentRecordController.selectApt.getStart())
-                && aptEndTime.equals(AppointmentRecordController.selectApt.getEnd()));
+        return aptStartTime.equals(AppointmentRecordController.selectApt.getStart())
+                && aptEndTime.equals(AppointmentRecordController.selectApt.getEnd());
     }
 
     /**
