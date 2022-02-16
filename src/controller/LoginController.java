@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -77,7 +78,12 @@ public class LoginController implements Initializable, CommonUseHelperIfc {
      */
     @FXML
     void exitClicked(ActionEvent event) {
-        exit(event, exitId);
+            Stage stage = (Stage) exitId.getScene().getWindow();
+            Validator.displayExitConfirmation(language);
+            if (Validator.confirmResult.isPresent() && Validator.confirmResult.get() == ButtonType.OK) {
+                stage.close();
+            }
+
     }
 
     /**
@@ -106,7 +112,7 @@ public class LoginController implements Initializable, CommonUseHelperIfc {
      * </P>
      */
     protected void displayUpcomingAptsAlert() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION, "Upcoming appointment:\n\n " + appointmentDao.getAllUpcomingApts(), ButtonType.OK);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, language.getString("upApt") + ":\n\n " + appointmentDao.getAllUpcomingApts(language), ButtonType.OK);
         alert.showAndWait()
                 .filter(res -> res == ButtonType.OK);
     }

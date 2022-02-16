@@ -14,6 +14,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 /**
@@ -219,7 +220,7 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
      *
      * @return a string that will be displayed on the user UI
      */
-    public String getAllUpcomingApts() {
+    public String getAllUpcomingApts(ResourceBundle language) {
         String message = "";
         List<Appointment> upcomingApt;
         upcomingApt = findAll()
@@ -227,10 +228,11 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
                 .filter(apt -> DateTimeConverter.isWithin15mins(apt.getStart()))
                 .collect(Collectors.toList());
         if (upcomingApt.size() == 0) {
-            message = "There is no upcoming appointment.";
+            message = language.getString("noApt");
         } else {
             for (Appointment apt : upcomingApt) {
-                message = message + "\n" + "Appointment ID: " + apt.getAppointment_id() + ",    Start: " + apt.getStart();
+                message = message + "\n" + language.getString("aptID") + ":" + apt.getAppointment_id() + ",    "
+                        + language.getString("start") +":" + apt.getStart();
             }
         }
         return message;

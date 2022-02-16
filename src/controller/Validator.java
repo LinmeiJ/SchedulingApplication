@@ -1,5 +1,6 @@
 package controller;
 
+import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 
@@ -7,6 +8,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Optional;
+import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -113,6 +115,17 @@ public final class Validator {
         confirmAlert.setTitle("Exit");
         confirmAlert.setHeaderText("Close the program");
         confirmAlert.setContentText("Are you sure you want to close the program?");
+        confirmResult = confirmAlert.showAndWait();
+    }
+
+
+    /**
+     * This method sets a confirmation window to ensure the end user wants to exit the program.
+     */
+    public static void displayExitConfirmation(ResourceBundle language) {
+        confirmAlert.setTitle(language.getString("exit"));
+        confirmAlert.setHeaderText(language.getString("close"));
+        confirmAlert.setContentText(language.getString("confirm"));
         confirmResult = confirmAlert.showAndWait();
     }
 
