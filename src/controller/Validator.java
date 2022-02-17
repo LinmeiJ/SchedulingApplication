@@ -83,7 +83,7 @@ public final class Validator {
         errorAlert.setTitle(LoginController.language.getString("error"));
         errorAlert.setHeaderText(LoginController.language.getString("invalidInput"));
         errorAlert.setContentText(msg);
-        errorAlert.showAndWait();
+        errorAlert.showAndWait().filter(res -> res == ButtonType.OK);
     }
 
     /**
@@ -95,7 +95,7 @@ public final class Validator {
         errorAlert.setTitle("Error");
         errorAlert.setHeaderText(("Invalid Input"));
         errorAlert.setContentText(msg);
-        errorAlert.showAndWait();
+        errorAlert.showAndWait().filter(res -> res == ButtonType.OK);
     }
 
     /**
@@ -116,7 +116,7 @@ public final class Validator {
         confirmAlert.setTitle("Exit");
         confirmAlert.setHeaderText("Close the program");
         confirmAlert.setContentText("Are you sure you want to close the program?");
-        confirmResult = confirmAlert.showAndWait();
+        confirmResult = confirmAlert.showAndWait().filter(res -> res == ButtonType.OK);
     }
 
 
@@ -127,7 +127,7 @@ public final class Validator {
         confirmAlert.setTitle(language.getString("exit"));
         confirmAlert.setHeaderText(language.getString("close"));
         confirmAlert.setContentText(language.getString("confirm"));
-        confirmResult = confirmAlert.showAndWait();
+        confirmResult = confirmAlert.showAndWait().filter(res -> res == ButtonType.OK);
     }
 
     /**
@@ -138,7 +138,7 @@ public final class Validator {
     public static void displaySuccess(String message) {
         infoAlert.setTitle("Information");
         infoAlert.setHeaderText(message + " successfully!");
-        infoAlert.showAndWait();
+        infoAlert.showAndWait().filter(res -> res == ButtonType.OK);
     }
 
     /**
@@ -149,7 +149,8 @@ public final class Validator {
     public static void displayInfo(String message) {
         infoAlert.setTitle("Information");
         infoAlert.setHeaderText(message);
-        infoAlert.showAndWait();
+        infoAlert.showAndWait()
+                .filter(res -> res == ButtonType.OK);
     }
 
     /**
@@ -159,7 +160,8 @@ public final class Validator {
         confirmAlert.setTitle("Message");
         confirmAlert.setHeaderText("Delete");
         confirmAlert.setContentText("Are you sure you want to delete it?"); // fix me here to specify a string
-        confirmResult = confirmAlert.showAndWait();
+        confirmResult = confirmAlert.showAndWait()
+                .filter(res -> res == ButtonType.OK);;
     }
 
     /**
@@ -255,7 +257,8 @@ public final class Validator {
         errorAlert.setTitle("Alert");
         errorAlert.setHeaderText(("Please save before continuing!"));
         errorAlert.setContentText(msg);
-        errorAlert.showAndWait();
+        errorAlert.showAndWait()
+                .filter(res -> res == ButtonType.OK);
     }
 
     /**

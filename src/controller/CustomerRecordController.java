@@ -129,18 +129,13 @@ public class CustomerRecordController implements Initializable, CommonUseHelperI
     }
 
     /**
-     * This method lists all the appointment based on a selected customer row.
+     * This method switches to a screen where all the appointments will be listed
      *
      * @param actionEvent an event indicates a component-defined action occurred.
      */
     @FXML
     void listAptSelected(ActionEvent actionEvent) {
-//        selectedCust = recordTable.getSelectionModel().getSelectedItem();
-//        if (selectedCust != null) {
-            setScene(actionEvent, Views.APPOINTMENT_RECORD_VIEW.getView());
-//        } else {
-//            Validator.displayInvalidInput("Please select a row/customer to update");
-//        }
+        setScene(actionEvent, Views.APPOINTMENT_RECORD_VIEW.getView());
     }
 
     /**

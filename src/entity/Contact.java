@@ -11,6 +11,18 @@ public class Contact {
     private String email;
 
     /**
+     * A constructor that receives 3 params
+     * @param contact_id contact ID
+     * @param contact_name contact name
+     * @param email  contact email address
+     */
+    public Contact(int contact_id, String contact_name, String email) {
+        this.contact_id = contact_id;
+        this.contact_name = contact_name;
+        this.email = email;
+    }
+
+    /**
      * A getter of contact ID
      *
      * @return A contact ID of the contact

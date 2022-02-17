@@ -4,7 +4,10 @@ import dao.*;
 import dateTimeUtil.BookingAvailability;
 import dateTimeUtil.DateTimeConverter;
 import entity.Appointment;
+import entity.Contact;
 import enums.Views;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -21,6 +24,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 /**
  * This class provides a data control flow between the add new appointment view and database tables
@@ -56,6 +60,7 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
     private Label customerId;
     @FXML
     private Label userId;
+    @FXML
 
     private final ContactDaoImpl contactDao = new ContactDaoImpl();
     private final CustomerDaoImpl customerDao = new CustomerDaoImpl();
@@ -83,7 +88,7 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
 
         String endH = endHr.getValue();
         String endM = endMinute.getValue();
-        String contactName = contactList.getValue();
+        String contactName = contactList.getValue();//fix me
         long contactId = contactDao.getContactId(contactName);
         //lambda expression #1: fix me - give a purpose!
         Function<LocalDate, String> localOfficeStartHr = hr -> {
@@ -214,21 +219,25 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
     public void initialize(URL url, ResourceBundle resourceBundle) {
         startDate.setValue(LocalDate.now());
         startDate.setShowWeekNumbers(true);
+
         endDate.setValue(LocalDate.now());
         endDate.setShowWeekNumbers(true);
 
-        Callback<DatePicker, DateCell> startDayCellFactory = this.getDayCellFactory();
-        startDate.setDayCellFactory(startDayCellFactory);
-        Callback<DatePicker, DateCell> endDayCellFactory = this.getDayCellFactory();
-        endDate.setDayCellFactory(endDayCellFactory);
+//        Callback<DatePicker, DateCell> startDayCellFactory = this.getDayCellFactory();
+//        startDate.setDayCellFactory(startDayCellFactory);
+//        Callback<DatePicker, DateCell> endDayCellFactory = this.getDayCellFactory();
+//        endDate.setDayCellFactory(endDayCellFactory);
+//
+//        startHr.setItems(estHr);
+//        startMinute.setItems(initializeMinutes());
+//        endHr.setItems(estHr);
+//        endMinute.setItems(initializeMinutes());
 
-        startHr.setItems(estHr);
-        startMinute.setItems(initializeMinutes());
-        endHr.setItems(estHr);
-        endMinute.setItems(initializeMinutes());
-
-        contactList.setItems(contactDao.findAll());
-        customerId.setText("Customer ID: " + CustomerRecordController.selectedCust.getCustomer_id());
+        contactList.setItems(contactDao.findAll()
+                .stream()
+                .map(contact -> contact.getContact_name())
+                .collect(Collectors.toCollection(FXCollections::observableArrayList)));
+//        customerId.setText(customerDao.findAll().stream().map(c -> c.));
         userId.setText("User ID: " + UserDaoImpl.userId);
 
     }

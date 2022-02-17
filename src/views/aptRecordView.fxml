@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane cache="true" prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AppointmentRecordController">
+<AnchorPane cache="true" prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AppointmentRecordController">
     <children>
         <Label alignment="CENTER" graphicTextGap="105.0" layoutX="145.0" layoutY="20.0" prefHeight="30.0" prefWidth="843.0" text="Appointments" textAlignment="CENTER" textFill="#5e2d2d">
             <font>
@@ -65,12 +65,17 @@
                 <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
             </opaqueInsets>
         </AnchorPane>
-      <Button layoutX="827.0" layoutY="46.0" mnemonicParsing="false" onAction="#updateClicked" prefHeight="30.0" prefWidth="133.0" text="Update">
+      <Button layoutX="892.0" layoutY="50.0" mnemonicParsing="false" onAction="#updateClicked" prefHeight="30.0" prefWidth="133.0" text="Update">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
-      <Button layoutX="971.0" layoutY="46.0" mnemonicParsing="false" onAction="#deleteClicked" prefHeight="30.0" prefWidth="110.0" text="Delete">
+      <Button layoutX="1043.0" layoutY="50.0" mnemonicParsing="false" onAction="#deleteClicked" prefHeight="30.0" prefWidth="110.0" text="Delete">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="addNewApt" layoutX="706.0" layoutY="50.0" mnemonicParsing="false" onAction="#addNewAptClicked" prefHeight="30.0" prefWidth="178.0" text="Add New Appointment">
          <font>
             <Font size="14.0" />
          </font>

@@ -1,6 +1,7 @@
 package dao;
 
 import dbConnection.JDBCConnection;
+import entity.Contact;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -13,7 +14,7 @@ import java.sql.SQLException;
  * @author Linmei M.
  */
 public class ContactDaoImpl extends JDBCConnection {
-    ObservableList<String> allContacts = FXCollections.observableArrayList();
+    ObservableList<Contact> allContacts = FXCollections.observableArrayList();
 
     /**
      * This method gets the contact ID based on a contact name
@@ -57,12 +58,15 @@ public class ContactDaoImpl extends JDBCConnection {
      *
      * @return a list of contact names
      */
-    public ObservableList<String> findAll() {
+    public ObservableList<Contact> findAll() {
         ResultSet rs = findRawDataFromDB("SELECT contact_Name FROM contacts");
         try {
             while (rs.next()) {
                 String name = rs.getString("contact_name");
-                allContacts.add(name);
+                int contactId = rs.getInt("contact_ID");
+                String email = rs.getString("email");
+                Contact contact = new Contact(contactId, name, email);
+                allContacts.add(contact);
             }
         } catch (SQLException e) {
             e.printStackTrace();

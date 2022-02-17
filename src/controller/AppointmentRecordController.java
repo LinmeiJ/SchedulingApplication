@@ -20,6 +20,7 @@ import java.time.Month;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 /**
  * This class provides a data control flow between displaying appointment record view and database tables
@@ -57,6 +58,8 @@ public class AppointmentRecordController extends JDBCConnection implements Initi
     private RadioButton filterByWeek;
     @FXML
     private RadioButton listAll;
+    private Button addNewApt;
+
 
     Logger logger = Logger.getLogger(this.getClass().getName());
     ObservableList<Appointment> aptDataTable = FXCollections.observableArrayList();
@@ -110,6 +113,11 @@ public class AppointmentRecordController extends JDBCConnection implements Initi
         } else {
             Validator.displayInvalidInput("Please select a row/appointment to update");
         }
+    }
+
+    @FXML
+    void addNewAptClicked(ActionEvent event) {
+        setScene(event, Views.ADD_NEW_APT_VIEW.getView());
     }
 
     /**
@@ -227,15 +235,20 @@ public class AppointmentRecordController extends JDBCConnection implements Initi
     private ObservableList<Appointment> getAptsForCurrentWeek(ObservableList<Appointment> appointments) {
         ObservableList<Appointment> aptByWeek = FXCollections.observableArrayList();
 
-        LocalDate monday = DateTimeConverter.getMondayDate();
-        LocalDate sunday = DateTimeConverter.getSundayDate();
+        LocalDate sunday = DateTimeConverter.getSundayDate(); // first day of a week
+        LocalDate saturday = DateTimeConverter.getSaturdayDate(); // last day of a week
 
-        for (Appointment apt : appointments) {
-            if (apt.getStart().toLocalDateTime().toLocalDate().compareTo(monday) >= 0 &&
-                    apt.getStart().toLocalDateTime().toLocalDate().compareTo(sunday) <= 0) {
-                aptByWeek.add(apt);
-            }
-        }
+        //lambda expression: filter and save a list of appointments that is only for current week.
+        aptByWeek = (ObservableList<Appointment>) appointments.stream()
+                .filter(apt -> apt.getStart().toLocalDateTime().toLocalDate().compareTo(saturday) <= 0 &&
+                apt.getStart().toLocalDateTime().toLocalDate().compareTo(sunday) >= 0)
+                .collect(Collectors.toList());
+//        for (Appointment apt : appointments) {
+//            if (apt.getStart().toLocalDateTime().toLocalDate().compareTo(monday) >= 0 &&
+//                    apt.getStart().toLocalDateTime().toLocalDate().compareTo(sunday) <= 0) {
+//                aptByWeek.add(apt);
+//            }
+//        }
         return aptByWeek;
     }
 
@@ -245,7 +258,7 @@ public class AppointmentRecordController extends JDBCConnection implements Initi
     private void initCols() {
         aptID.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
         aptTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
-        aptTitle.setEditable(true);
+//        aptTitle.setEditable(true);
         aptDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
         aptLocation.setCellValueFactory(new PropertyValueFactory<>("location"));
         aptType.setCellValueFactory(new PropertyValueFactory<>("type"));

@@ -2,14 +2,12 @@ package dateTimeUtil;
 
 import enums.TimeZoneOption;
 
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
-import java.util.List;
 import java.util.TimeZone;
 
 import static java.time.temporal.ChronoUnit.MINUTES;
@@ -136,29 +134,30 @@ public class DateTimeConverter {
     }
 
     /**
-     * This method finds the date of monday for the current week
+     * This method finds the date of last day, which is Saturday, of the current week
      *
-     * @return the date of monday of the current week
+     * @return the date of Saturday of the current week
      */
-    public static LocalDate getMondayDate() { // fix me - last day of the week(Sat.)
-        LocalDate monday = TODAY.toLocalDate();
-        while (monday.getDayOfWeek() != DayOfWeek.MONDAY) {
-            monday = monday.minusDays(1);
+    public static LocalDate getSaturdayDate() {
+        LocalDate today = TODAY.toLocalDate();
+        while (today.getDayOfWeek() != DayOfWeek.SATURDAY) {
+            today = today.plusDays(1);
         }
-        return monday;
+        return today;
+
     }
 
     /**
-     * This method finds the date of sunday for the current week
+     * This method finds the date of first day, which is Sunday, of the current week
      *
      * @return the date of sunday of the current week
      */
-    public static LocalDate getSundayDate() { // fix me - first day of the week
-        LocalDate sunday = TODAY.toLocalDate();
-        while (sunday.getDayOfWeek() != DayOfWeek.SUNDAY) {
-            sunday = sunday.plusDays(1);
+    public static LocalDate getSundayDate() {
+        LocalDate today = TODAY.toLocalDate();
+        while (today.getDayOfWeek() != DayOfWeek.SUNDAY) {
+            today = today.minusDays(1);
         }
-        return sunday;
+        return today;
     }
 
     /**

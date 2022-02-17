@@ -4,6 +4,7 @@ import dao.AppointmentDaoImpl;
 import dao.ContactDaoImpl;
 import dao.ReportDaoImpl;
 import entity.Appointment;
+import entity.Contact;
 import entity.Country;
 import entity.Report;
 import enums.Views;
@@ -18,6 +19,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import java.net.URL;
 import java.sql.Timestamp;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 /**
  * This class provides a data control flow for generating reports between the report UI and the database
@@ -129,6 +131,59 @@ public class ReportController implements Initializable, CommonUseHelperIfc {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        displayCountsByTypeOrMonth();
+        displayAppointmentsByContactName();
+        displayCustCountsByCountryName();
+    }
+
+    /**
+     * This is the report there where display the total customer count by country name
+     */
+    private void displayCustCountsByCountryName() {
+        countryName.setCellValueFactory(new PropertyValueFactory<>("countryName"));
+        totalCountCustomers.setCellValueFactory(new PropertyValueFactory<>("count"));
+        reportThree.setItems(reportDao.getCustCountByCountry());
+    }
+
+    /**
+     * This is the report two where displaying a list of appointment by contact name
+     *
+     * <p>
+     *     Lambda expression # 1
+     * </p>
+     */
+    private void displayAppointmentsByContactName() {
+        ObservableList<Contact> contacts = contactDao.findAll();
+        // lambda expression: using steam to map a list of contact names and save it to a list for displaying them on the user UI
+        ObservableList<String> contactNames = (ObservableList<String>) contacts.stream()
+                .map(c -> c.getContact_name())
+                .collect(Collectors.toList());
+
+        contactList.setItems(contactNames);
+
+        if (contactName != null) {
+            contactList.setValue(contactName);
+            aptID.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
+            title.setCellValueFactory(new PropertyValueFactory<>("title"));
+            type.setCellValueFactory(new PropertyValueFactory<>("type"));
+            description.setCellValueFactory(new PropertyValueFactory<>("description"));
+            start.setCellValueFactory(new PropertyValueFactory<>("start"));
+            end.setCellValueFactory(new PropertyValueFactory<>("end"));
+            custId.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
+
+            long id = contactDao.getContactId(contactName);
+            if (id == 0) {
+                Validator.displayInfo("there is no appointments.");
+            } else {
+                reportTwo.setItems(appointmentDao.findAllByContactId(id));
+            }
+        }
+    }
+
+    /**
+     * This is report one where display the total count either by type or by country
+     */
+    private void displayCountsByTypeOrMonth() {
         monthTypeCombo.setItems(FXCollections.observableArrayList("Month", "Type"));
 
         if (isReportOneByMonth) {
@@ -142,29 +197,5 @@ public class ReportController implements Initializable, CommonUseHelperIfc {
             typeMonthOption.setCellValueFactory(new PropertyValueFactory<>("Type"));
             reportOne.setItems(reportDao.getCountByType());
         }
-
-        ObservableList<String> contacts = contactDao.findAll();
-        contactList.setItems(contacts);
-
-        if (contactName != null) {
-            aptID.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
-            title.setCellValueFactory(new PropertyValueFactory<>("title"));
-            type.setCellValueFactory(new PropertyValueFactory<>("type"));
-            description.setCellValueFactory(new PropertyValueFactory<>("description"));
-            start.setCellValueFactory(new PropertyValueFactory<>("start"));
-            end.setCellValueFactory(new PropertyValueFactory<>("end"));
-            custId.setCellValueFactory(new PropertyValueFactory<>("customer_id"));
-            contactList.setValue(contactName);
-
-            long id = contactDao.getContactId(contactName);
-            if (id == 0) {
-                Validator.displayInfo("there is no appointments.");
-            } else {
-                reportTwo.setItems(appointmentDao.findAllByContactId(id));
-            }
-        }
-        countryName.setCellValueFactory(new PropertyValueFactory<>("countryName"));
-        totalCountCustomers.setCellValueFactory(new PropertyValueFactory<>("count"));
-        reportThree.setItems(reportDao.getCustCountByCountry());
     }
 }
