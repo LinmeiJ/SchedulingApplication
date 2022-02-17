@@ -17,6 +17,7 @@ import javafx.util.Callback;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -79,29 +80,28 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
         String description = aptDescriptionField.getText();
         String type = aptTypeField.getText();
         String location = aptLocationField.getText();
-
-        LocalDate startD = startDate.getValue();
-        String startH = startHr.getValue();
-        String startM = startMin.getValue();
-        String sm = startMeridiem.getValue();
-
-        LocalDate endD = endDate.getValue();
-        String endH = endHr.getValue();
-        String endM = endMin.getValue();
-        String em = endMeridiem.getValue();
-
         String contactName = contactList.getValue();
         String customerName = customerList.getValue();
         String userName = userList.getValue();
-
-
         int contactId = getID(contactName, contactMap);
         int customerId = getID(contactName, customerMap);
         int userId = getID(contactName, userMap);
 
+        // get appointment time user wishes to book
+        LocalDate startD = startDate.getValue();
+        LocalDate endD = endDate.getValue();
+        String startH = DateTimeConverter.get24HrTime(startHr.getValue(), startMeridiem.getValue());
+        String endH = DateTimeConverter.get24HrTime(endHr.getValue(), endMeridiem.getValue());
+        String startM = startMin.getValue();
+        String endM = endMin.getValue();
+
+        //convert the time input to LocalDateTime
+        LocalDateTime  startLocalDateTime = LocalDateTime.of(startD, LocalTime.of(Integer.valueOf(startH), Integer.valueOf(startM)));
+        LocalDateTime  endLocalDateTime = LocalDateTime.of(endD, LocalTime.of(Integer.valueOf(endH), Integer.valueOf(endM)));
+
         if (!areValidInput(type, location, title, description, startD, startH, startM, endD, endH, endM, contactName, customerName, userName)) {
             Validator.displayInvalidInput("Invalid input. All fields can not be empty");
-        } else if (!Validator.isValidAppointmentTime(startD, startH, startM, endD, endH, endM, sm, em)) {
+        } else if (!Validator.isValidAppointmentTime(startD, startH, startM, endD, endH, endM)){
             Validator.displayInfo("Sorry, your appointment can not be in the past or the appointment ending can not be before the appointment starting time. Try again please.");
         } else if (!DateTimeConverter.isWithinOfficeHour(startD, startH, startM)) {
             Validator.displayInfo("Sorry, The time you wish to book is out of the EST timezone office hour. \nThe office hour starts "

@@ -242,4 +242,15 @@ public class DateTimeConverter {
         return String.valueOf(convertESTToLocal(String.valueOf(estOfficeHrOfTheDay)).toLocalDateTime().toLocalTime());
     }
 
+    /**
+     * convert 12 hour time to 24 hour time
+     * @param hr the hour
+     * @param meridiem the meridiem - am/pm
+     * @return converted hr time
+     */
+    public static String get24HrTime(String hr, String meridiem){
+        hr += meridiem.equals("AM") ? 0 : 12;
+        return hr;
+    }
+
 }

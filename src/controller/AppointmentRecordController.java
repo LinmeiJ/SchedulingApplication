@@ -193,11 +193,11 @@ public class AppointmentRecordController extends JDBCConnection implements Initi
                 AddNewCustomerController.isNewCust = false;
             } else if (isMonthFilter) {// fix me
                 filterByMonth.setSelected(true);
-//                aptDataTable.addAll(getAptsForCurrentMonth(appointmentDao.findAllAppointment(CustomerRecordController.selectedCust.getCustomer_id())));
+                aptDataTable.addAll(getAptsForCurrentMonth(appointmentDao.findAllAppointment()));
                 isMonthFilter = false;
             } else if (isWeekFilter) {
                 filterByWeek.setSelected(true); // fix me
-//                aptDataTable.addAll(getAptsForCurrentWeek(appointmentDao.findAllAppointment(CustomerRecordController.selectedCust.getCustomer_id())));
+                aptDataTable.addAll(getAptsForCurrentWeek(appointmentDao.findAllAppointment()));
                 isWeekFilter = false;
             } else {
                 listAll.setSelected(true);
@@ -210,19 +210,18 @@ public class AppointmentRecordController extends JDBCConnection implements Initi
     }
 
     /**
-     * This method sets up the appointment list filtering by current month
+     * Lambda expression.This method sets up the appointment list filtering by current month
      *
      * @param appointments an appointment list of all months
      * @return an appointment list of current month
      */
     private ObservableList<Appointment> getAptsForCurrentMonth(ObservableList<Appointment> appointments) {
-        ObservableList<Appointment> aptByMonth = FXCollections.observableArrayList();
+        ObservableList<Appointment> aptByMonth;
         Month currentMonth = LocalDate.now().getMonth();
-        for (Appointment apt : appointments) {
-            if (apt.getStart().toLocalDateTime().toLocalDate().getMonth().equals(currentMonth)) {
-                aptByMonth.add(apt);
-            }
-        }
+        //lambda expression: get the current week appointments by filters starting from sunday to sarturday
+        aptByMonth = appointments.stream()
+                .filter(apt -> (apt.getStart().toLocalDateTime().toLocalDate().getMonth().equals(currentMonth)))
+                .collect(Collectors.toCollection(FXCollections::observableArrayList));
         return aptByMonth;
     }
 
@@ -233,22 +232,16 @@ public class AppointmentRecordController extends JDBCConnection implements Initi
      * @return an appointment list of current week
      */
     private ObservableList<Appointment> getAptsForCurrentWeek(ObservableList<Appointment> appointments) {
-        ObservableList<Appointment> aptByWeek = FXCollections.observableArrayList();
+        ObservableList<Appointment> aptByWeek;
 
         LocalDate sunday = DateTimeConverter.getSundayDate(); // first day of a week
         LocalDate saturday = DateTimeConverter.getSaturdayDate(); // last day of a week
 
         //lambda expression: filter and save a list of appointments that is only for current week.
-        aptByWeek = (ObservableList<Appointment>) appointments.stream()
-                .filter(apt -> apt.getStart().toLocalDateTime().toLocalDate().compareTo(saturday) <= 0 &&
-                apt.getStart().toLocalDateTime().toLocalDate().compareTo(sunday) >= 0)
-                .collect(Collectors.toList());
-//        for (Appointment apt : appointments) {
-//            if (apt.getStart().toLocalDateTime().toLocalDate().compareTo(monday) >= 0 &&
-//                    apt.getStart().toLocalDateTime().toLocalDate().compareTo(sunday) <= 0) {
-//                aptByWeek.add(apt);
-//            }
-//        }
+        aptByWeek = appointments.stream()
+                .filter(apt -> (apt.getStart().toLocalDateTime().toLocalDate().compareTo(saturday) <= 0 &&
+                apt.getStart().toLocalDateTime().toLocalDate().compareTo(sunday) >= 0))
+                .collect(Collectors.toCollection(FXCollections::observableArrayList));
         return aptByWeek;
     }
 
@@ -258,7 +251,6 @@ public class AppointmentRecordController extends JDBCConnection implements Initi
     private void initCols() {
         aptID.setCellValueFactory(new PropertyValueFactory<>("appointment_id"));
         aptTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
-//        aptTitle.setEditable(true);
         aptDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
         aptLocation.setCellValueFactory(new PropertyValueFactory<>("location"));
         aptType.setCellValueFactory(new PropertyValueFactory<>("type"));

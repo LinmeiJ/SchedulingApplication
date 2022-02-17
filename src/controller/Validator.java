@@ -5,10 +5,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.ZonedDateTime;
+import java.time.*;
 import java.time.chrono.ChronoLocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
@@ -275,10 +272,12 @@ public final class Validator {
      * @param endM an appointment ending minute
      * @return true if the appointment time is valid, otherwise returns a false.
      */
-    public static boolean isValidAppointmentTime(LocalDate startD, String startH, String startM, LocalDate endD, String endH, String endM, String startMeridiem, String endMeridiem) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss a");
-        ZonedDateTime startDateTime = ZonedDateTime.parse(startD + " " + startH + ":" + startM + ":" + "00" + " " + startMeridiem, formatter);
-        ZonedDateTime endDateTime = ZonedDateTime.parse(endD + " " + endH + ":" + endM + ":" + "00" + " " + endMeridiem, formatter);
+    public static boolean isValidAppointmentTime(LocalDate startD, String startH, String startM, LocalDate endD, String endH, String endM) {
+        ZoneId zoneId = ZoneId.systemDefault();
+        LocalTime startLocalTime = LocalTime.of(Integer.valueOf(startH), Integer.valueOf(startM));
+        ZonedDateTime startDateTime = ZonedDateTime.of(startD, startLocalTime, zoneId);
+        LocalTime endLocalTime = LocalTime.of(Integer.valueOf(endH), Integer.valueOf(endM));
+        ZonedDateTime endDateTime =ZonedDateTime.of(endD, endLocalTime, zoneId);;
 
         return endDateTime.isAfter(startDateTime) && LocalDateTime.now().isBefore(ChronoLocalDateTime.from(startDateTime));
 //        LocalTime startTime = LocalTime.of(Integer.parseInt(startH), Integer.parseInt(startM));

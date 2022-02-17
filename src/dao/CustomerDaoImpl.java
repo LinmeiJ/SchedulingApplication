@@ -32,7 +32,7 @@ public class CustomerDaoImpl extends JDBCConnection implements ServiceIfc<Custom
 
         try {
             while (rs.next()) {
-                int id = rs.getLong("customer_id");
+                int id = rs.getInt("customer_id");
                 String name = rs.getString("customer_name");
                 String address = rs.getString("address");
                 String postalCode = rs.getString("Postal_Code");
