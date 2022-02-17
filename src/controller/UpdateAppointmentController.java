@@ -109,15 +109,17 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
         if (!areValidInput(type, location, title, description, startD, startH, startM, endD, endH, endM, contactName)) {
             Validator.displayInvalidInput("Invalid input. \n requires:\n" +
                     "Only alphabets are allowed for Type, Location, Title and all fields can not be empty");
-        } else if (!Validator.isValidAppointmentTime(startD, startH, startM, endD, endH, endM)) {
-            Validator.displayInfo("Your appointment can not be in the past or your appointment ending time can not be before the appointment starting time. Please try again.");
-        } else if (!DateTimeConverter.isWithinOfficeHour(startD, startH, startM)) {
+        }
+//        else if (!Validator.isValidAppointmentTime(startD, startH, startM, endD, endH, endM)) { // fix me
+//            Validator.displayInfo("Your appointment can not be in the past or your appointment ending time can not be before the appointment starting time. Please try again.");
+//        }
+        else if (!DateTimeConverter.isWithinOfficeHour(startD, startH, startM)) {
             Validator.displayInfo("Sorry, The time you wish to book is out of the EST timezone office hour. \nThe office hour starts "
-                    + DateTimeConverter.getOfficeHourOfTheDay(startD)
+                    + DateTimeConverter.getOfficeStartHr(startD)
                     + " on your local time. Please select a different time.");
         } else if (appointmentDao.isDoubleBooking(contactId, startD, startH, startM, endD, endH, endM)) {
             Validator.displayInfo("Sorry, the time you have selected is booked, please select a different time. \nAvailable office hours in EST timezone for the same date is below: \n" + getAvailableTime()
-                    + "Keep in mind, the EST office hour starts at " + DateTimeConverter.getOfficeHourOfTheDay(startD) + " at your time and open for 14 hours a day");
+                    + "Keep in mind, the EST office hour starts at " + DateTimeConverter.getOfficeStartHr(startD) + " at your time and open for 14 hours a day");
         } else {
             updateAptRecordForm(event, type, location, title, description, startD, startH, startM, endD, endH, endM, contactId);
         }
@@ -199,7 +201,7 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
      */
     private void initContact() {
         contactList.setValue(contactDao.findNameByID(appointment.getContact_id()));
-        contactList.setItems(contactDao.findAll());
+//        contactList.setItems(contactDao.findAll()); //fix me
 
     }
 

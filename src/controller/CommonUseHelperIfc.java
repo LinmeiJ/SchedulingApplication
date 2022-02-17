@@ -82,7 +82,7 @@ public interface CommonUseHelperIfc {
     }
 
     /**
-     * Disables weekends options for the date picker.
+     * Disables weekends options for the date picker since it is out of the office hour.
      *
      * @return a Callback
      */

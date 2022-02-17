@@ -1,12 +1,15 @@
 package dateTimeUtil;
 
 import enums.TimeZoneOption;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.TimeZone;
 
@@ -23,6 +26,12 @@ public class DateTimeConverter {
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern(FORMAT);
     private static final LocalTime officeOpenTime = LocalTime.of(8, 00);
     private static final LocalTime officeCloseTime = LocalTime.of(22, 00);
+    public static ObservableList<String> hrList = FXCollections.observableList( Arrays.asList("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"));
+    public static ObservableList<String> minuteList = FXCollections.observableList( Arrays.asList("00", "15", "30", "45"));
+    public static ObservableList<String> meridiemList = FXCollections.observableList( Arrays.asList("AM", "PM"));
+
+
+
 
     /**
      * This method gets a timezone based on user local setting
@@ -216,10 +225,21 @@ public class DateTimeConverter {
      * This method generates a local time for user to identify the EST starting office hour based on the local date
      *
      * @param dateValue the date user wish to book
-     * @return a date time of the EST office start hour for that day in terms of user local hour time.
+     * @return a date time of the EST office start hour
      */
-    public static String getOfficeHourOfTheDay(LocalDate dateValue) {
+    public static String getOfficeStartHr(LocalDate dateValue) {
         LocalDateTime estOfficeHrOfTheDay = LocalDateTime.of(dateValue, LocalTime.of(8, 0));
         return String.valueOf(convertESTToLocal(String.valueOf(estOfficeHrOfTheDay)).toLocalDateTime().toLocalTime());
     }
+    /**
+     * This method generates a local time for user to identify the EST end office hour based on the local date
+     *
+     * @param dateValue the date user wish to book
+     * @return a date time of the EST office end hour
+     */
+    public static String getOfficeEndHr(LocalDate dateValue) {
+        LocalDateTime estOfficeHrOfTheDay = LocalDateTime.of(dateValue, LocalTime.of(22, 0));
+        return String.valueOf(convertESTToLocal(String.valueOf(estOfficeHrOfTheDay)).toLocalDateTime().toLocalTime());
+    }
+
 }

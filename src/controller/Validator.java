@@ -8,6 +8,9 @@ import javafx.stage.Stage;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZonedDateTime;
+import java.time.chrono.ChronoLocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.regex.Matcher;
@@ -272,12 +275,17 @@ public final class Validator {
      * @param endM an appointment ending minute
      * @return true if the appointment time is valid, otherwise returns a false.
      */
-    public static boolean isValidAppointmentTime(LocalDate startD, String startH, String startM, LocalDate endD, String endH, String endM) {
-        LocalTime startTime = LocalTime.of(Integer.parseInt(startH), Integer.parseInt(startM));
-        LocalTime endTime = LocalTime.of(Integer.parseInt(endH), Integer.parseInt(endM));
-        LocalDateTime startDateTime = LocalDateTime.of(startD, startTime);
-        LocalDateTime endDateTime = LocalDateTime.of(endD, endTime);
-        return endDateTime.isAfter(startDateTime) && LocalDateTime.now().isBefore(startDateTime);
+    public static boolean isValidAppointmentTime(LocalDate startD, String startH, String startM, LocalDate endD, String endH, String endM, String startMeridiem, String endMeridiem) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss a");
+        ZonedDateTime startDateTime = ZonedDateTime.parse(startD + " " + startH + ":" + startM + ":" + "00" + " " + startMeridiem, formatter);
+        ZonedDateTime endDateTime = ZonedDateTime.parse(endD + " " + endH + ":" + endM + ":" + "00" + " " + endMeridiem, formatter);
+
+        return endDateTime.isAfter(startDateTime) && LocalDateTime.now().isBefore(ChronoLocalDateTime.from(startDateTime));
+//        LocalTime startTime = LocalTime.of(Integer.parseInt(startH), Integer.parseInt(startM));
+//        LocalTime endTime = LocalTime.of(Integer.parseInt(endH), Integer.parseInt(endM));
+//        LocalDateTime startDateTime = LocalDateTime.of(startD, startTime);
+//        LocalDateTime endDateTime = LocalDateTime.of(endD, endTime);
+//        return endDateTime.isAfter(startDateTime) && LocalDateTime.now().isBefore(startDateTime);
     }
 
 

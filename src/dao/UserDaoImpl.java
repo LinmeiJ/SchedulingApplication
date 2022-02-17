@@ -2,8 +2,13 @@ package dao;
 
 import controller.Validator;
 import dbConnection.JDBCConnection;
+import entity.Contact;
+import entity.User;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
@@ -14,6 +19,7 @@ import java.sql.SQLException;
 public class UserDaoImpl extends JDBCConnection {
     public static String userName;
     public static long userId;
+    public static ObservableList<User> userList = FXCollections.observableArrayList();
 
     /**
      * This method finds a username by user input name and user input password
@@ -39,4 +45,21 @@ public class UserDaoImpl extends JDBCConnection {
         }
         return isUserFind;
     }
+
+    public ObservableList<User> findAll() {
+        ResultSet rs = findRawDataFromDB("SELECT User_ID, User_Name, Password, Create_Date, Created_By, Last_Update, Last_Updated_By FROM users");
+        try {
+            while (rs.next()) {
+                String name = rs.getString("user_name");
+                int userId = rs.getInt("user_id");
+                String password = rs.getString("password");
+                User user = new User(userId, name, password);
+                userList.add(user);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return userList;
+    }
+
 }

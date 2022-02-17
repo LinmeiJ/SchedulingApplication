@@ -59,7 +59,7 @@ public class ContactDaoImpl extends JDBCConnection {
      * @return a list of contact names
      */
     public ObservableList<Contact> findAll() {
-        ResultSet rs = findRawDataFromDB("SELECT contact_Name FROM contacts");
+        ResultSet rs = findRawDataFromDB("SELECT contact_Name, contact_ID, email FROM contacts");
         try {
             while (rs.next()) {
                 String name = rs.getString("contact_name");

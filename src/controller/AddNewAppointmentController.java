@@ -5,9 +5,9 @@ import dateTimeUtil.BookingAvailability;
 import dateTimeUtil.DateTimeConverter;
 import entity.Appointment;
 import entity.Contact;
+import entity.Customer;
+import entity.User;
 import enums.Views;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -15,15 +15,9 @@ import javafx.scene.control.*;
 import javafx.util.Callback;
 
 import java.net.URL;
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.ResourceBundle;
-import java.util.function.Function;
-import java.util.function.Predicate;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -41,76 +35,92 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
     @FXML
     private TextArea aptDescriptionField;
     @FXML
-    private DatePicker startDate;
-    @FXML
     private DatePicker endDate;
-    @FXML
-    private ComboBox<String> startHr;
-    @FXML
-    private ComboBox<String> startMinute;
-    @FXML
-    private ComboBox<String> endMinute;
     @FXML
     private ComboBox<String> endHr;
     @FXML
+    private ComboBox<String> endMin;
+    @FXML
+    private ChoiceBox<String> endMeridiem;
+    @FXML
+    private DatePicker startDate;
+    @FXML
+    private ComboBox<String> startHr;
+    @FXML
+    private ComboBox<String> startMin;
+    @FXML
+    private ChoiceBox<String> startMeridiem;
+    @FXML
     private Button exitBtn;
     @FXML
-    private ChoiceBox<String> contactList;
+    private ComboBox<String> contactList;
     @FXML
-    private Label customerId;
+    private ComboBox<String> customerList;
     @FXML
-    private Label userId;
-    @FXML
+    private ComboBox<String> userList;
 
+    private final UserDaoImpl userDao = new UserDaoImpl();
     private final ContactDaoImpl contactDao = new ContactDaoImpl();
     private final CustomerDaoImpl customerDao = new CustomerDaoImpl();
     private final AppointmentDaoImpl appointmentDao = new AppointmentDaoImpl();
     public static long newCustID; // new customer ID
+    Map<Integer, String> userMap;
+    Map<Integer, String> customerMap;
+    Map<Integer, String> contactMap;
 
     /**
      * getting the date from user, validates the user inputs, and save the input to database.
      *
-     * <p>
-     *     lambda expression #1
-     * </p>
      * @param event JavaFX button press event
      */
     @FXML
-    public void saveIsClicked(ActionEvent event) {
+    void saveIsClicked(ActionEvent event) {
         String title = aptTitleField.getText();
         String description = aptDescriptionField.getText();
         String type = aptTypeField.getText();
         String location = aptLocationField.getText();
+
         LocalDate startD = startDate.getValue();
         String startH = startHr.getValue();
-        String startM = startMinute.getValue();
+        String startM = startMin.getValue();
+        String sm = startMeridiem.getValue();
+
         LocalDate endD = endDate.getValue();
-
         String endH = endHr.getValue();
-        String endM = endMinute.getValue();
-        String contactName = contactList.getValue();//fix me
-        long contactId = contactDao.getContactId(contactName);
-        //lambda expression #1: fix me - give a purpose!
-        Function<LocalDate, String> localOfficeStartHr = hr -> {
-            LocalDateTime estOfficeHrOfTheDay = LocalDateTime.of(hr, LocalTime.of(8, 0));
-            return String.valueOf(DateTimeConverter.convertESTToLocal(String.valueOf(estOfficeHrOfTheDay)).toLocalDateTime().toLocalTime());
-        };
+        String endM = endMin.getValue();
+        String em = endMeridiem.getValue();
 
-        if (!areValidInput(type, location, title, description, startD, startH, startM, endD, endH, endM, contactName)) {
-            Validator.displayInvalidInput("Invalid input. \n requires:\n\n" +
-                    "Only alphabets are allowed for Type, Location, Title \n and all fields can not be empty");
-        } else if (!Validator.isValidAppointmentTime(startD, startH, startM, endD, endH, endM)) {
+        String contactName = contactList.getValue();
+        String customerName = customerList.getValue();
+        String userName = userList.getValue();
+
+
+        int contactId = getID(contactName, contactMap);
+        int customerId = getID(contactName, customerMap);
+        int userId = getID(contactName, userMap);
+
+        if (!areValidInput(type, location, title, description, startD, startH, startM, endD, endH, endM, contactName, customerName, userName)) {
+            Validator.displayInvalidInput("Invalid input. All fields can not be empty");
+        } else if (!Validator.isValidAppointmentTime(startD, startH, startM, endD, endH, endM, sm, em)) {
             Validator.displayInfo("Sorry, your appointment can not be in the past or the appointment ending can not be before the appointment starting time. Try again please.");
         } else if (!DateTimeConverter.isWithinOfficeHour(startD, startH, startM)) {
             Validator.displayInfo("Sorry, The time you wish to book is out of the EST timezone office hour. \nThe office hour starts "
-                    + DateTimeConverter.getOfficeHourOfTheDay(startD)
+                    + DateTimeConverter.getOfficeStartHr(startD)
                     + " on your local time. Please select a different time.");
         } else if (appointmentDao.isDoubleBooking(contactId, startD, startH, startM, endD, endH, endM)) {
             Validator.displayInfo("Sorry, the time you have selected is booked, please select a different time. \nAvailable office hours for the same date in EST time(please check your localtime if you are not in EST timezone) is below: \n" + getAvailableTime()
-                    + "Keep in mind, the EST office hour starts at " + localOfficeStartHr.apply(startD) + " at your time and open for 14 hours a day");
+                    + "Keep in mind, the EST office hour starts at " + DateTimeConverter.getOfficeStartHr(startD) + " at your time and open for 14 hours a day");
         } else {
             saveNewAppointment(event, title, description, type, location, startD, startH, startM, endD, endH, endM, contactId);
         }
+    }
+
+    private int getID(String contactName, Map<Integer, String> map) {
+        for (Map.Entry<Integer, String> contact : map.entrySet()) {
+            if(contact.getValue().equals(contactName))
+                return contact.getKey();
+        }
+        return 0;
     }
 
     /**
@@ -194,8 +204,8 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
      * @param contact     contact ID.
      * @return boolean not valid returns a false, otherwise returns a true.
      */
-    private boolean areValidInput(String type, String location, String title, String description, LocalDate startD, String startH, String startM, LocalDate endD, String endH, String endM, String contact) {
-        return Validator.isValidString(type, location, title) && description.length() > 0 && contact != null && startD != null && endD != null && startM != null && startH != null && endM != null && endH != null;
+    private boolean areValidInput(String type, String location, String title, String description, LocalDate startD, String startH, String startM, LocalDate endD, String endH, String endM, String contact, String customer, String user) {
+        return Validator.isValidString(type, location, title) && description.length() > 0 && contact != null && customer != null && user != null && startD != null && endD != null && startM != null && startH != null && endM != null && endH != null;
     }
 
     private String getAvailableTime() {
@@ -217,28 +227,72 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        setDateTime();
+        contactList.getItems().addAll(convertContactListToIDNamePair().values());
+        customerList.getItems().addAll(convertCustomerListToIDNamePair().values());
+        userList.getItems().addAll(convertUserListToIDNamePair().values());
+
+    }
+
+    /**
+     * This method initialize the data hour time for user to select - weekends are disabled
+     */
+    private void setDateTime() {
         startDate.setValue(LocalDate.now());
         startDate.setShowWeekNumbers(true);
 
         endDate.setValue(LocalDate.now());
         endDate.setShowWeekNumbers(true);
 
-//        Callback<DatePicker, DateCell> startDayCellFactory = this.getDayCellFactory();
-//        startDate.setDayCellFactory(startDayCellFactory);
-//        Callback<DatePicker, DateCell> endDayCellFactory = this.getDayCellFactory();
-//        endDate.setDayCellFactory(endDayCellFactory);
-//
-//        startHr.setItems(estHr);
-//        startMinute.setItems(initializeMinutes());
-//        endHr.setItems(estHr);
-//        endMinute.setItems(initializeMinutes());
+        Callback<DatePicker, DateCell> startDayCellFactory = this.getDayCellFactory();
+        startDate.setDayCellFactory(startDayCellFactory);
+        Callback<DatePicker, DateCell> endDayCellFactory = this.getDayCellFactory();
+        endDate.setDayCellFactory(endDayCellFactory);
 
-        contactList.setItems(contactDao.findAll()
-                .stream()
-                .map(contact -> contact.getContact_name())
-                .collect(Collectors.toCollection(FXCollections::observableArrayList)));
-//        customerId.setText(customerDao.findAll().stream().map(c -> c.));
-        userId.setText("User ID: " + UserDaoImpl.userId);
+        startHr.setItems(DateTimeConverter.hrList);
+        startMin.setItems(DateTimeConverter.minuteList);
+        startMeridiem.setItems(DateTimeConverter.meridiemList);
 
+        endHr.setItems(DateTimeConverter.hrList);
+        endMin.setItems(DateTimeConverter.minuteList);
+        endMeridiem.setItems(DateTimeConverter.meridiemList);
     }
+
+
+    /**
+     * Lambda expression: Convert a list of user object into a user ID and user Name key value pair map
+     *
+     * @return a map that contains only user ID and its corresponding user name
+     */
+    public Map<Integer, String> convertUserListToIDNamePair() {
+        userMap = userDao.findAll()
+                .stream()
+                .collect(Collectors.toMap(User::getUser_id, User::getUser_name));
+        return userMap;
+    }
+
+    /**
+     * Lambda expression #1: Convert a list of contact object into a contact ID and contact Name key value pair map
+     *
+     * @return a map that contains only contact ID and its corresponding contact name
+     */
+    public Map<Integer, String> convertContactListToIDNamePair() {
+        contactMap = contactDao.findAll()
+                .stream()
+                .collect(Collectors.toMap(Contact::getContact_id, Contact::getContact_name));
+        return contactMap;
+    }
+
+    /**
+     * Lambda expression: Convert a list of Customer object into a Customer ID and Customer Name key value pair map
+     *
+     * @return a map that contains only Customer ID and its corresponding Customer name
+     */
+    public Map<Integer, String> convertCustomerListToIDNamePair() {
+        customerMap = customerDao.findAll()
+                .stream()
+                .collect(Collectors.toMap(Customer::getCustomer_id, Customer::getCustomer_name));
+        return customerMap;
+    }
+
 }

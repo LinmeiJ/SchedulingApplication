@@ -8,7 +8,7 @@ import java.sql.Timestamp;
  * @author Linmei M.
  */
 public class Customer {
-    private long customer_id;
+    private int customer_id;
     private String customer_name;
     private String address;
     private String postal_code;
@@ -36,7 +36,7 @@ public class Customer {
      * @param phone              the phone od the customer
      * @param firstLevelDivision the firstLevelDivision object
      */
-    public Customer(long customer_id, String customer_name, String address, String postal_code, String phone, FirstLevelDivision firstLevelDivision) {
+    public Customer(int customer_id, String customer_name, String address, String postal_code, String phone, FirstLevelDivision firstLevelDivision) {
         this.customer_id = customer_id;
         this.customer_name = customer_name;
         this.address = address;
@@ -50,7 +50,7 @@ public class Customer {
      *
      * @return a customer ID
      */
-    public long getCustomer_id() {
+    public int getCustomer_id() {
         return customer_id;
     }
 

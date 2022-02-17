@@ -17,6 +17,15 @@ public class User {
     private Timestamp last_update;
     private String last_updated_by;
 
+    public User() {
+    }
+
+    public User(int user_id, String user_name, String password) {
+        this.user_id = user_id;
+        this.user_name = user_name;
+        this.password = password;
+    }
+
     /**
      * A getter that get a user ID
      *
