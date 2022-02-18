@@ -112,7 +112,10 @@ public class LoginController implements Initializable, CommonUseHelperIfc {
      * Lambda expression
      */
     protected void displayUpcomingAptsAlert() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION, language.getString("upApt") + ":\n\n " + appointmentDao.getAllUpcomingApts(language), ButtonType.OK);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, appointmentDao.getAllUpcomingApts(language), ButtonType.OK);
+        alert.setTitle(language.getString("message"));
+        alert.setHeaderText(language.getString("upApt"));
+
         alert.showAndWait()
                 .filter(res -> res == ButtonType.OK);
     }

@@ -169,7 +169,7 @@ public final class Validator {
      * This method generates a message to confirm whether the end user want to delete a selected item.
      */
     public static void displayDeleteConfirmation(String message) {
-        confirmAlert.setTitle("Message");
+        confirmAlert.setTitle("Delete Confirmation");
         confirmAlert.setHeaderText("Delete");
         confirmAlert.setContentText("Are you sure you want to delete " + message);
         confirmResult = confirmAlert.showAndWait();

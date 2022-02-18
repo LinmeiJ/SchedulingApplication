@@ -75,27 +75,31 @@ public class CustomerRecordController implements Initializable, CommonUseHelperI
         selectedCust = recordTable.getSelectionModel().getSelectedItem();
 
         if (selectedCust != null) {
-            customerDao.delete(selectedCust);
-            customersDataTable.remove(selectedCust);
+            Validator.displayDeleteConfirmation("the customer ID " + selectedCust.getCustomer_id()+"? The associated appointments will be also delete!");
+            if (Validator.confirmResult.isPresent() && Validator.confirmResult.get() == ButtonType.OK) {
+                customerDao.delete(selectedCust);
+                customersDataTable.remove(selectedCust);
+                Validator.displaySuccess("Deleted");
+            }
         } else {
             Validator.displayInvalidInput("Please select a row to delete");
         }
     }
 
-    /**
-     * This method receives an action of going to the adding a new appointment view.
-     *
-     * @param event an event indicates a component-defined action occurred.
-     */
-    @FXML
-    void addNewAptSelected(ActionEvent event) {
-        selectedCust = recordTable.getSelectionModel().getSelectedItem();
-        if (selectedCust != null) {
-            setScene(event, Views.ADD_NEW_APT_VIEW.getView());
-        } else {
-            Validator.displayInvalidInput("Please select a row/customer to update or Add");
-        }
-    }
+//    /**
+//     * This method receives an action of going to the adding a new appointment view.
+//     *
+//     * @param event an event indicates a component-defined action occurred.
+//     */
+//    @FXML
+//    void addNewAptSelected(ActionEvent event) {
+//        selectedCust = recordTable.getSelectionModel().getSelectedItem();
+//        if (selectedCust != null) {
+//            setScene(event, Views.ADD_NEW_APT_VIEW.getView());
+//        } else {
+//            Validator.displayInvalidInput("Please select a row/customer to update or Add");
+//        }
+//    }
 
     /**
      * This method receives an action of going to the adding a new customer view.
