@@ -101,8 +101,8 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
                 String description = rs.getString("description");
                 String location = rs.getString("location");
                 String type = rs.getString("type");
-                Timestamp startDateTime = DateTimeConverter.convertUTCToLocal(String.valueOf(rs.getTimestamp("start")));
-                Timestamp endDateTime = DateTimeConverter.convertUTCToLocal(String.valueOf(rs.getTimestamp("end")));
+                Timestamp startDateTime = rs.getTimestamp("start");
+                Timestamp endDateTime =rs.getTimestamp("end");
 
                 int contactId = rs.getInt("contact_id");
                 int userId = rs.getInt("user_id");
@@ -187,7 +187,8 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
      * @throws SQLException An exception that provides information on a database access error or other errors.
      */
     public void save(Appointment appointment) {
-        String sql = "INSERT INTO appointments VALUES(NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        String sql = "INSERT INTO appointments (Title, Description, Location, Type, Start, End, Customer_ID, User_ID, Contact_ID, Created_By, Last_Update, create_date, Last_Updated_by) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement preparedStatement = null;
         try {
             preparedStatement = JDBCConnection.connection.prepareStatement(sql);
@@ -198,13 +199,13 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
             preparedStatement.setString(4, appointment.getType());
             preparedStatement.setTimestamp(5, appointment.getStart());
             preparedStatement.setTimestamp(6, appointment.getEnd());
-            preparedStatement.setTimestamp(7, appointment.getCreated_date());
-            preparedStatement.setString(8, appointment.getCreated_by());
-            preparedStatement.setTimestamp(9, appointment.getLast_update());
-            preparedStatement.setString(10, appointment.getLast_updated_by());
-            preparedStatement.setLong(11, appointment.getCustomer_id());
-            preparedStatement.setLong(12, appointment.getUser_id());
-            preparedStatement.setLong(13, appointment.getContact_id());
+            preparedStatement.setLong(7, appointment.getCustomer_id());
+            preparedStatement.setLong(8, appointment.getUser_id());
+            preparedStatement.setLong(9, appointment.getContact_id());
+            preparedStatement.setString(10, appointment.getCreated_by());
+            preparedStatement.setTimestamp(11, appointment.getLast_update());
+            preparedStatement.setTimestamp(12, appointment.getCreated_date());
+            preparedStatement.setString(13, appointment.getLast_updated_by());
 
             preparedStatement.execute();
         } catch (SQLException e) {

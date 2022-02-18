@@ -113,7 +113,7 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
 //        else if (!Validator.isValidAppointmentTime(startD, startH, startM, endD, endH, endM)) { // fix me
 //            Validator.displayInfo("Your appointment can not be in the past or your appointment ending time can not be before the appointment starting time. Please try again.");
 //        }
-        else if (!DateTimeConverter.isWithinOfficeHour(startD, startH, startM)) {
+        else if (!DateTimeConverter.isWithinOfficeHour(startD, startH, startM, endD, endH, endM)) {
             Validator.displayInfo("Sorry, The time you wish to book is out of the EST timezone office hour. \nThe office hour starts "
                     + DateTimeConverter.getOfficeStartHr(startD)
                     + " on your local time. Please select a different time.");

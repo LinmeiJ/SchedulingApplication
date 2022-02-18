@@ -1,5 +1,6 @@
 package controller;
 
+import dateTimeUtil.DateTimeConverter;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -154,6 +155,17 @@ public final class Validator {
     }
 
     /**
+     *
+     * @param message
+     */
+    public static void displayConfirmation(String message) {
+        infoAlert.setTitle("Confirmation");
+        infoAlert.setHeaderText(message);
+        infoAlert.showAndWait()
+                .filter(res -> res == ButtonType.OK);
+    }
+
+    /**
      * This method generates a message to confirm whether the end user want to delete a selected item.
      */
     public static void displayDeleteConfirmation() { // fix me - 1, change return not as void - boolean 2. passing a message
@@ -288,4 +300,10 @@ public final class Validator {
     }
 
 
+    public static boolean isOutOfOfficeHr(LocalDateTime startLocalDateTime, LocalDateTime endLocalDateTime) {
+        return (startLocalDateTime.toLocalTime()).isBefore(DateTimeConverter.convertESTOfficeStartHrToLocal())
+                || (startLocalDateTime.toLocalTime().isAfter(DateTimeConverter.convertESTOfficeEndHrToLocal()))
+                || (endLocalDateTime.toLocalTime()).isBefore(DateTimeConverter.convertESTOfficeStartHrToLocal())
+                || (endLocalDateTime.toLocalTime().isAfter(DateTimeConverter.convertESTOfficeEndHrToLocal()));
+    }
 }

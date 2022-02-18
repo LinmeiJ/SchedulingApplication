@@ -79,6 +79,7 @@ public class AppointmentRecordController extends JDBCConnection implements Initi
     void deleteClicked(ActionEvent event) {
         selectApt = appointmentTable.getSelectionModel().getSelectedItem();
         if (selectApt != null) {
+            Validator.displayDeleteConfirmation();
             if (Validator.confirmResult.isPresent() && Validator.confirmResult.get() == ButtonType.OK) {
                 appointmentDao.delete(selectApt);
                 aptDataTable.remove(selectApt);

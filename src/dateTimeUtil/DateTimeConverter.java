@@ -62,6 +62,9 @@ public class DateTimeConverter {
      * @return an EST time
      */
     public static Timestamp convertAptTimeToEST(LocalDate dateValue, String hrValue, String minuteValue) {
+        if(hrValue.length() < 2){
+            hrValue = "0" + hrValue;
+        }
         String str = dateValue.toString() + " " + hrValue + ":" + minuteValue + ":00";
         LocalDateTime dateTime = LocalDateTime.parse(str, FORMATTER);
         return Timestamp.valueOf(FORMATTER.format(dateTime.atZone(ZoneId.systemDefault()).withZoneSameInstant(ZoneId.of(String.valueOf(TimeZoneOption.EST), ZoneId.SHORT_IDS))));
@@ -204,11 +207,12 @@ public class DateTimeConverter {
         return (MINUTES.between(TODAY, timestamp.toLocalDateTime()) >= 0 && MINUTES.between(TODAY, timestamp.toLocalDateTime()) <= 16);
     }
 
-    public static boolean isWithinOfficeHour(LocalDate dateValue, String hrValue, String minuteValue) {
+    public static boolean isWithinOfficeHour(LocalDate dateValue, String hrValue, String minuteValue, LocalDate endDate, String endH, String endM) {
         Timestamp aptDateTime = convertAptTimeToEST(dateValue, hrValue, minuteValue);
+        Timestamp endDateTime = convertAptTimeToEST(endDate, endH, endM);
         LocalDateTime officeOpenDateTime = LocalDateTime.of(dateValue, officeOpenTime);
         LocalDateTime officeCloseDateTime = LocalDateTime.of(dateValue, officeCloseTime);
-        return checkOfficeDateTime(aptDateTime.toLocalDateTime(), officeOpenDateTime, officeCloseDateTime);
+        return checkOfficeDateTime(aptDateTime.toLocalDateTime(), officeOpenDateTime, officeCloseDateTime, endDateTime.toLocalDateTime());
     }
 
     /**
@@ -219,8 +223,9 @@ public class DateTimeConverter {
      * @param officeCloseDateTime the time when office closes
      * @return true if the appointment is within EST office hour, false when out of office hour.
      */
-    private static boolean checkOfficeDateTime(LocalDateTime aptDateTime, LocalDateTime officeOpenDateTime, LocalDateTime officeCloseDateTime) {
-        return !aptDateTime.isBefore(officeOpenDateTime) && !aptDateTime.isAfter(officeCloseDateTime);
+    private static boolean checkOfficeDateTime(LocalDateTime aptDateTime, LocalDateTime officeOpenDateTime, LocalDateTime officeCloseDateTime, LocalDateTime endDateTime) {
+        return !aptDateTime.isBefore(officeOpenDateTime) && !aptDateTime.isAfter(officeCloseDateTime)
+                && !endDateTime.isBefore(officeOpenDateTime) && !endDateTime.isAfter(officeCloseDateTime);
     }
 
     /**
@@ -255,14 +260,14 @@ public class DateTimeConverter {
         return hr;
     }
 
-    public static String convertESTOfficeStartHrToLocal(){
-        Timestamp startTime =  convertESTToLocal(String.valueOf(LocalDateTime.of(LocalDate.now(), LocalTime.of(8, 0))));
-        return String.valueOf(startTime);
+    public static LocalTime convertESTOfficeStartHrToLocal(){
+        Timestamp startTime = convertESTToLocal(String.valueOf(LocalDateTime.of(LocalDate.now(), LocalTime.of(8, 0))));
+        return startTime.toLocalDateTime().toLocalTime();
     }
 
-    public static String convertESTOfficeEndHrToLocal(){
+    public static LocalTime convertESTOfficeEndHrToLocal(){
         Timestamp endTime =  convertESTToLocal(String.valueOf(LocalDateTime.of(LocalDate.now(), LocalTime.of(22, 0))));
-        return String.valueOf(endTime);
+        return endTime.toLocalDateTime().toLocalTime();
     }
 
 }

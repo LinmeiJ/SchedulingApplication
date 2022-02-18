@@ -15,6 +15,7 @@ import javafx.scene.control.*;
 import javafx.util.Callback;
 
 import java.net.URL;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -90,8 +91,8 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
         String customerName = customerList.getValue();
         String userName = userList.getValue();
         int contactId = getID(contactName, contactMap);
-        int customerId = getID(contactName, customerMap);
-        int userId = getID(contactName, userMap);
+        int customerId = getID(customerName, customerMap);
+        int userId = getID(userName, userMap);
 
         // get appointment time user wishes to book
         LocalDate startD = startDate.getValue();
@@ -107,20 +108,31 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
 
         if (!areValidInput(type, location, title, description, startD, startH, startM, endD, endH, endM, contactName, customerName, userName)) {
             Validator.displayInvalidInput("Invalid input. All fields can not be empty");
-        } else if (!Validator.isValidAppointmentTime(startD, startH, startM, endD, endH, endM)){
+//        }else if(!Validator.isOutOfOfficeHr(startLocalDateTime, endLocalDateTime)){
+//            Validator.displayInfo("Sorry, your appointment is out of office hour. Try again.");
+        }
+        else if (!Validator.isValidAppointmentTime(startD, startH, startM, endD, endH, endM)){
             Validator.displayInfo("Sorry, your appointment can not be in the past or the appointment ending can not be before the appointment starting time. Try again please.");
-        } else if (!DateTimeConverter.isWithinOfficeHour(startD, startH, startM)) {
+        } else if (!DateTimeConverter.isWithinOfficeHour(startD, startH, startM, endD, endH, endM)) {
             Validator.displayInfo("Sorry, The time you wish to book is out of office hour.");
         } else if (appointmentDao.isDoubleBooking(contactId, startD, startH, startM, endD, endH, endM)) {
             Validator.displayInfo("Sorry, the time you have selected is already booked, please select a different time.");
         } else {
-            saveNewAppointment(event, title, description, type, location, startD, startH, startM, endD, endH, endM, contactId);
+            Timestamp createdDate = DateTimeConverter.convertLocalTimeToUTC(LocalDateTime.now());
+            Timestamp lastUpdate = DateTimeConverter.convertLocalTimeToUTC(LocalDateTime.now());
+            Appointment appointment = new Appointment(title, description, location,
+                    type, Timestamp.valueOf(startLocalDateTime), Timestamp.valueOf(endLocalDateTime),
+                   createdDate, userName, lastUpdate, userName, customerId, contactId, userId);
+            appointmentDao.save(appointment);
+            Validator.displaySuccess("Appointment is saved");
+            setScene(event, Views.APPOINTMENT_RECORD_VIEW.getView());
+//            saveNewAppointment(event, title, description, type, location, startD, startH, startM, endD, endH, endM, contactId);
         }
     }
 
-    private int getID(String contactName, Map<Integer, String> map) {
+    private int getID(String customerName, Map<Integer, String> map) {
         for (Map.Entry<Integer, String> contact : map.entrySet()) {
-            if(contact.getValue().equals(contactName))
+            if(contact.getValue().equals(customerName))
                 return contact.getKey();
         }
         return 0;
@@ -157,12 +169,12 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
         appointment.setLast_update(DateTimeConverter.convertLocalTimeToUTC(LocalDateTime.now()));
         appointment.setLast_updated_by(UserDaoImpl.userName);
 
-        if (AddNewCustomerController.isNewCust) {
-            newCustID = customerDao.findIdByNameAndDivisionId(AddNewCustomerController.customer.getCustomer_name(), AddNewCustomerController.customer.getDivision_id());
-            appointment.setCustomer_id(newCustID);
-        } else {
-            appointment.setCustomer_id(CustomerRecordController.selectedCust.getCustomer_id());
-        }
+//        if (AddNewCustomerController.isNewCust) {
+//            newCustID = customerDao.findIdByNameAndDivisionId(AddNewCustomerController.customer.getCustomer_name(), AddNewCustomerController.customer.getDivision_id());
+//            appointment.setCustomer_id(newCustID);
+//        } else {
+//            appointment.setCustomer_id(CustomerRecordController.selectedCust.getCustomer_id());
+//        }
         appointment.setUser_id(UserDaoImpl.userId);
         appointment.setContact_id(contactId);
 
@@ -239,8 +251,8 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
     }
 
     private void setOfficeHrLabels() {
-        LocalOfficeHrStart.setText(DateTimeConverter.convertESTOfficeStartHrToLocal());
-        localOfficeHrEnd.setText(DateTimeConverter.convertESTOfficeEndHrToLocal());
+        LocalOfficeHrStart.setText(String.valueOf(DateTimeConverter.convertESTOfficeStartHrToLocal()));
+        localOfficeHrEnd.setText(String.valueOf(DateTimeConverter.convertESTOfficeEndHrToLocal()));
     }
 
     /**
