@@ -3,6 +3,7 @@ package dateTimeUtil;
 import entity.Appointment;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.*;
 import java.util.function.BiPredicate;
@@ -54,10 +55,9 @@ public class BookingAvailability {
      * @param end          the user input ent localTime
      * @return true if time is already booked, otherwise returns false.
      */
-    public static boolean checkBookingStatus(List<Appointment> scheduleList, Timestamp start, Timestamp end) {
+    public static boolean checkBookingStatus(List<Appointment> scheduleList, LocalDateTime start, LocalDateTime end) {
         availableTimeToDisplay = new HashMap<>();
         List<LocalTime> availableTimeSlots = initializedTimeSlots();
-
         filterOutAlReadyBookedTimeSlots(scheduleList, availableTimeSlots);
 
         if (start != null || end != null) {
@@ -117,9 +117,9 @@ public class BookingAvailability {
      * @param end   end localTime
      * @return a list of time slots that user wishes to book.
      */
-    private static List<LocalTime> getUserWantedTimeSlots(Timestamp start, Timestamp end) {
+    private static List<LocalTime> getUserWantedTimeSlots(LocalDateTime start, LocalDateTime end) {
         // figure out which timeslot the user would like to book
-        long newAptDuration = MINUTES.between(start.toLocalDateTime().toLocalTime(), end.toLocalDateTime().toLocalTime());
+        long newAptDuration = MINUTES.between(start.toLocalTime(), end.toLocalTime());
         long newAptDurationCount = newAptDuration / 15;
 
         // split the appoint to get ready for checking availability
@@ -127,7 +127,7 @@ public class BookingAvailability {
 
         int incrementTime = 0;
         for (int index = 0; index <= newAptDurationCount; index++) {
-            splitTime.add(start.toLocalDateTime().toLocalTime().plusMinutes(incrementTime));
+            splitTime.add(start.toLocalTime().plusMinutes(incrementTime));
             incrementTime += 15;
         }
         return splitTime;

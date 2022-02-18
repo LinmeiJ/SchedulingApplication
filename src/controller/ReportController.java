@@ -155,9 +155,9 @@ public class ReportController implements Initializable, CommonUseHelperIfc {
     private void displayAppointmentsByContactName() {
         ObservableList<Contact> contacts = contactDao.findAll();
         // lambda expression: using steam to map a list of contact names and save it to a list for displaying them on the user UI
-        ObservableList<String> contactNames = (ObservableList<String>) contacts.stream()
+        ObservableList<String> contactNames = contacts.stream()
                 .map(c -> c.getContact_name())
-                .collect(Collectors.toList());
+                .collect(Collectors.toCollection(FXCollections::observableArrayList));
 
         contactList.setItems(contactNames);
 

@@ -168,12 +168,11 @@ public final class Validator {
     /**
      * This method generates a message to confirm whether the end user want to delete a selected item.
      */
-    public static void displayDeleteConfirmation() { // fix me - 1, change return not as void - boolean 2. passing a message
+    public static void displayDeleteConfirmation(String message) {
         confirmAlert.setTitle("Message");
         confirmAlert.setHeaderText("Delete");
-        confirmAlert.setContentText("Are you sure you want to delete it?"); // fix me here to specify a string
-        confirmResult = confirmAlert.showAndWait()
-                .filter(res -> res == ButtonType.OK);;
+        confirmAlert.setContentText("Are you sure you want to delete " + message);
+        confirmResult = confirmAlert.showAndWait();
     }
 
     /**

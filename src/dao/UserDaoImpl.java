@@ -19,7 +19,7 @@ import java.sql.SQLException;
 public class UserDaoImpl extends JDBCConnection {
     public static String userName;
     public static long userId;
-    public static ObservableList<User> userList = FXCollections.observableArrayList();
+    public ObservableList<User> userList;
 
     /**
      * This method finds a username by user input name and user input password
@@ -47,6 +47,7 @@ public class UserDaoImpl extends JDBCConnection {
     }
 
     public ObservableList<User> findAll() {
+        userList = FXCollections.observableArrayList();
         ResultSet rs = findRawDataFromDB("SELECT User_ID, User_Name, Password, Create_Date, Created_By, Last_Update, Last_Updated_By FROM users");
         try {
             while (rs.next()) {

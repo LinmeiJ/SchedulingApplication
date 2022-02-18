@@ -79,17 +79,16 @@ public class AppointmentRecordController extends JDBCConnection implements Initi
     void deleteClicked(ActionEvent event) {
         selectApt = appointmentTable.getSelectionModel().getSelectedItem();
         if (selectApt != null) {
-            Validator.displayDeleteConfirmation();
+            Validator.displayDeleteConfirmation("the appointment ID " + selectApt.getAppointment_id() + " and the type is " + selectApt.getType());
             if (Validator.confirmResult.isPresent() && Validator.confirmResult.get() == ButtonType.OK) {
                 appointmentDao.delete(selectApt);
                 aptDataTable.remove(selectApt);
                 Validator.displaySuccess("The appointment ID " + selectApt.getAppointment_id() + " and type as " + selectApt.getType() + " is deleted");
             }
-        }
-        else {
+        } else {
             Validator.displayInvalidInput("Please select a row to delete");
         }
-}
+    }
 
     /**
      * This method exits the program.
@@ -189,15 +188,16 @@ public class AppointmentRecordController extends JDBCConnection implements Initi
     private void initTable() {
         initCols();
         try {
-            if (AddNewCustomerController.isNewCust) {//fix me
-//                aptDataTable.addAll(appointmentDao.findAllAppointment(AddNewAppointmentController.newCustID));
-                AddNewCustomerController.isNewCust = false;
-            } else if (isMonthFilter) {// fix me
+//            if (AddNewCustomerController.isNewCust) {//fix me
+////                aptDataTable.addAll(appointmentDao.findAllAppointment(AddNewAppointmentController.newCustID));
+//                AddNewCustomerController.isNewCust = false;
+//            } else
+            if (isMonthFilter) {
                 filterByMonth.setSelected(true);
                 aptDataTable.addAll(getAptsForCurrentMonth(appointmentDao.findAllAppointment()));
                 isMonthFilter = false;
             } else if (isWeekFilter) {
-                filterByWeek.setSelected(true); // fix me
+                filterByWeek.setSelected(true);
                 aptDataTable.addAll(getAptsForCurrentWeek(appointmentDao.findAllAppointment()));
                 isWeekFilter = false;
             } else {
@@ -211,7 +211,7 @@ public class AppointmentRecordController extends JDBCConnection implements Initi
     }
 
     /**
-     * Lambda expression.This method sets up the appointment list filtering by current month
+     * Lambda expression #2.This method sets up the appointment list filtering by current month
      *
      * @param appointments an appointment list of all months
      * @return an appointment list of current month
@@ -241,7 +241,7 @@ public class AppointmentRecordController extends JDBCConnection implements Initi
         //lambda expression: filter and save a list of appointments that is only for current week.
         aptByWeek = appointments.stream()
                 .filter(apt -> (apt.getStart().toLocalDateTime().toLocalDate().compareTo(saturday) <= 0 &&
-                apt.getStart().toLocalDateTime().toLocalDate().compareTo(sunday) >= 0))
+                        apt.getStart().toLocalDateTime().toLocalDate().compareTo(sunday) >= 0))
                 .collect(Collectors.toCollection(FXCollections::observableArrayList));
         return aptByWeek;
     }

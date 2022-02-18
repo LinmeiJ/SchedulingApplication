@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane cache="true" prefHeight="400.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CustomerRecordController">
+<AnchorPane cache="true" prefHeight="400.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CustomerRecordController">
     <children>
         <Label alignment="CENTER" graphicTextGap="105.0" layoutX="10.0" layoutY="14.0" prefHeight="30.0" prefWidth="961.0" text="Customer Records" textAlignment="CENTER" textFill="#5e2d2d">
             <font>
@@ -38,22 +38,17 @@
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
                 </TableView>
-            <Button fx:id="addNew" layoutX="775.0" layoutY="125.0" mnemonicParsing="false" onAction="#addNewCustomer" prefHeight="30.0" prefWidth="176.0" text="Add A New Customer">
+            <Button fx:id="addNew" layoutX="782.0" layoutY="163.0" mnemonicParsing="false" onAction="#addNewCustomer" prefHeight="30.0" prefWidth="205.0" text="Add A New Customer">
                <font>
                   <Font size="14.0" />
                </font>
             </Button>
-            <Button fx:id="updateBtn" layoutX="756.0" layoutY="60.0" mnemonicParsing="false" onAction="#UpdateSelected" prefHeight="30.0" prefWidth="228.0" text="Update Customer &amp; Appointment">
+            <Button fx:id="updateBtn" layoutX="784.0" layoutY="96.0" mnemonicParsing="false" onAction="#UpdateSelected" prefHeight="30.0" prefWidth="205.0" text="Update Customer">
                <font>
                   <Font size="14.0" />
                </font>
             </Button>
-            <Button fx:id="deleteBtn" layoutX="816.0" layoutY="229.0" mnemonicParsing="false" onAction="#deleteSelected" prefHeight="26.0" prefWidth="92.0" text="Delete">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Button>
-            <Button fx:id="addNewApt" layoutX="774.0" layoutY="178.0" mnemonicParsing="false" onAction="#addNewAptSelected" prefHeight="30.0" prefWidth="176.0" text="Add A New Appointment">
+            <Button fx:id="deleteBtn" layoutX="782.0" layoutY="229.0" mnemonicParsing="false" onAction="#deleteSelected" prefHeight="30.0" prefWidth="205.0" text="Delete A Customer">
                <font>
                   <Font size="14.0" />
                </font>

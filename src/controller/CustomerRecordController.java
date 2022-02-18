@@ -90,7 +90,6 @@ public class CustomerRecordController implements Initializable, CommonUseHelperI
     @FXML
     void addNewAptSelected(ActionEvent event) {
         selectedCust = recordTable.getSelectionModel().getSelectedItem();
-
         if (selectedCust != null) {
             setScene(event, Views.ADD_NEW_APT_VIEW.getView());
         } else {

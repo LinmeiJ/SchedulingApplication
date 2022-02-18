@@ -59,7 +59,7 @@ public class CustomerDaoImpl extends JDBCConnection implements ServiceIfc<Custom
             String sql = "DELETE FROM customers WHERE Customer_ID = " + customer.getCustomer_id();
             statement.executeUpdate(sql);
             allCustomers.remove(customer);
-            Validator.displayDeleteConfirmation(); // fix me - handle the ok or cancel button
+            Validator.displayDeleteConfirmation( "the Customer ID " + customer.getCustomer_id() + "and name is " + customer.getCustomer_name());
             Validator.displaySuccess("Delete");
         } catch (SQLException e) {
             System.out.println("something wrong with executing delete sql");

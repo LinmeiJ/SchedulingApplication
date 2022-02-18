@@ -162,7 +162,7 @@ public class UpdateCustomerController implements Initializable, CommonUseHelperI
         String phone = phoneField.getText();
         String postCode = zipCodeField.getText();
         String div = division.getValue();
-        return !name.equals(selectedCust.getCustomer_name()) || !address.equals(selectedCust.getAddress())
+        return !name.equals(customer.getCustomer_name()) || !address.equals(selectedCust.getAddress())
                 || !phone.equals(selectedCust.getPhone()) || !postCode.equals(selectedCust.getPostal_code())
                 || !div.equals(getCustomerDivision().get(0));
     }

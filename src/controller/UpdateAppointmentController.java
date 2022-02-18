@@ -74,7 +74,7 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
 
     private final AppointmentDaoImpl appointmentDao = new AppointmentDaoImpl();
     private final ContactDaoImpl contactDao = new ContactDaoImpl();
-    public static Appointment appointment = AppointmentRecordController.selectApt;
+    public static Appointment appointment ;
 
     /**
      * This method sets the scene to the previous scene.
@@ -129,7 +129,7 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
                     "1. your appointment can not be in the past \n 2. the appointment ending time can not be before the appointment starting time. \n Try again please.");
         } else if (!DateTimeConverter.isWithinOfficeHour(startD, startH, startM, endD, endH, endM)) {
             Validator.displayInfo("Sorry, The time you wish to book is out of office hour.");
-        } else if (appointmentDao.isDoubleBooking(contactId, startD, startH, startM, endD, endH, endM)) {
+        } else if (appointmentDao.isDoubleBooking(appointment.getCustomer_id(),startLocalDateTime, endLocalDateTime)) {
             Validator.displayInfo("Sorry, the time you have selected is already booked, please select a different time.");
         } else {
             Timestamp createdDate = DateTimeConverter.convertLocalTimeToUTC(LocalDateTime.now());
@@ -196,6 +196,8 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        appointment = AppointmentRecordController.selectApt;
+
         initFields();
         initLastAptDateTime();
         initContact();

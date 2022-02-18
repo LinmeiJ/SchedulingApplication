@@ -72,9 +72,9 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
     private final CustomerDaoImpl customerDao = new CustomerDaoImpl();
     private final AppointmentDaoImpl appointmentDao = new AppointmentDaoImpl();
     public static long newCustID; // new customer ID
-    Map<Integer, String> userMap;
-    Map<Integer, String> customerMap;
-    Map<Integer, String> contactMap;
+    Map<Integer, String> userMap = new HashMap<>();
+    Map<Integer, String> customerMap = new HashMap<>();
+    Map<Integer, String> contactMap = new HashMap<>();
 
     /**
      * getting the date from user, validates the user inputs, and save the input to database.
@@ -113,7 +113,7 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
                     "1. your appointment can not be in the past \n 2. the appointment ending time can not be before the appointment starting time. \n Try again please.");
         } else if (!DateTimeConverter.isWithinOfficeHour(startD, startH, startM, endD, endH, endM)) {
             Validator.displayInfo("Sorry, The time you wish to book is out of office hour.");
-        } else if (appointmentDao.isDoubleBooking(contactId, startD, startH, startM, endD, endH, endM)) {
+        } else if (appointmentDao.isDoubleBooking(customerId, startLocalDateTime, endLocalDateTime)) {
             Validator.displayInfo("Sorry, the time you have selected is already booked, please select a different time.");
         } else {
             Timestamp createdDate = DateTimeConverter.convertLocalTimeToUTC(LocalDateTime.now());
@@ -283,6 +283,7 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
      * @return a map that contains only user ID and its corresponding user name
      */
     public Map<Integer, String> convertUserListToIDNamePair() {
+        userMap.clear();
         userMap = userDao.findAll()
                 .stream()
                 .collect(Collectors.toMap(User::getUser_id, User::getUser_name));
@@ -295,9 +296,11 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
      * @return a map that contains only contact ID and its corresponding contact name
      */
     public Map<Integer, String> convertContactListToIDNamePair() {
+        contactMap.clear();
         contactMap = contactDao.findAll()
                 .stream()
                 .collect(Collectors.toMap(Contact::getContact_id, Contact::getContact_name));
+
         return contactMap;
     }
 
@@ -307,6 +310,7 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
      * @return a map that contains only Customer ID and its corresponding Customer name
      */
     public Map<Integer, String> convertCustomerListToIDNamePair() {
+        customerMap.clear();
         customerMap = customerDao.findAll()
                 .stream()
                 .collect(Collectors.toMap(Customer::getCustomer_id, Customer::getCustomer_name));

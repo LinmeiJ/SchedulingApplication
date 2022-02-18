@@ -134,9 +134,9 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
             preparedStatement.setString(4, appointment.getType());
             preparedStatement.setTimestamp(5, appointment.getStart());
             preparedStatement.setTimestamp(6, appointment.getEnd());
-            preparedStatement.setTimestamp(7, DateTimeConverter.convertLocalTimeToUTC(LocalDateTime.now()));
+            preparedStatement.setTimestamp(7,Timestamp.valueOf(LocalDateTime.now()));
             preparedStatement.setString(8, UserDaoImpl.userName);
-            preparedStatement.setTimestamp(9, DateTimeConverter.convertLocalTimeToUTC(LocalDateTime.now()));
+            preparedStatement.setTimestamp(9, Timestamp.valueOf(LocalDateTime.now()));
             preparedStatement.setString(10, UserDaoImpl.userName);
             preparedStatement.setLong(11, appointment.getCustomer_id());
             preparedStatement.setLong(12, appointment.getUser_id());
@@ -261,29 +261,54 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
     }
 
     /**
+     * This methods find a list of appointment by a specific customer ID.
+     *
+     * @param customerID the customer ID that a appointment associate to
+     * @return A list of appointment
+     */
+    public List<Appointment> findByCustomerID(long customerID) {
+        List<Appointment> scheduleListByContactID = new ArrayList<>();
+        try {
+            ResultSet rs = findRawDataFromDB("Select Appointment_ID, Start, End, Contact_ID FROM client_schedule.appointments WHERE Customer_ID = " + customerID);
+            while (rs.next()) {
+                long aptId = rs.getLong("appointment_id");
+                if(AppointmentRecordController.selectApt != null && AppointmentRecordController.selectApt.getAppointment_id() == aptId){
+                    continue;
+                }
+                Timestamp start = rs.getTimestamp("start");
+                Timestamp end = rs.getTimestamp("end");
+                Appointment appointmentSchedule = new Appointment(aptId, start, end);
+                appointmentSchedule.setContact_id(rs.getLong("contact_id"));
+                appointmentSchedule.setCustomer_id(customerID);
+                scheduleListByContactID.add(appointmentSchedule);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return scheduleListByContactID;
+    }
+
+    /**
      * This method checks whether a new appointment time is already been booked.
      *
-     * @param contactId the contact id user has selected
-     * @param start     the start date user has selected
-     * @param startH    the start hour user has selected
-     * @param startM    the start minute user has selected
-     * @param end       the end date user has selected
-     * @param endH      the end hour user has selected
-     * @param endM      the end minute user has selected
+     * @param customerID the customer id user has selected
+     * @param startApt appointment start time
+     * @param  endApt appointment end time
      * @return returns true when the time is available, otherwise, returns false.
      */
-    public boolean isDoubleBooking(long contactId, LocalDate start, String startH, String startM, LocalDate end, String endH, String endM) {
-        List<Appointment> scheduleList = findByContactId(contactId);// fix me - get by customer
+    public boolean isDoubleBooking(long customerID,
+                                   LocalDateTime startApt, LocalDateTime endApt) {
+        List<Appointment> scheduleList = findByCustomerID(customerID);
         if (AppointmentRecordController.selectApt != null) {
-            if (isAppointmentTimeUpdated(DateTimeConverter.convertAptTimeToUTC(start, startH, startM), DateTimeConverter.convertAptTimeToUTC(end, endH, endM)))
+            if (isAppointmentTimeUpdated(startApt, endApt))
             {
                 return false;
             }
         }
-        Timestamp aptStartTime = DateTimeConverter.convertAptTimeToEST(start, startH, startM);
-        Timestamp aptEndTime = DateTimeConverter.convertAptTimeToEST(end, endH, endM);
-        List<Appointment> sameDateScheduleList = filterByDate(scheduleList, aptStartTime);
-        return BookingAvailability.checkBookingStatus(sameDateScheduleList, aptStartTime, aptEndTime);
+//        Timestamp aptStartTime = DateTimeConverter.convertAptTimeToEST(start, startH, startM);
+//        Timestamp aptEndTime = DateTimeConverter.convertAptTimeToEST(end, endH, endM);
+        List<Appointment> sameDateScheduleList = filterByDate(scheduleList, startApt);
+        return BookingAvailability.checkBookingStatus(sameDateScheduleList, startApt, endApt);
     }
 
     /**
@@ -293,7 +318,7 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
      * @param aptEndTime   an appointment ending time
      * @return false when the appointment time is not changed, otherwise returns true.
      */
-    private boolean isAppointmentTimeUpdated(Timestamp aptStartTime, Timestamp aptEndTime) {
+    private boolean isAppointmentTimeUpdated(LocalDateTime aptStartTime, LocalDateTime aptEndTime) {
         return aptStartTime.equals(AppointmentRecordController.selectApt.getStart())
                 && aptEndTime.equals(AppointmentRecordController.selectApt.getEnd());
     }
@@ -305,8 +330,8 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
      * @param aptStartTime a new appointment starting time
      * @return returns a list of appointment that is in the same date.
      */
-    public List<Appointment> filterByDate(List<Appointment> scheduleList, Timestamp aptStartTime) {
-        LocalDate date = aptStartTime.toLocalDateTime().toLocalDate();
+    public List<Appointment> filterByDate(List<Appointment> scheduleList, LocalDateTime aptStartTime) {
+        LocalDate date = aptStartTime.toLocalDate();
         return scheduleList.stream()
                 .filter(apt -> apt.getStart().toLocalDateTime().toLocalDate().equals(date))
                 .collect(Collectors.toList());

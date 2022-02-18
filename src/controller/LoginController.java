@@ -109,8 +109,7 @@ public class LoginController implements Initializable, CommonUseHelperIfc {
      * Displays whether there is an upcoming appointment.
      *
      * <p>
-     * Lambda expression #2. fix me - what the purpose and why use it!
-     * </P>
+     * Lambda expression
      */
     protected void displayUpcomingAptsAlert() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION, language.getString("upApt") + ":\n\n " + appointmentDao.getAllUpcomingApts(language), ButtonType.OK);
