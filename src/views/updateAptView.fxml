@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
@@ -66,7 +67,7 @@
             <Label fx:id="custID" layoutX="97.0" layoutY="476.0" prefHeight="18.0" prefWidth="54.0" />
             <Label layoutX="172.0" layoutY="476.0" text="User ID:" />
             <Label fx:id="userId" layoutX="231.0" layoutY="476.0" prefHeight="18.0" prefWidth="54.0" />
-            <Label layoutX="284.0" layoutY="66.0" prefHeight="20.0" prefWidth="263.0" text="Office Hour is from 8am to 22pm EST." textOverrun="WORD_ELLIPSIS">
+            <Label layoutX="284.0" layoutY="66.0" prefHeight="20.0" prefWidth="213.0" text="Local Time Office Hour: " textOverrun="WORD_ELLIPSIS">
                <font>
                   <Font size="14.0" />
                </font>
@@ -87,6 +88,9 @@
                   </LinearGradient>
                </textFill>
             </Label>
+            <Label fx:id="startOfficeHr" layoutX="484.0" layoutY="68.0" prefHeight="18.0" prefWidth="30.0" />
+            <Label layoutX="516.0" layoutY="68.0" prefHeight="18.0" prefWidth="27.0" text="To" />
+            <Label fx:id="endOfficeHr" layoutX="544.0" layoutY="68.0" prefHeight="18.0" prefWidth="46.0" />
          </children>
       </AnchorPane>
       <Button fx:id="saveUpdates" layoutX="973.0" layoutY="476.0" mnemonicParsing="false" onAction="#updateClicked" prefHeight="44.0" prefWidth="94.0" text="Save">
@@ -95,5 +99,7 @@
          </font></Button>
       <Button fx:id="backBtn" layoutX="946.0" layoutY="547.0" mnemonicParsing="false" onAction="#backToRecordPage" text="Back" />
       <Button fx:id="cancelBtn" layoutX="1040.0" layoutY="547.0" mnemonicParsing="false" onAction="#exitBtnClicked" text="Exit" />
+      <ChoiceBox fx:id="startMeridiem" layoutX="975.0" layoutY="148.0" prefHeight="26.0" prefWidth="54.0" />
+      <ChoiceBox fx:id="endMeridiem" layoutX="975.0" layoutY="196.0" prefHeight="26.0" prefWidth="54.0" />
    </children>
 </AnchorPane>

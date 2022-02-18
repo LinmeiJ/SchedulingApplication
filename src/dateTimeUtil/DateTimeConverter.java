@@ -79,6 +79,9 @@ public class DateTimeConverter {
      * @return an UTC time
      */
     public static Timestamp convertAptTimeToUTC(LocalDate dateValue, String hrValue, String minuteValue) {
+        if(hrValue.length() == 1){
+            hrValue = "0" + hrValue;
+        }
         String str = dateValue.toString() + " " + hrValue + ":" + minuteValue + ":00";
         LocalDateTime dateTime = LocalDateTime.parse(str, FORMATTER);
         return Timestamp.valueOf(FORMATTER.format(dateTime.atZone(ZoneId.systemDefault()).withZoneSameInstant(ZoneId.of(TimeZoneOption.UTC.name()))));
@@ -257,6 +260,18 @@ public class DateTimeConverter {
      */
     public static int get24HrTime(int hr, String meridiem){
         hr += meridiem.equals("AM") ? 0 : 12;
+//        hr = meridiem.equals("PM")? hr-12 : hr;
+        return hr;
+    }
+
+    public static String getMeridiem(int hr){
+      return hr > 12 ? "PM" : "AM";
+    }
+
+    public static int convertHrTo12HrTime(int hr){
+        if(hr > 12){
+           hr -= 12 ;
+        }
         return hr;
     }
 

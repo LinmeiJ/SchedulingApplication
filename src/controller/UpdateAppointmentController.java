@@ -60,10 +60,21 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
     private ComboBox<String> contactList;
     @FXML
     private Label userId;
+    @FXML
+    private ChoiceBox<String> startMeridiem;
+
+    @FXML
+    private ChoiceBox<String> endMeridiem;
+    @FXML
+    private Label startOfficeHr;
+
+    @FXML
+    private Label endOfficeHr;
+
 
     private final AppointmentDaoImpl appointmentDao = new AppointmentDaoImpl();
     private final ContactDaoImpl contactDao = new ContactDaoImpl();
-    public Appointment appointment = AppointmentRecordController.selectApt;
+    public static Appointment appointment = AppointmentRecordController.selectApt;
 
     /**
      * This method sets the scene to the previous scene.
@@ -96,33 +107,58 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
         String location = aptLocation.getText();
         String title = aptTitle.getText();
         String description = aptDescription.getText();
-        LocalDate startD = startDate.getValue();
-        String startH = startHr.getValue();
-        String startM = startMin.getValue();
-        LocalDate endD = endDate.getValue();
-        String endH = endHr.getValue();
-        String endM = endMin.getValue();
         String contactName = contactList.getValue();
-        long contactId;
-        contactId = contactDao.getContactId(contactName);
+        long contactId = contactDao.getContactId(contactName);
+
+        // get appointment time user wishes to book
+        LocalDate startD = startDate.getValue();
+        LocalDate endD = endDate.getValue();
+        String startH = String.valueOf(DateTimeConverter.get24HrTime(Integer.parseInt(startHr.getValue()), startMeridiem.getValue()));
+        String endH = String.valueOf(DateTimeConverter.get24HrTime(Integer.parseInt(endHr.getValue()), endMeridiem.getValue()));
+        String startM = startMin.getValue();
+        String endM = endMin.getValue();
+
+        //convert the time input to LocalDateTime
+        LocalDateTime startLocalDateTime = LocalDateTime.of(startD, LocalTime.of(Integer.valueOf(startH), Integer.valueOf(startM)));
+        LocalDateTime endLocalDateTime = LocalDateTime.of(endD, LocalTime.of(Integer.valueOf(endH), Integer.valueOf(endM)));
 
         if (!areValidInput(type, location, title, description, startD, startH, startM, endD, endH, endM, contactName)) {
-            Validator.displayInvalidInput("Invalid input. \n requires:\n" +
-                    "Only alphabets are allowed for Type, Location, Title and all fields can not be empty");
-        }
-//        else if (!Validator.isValidAppointmentTime(startD, startH, startM, endD, endH, endM)) { // fix me
-//            Validator.displayInfo("Your appointment can not be in the past or your appointment ending time can not be before the appointment starting time. Please try again.");
-//        }
-        else if (!DateTimeConverter.isWithinOfficeHour(startD, startH, startM, endD, endH, endM)) {
-            Validator.displayInfo("Sorry, The time you wish to book is out of the EST timezone office hour. \nThe office hour starts "
-                    + DateTimeConverter.getOfficeStartHr(startD)
-                    + " on your local time. Please select a different time.");
+            Validator.displayInvalidInput("Invalid input. All fields can not be empty");
+        } else if (!Validator.isValidAppointmentTime(startD, startH, startM, endD, endH, endM)) {
+            Validator.displayInfo("Sorry, your appointment can not be in the past or the appointment ending can not be before the appointment starting time. Try again please.");
+        } else if (!DateTimeConverter.isWithinOfficeHour(startD, startH, startM, endD, endH, endM)) {
+            Validator.displayInfo("Sorry, The time you wish to book is out of office hour.");
         } else if (appointmentDao.isDoubleBooking(contactId, startD, startH, startM, endD, endH, endM)) {
-            Validator.displayInfo("Sorry, the time you have selected is booked, please select a different time. \nAvailable office hours in EST timezone for the same date is below: \n" + getAvailableTime()
-                    + "Keep in mind, the EST office hour starts at " + DateTimeConverter.getOfficeStartHr(startD) + " at your time and open for 14 hours a day");
+            Validator.displayInfo("Sorry, the time you have selected is already booked, please select a different time.");
         } else {
-            updateAptRecordForm(event, type, location, title, description, startD, startH, startM, endD, endH, endM, contactId);
+            Timestamp createdDate = DateTimeConverter.convertLocalTimeToUTC(LocalDateTime.now());
+            Timestamp lastUpdate = DateTimeConverter.convertLocalTimeToUTC(LocalDateTime.now());
+            Appointment appointmentUpdate = new Appointment(appointment.getAppointment_id(), title, description, location,
+                    type, Timestamp.valueOf(startLocalDateTime), Timestamp.valueOf(endLocalDateTime),
+                    createdDate, UserDaoImpl.userName, lastUpdate, UserDaoImpl.userName, appointment.getCustomer_id(), contactId, appointment.getUser_id());
+            appointmentDao.update(appointmentUpdate);
+            Validator.displaySuccess("Appointment is saved");
+            setScene(event, Views.APPOINTMENT_RECORD_VIEW.getView());
+//            saveNewAppointment(event, title, description, type, location, startD, startH, startM, endD, endH, endM, contactId);
         }
+
+//        if (!areValidInput(type, location, title, description, startD, startH, startM, endD, endH, endM, contactName)) {
+//            Validator.displayInvalidInput("Invalid input. \n requires:\n" +
+//                    "Only alphabets are allowed for Type, Location, Title and all fields can not be empty");
+//        }
+////        else if (!Validator.isValidAppointmentTime(startD, startH, startM, endD, endH, endM)) { // fix me
+////            Validator.displayInfo("Your appointment can not be in the past or your appointment ending time can not be before the appointment starting time. Please try again.");
+////        }
+//        else if (!DateTimeConverter.isWithinOfficeHour(startD, startH, startM, endD, endH, endM)) {
+//            Validator.displayInfo("Sorry, The time you wish to book is out of the EST timezone office hour. \nThe office hour starts "
+//                    + DateTimeConverter.getOfficeStartHr(startD)
+//                    + " on your local time. Please select a different time.");
+//        } else if (appointmentDao.isDoubleBooking(contactId, startD, startH, startM, endD, endH, endM)) {
+//            Validator.displayInfo("Sorry, the time you have selected is booked, please select a different time. \nAvailable office hours in EST timezone for the same date is below: \n" + getAvailableTime()
+//                    + "Keep in mind, the EST office hour starts at " + DateTimeConverter.getOfficeStartHr(startD) + " at your time and open for 14 hours a day");
+//        } else {
+//            updateAptRecordForm(event, type, location, title, description, startD, startH, startM, endD, endH, endM, contactId);
+//        }
     }
 
     /**
@@ -133,7 +169,7 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
         Map<LocalTime, LocalTime> availableTimeToDisplay = BookingAvailability.availableTimeToDisplay;
 
         Iterator iteratorMap = availableTimeToDisplay.entrySet().iterator();
-        while(iteratorMap.hasNext()) {
+        while (iteratorMap.hasNext()) {
             Map.Entry mapElement = (Map.Entry) iteratorMap.next();
             availableTime = availableTime + mapElement.getKey() + " To "
                     + mapElement.getValue() + "\n";
@@ -163,7 +199,8 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
         Timestamp end = DateTimeConverter.convertAptTimeToUTC(endD, endH, endM);
         long custId = AppointmentRecordController.selectApt.getCustomer_id();
 
-        appointmentDao.update(new Appointment(AppointmentRecordController.selectApt.getAppointment_id(), title, description, location, type, start, end, currentTime, UserDaoImpl.userName, currentTime, UserDaoImpl.userName, custId, contactId, UserDaoImpl.userId));
+        appointmentDao.update(new Appointment(AppointmentRecordController.selectApt.getAppointment_id(), title, description, location, type,
+                start, end, currentTime, UserDaoImpl.userName, currentTime, UserDaoImpl.userName, custId, contactId, UserDaoImpl.userId));
         Validator.displaySuccess("updated ");
         setScene(event, Views.APPOINTMENT_RECORD_VIEW.getView());
     }
@@ -201,7 +238,10 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
      */
     private void initContact() {
         contactList.setValue(contactDao.findNameByID(appointment.getContact_id()));
-//        contactList.setItems(contactDao.findAll()); //fix me
+        contactList.setItems(contactDao.findName());
+        startOfficeHr.setText(String.valueOf(DateTimeConverter.convertESTOfficeStartHrToLocal()));
+        endOfficeHr.setText(String.valueOf(DateTimeConverter.convertESTOfficeEndHrToLocal()));
+
 
     }
 
@@ -211,18 +251,23 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
     private void initLastAptDateTime() {
         LocalDateTime startDateTime = appointment.getStart().toLocalDateTime();
         startDate.setValue(startDateTime.toLocalDate());
-        startHr.setValue(DateTimeConverter.getHr(startDateTime.getHour()));
+        startHr.setValue(DateTimeConverter.getHr(DateTimeConverter.convertHrTo12HrTime(startDateTime.getHour())));
         startMin.setValue(DateTimeConverter.getMint(startDateTime.getMinute()));
+        startMeridiem.setValue(DateTimeConverter.getMeridiem(startDateTime.getHour()));
 
         LocalDateTime endDateTime = appointment.getEnd().toLocalDateTime();
         endDate.setValue(endDateTime.toLocalDate());
-        endHr.setValue(DateTimeConverter.getHr(endDateTime.getHour()));
+        endHr.setValue(DateTimeConverter.getHr(DateTimeConverter.convertHrTo12HrTime(endDateTime.getHour())));
         endMin.setValue(DateTimeConverter.getMint(endDateTime.getMinute()));
+        endMeridiem.setValue(DateTimeConverter.getMeridiem(endDateTime.getHour()));
 
-        startHr.setItems(estHr);
-        startMin.setItems(initializeMinutes());
-        endHr.setItems(estHr);
-        endMin.setItems(initializeMinutes());
+        startHr.setItems(DateTimeConverter.hrList);
+        startMin.setItems(DateTimeConverter.minuteList);
+        startMeridiem.setItems(DateTimeConverter.meridiemList);
+
+        endHr.setItems(DateTimeConverter.hrList);
+        endMin.setItems(DateTimeConverter.minuteList);
+        endMeridiem.setItems(DateTimeConverter.meridiemList);
     }
 
     /**

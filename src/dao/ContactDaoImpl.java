@@ -54,6 +54,24 @@ public class ContactDaoImpl extends JDBCConnection {
     }
 
     /**
+     * This method finds all contact names
+     *
+     * @return contact names
+     */
+    public ObservableList<String> findName() {
+        ObservableList<String> contactName = FXCollections.observableArrayList();
+        ResultSet rs = findRawDataFromDB("SELECT Contact_Name FROM contacts");
+        try {
+            while(rs.next()) {
+                contactName.add(rs.getString("contact_name"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return contactName;
+    }
+
+    /**
      * This method finds all contacts from the contacts table in the database
      *
      * @return a list of contact names
