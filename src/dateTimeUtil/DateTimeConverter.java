@@ -108,7 +108,9 @@ public class DateTimeConverter {
      * @return a local date time
      */
     public static Timestamp convertESTToLocal(String timestamp) {
-        timestamp = timestamp.replace("T", " ") + ":00";
+        if(timestamp.contains("T")) {
+            timestamp = timestamp.replace("T", " ") + ":00";
+        }
         Timestamp localDateTime = null;
         try {
             DateFormat currentTFormat = new SimpleDateFormat(FORMAT);
@@ -251,6 +253,16 @@ public class DateTimeConverter {
     public static int get24HrTime(int hr, String meridiem){
         hr += meridiem.equals("AM") ? 0 : 12;
         return hr;
+    }
+
+    public static String convertESTOfficeStartHrToLocal(){
+        Timestamp startTime =  convertESTToLocal(String.valueOf(LocalDateTime.of(LocalDate.now(), LocalTime.of(8, 0))));
+        return String.valueOf(startTime);
+    }
+
+    public static String convertESTOfficeEndHrToLocal(){
+        Timestamp endTime =  convertESTToLocal(String.valueOf(LocalDateTime.of(LocalDate.now(), LocalTime.of(22, 0))));
+        return String.valueOf(endTime);
     }
 
 }

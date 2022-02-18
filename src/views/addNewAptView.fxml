@@ -96,5 +96,13 @@
       <ComboBox fx:id="endMin" layoutX="485.0" layoutY="414.0" prefHeight="27.0" prefWidth="78.0" />
       <ChoiceBox fx:id="startMeridiem" layoutX="579.0" layoutY="376.0" prefHeight="26.0" prefWidth="61.0" />
       <ChoiceBox fx:id="endMeridiem" layoutX="579.0" layoutY="414.0" prefHeight="26.0" prefWidth="61.0" />
+      <Label layoutX="66.0" layoutY="472.0" prefHeight="20.0" prefWidth="195.0" text="(Local Time Office Hour starts: ">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="LocalOfficeHrStart" layoutX="261.0" layoutY="474.0" prefHeight="18.0" prefWidth="62.0" />
+      <Label layoutX="331.0" layoutY="475.0" text="To" />
+      <Label fx:id="localOfficeHrEnd" layoutX="361.0" layoutY="475.0" prefHeight="18.0" prefWidth="62.0" />
    </children>
 </AnchorPane>

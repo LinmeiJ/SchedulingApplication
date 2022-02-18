@@ -60,6 +60,12 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
     @FXML
     private ComboBox<String> userList;
 
+    @FXML
+    private Label LocalOfficeHrStart;
+    @FXML
+    private Label localOfficeHrEnd;
+
+
     private final UserDaoImpl userDao = new UserDaoImpl();
     private final ContactDaoImpl contactDao = new ContactDaoImpl();
     private final CustomerDaoImpl customerDao = new CustomerDaoImpl();
@@ -104,12 +110,9 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
         } else if (!Validator.isValidAppointmentTime(startD, startH, startM, endD, endH, endM)){
             Validator.displayInfo("Sorry, your appointment can not be in the past or the appointment ending can not be before the appointment starting time. Try again please.");
         } else if (!DateTimeConverter.isWithinOfficeHour(startD, startH, startM)) {
-            Validator.displayInfo("Sorry, The time you wish to book is out of the EST timezone office hour. \nThe office hour starts "
-                    + DateTimeConverter.getOfficeStartHr(startD)
-                    + " on your local time. Please select a different time.");
+            Validator.displayInfo("Sorry, The time you wish to book is out of office hour.");
         } else if (appointmentDao.isDoubleBooking(contactId, startD, startH, startM, endD, endH, endM)) {
-            Validator.displayInfo("Sorry, the time you have selected is booked, please select a different time. \nAvailable office hours for the same date in EST time(please check your localtime if you are not in EST timezone) is below: \n" + getAvailableTime()
-                    + "Keep in mind, the EST office hour starts at " + DateTimeConverter.getOfficeStartHr(startD) + " at your time and open for 14 hours a day");
+            Validator.displayInfo("Sorry, the time you have selected is already booked, please select a different time.");
         } else {
             saveNewAppointment(event, title, description, type, location, startD, startH, startM, endD, endH, endM, contactId);
         }
@@ -228,10 +231,16 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setDateTime();
+        setOfficeHrLabels();
         contactList.getItems().addAll(convertContactListToIDNamePair().values());
         customerList.getItems().addAll(convertCustomerListToIDNamePair().values());
         userList.getItems().addAll(convertUserListToIDNamePair().values());
 
+    }
+
+    private void setOfficeHrLabels() {
+        LocalOfficeHrStart.setText(DateTimeConverter.convertESTOfficeStartHrToLocal());
+        localOfficeHrEnd.setText(DateTimeConverter.convertESTOfficeEndHrToLocal());
     }
 
     /**

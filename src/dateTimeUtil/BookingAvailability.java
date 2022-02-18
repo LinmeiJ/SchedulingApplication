@@ -5,6 +5,8 @@ import entity.Appointment;
 import java.sql.Timestamp;
 import java.time.LocalTime;
 import java.util.*;
+import java.util.function.BiPredicate;
+import java.util.function.Predicate;
 
 import static java.time.temporal.ChronoUnit.MINUTES;
 
@@ -99,10 +101,9 @@ public class BookingAvailability {
      */
     private static boolean checksIfDoubleBooked(List<LocalTime> availableTimeSlots, List<LocalTime> splitTime) {
         //check whether user wanted timeslots available in the availableTimeSlots list
-
         for (LocalTime time : splitTime) {
             if (!availableTimeSlots.contains(time)) {
-                displayAvailableTime(availableTimeSlots);
+//                displayAvailableTime(availableTimeSlots);
                 return true;
             }
         }
