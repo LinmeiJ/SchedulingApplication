@@ -8,9 +8,6 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.paint.Color?>
-<?import javafx.scene.paint.LinearGradient?>
-<?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.UpdateAppointmentController">
@@ -67,30 +64,10 @@
             <Label fx:id="custID" layoutX="97.0" layoutY="476.0" prefHeight="18.0" prefWidth="54.0" />
             <Label layoutX="172.0" layoutY="476.0" text="User ID:" />
             <Label fx:id="userId" layoutX="231.0" layoutY="476.0" prefHeight="18.0" prefWidth="54.0" />
-            <Label layoutX="284.0" layoutY="66.0" prefHeight="20.0" prefWidth="213.0" text="Local Time Office Hour: " textOverrun="WORD_ELLIPSIS">
-               <font>
-                  <Font size="14.0" />
-               </font>
-               <textFill>
-                  <LinearGradient endX="1.0" endY="1.0">
-                     <stops>
-                        <Stop>
-                           <color>
-                              <Color />
-                           </color>
-                        </Stop>
-                        <Stop offset="1.0">
-                           <color>
-                              <Color red="1.0" green="1.0" blue="1.0" />
-                           </color>
-                        </Stop>
-                     </stops>
-                  </LinearGradient>
-               </textFill>
-            </Label>
-            <Label fx:id="startOfficeHr" layoutX="484.0" layoutY="68.0" prefHeight="18.0" prefWidth="30.0" />
-            <Label layoutX="516.0" layoutY="68.0" prefHeight="18.0" prefWidth="27.0" text="To" />
-            <Label fx:id="endOfficeHr" layoutX="544.0" layoutY="68.0" prefHeight="18.0" prefWidth="46.0" />
+            <Label fx:id="startOfficeHr" layoutX="512.0" layoutY="48.0" prefHeight="18.0" prefWidth="30.0" />
+            <Label layoutX="556.0" layoutY="48.0" prefHeight="18.0" prefWidth="27.0" text="To" />
+            <Label fx:id="endOfficeHr" layoutX="587.0" layoutY="48.0" prefHeight="18.0" prefWidth="46.0" />
+            <Label layoutX="290.0" layoutY="49.0" prefHeight="18.0" prefWidth="194.0" text="Local Time Office Hour:" />
          </children>
       </AnchorPane>
       <Button fx:id="saveUpdates" layoutX="973.0" layoutY="476.0" mnemonicParsing="false" onAction="#updateClicked" prefHeight="44.0" prefWidth="94.0" text="Save">

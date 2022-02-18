@@ -125,7 +125,8 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
         if (!areValidInput(type, location, title, description, startD, startH, startM, endD, endH, endM, contactName)) {
             Validator.displayInvalidInput("Invalid input. All fields can not be empty");
         } else if (!Validator.isValidAppointmentTime(startD, startH, startM, endD, endH, endM)) {
-            Validator.displayInfo("Sorry, your appointment can not be in the past or the appointment ending can not be before the appointment starting time. Try again please.");
+            Validator.displayInfo("Sorry.\n" +
+                    "1. your appointment can not be in the past \n 2. the appointment ending time can not be before the appointment starting time. \n Try again please.");
         } else if (!DateTimeConverter.isWithinOfficeHour(startD, startH, startM, endD, endH, endM)) {
             Validator.displayInfo("Sorry, The time you wish to book is out of office hour.");
         } else if (appointmentDao.isDoubleBooking(contactId, startD, startH, startM, endD, endH, endM)) {
@@ -139,26 +140,8 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
             appointmentDao.update(appointmentUpdate);
             Validator.displaySuccess("Appointment is saved");
             setScene(event, Views.APPOINTMENT_RECORD_VIEW.getView());
-//            saveNewAppointment(event, title, description, type, location, startD, startH, startM, endD, endH, endM, contactId);
         }
 
-//        if (!areValidInput(type, location, title, description, startD, startH, startM, endD, endH, endM, contactName)) {
-//            Validator.displayInvalidInput("Invalid input. \n requires:\n" +
-//                    "Only alphabets are allowed for Type, Location, Title and all fields can not be empty");
-//        }
-////        else if (!Validator.isValidAppointmentTime(startD, startH, startM, endD, endH, endM)) { // fix me
-////            Validator.displayInfo("Your appointment can not be in the past or your appointment ending time can not be before the appointment starting time. Please try again.");
-////        }
-//        else if (!DateTimeConverter.isWithinOfficeHour(startD, startH, startM, endD, endH, endM)) {
-//            Validator.displayInfo("Sorry, The time you wish to book is out of the EST timezone office hour. \nThe office hour starts "
-//                    + DateTimeConverter.getOfficeStartHr(startD)
-//                    + " on your local time. Please select a different time.");
-//        } else if (appointmentDao.isDoubleBooking(contactId, startD, startH, startM, endD, endH, endM)) {
-//            Validator.displayInfo("Sorry, the time you have selected is booked, please select a different time. \nAvailable office hours in EST timezone for the same date is below: \n" + getAvailableTime()
-//                    + "Keep in mind, the EST office hour starts at " + DateTimeConverter.getOfficeStartHr(startD) + " at your time and open for 14 hours a day");
-//        } else {
-//            updateAptRecordForm(event, type, location, title, description, startD, startH, startM, endD, endH, endM, contactId);
-//        }
     }
 
     /**

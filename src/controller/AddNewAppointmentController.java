@@ -109,7 +109,8 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
         if (!areValidInput(type, location, title, description, startD, startH, startM, endD, endH, endM, contactName, customerName, userName)) {
             Validator.displayInvalidInput("Invalid input. All fields can not be empty");
         }else if (!Validator.isValidAppointmentTime(startD, startH, startM, endD, endH, endM)){
-            Validator.displayInfo("Sorry, your appointment can not be in the past or the appointment ending can not be before the appointment starting time. Try again please.");
+            Validator.displayInfo("Sorry.\n" +
+                    "1. your appointment can not be in the past \n 2. the appointment ending time can not be before the appointment starting time. \n Try again please.");
         } else if (!DateTimeConverter.isWithinOfficeHour(startD, startH, startM, endD, endH, endM)) {
             Validator.displayInfo("Sorry, The time you wish to book is out of office hour.");
         } else if (appointmentDao.isDoubleBooking(contactId, startD, startH, startM, endD, endH, endM)) {
@@ -123,7 +124,6 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
             appointmentDao.save(appointment);
             Validator.displaySuccess("Appointment is saved");
             setScene(event, Views.APPOINTMENT_RECORD_VIEW.getView());
-//            saveNewAppointment(event, title, description, type, location, startD, startH, startM, endD, endH, endM, contactId);
         }
     }
 
