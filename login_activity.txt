@@ -324,3 +324,5 @@ Date = 2022-02-16T22:17:32.3-06:00		User Name = test		Attempt Status = Failed		S
 Date = 2022-02-16T22:17:35.723-06:00		User Name = test		Attempt Status = Success		Success Total Count = 1		Failed Total Count = 1		
 Date = 2022-02-16T22:19:27.576-06:00		User Name = test		Attempt Status = Success		Success Total Count = 1		Failed Total Count = 0		
 Date = 2022-02-16T22:23:18.51-06:00		User Name = test		Attempt Status = Success		Success Total Count = 1		Failed Total Count = 0		
+Date = 2022-02-17T18:34:19.001-06:00		User Name = test		Attempt Status = Failed		Success Total Count = 0		Failed Total Count = 0		
+Date = 2022-02-17T18:34:25.351-06:00		User Name = test		Attempt Status = Success		Success Total Count = 1		Failed Total Count = 1		

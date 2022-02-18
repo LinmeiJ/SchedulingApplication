@@ -90,8 +90,8 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
         // get appointment time user wishes to book
         LocalDate startD = startDate.getValue();
         LocalDate endD = endDate.getValue();
-        String startH = DateTimeConverter.get24HrTime(startHr.getValue(), startMeridiem.getValue());
-        String endH = DateTimeConverter.get24HrTime(endHr.getValue(), endMeridiem.getValue());
+        String startH = String.valueOf(DateTimeConverter.get24HrTime(Integer.parseInt(startHr.getValue()), startMeridiem.getValue()));
+        String endH = String.valueOf(DateTimeConverter.get24HrTime(Integer.parseInt(endHr.getValue()), endMeridiem.getValue()));
         String startM = startMin.getValue();
         String endM = endMin.getValue();
 

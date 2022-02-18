@@ -248,7 +248,7 @@ public class DateTimeConverter {
      * @param meridiem the meridiem - am/pm
      * @return converted hr time
      */
-    public static String get24HrTime(String hr, String meridiem){
+    public static int get24HrTime(int hr, String meridiem){
         hr += meridiem.equals("AM") ? 0 : 12;
         return hr;
     }
