@@ -317,6 +317,6 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
      * @return boolean if all input are valid returns a ture, otherwise, returns a false.
      */
     private boolean areValidInput(String type, String location, String title, String description, LocalDate startD, String startH, String startM, LocalDate endD, String endH, String endM, String contact, String startMe, String endMe) {
-        return Validator.isValidString(type, location, title) && description != null && contact != null && startD != null && endD != null && startMe != null && endMe != null && Validator.isValidString(startH, startM, endH, endM);
+        return Validator.isValidString(type, location, title) && !description.trim().isBlank() && contact != null && startD != null && endD != null && startMe != null && endMe != null && Validator.isValidString(startH, startM, endH, endM);
     }
 }

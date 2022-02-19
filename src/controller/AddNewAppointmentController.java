@@ -229,7 +229,7 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
      * @param actionEvent an event indicates a component-defined action occurred.
      **/
     public void backToLastViewIsClicked(ActionEvent actionEvent) {
-        setScene(actionEvent, Views.CUSTOMER_RECORD_VIEW.getView());
+        setScene(actionEvent, Views.APPOINTMENT_RECORD_VIEW.getView());
     }
 
     /**
@@ -251,7 +251,7 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
      * @return boolean not valid returns a false, otherwise returns a true.
      */
     private boolean areValidInput(String type, String location, String title, String description, LocalDate startD, String startH, String startM, LocalDate endD, String endH, String endM, String contact, String customer, String user) {
-        return Validator.isValidString(type, location, title) && description.length() > 0 && contact != null && customer != null && user != null && startD != null && endD != null && startM != null && startH != null && endM != null && endH != null;
+        return Validator.isValidString(type, location, title) && !description.trim().isBlank() && contact != null && customer != null && user != null && startD != null && endD != null && startM != null && startH != null && endM != null && endH != null;
     }
 // I am keeping those here for my future enhancement for this program
 //    private String getAvailableTime() {
