@@ -68,14 +68,15 @@
             <Label layoutX="556.0" layoutY="48.0" prefHeight="18.0" prefWidth="27.0" text="To" />
             <Label fx:id="endOfficeHr" layoutX="587.0" layoutY="48.0" prefHeight="18.0" prefWidth="46.0" />
             <Label layoutX="290.0" layoutY="49.0" prefHeight="18.0" prefWidth="194.0" text="Local Time Office Hour:" />
+            <Button fx:id="backBtn" layoutX="755.0" layoutY="13.0" mnemonicParsing="false" onAction="#backToRecordPage" text="Back" />
+            <Button fx:id="saveUpdates" layoutX="767.0" layoutY="398.0" mnemonicParsing="false" onAction="#updateClicked" prefHeight="44.0" prefWidth="94.0" text="Save">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Button>
          </children>
       </AnchorPane>
-      <Button fx:id="saveUpdates" layoutX="973.0" layoutY="476.0" mnemonicParsing="false" onAction="#updateClicked" prefHeight="44.0" prefWidth="94.0" text="Save">
-         <font>
-            <Font size="20.0" />
-         </font></Button>
-      <Button fx:id="backBtn" layoutX="946.0" layoutY="547.0" mnemonicParsing="false" onAction="#backToRecordPage" text="Back" />
-      <Button fx:id="cancelBtn" layoutX="1040.0" layoutY="547.0" mnemonicParsing="false" onAction="#exitBtnClicked" text="Exit" />
+      <Button fx:id="cancelBtn" layoutX="940.0" layoutY="62.0" mnemonicParsing="false" onAction="#exitBtnClicked" text="Exit" />
       <ChoiceBox fx:id="startMeridiem" layoutX="975.0" layoutY="148.0" prefHeight="26.0" prefWidth="54.0" />
       <ChoiceBox fx:id="endMeridiem" layoutX="975.0" layoutY="196.0" prefHeight="26.0" prefWidth="54.0" />
    </children>

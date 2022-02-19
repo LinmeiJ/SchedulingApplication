@@ -19,7 +19,7 @@
                 <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
             </padding>
         </Label>
-        <Button fx:id="exitId" layoutX="944.0" layoutY="368.0" mnemonicParsing="false" onAction="#exitBtnClicked" prefHeight="22.0" prefWidth="54.0" text="Exit">
+        <Button fx:id="exitId" layoutX="980.0" layoutY="14.0" mnemonicParsing="false" onAction="#exitBtnClicked" prefHeight="22.0" prefWidth="54.0" text="Exit">
          <font>
             <Font size="14.0" />
          </font></Button>

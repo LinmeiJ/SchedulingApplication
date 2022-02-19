@@ -61,14 +61,9 @@
                      </font>
                   </RadioButton>
                   <ComboBox fx:id="division" editable="true" layoutX="37.0" layoutY="87.0" prefHeight="36.0" prefWidth="249.0" promptText="Division List" />
-                  <Button fx:id="saveUpdates" layoutX="196.0" layoutY="150.0" mnemonicParsing="false" onAction="#saveUpdateClicked" prefHeight="44.0" prefWidth="94.0" text="Save">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                  </Button>
                </children>
             </AnchorPane>
-            <Button fx:id="backBtn" layoutX="619.0" layoutY="467.0" mnemonicParsing="false" onAction="#backToRecordPage" prefHeight="25.0" prefWidth="110.0" text="Back">
+            <Button fx:id="backBtn" layoutX="695.0" layoutY="26.0" mnemonicParsing="false" onAction="#backToRecordPage" prefHeight="25.0" prefWidth="110.0" text="Back">
                <font>
                   <Font size="14.0" />
                </font>
@@ -93,9 +88,14 @@
                   <Font name="System Italic" size="11.0" />
                </font>
             </Label>
+            <Button fx:id="saveUpdates" layoutX="734.0" layoutY="427.0" mnemonicParsing="false" onAction="#saveUpdateClicked" prefHeight="44.0" prefWidth="94.0" text="Save">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Button>
          </children>
       </AnchorPane>
-      <Button fx:id="cancelBtn" layoutX="825.0" layoutY="483.0" mnemonicParsing="false" onAction="#exitBtnClicked" prefHeight="25.0" prefWidth="88.0" text="Exit">
+      <Button fx:id="cancelBtn" layoutX="915.0" layoutY="41.0" mnemonicParsing="false" onAction="#exitBtnClicked" prefHeight="25.0" prefWidth="88.0" text="Exit">
          <font>
             <Font size="14.0" />
          </font></Button>

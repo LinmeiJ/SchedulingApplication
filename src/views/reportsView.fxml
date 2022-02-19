@@ -1,61 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="778.0" prefWidth="866.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ReportController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="682.0" prefWidth="808.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ReportController">
    <children>
       <Label fx:id="reportType" alignment="TOP_CENTER" layoutX="357.0" layoutY="14.0" prefHeight="35.0" prefWidth="104.0" text="Reports" textAlignment="CENTER" wrapText="true">
          <font>
             <Font size="18.0" />
          </font></Label>
-      <Label layoutX="26.0" layoutY="60.0" prefHeight="17.0" prefWidth="576.0" text="Report One - Total Number of Customer Appointment By Type and Month" />
-      <VBox layoutX="79.0" layoutY="92.0" prefHeight="200.0" prefWidth="727.0">
-         <children>
-            <ComboBox fx:id="monthTypeCombo" editable="true" onAction="#monthTypeBtnSelected" prefHeight="26.0" prefWidth="244.0" promptText="Filter Counts By Month and Type" />
-            <TableView fx:id="reportOne" prefHeight="201.0" prefWidth="727.0">
-              <columns>
-                <TableColumn fx:id="typeMonthOption" prefWidth="198.39998626708984" text="Month Or Type" />
-                <TableColumn fx:id="typeMonthCount" prefWidth="528.0000915527344" text="Total Count" />
-              </columns>
-            </TableView>
-         </children>
-      </VBox>
-      <Label layoutX="14.0" layoutY="318.0" prefHeight="17.0" prefWidth="670.0" text="Report Two - Select a contact name to view her/his appointment list: " />
-      <VBox layoutX="79.0" layoutY="354.0" prefHeight="228.0" prefWidth="727.0">
-         <children>
-            <ComboBox fx:id="contactList" editable="true" onAction="#contactNameIsSelected" prefHeight="26.0" prefWidth="230.0" promptText="Select A Contact To View" />
-            <TableView fx:id="reportTwo" prefHeight="192.0" prefWidth="727.0">
-               <columns>
-                  <TableColumn fx:id="aptID" prefWidth="98.40001678466797" text="Appointment" />
-                  <TableColumn fx:id="title" prefWidth="51.999969482421875" text="Title" />
-                  <TableColumn fx:id="type" prefWidth="90.39996337890625" text="Type" />
-                  <TableColumn fx:id="description" prefWidth="137.0" text="Description" />
-                  <TableColumn fx:id="start" prefWidth="134.0" text="Start Date Time" />
-                  <TableColumn fx:id="end" prefWidth="138.0" text="End Date Time" />
-                  <TableColumn fx:id="custId" prefWidth="75.0" text="Customer ID" />
-               </columns>
-            </TableView>
-         </children>
-      </VBox>
-      <Label layoutX="26.0" layoutY="599.0" prefHeight="17.0" prefWidth="700.0" text="Report Three  -  Total Customer Count by Country Name " />
-      <VBox layoutX="79.0" layoutY="626.0" prefHeight="146.0" prefWidth="727.0">
-         <children>
-            <TableView fx:id="reportThree" prefHeight="114.0" prefWidth="401.0">
-              <columns>
-                <TableColumn fx:id="countryName" prefWidth="154.4000473022461" text="Country Name" />
-                <TableColumn fx:id="totalCountCustomers" minWidth="0.0" prefWidth="571.1999816894531" text="Total Count of Customers" />
-              </columns>
-            </TableView>
-         </children>
-      </VBox>
-      <Button fx:id="back" layoutX="712.0" layoutY="19.0" mnemonicParsing="false" onAction="#backIsSelected" prefHeight="25.0" prefWidth="67.0" text="Back" />
-      <Button fx:id="exit" layoutX="793.0" layoutY="19.0" mnemonicParsing="false" onAction="#existIsSelected" prefHeight="25.0" prefWidth="67.0" text="Exit" />
+      <Label layoutX="13.0" layoutY="49.0" prefHeight="17.0" prefWidth="576.0" text="Report One - Total Number of Customer Appointment By Type and Month" />
+      <ComboBox fx:id="monthTypeCombo" editable="true" layoutX="58.0" layoutY="78.0" onAction="#monthTypeBtnSelected" prefHeight="26.0" prefWidth="169.0" promptText="Filter Counts By Month and Type" />
+      <TableView fx:id="reportOne" layoutX="13.0" layoutY="104.0" prefHeight="155.0" prefWidth="727.0">
+        <columns>
+          <TableColumn fx:id="typeMonthOption" prefWidth="198.39998626708984" text="Month Or Type" />
+          <TableColumn fx:id="typeMonthCount" prefWidth="528.0000915527344" text="Total Appointment Count" />
+        </columns>
+      </TableView>
+      <Label layoutX="10.0" layoutY="259.0" prefHeight="17.0" prefWidth="670.0" text="Report Two - Select a contact name to view her/his appointment list: " />
+      <ComboBox fx:id="contactList" editable="true" layoutX="48.0" layoutY="286.0" onAction="#contactNameIsSelected" prefHeight="26.0" prefWidth="169.0" promptText="Select A Contact To View" />
+      <TableView fx:id="reportTwo" layoutY="318.0" prefHeight="192.0" prefWidth="727.0">
+         <columns>
+            <TableColumn fx:id="aptID" prefWidth="98.40001678466797" text="Appointment" />
+            <TableColumn fx:id="title" prefWidth="51.999969482421875" text="Title" />
+            <TableColumn fx:id="type" prefWidth="90.39996337890625" text="Type" />
+            <TableColumn fx:id="description" prefWidth="137.0" text="Description" />
+            <TableColumn fx:id="start" prefWidth="134.0" text="Start Date Time" />
+            <TableColumn fx:id="end" prefWidth="138.0" text="End Date Time" />
+            <TableColumn fx:id="custId" prefWidth="75.0" text="Customer ID" />
+         </columns>
+      </TableView>
+      <Label layoutX="7.0" layoutY="525.0" prefHeight="17.0" prefWidth="700.0" text="Report Three  -  Total Customer Count by Country Name " />
+      <TableView fx:id="reportThree" layoutX="13.0" layoutY="551.0" prefHeight="114.0" prefWidth="663.0">
+        <columns>
+          <TableColumn fx:id="countryName" prefWidth="301.0" text="Country Name" />
+          <TableColumn fx:id="totalCountCustomers" minWidth="0.0" prefWidth="426.0" text="Total Count of Customers" />
+        </columns>
+      </TableView>
+      <Button fx:id="back" layoutX="546.0" layoutY="32.0" mnemonicParsing="false" onAction="#backIsSelected" prefHeight="25.0" prefWidth="67.0" text="Back" />
+      <Button fx:id="exit" layoutX="643.0" layoutY="32.0" mnemonicParsing="false" onAction="#existIsSelected" prefHeight="25.0" prefWidth="67.0" text="Exit" />
+      <Label layoutX="14.0" layoutY="291.0" prefHeight="17.0" prefWidth="44.0" text="Filter:" />
+      <Label layoutX="26.0" layoutY="83.0" prefHeight="17.0" prefWidth="44.0" text="Filter:" />
    </children>
+   <padding>
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+   </padding>
 </AnchorPane>

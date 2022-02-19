@@ -90,7 +90,7 @@ public class CustomerRecordController implements Initializable, CommonUseHelperI
         selectedCust = recordTable.getSelectionModel().getSelectedItem();
 
         if (selectedCust != null) {
-            Validator.displayDeleteConfirmation("the customer ID " + selectedCust.getCustomer_id()+"? The associated appointments will be also delete!");
+            Validator.displayDeleteConfirmation("the customer ID " + selectedCust.getCustomer_id()+"? \nThe associated appointments will be also deleted!");
             if (Validator.confirmResult.isPresent() && Validator.confirmResult.get() == ButtonType.OK) {
                 customerDao.delete(selectedCust);
                 customersDataTable.remove(selectedCust);
