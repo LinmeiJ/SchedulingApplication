@@ -9,9 +9,21 @@ import java.sql.SQLException;
  * @author Linmei M.
  */
 public interface ServiceIfc<T> {
-    void update(T obj) throws SQLException;
+    /**
+     * an abstract method of update
+     * @param obj any entity object
+     */
+    void update(T obj);
 
+    /**
+     * an abstract method of delete
+     * @param obj any entity object
+     */
     void delete(T obj);
 
-    void save(T obj) throws SQLException;
+    /**
+     * an abstract method of save
+     * @param obj any entity object
+     */
+    void save(T obj);
 }

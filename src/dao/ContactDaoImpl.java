@@ -14,6 +14,9 @@ import java.sql.SQLException;
  * @author Linmei M.
  */
 public class ContactDaoImpl extends JDBCConnection {
+    /**
+     * Initialize a list that can contain Contact objects
+     */
     ObservableList<Contact> allContacts = FXCollections.observableArrayList();
 
     /**

@@ -161,7 +161,20 @@ public class Appointment {
         this.user_id = user_id;
     }
 
-    public Appointment(long aptId, String title, String description, String location, String type, Timestamp startDateTime, Timestamp endDateTime, long customerId, String nameByID, long userId) {
+    /**
+     * A constructor that takes in 10 arguments
+     * @param aptId an appointment ID
+     * @param title an appointment title
+     * @param description an appointment description
+     * @param location an appointment location
+     * @param type an appointment type
+     * @param startDateTime an appointment startDateTime
+     * @param endDateTime an appointment endDateTime
+     * @param customerId a customer ID
+     * @param contactName a contact name
+     * @param userId a user ID
+     */
+    public Appointment(long aptId, String title, String description, String location, String type, Timestamp startDateTime, Timestamp endDateTime, long customerId, String contactName, long userId) {
         this.appointment_id = aptId;
         this.title = title;
         this.description = description;
@@ -170,7 +183,7 @@ public class Appointment {
         this.start = startDateTime;
         this.end = endDateTime;
         this.customer_id = customerId;
-        this.contact_name = nameByID;
+        this.contact_name = contactName;
         this.user_id = userId;
     }
 
@@ -433,11 +446,11 @@ public class Appointment {
         this.contact_name = contact;
     }
 
-    /**
-     * A setter that sets an appointment ID
-     * @param appointment_id an appointment ID
-     */
-    public void setAppointment_id(long appointment_id) {
-        this.appointment_id = appointment_id;
-    }
+//    /**
+//     * A setter that sets an appointment ID
+//     * @param appointment_id an appointment ID
+//     */
+//    public void setAppointment_id(long appointment_id) {
+//        this.appointment_id = appointment_id;
+//    }
 }

@@ -1,7 +1,6 @@
 package dao;
 
 import controller.CustomerRecordController;
-import controller.Validator;
 import dbConnection.JDBCConnection;
 import entity.Customer;
 import javafx.collections.FXCollections;
@@ -17,10 +16,18 @@ import java.sql.SQLException;
  * @author Linmei M.
  */
 public class CustomerDaoImpl extends JDBCConnection implements ServiceIfc<Customer> {
-
+    /**
+     * Initialize a first level division dao object
+     */
     private final FirstLevelDivisionDaoImpl firstLevelDivisionDao = new FirstLevelDivisionDaoImpl();
+    /**
+     * Initialize an appointment dao object
+     */
     private final AppointmentDaoImpl aptDao = new AppointmentDaoImpl();
-    private ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
+    /**
+     * initialize a list that can contain Customer objects
+     */
+    private final ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
 
     /**
      * This method finds all customers from the customers table in database.
@@ -117,26 +124,26 @@ public class CustomerDaoImpl extends JDBCConnection implements ServiceIfc<Custom
         }
 
     }
-
-    /**
-     * This method finds an customer ID by customer name and a division ID
-     *
-     * @param customerName a customer name
-     * @param divisionId a division ID
-     * @return a customer ID
-     */
-    public long findIdByNameAndDivisionId(String customerName, long divisionId) {
-        ResultSet rs = findRawDataFromDB("SELECT Customer_ID FROM customers WHERE customer_name = '" + customerName + "' and division_id = " + divisionId);
-        long id = 0;
-        try {
-            while (rs.next()) {
-                id = rs.getLong("customer_id");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return id;
-    }
+//
+//    /**
+//     * This method finds an customer ID by customer name and a division ID
+//     *
+//     * @param customerName a customer name
+//     * @param divisionId a division ID
+//     * @return a customer ID
+//     */
+//    public long findIdByNameAndDivisionId(String customerName, long divisionId) {
+//        ResultSet rs = findRawDataFromDB("SELECT Customer_ID FROM customers WHERE customer_name = '" + customerName + "' and division_id = " + divisionId);
+//        long id = 0;
+//        try {
+//            while (rs.next()) {
+//                id = rs.getLong("customer_id");
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        return id;
+//    }
 }
 
 

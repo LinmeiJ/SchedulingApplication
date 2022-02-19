@@ -45,11 +45,29 @@ public class UpdateCustomerController implements Initializable, CommonUseHelperI
     @FXML
     private Button cancelBtn;
 
+    /**
+     * Initialize customerDao object
+     */
     private final CustomerDaoImpl customerDao = new CustomerDaoImpl();
+    /**
+     * Initialize first level division dao object
+     */
     private final FirstLevelDivisionDaoImpl divisionDao = new FirstLevelDivisionDaoImpl();
-    private Customer selectedCust = CustomerRecordController.selectedCust;
-    private Customer customer = new Customer();
+    /**
+     * get and save the selected customer row from customer record controller
+     */
+    private final Customer selectedCust = CustomerRecordController.selectedCust;
+    /**
+     * Initialize a customer object
+     */
+    private final Customer customer = new Customer();
+    /**
+     * initialize isSaved to false
+     */
     private boolean isSaved = false;
+    /**
+     * create a country ID variable
+     */
     public CountryId ctryID;
 
     /**

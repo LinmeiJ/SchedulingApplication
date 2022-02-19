@@ -15,6 +15,9 @@ import java.sql.SQLException;
  * @author Linmei M.
  */
 public class ReportDaoImpl extends JDBCConnection {
+    /**
+     * initialize a report list
+     */
     ObservableList<Report> reports = FXCollections.observableArrayList();
 
     /**

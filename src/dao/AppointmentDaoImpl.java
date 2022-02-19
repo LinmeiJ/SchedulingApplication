@@ -1,7 +1,6 @@
 package dao;
 
 import controller.AppointmentRecordController;
-import controller.Validator;
 import dateTimeUtil.BookingAvailability;
 import dateTimeUtil.DateTimeConverter;
 import dbConnection.JDBCConnection;
@@ -23,8 +22,15 @@ import java.util.stream.Collectors;
  * @author Linmei M.
  */
 public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<Appointment> {
+    /**
+     * Initialize contact dao object
+     */
     private final ContactDaoImpl contactDao = new ContactDaoImpl();
-    private ObservableList<Appointment> allAppointment = FXCollections.observableArrayList();
+    /**
+     * Initialize a list that can contain Appointment objects
+     */
+    private final ObservableList<Appointment> allAppointment = FXCollections.observableArrayList();
+
     private Appointment appointment;
 
     /**
@@ -124,7 +130,7 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
      */
     public void update(Appointment appointment) {
         String sql = "UPDATE appointments SET Title=?, Description=?, Location=?, Type=?, Start=?, End=?, Create_Date=?,Created_By=?, Last_Update=?, Last_Updated_By=?, Customer_ID=?, User_ID=?, Contact_ID=? WHERE Appointment_ID = " + appointment.getAppointment_id();
-        PreparedStatement preparedStatement = null;
+        PreparedStatement preparedStatement;
         try {
             preparedStatement = JDBCConnection.connection.prepareStatement(sql);
 
@@ -188,7 +194,7 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
     public void save(Appointment appointment) {
 
         String sql = "INSERT INTO appointments (Title, Description, Location, Type, Start, End, Customer_ID, User_ID, Contact_ID, Created_By, Last_Update, create_date, Last_Updated_by) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        PreparedStatement preparedStatement = null;
+        PreparedStatement preparedStatement;
         try {
             preparedStatement = JDBCConnection.connection.prepareStatement(sql);
 
@@ -235,30 +241,30 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
         }
         return message;
     }
-
-    /**
-     * This methods find a list of appointment by a specific contact ID.
-     *
-     * @param contactId the contact ID that a appointment associate to
-     * @return A list of appointment
-     */
-    public List<Appointment> findByContactId(long contactId) {
-        List<Appointment> scheduleListByContactID = new ArrayList<>();
-        try {
-            ResultSet rs = findRawDataFromDB("Select Appointment_ID, Start, End, Contact_ID FROM client_schedule.appointments WHERE Contact_ID = " + contactId);
-            while (rs.next()) {
-                long aptId = rs.getLong("appointment_id");
-                Timestamp start = DateTimeConverter.convertUTCToEST(rs.getTimestamp("start"));
-                Timestamp end = DateTimeConverter.convertUTCToEST(rs.getTimestamp("end"));
-                Appointment appointmentSchedule = new Appointment(aptId, start, end);
-                appointmentSchedule.setContact_id(rs.getLong("contact_id"));
-                scheduleListByContactID.add(appointmentSchedule);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return scheduleListByContactID;
-    }
+//
+//    /**
+//     * This methods find a list of appointment by a specific contact ID.
+//     *
+//     * @param contactId the contact ID that a appointment associate to
+//     * @return A list of appointment
+//     */
+//    public List<Appointment> findByContactId(long contactId) {
+//        List<Appointment> scheduleListByContactID = new ArrayList<>();
+//        try {
+//            ResultSet rs = findRawDataFromDB("Select Appointment_ID, Start, End, Contact_ID FROM client_schedule.appointments WHERE Contact_ID = " + contactId);
+//            while (rs.next()) {
+//                long aptId = rs.getLong("appointment_id");
+//                Timestamp start = DateTimeConverter.convertUTCToEST(rs.getTimestamp("start"));
+//                Timestamp end = DateTimeConverter.convertUTCToEST(rs.getTimestamp("end"));
+//                Appointment appointmentSchedule = new Appointment(aptId, start, end);
+//                appointmentSchedule.setContact_id(rs.getLong("contact_id"));
+//                scheduleListByContactID.add(appointmentSchedule);
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        return scheduleListByContactID;
+//    }
 
     /**
      * This methods find a list of appointment by a specific customer ID.
@@ -319,8 +325,8 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
      * @return false when the appointment time is not changed, otherwise returns true.
      */
     private boolean isAppointmentTimeUpdated(LocalDateTime aptStartTime, LocalDateTime aptEndTime) {
-        return aptStartTime.equals(AppointmentRecordController.selectApt.getStart())
-                && aptEndTime.equals(AppointmentRecordController.selectApt.getEnd());
+        return Timestamp.valueOf(aptStartTime).equals(AppointmentRecordController.selectApt.getStart())
+                && Timestamp.valueOf(aptEndTime).equals(AppointmentRecordController.selectApt.getEnd());
     }
 
     /**

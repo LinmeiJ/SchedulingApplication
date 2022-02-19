@@ -3,7 +3,6 @@ package controller;
 import dao.AppointmentDaoImpl;
 import dao.ContactDaoImpl;
 import dao.UserDaoImpl;
-import dateTimeUtil.BookingAvailability;
 import dateTimeUtil.DateTimeConverter;
 import dbConnection.JDBCConnection;
 import entity.Appointment;
@@ -13,15 +12,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.util.Callback;
 
 import java.net.URL;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.Iterator;
-import java.util.Map;
 import java.util.ResourceBundle;
 
 /**
@@ -71,9 +67,17 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
     @FXML
     private Label endOfficeHr;
 
-
+    /**
+     * Initialize appointmentDao object
+     */
     private final AppointmentDaoImpl appointmentDao = new AppointmentDaoImpl();
+    /**
+     * Initialize a contact dao object
+     */
     private final ContactDaoImpl contactDao = new ContactDaoImpl();
+    /**
+     * Initialize an appointment object
+     */
     public static Appointment appointment ;
 
     /**
@@ -119,8 +123,8 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
         String endM = endMin.getValue();
 
         //convert the time input to LocalDateTime
-        LocalDateTime startLocalDateTime = LocalDateTime.of(startD, LocalTime.of(Integer.valueOf(startH), Integer.valueOf(startM)));
-        LocalDateTime endLocalDateTime = LocalDateTime.of(endD, LocalTime.of(Integer.valueOf(endH), Integer.valueOf(endM)));
+        LocalDateTime startLocalDateTime = LocalDateTime.of(startD, LocalTime.of(Integer.parseInt(startH), Integer.parseInt(startM)));
+        LocalDateTime endLocalDateTime = LocalDateTime.of(endD, LocalTime.of(Integer.parseInt(endH), Integer.parseInt(endM)));
 
         if (!areValidInput(type, location, title, description, startD, startH, startM, endD, endH, endM, contactName)) {
             Validator.displayInvalidInput("Invalid input. All fields can not be empty");

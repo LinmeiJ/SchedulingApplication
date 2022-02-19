@@ -1,14 +1,10 @@
 package controller;
 
-import dateTimeUtil.DateTimeConverter;
-import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import javafx.stage.Stage;
 
 import java.time.*;
 import java.time.chrono.ChronoLocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.regex.Matcher;
@@ -28,17 +24,17 @@ public final class Validator {
     /**
      * An alert to display an error message.
      */
-    private static Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+    private static final Alert errorAlert = new Alert(Alert.AlertType.ERROR);
 
     /**
      * An alert object to display a confirmation to a user.
      */
-    private static Alert confirmAlert = new Alert(Alert.AlertType.CONFIRMATION);
+    private static final Alert confirmAlert = new Alert(Alert.AlertType.CONFIRMATION);
 
     /**
      * An alert object to display info to user to the user.
      */
-    private static Alert infoAlert = new Alert(Alert.AlertType.INFORMATION);
+    private static final Alert infoAlert = new Alert(Alert.AlertType.INFORMATION);
 
     /**
      * Validates 4 strings at a time
@@ -72,7 +68,7 @@ public final class Validator {
      * @return if the string is valid, returns ture, otherwise returns a false.
      */
     public static boolean checkStringEntry(String str1) {
-        return str1.length() != 0 && !str1.isEmpty() && str1 != null;
+        return !str1.isEmpty();
     }
 
     /**
@@ -151,17 +147,6 @@ public final class Validator {
      */
     public static void displayInfo(String message) {
         infoAlert.setTitle("Information");
-        infoAlert.setHeaderText(message);
-        infoAlert.showAndWait()
-                .filter(res -> res == ButtonType.OK);
-    }
-
-    /**
-     *
-     * @param message a custom message that displays on the user screen
-     */
-    public static void displayConfirmation(String message) {
-        infoAlert.setTitle("Confirmation");
         infoAlert.setHeaderText(message);
         infoAlert.showAndWait()
                 .filter(res -> res == ButtonType.OK);
@@ -289,24 +274,12 @@ public final class Validator {
      */
     public static boolean isValidAppointmentTime(LocalDate startD, String startH, String startM, LocalDate endD, String endH, String endM) {
         ZoneId zoneId = ZoneId.systemDefault();
-        LocalTime startLocalTime = LocalTime.of(Integer.valueOf(startH), Integer.valueOf(startM));
+        LocalTime startLocalTime = LocalTime.of(Integer.parseInt(startH), Integer.parseInt(startM));
         ZonedDateTime startDateTime = ZonedDateTime.of(startD, startLocalTime, zoneId);
-        LocalTime endLocalTime = LocalTime.of(Integer.valueOf(endH), Integer.valueOf(endM));
-        ZonedDateTime endDateTime =ZonedDateTime.of(endD, endLocalTime, zoneId);;
+        LocalTime endLocalTime = LocalTime.of(Integer.parseInt(endH), Integer.parseInt(endM));
+        ZonedDateTime endDateTime =ZonedDateTime.of(endD, endLocalTime, zoneId);
 
         return endDateTime.isAfter(startDateTime) && LocalDateTime.now().isBefore(ChronoLocalDateTime.from(startDateTime));
-//        LocalTime startTime = LocalTime.of(Integer.parseInt(startH), Integer.parseInt(startM));
-//        LocalTime endTime = LocalTime.of(Integer.parseInt(endH), Integer.parseInt(endM));
-//        LocalDateTime startDateTime = LocalDateTime.of(startD, startTime);
-//        LocalDateTime endDateTime = LocalDateTime.of(endD, endTime);
-//        return endDateTime.isAfter(startDateTime) && LocalDateTime.now().isBefore(startDateTime);
     }
 
-
-    public static boolean isOutOfOfficeHr(LocalDateTime startLocalDateTime, LocalDateTime endLocalDateTime) {
-        return (startLocalDateTime.toLocalTime()).isBefore(DateTimeConverter.convertESTOfficeStartHrToLocal())
-                || (startLocalDateTime.toLocalTime().isAfter(DateTimeConverter.convertESTOfficeEndHrToLocal()))
-                || (endLocalDateTime.toLocalTime()).isBefore(DateTimeConverter.convertESTOfficeStartHrToLocal())
-                || (endLocalDateTime.toLocalTime().isAfter(DateTimeConverter.convertESTOfficeEndHrToLocal()));
-    }
 }

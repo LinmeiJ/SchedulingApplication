@@ -47,9 +47,21 @@ public class AddNewCustomerController extends JDBCConnection implements Initiali
     @FXML
     private Button cancelBtn;
 
+    /**
+     * initialize a customer
+     */
     public static Customer customer = new Customer();
+    /**
+     * initialize a customer dao object
+     */
     private final CustomerDaoImpl customerDao = new CustomerDaoImpl();
+    /**
+     * Initialize first level division dao object
+     */
     private final FirstLevelDivisionDaoImpl divisionDao = new FirstLevelDivisionDaoImpl();
+    /**
+     * Initialize a boolean that tells whether a customer is a new one
+     */
     public static boolean isNewCust = false; // whether it is a new customer
 
     /**
@@ -141,6 +153,14 @@ public class AddNewCustomerController extends JDBCConnection implements Initiali
         }
     }
 
+    /**
+     * This method stores members of customer object
+     * @param name customer name
+     * @param address customer address
+     * @param phone customer phone
+     * @param zipcode customer zipcode
+     * @param divisionId customer division ID
+     */
     private void setCustomer(String name, String address, String phone, String zipcode, long divisionId) {
         customer.setCustomer_name(name);
         customer.setAddress(address);

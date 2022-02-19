@@ -62,12 +62,29 @@ public class ReportController implements Initializable, CommonUseHelperIfc {
     @FXML
     private TableView<Country> reportThree;
 
+    /**
+     * Initialize the isReportOneByMonth to true;
+     */
     private static boolean isReportOneByMonth = true;
+    /**
+     * Initialize the isReportOneByType;
+     */
     private static boolean isReportOneByType;
-    //    private static boolean isReportTwoContact;
+    /**
+     * Initialize a contact name
+     */
     private static String contactName;
+    /**
+     * Initialize a report dao object
+     */
     private final ReportDaoImpl reportDao = new ReportDaoImpl();
+    /**
+     * Initialize a contact dao object
+     */
     private final ContactDaoImpl contactDao = new ContactDaoImpl();
+    /**
+     * Initialize a appointment dao object
+     */
     private final AppointmentDaoImpl appointmentDao = new AppointmentDaoImpl();
 
     /**

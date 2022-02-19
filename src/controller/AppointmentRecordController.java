@@ -58,16 +58,30 @@ public class AppointmentRecordController extends JDBCConnection implements Initi
     private RadioButton filterByWeek;
     @FXML
     private RadioButton listAll;
-    private Button addNewApt;
 
-
-    Logger logger = Logger.getLogger(this.getClass().getName());
+    /**
+     * Initialize a list that can contains Appointment object
+     */
     ObservableList<Appointment> aptDataTable = FXCollections.observableArrayList();
+    /**
+     * Initialize an appointment dao object
+     */
     AppointmentDaoImpl appointmentDao = new AppointmentDaoImpl();
-
+    /**
+     * Initialize isMonthFilter to false
+     */
     public static boolean isMonthFilter = false;
+    /**
+     * Initialize isWeekFilter to false
+     */
     public static boolean isWeekFilter = false;
+    /**
+     * Initialize listAllFilter to false
+     */
     public static boolean listAllFilter = false;
+    /**
+     * Initialize Appointment object to store the appointment that is selected from the appointment record table
+     */
     public static Appointment selectApt;
 
     /**
@@ -206,7 +220,7 @@ public class AppointmentRecordController extends JDBCConnection implements Initi
                 listAllFilter = false;
             }
         } catch (Exception e) {
-            logger.log(Level.WARNING, "initialize() throws an exception", this.getClass().getName());
+            System.out.println(e.getMessage());
         }
     }
 

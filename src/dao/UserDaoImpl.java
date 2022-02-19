@@ -2,7 +2,6 @@ package dao;
 
 import controller.Validator;
 import dbConnection.JDBCConnection;
-import entity.Contact;
 import entity.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,8 +16,17 @@ import java.sql.SQLException;
  * @author Linmei M.
  */
 public class UserDaoImpl extends JDBCConnection {
+    /**
+     * a user name
+     */
     public static String userName;
+    /**
+     * a user ID
+     */
     public static long userId;
+    /**
+     * a user list
+     */
     public ObservableList<User> userList;
 
     /**

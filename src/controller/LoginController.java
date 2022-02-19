@@ -42,10 +42,22 @@ public class LoginController implements Initializable, CommonUseHelperIfc {
     @FXML
     private Label signIn;
 
+    /**
+     * Initialize the language bundle
+     */
     public static ResourceBundle language;
+    /**
+     * initialize successful login count
+     */
     private int successCount;
+    /**
+     * Initialize the failed login count
+     */
     private int failedCount;
 
+    /**
+     * Initialize an appointment dao object
+     */
     private final AppointmentDaoImpl appointmentDao = new AppointmentDaoImpl();
 
     /**

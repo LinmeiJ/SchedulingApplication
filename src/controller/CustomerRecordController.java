@@ -40,11 +40,26 @@ public class CustomerRecordController implements Initializable, CommonUseHelperI
     @FXML
     private TableColumn<Customer, String> custDivision;
 
+    /**
+     * Initialize customer dao object
+     */
     public CustomerDaoImpl customerDao = new CustomerDaoImpl();
+    /**
+     * Initialize a list that con contain customer objects
+     */
     public ObservableList<Customer> customersDataTable = FXCollections.observableArrayList();
+    /**
+     * Initialize a customer object that stores the selected customer row
+     */
     public static Customer selectedCust;
+    /**
+     * initialize a country ID
+     */
     public static CountryId ctryId;
 
+    /**
+     * Initialize a logger for logging user activities
+     */
     Logger logger = Logger.getLogger(this.getClass().getName());
 
     /**

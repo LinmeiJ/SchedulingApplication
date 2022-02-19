@@ -1,14 +1,9 @@
 package dateTimeUtil;
 
 import entity.Appointment;
-
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.*;
-import java.util.function.BiPredicate;
-import java.util.function.Predicate;
-
 import static java.time.temporal.ChronoUnit.MINUTES;
 
 /**
@@ -62,7 +57,6 @@ public class BookingAvailability {
 
         if (start != null || end != null) {
             List<LocalTime> splitTime = getUserWantedTimeSlots(start, end);
-
             return checksIfDoubleBooked(availableTimeSlots, splitTime);
         }
         return false;
@@ -133,27 +127,27 @@ public class BookingAvailability {
         return splitTime;
     }
 
-    /**
-     * This method formats the available times slots to used for displaying on the user interface
-     *
-     * @param availableAllDayTimeSlots all available times slots to the user
-     */
-    private static void displayAvailableTime(List<LocalTime> availableAllDayTimeSlots) {
-
-        int index;
-        LocalTime temp = availableAllDayTimeSlots.get(0);
-        for (index = 0; index < availableAllDayTimeSlots.size(); ) {
-            if (index > availableAllDayTimeSlots.size() - 2) {
-                availableTimeToDisplay.put(temp, availableAllDayTimeSlots.get(index));
-                break;
-            } else if (availableAllDayTimeSlots.get(index).plusMinutes(15).equals(availableAllDayTimeSlots.get(index + 1))) {
-                index++;
-            } else {
-                availableTimeToDisplay.put(temp, availableAllDayTimeSlots.get(index));
-
-                temp = availableAllDayTimeSlots.get(index + 1);
-                index++;
-            }
-        }
-    }
+//    /**
+//     * This method formats the available times slots to used for displaying on the user interface
+//     *
+//     * @param availableAllDayTimeSlots all available times slots to the user
+//     */
+//    private static void displayAvailableTime(List<LocalTime> availableAllDayTimeSlots) {
+//
+//        int index;
+//        LocalTime temp = availableAllDayTimeSlots.get(0);
+//        for (index = 0; index < availableAllDayTimeSlots.size(); ) {
+//            if (index > availableAllDayTimeSlots.size() - 2) {
+//                availableTimeToDisplay.put(temp, availableAllDayTimeSlots.get(index));
+//                break;
+//            } else if (availableAllDayTimeSlots.get(index).plusMinutes(15).equals(availableAllDayTimeSlots.get(index + 1))) {
+//                index++;
+//            } else {
+//                availableTimeToDisplay.put(temp, availableAllDayTimeSlots.get(index));
+//
+//                temp = availableAllDayTimeSlots.get(index + 1);
+//                index++;
+//            }
+//        }
+//    }
 }

@@ -17,9 +17,18 @@ public class User {
     private Timestamp last_update;
     private String last_updated_by;
 
+    /**
+     * a constructor doesn't take any param
+     */
     public User() {
     }
 
+    /**
+     * a constructor that takes in 3 params
+     * @param user_id an user ID
+     * @param user_name an user name
+     * @param password an user password
+     */
     public User(int user_id, String user_name, String password) {
         this.user_id = user_id;
         this.user_name = user_name;
