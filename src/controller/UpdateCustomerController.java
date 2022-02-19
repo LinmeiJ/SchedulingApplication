@@ -234,8 +234,7 @@ public class UpdateCustomerController implements Initializable, CommonUseHelperI
 
     /**
      * This method gets the division list based on the previous saved country ID
-     *
-     * @return ObservableList<String> a list of division names
+     * @return a list of divisions
      */
     private ObservableList<String> getCustomerDivision() {
         ObservableList<String> divisionList = FXCollections.observableArrayList();

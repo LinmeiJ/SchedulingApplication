@@ -184,7 +184,6 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
      * This method saves an appointment that passed in.
      *
      * @param appointment an new appointment that need to save to the database.
-     * @throws SQLException An exception that provides information on a database access error or other errors.
      */
     public void save(Appointment appointment) {
 
@@ -216,6 +215,7 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
     /**
      * This method checks whether there is an upcoming appointments within 15 minutes.
      *
+     * @param language the resource where language for the logging translated
      * @return a string that will be displayed on the user UI
      */
     public String getAllUpcomingApts(ResourceBundle language) {

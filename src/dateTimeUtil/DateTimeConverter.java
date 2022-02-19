@@ -26,11 +26,9 @@ public class DateTimeConverter {
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern(FORMAT);
     private static final LocalTime officeOpenTime = LocalTime.of(8, 00);
     private static final LocalTime officeCloseTime = LocalTime.of(22, 00);
-    public static ObservableList<String> hrList = FXCollections.observableList( Arrays.asList("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"));
-    public static ObservableList<String> minuteList = FXCollections.observableList( Arrays.asList("00", "15", "30", "45"));
-    public static ObservableList<String> meridiemList = FXCollections.observableList( Arrays.asList("AM", "PM"));
-
-
+    public static ObservableList<String> hrList = FXCollections.observableList(Arrays.asList("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"));
+    public static ObservableList<String> minuteList = FXCollections.observableList(Arrays.asList("00", "15", "30", "45"));
+    public static ObservableList<String> meridiemList = FXCollections.observableList(Arrays.asList("AM", "PM"));
 
 
     /**
@@ -62,7 +60,7 @@ public class DateTimeConverter {
      * @return an EST time
      */
     public static Timestamp convertAptTimeToEST(LocalDate dateValue, String hrValue, String minuteValue) {
-        if(hrValue.length() < 2){
+        if (hrValue.length() < 2) {
             hrValue = "0" + hrValue;
         }
         String str = dateValue.toString() + " " + hrValue + ":" + minuteValue + ":00";
@@ -79,7 +77,7 @@ public class DateTimeConverter {
      * @return an UTC time
      */
     public static Timestamp convertAptTimeToUTC(LocalDate dateValue, String hrValue, String minuteValue) {
-        if(hrValue.length() == 1){
+        if (hrValue.length() == 1) {
             hrValue = "0" + hrValue;
         }
         String str = dateValue.toString() + " " + hrValue + ":" + minuteValue + ":00";
@@ -114,7 +112,7 @@ public class DateTimeConverter {
      * @return a local date time
      */
     public static Timestamp convertESTToLocal(String timestamp) {
-        if(timestamp.contains("T")) {
+        if (timestamp.contains("T")) {
             timestamp = timestamp.replace("T", " ") + ":00";
         }
         Timestamp localDateTime = null;
@@ -211,24 +209,32 @@ public class DateTimeConverter {
     }
 
     public static boolean isWithinOfficeHour(LocalDate dateValue, String hrValue, String minuteValue, LocalDate endDate, String endH, String endM) {
-        Timestamp aptDateTime = convertAptTimeToEST(dateValue, hrValue, minuteValue);
+        Timestamp aptStartDateTime = convertAptTimeToEST(dateValue, hrValue, minuteValue);
         Timestamp endDateTime = convertAptTimeToEST(endDate, endH, endM);
         LocalDateTime officeOpenDateTime = LocalDateTime.of(dateValue, officeOpenTime);
         LocalDateTime officeCloseDateTime = LocalDateTime.of(dateValue, officeCloseTime);
-        return checkOfficeDateTime(aptDateTime.toLocalDateTime(), officeOpenDateTime, officeCloseDateTime, endDateTime.toLocalDateTime());
+        return checkOfficeDateTime(aptStartDateTime.toLocalDateTime(), officeOpenDateTime, officeCloseDateTime, endDateTime.toLocalDateTime());
+    }
+
+    private static boolean isWeekend(LocalDateTime aptStartDateTime, LocalDateTime endDateTime) {
+        return ((aptStartDateTime.toLocalDate().getDayOfWeek() == DayOfWeek.SUNDAY || aptStartDateTime.toLocalDate().getDayOfWeek() == DayOfWeek.SATURDAY)
+                &&
+                (endDateTime.toLocalDate().getDayOfWeek() == DayOfWeek.SUNDAY || endDateTime.toLocalDate().getDayOfWeek() == DayOfWeek.SATURDAY));
     }
 
     /**
      * This method checks whether user appointment is within EST office hour.
      *
-     * @param aptDateTime         the time the user wishes to book
+     * @param aptDateTime         the appointment start time
      * @param officeOpenDateTime  the time when office opens
      * @param officeCloseDateTime the time when office closes
+     * @param endDateTime the appointment end time
      * @return true if the appointment is within EST office hour, false when out of office hour.
      */
     private static boolean checkOfficeDateTime(LocalDateTime aptDateTime, LocalDateTime officeOpenDateTime, LocalDateTime officeCloseDateTime, LocalDateTime endDateTime) {
         return !aptDateTime.isBefore(officeOpenDateTime) && !aptDateTime.isAfter(officeCloseDateTime)
-                && !endDateTime.isBefore(officeOpenDateTime) && !endDateTime.isAfter(officeCloseDateTime);
+                && !endDateTime.isBefore(officeOpenDateTime) && !endDateTime.isAfter(officeCloseDateTime)
+                && !isWeekend(aptDateTime, endDateTime);
     }
 
     /**
@@ -241,6 +247,7 @@ public class DateTimeConverter {
         LocalDateTime estOfficeHrOfTheDay = LocalDateTime.of(dateValue, LocalTime.of(8, 0));
         return String.valueOf(convertESTToLocal(String.valueOf(estOfficeHrOfTheDay)).toLocalDateTime().toLocalTime());
     }
+
     /**
      * This method generates a local time for user to identify the EST end office hour based on the local date
      *
@@ -254,34 +261,35 @@ public class DateTimeConverter {
 
     /**
      * convert 12 hour time to 24 hour time
-     * @param hr the hour
+     *
+     * @param hr       the hour
      * @param meridiem the meridiem - am/pm
      * @return converted hr time
      */
-    public static int get24HrTime(int hr, String meridiem){
+    public static int get24HrTime(int hr, String meridiem) {
         hr += meridiem.equals("AM") ? 0 : 12;
 //        hr = meridiem.equals("PM")? hr-12 : hr;
         return hr;
     }
 
-    public static String getMeridiem(int hr){
-      return hr > 12 ? "PM" : "AM";
+    public static String getMeridiem(int hr) {
+        return hr > 12 ? "PM" : "AM";
     }
 
-    public static int convertHrTo12HrTime(int hr){
-        if(hr > 12){
-           hr -= 12 ;
+    public static int convertHrTo12HrTime(int hr) {
+        if (hr > 12) {
+            hr -= 12;
         }
         return hr;
     }
 
-    public static LocalTime convertESTOfficeStartHrToLocal(){
+    public static LocalTime convertESTOfficeStartHrToLocal() {
         Timestamp startTime = convertESTToLocal(String.valueOf(LocalDateTime.of(LocalDate.now(), LocalTime.of(8, 0))));
         return startTime.toLocalDateTime().toLocalTime();
     }
 
-    public static LocalTime convertESTOfficeEndHrToLocal(){
-        Timestamp endTime =  convertESTToLocal(String.valueOf(LocalDateTime.of(LocalDate.now(), LocalTime.of(22, 0))));
+    public static LocalTime convertESTOfficeEndHrToLocal() {
+        Timestamp endTime = convertESTToLocal(String.valueOf(LocalDateTime.of(LocalDate.now(), LocalTime.of(22, 0))));
         return endTime.toLocalDateTime().toLocalTime();
     }
 

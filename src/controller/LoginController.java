@@ -122,6 +122,8 @@ public class LoginController implements Initializable, CommonUseHelperIfc {
 
     /**
      * Logs user attempt into a file called login_activity.txt
+     *
+     * @param loginAttempts log in attempts either a success or a fail message
      */
     private void loginAttempt(String loginAttempts) {
         try {

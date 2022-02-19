@@ -103,12 +103,12 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
         String endM = endMin.getValue();
 
         //convert the time input to LocalDateTime
-        LocalDateTime  startLocalDateTime = LocalDateTime.of(startD, LocalTime.of(Integer.valueOf(startH), Integer.valueOf(startM)));
-        LocalDateTime  endLocalDateTime = LocalDateTime.of(endD, LocalTime.of(Integer.valueOf(endH), Integer.valueOf(endM)));
+        LocalDateTime startLocalDateTime = LocalDateTime.of(startD, LocalTime.of(Integer.valueOf(startH), Integer.valueOf(startM)));
+        LocalDateTime endLocalDateTime = LocalDateTime.of(endD, LocalTime.of(Integer.valueOf(endH), Integer.valueOf(endM)));
 
         if (!areValidInput(type, location, title, description, startD, startH, startM, endD, endH, endM, contactName, customerName, userName)) {
             Validator.displayInvalidInput("Invalid input. All fields can not be empty");
-        }else if (!Validator.isValidAppointmentTime(startD, startH, startM, endD, endH, endM)){
+        } else if (!Validator.isValidAppointmentTime(startD, startH, startM, endD, endH, endM)) {
             Validator.displayInfo("Sorry.\n" +
                     "1. your appointment can not be in the past \n 2. the appointment ending time can not be before the appointment starting time. \n Try again please.");
         } else if (!DateTimeConverter.isWithinOfficeHour(startD, startH, startM, endD, endH, endM)) {
@@ -120,7 +120,7 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
             Timestamp lastUpdate = DateTimeConverter.convertLocalTimeToUTC(LocalDateTime.now());
             Appointment appointment = new Appointment(title, description, location,
                     type, Timestamp.valueOf(startLocalDateTime), Timestamp.valueOf(endLocalDateTime),
-                   createdDate, userName, lastUpdate, userName, customerId, contactId, userId);
+                    createdDate, userName, lastUpdate, userName, customerId, contactId, userId);
             appointmentDao.save(appointment);
             Validator.displaySuccess("Appointment is saved");
             setScene(event, Views.APPOINTMENT_RECORD_VIEW.getView());
@@ -129,7 +129,7 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
 
     private int getID(String customerName, Map<Integer, String> map) {
         for (Map.Entry<Integer, String> contact : map.entrySet()) {
-            if(contact.getValue().equals(customerName))
+            if (contact.getValue().equals(customerName))
                 return contact.getKey();
         }
         return 0;
@@ -213,7 +213,9 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
      * @param endD        end date field input.
      * @param endH        end hour field input.
      * @param endM        end minute field input.
-     * @param contact     contact ID.
+     * @param contact     contact name.
+     * @param customer    customer name
+     * @param user        user name
      * @return boolean not valid returns a false, otherwise returns a true.
      */
     private boolean areValidInput(String type, String location, String title, String description, LocalDate startD, String startH, String startM, LocalDate endD, String endH, String endM, String contact, String customer, String user) {

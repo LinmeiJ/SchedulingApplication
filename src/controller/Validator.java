@@ -123,6 +123,8 @@ public final class Validator {
 
     /**
      * This method sets a confirmation window to ensure the end user wants to exit the program.
+     *
+     * @param language A resource folder where contains languages that are in english and french
      */
     public static void displayExitConfirmation(ResourceBundle language) {
         confirmAlert.setTitle(language.getString("exit"));
@@ -156,7 +158,7 @@ public final class Validator {
 
     /**
      *
-     * @param message
+     * @param message a custom message that displays on the user screen
      */
     public static void displayConfirmation(String message) {
         infoAlert.setTitle("Confirmation");
@@ -167,6 +169,8 @@ public final class Validator {
 
     /**
      * This method generates a message to confirm whether the end user want to delete a selected item.
+     *
+     * @param message  a custom message that displays on the screen
      */
     public static void displayDeleteConfirmation(String message) {
         confirmAlert.setTitle("Delete Confirmation");

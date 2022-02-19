@@ -144,49 +144,23 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
 
     }
 
-    /**
-     * The method generates a set of available time to display on users window when the time is booked or out of EST office hour
-     */
-    private String getAvailableTime() {
-        String availableTime = "";
-        Map<LocalTime, LocalTime> availableTimeToDisplay = BookingAvailability.availableTimeToDisplay;
-
-        Iterator iteratorMap = availableTimeToDisplay.entrySet().iterator();
-        while (iteratorMap.hasNext()) {
-            Map.Entry mapElement = (Map.Entry) iteratorMap.next();
-            availableTime = availableTime + mapElement.getKey() + " To "
-                    + mapElement.getValue() + "\n";
-        }
-        return availableTime;
-    }
-
-    /**
-     * This method updates the selected appointment.
-     *
-     * @param event       JavaFX event that passed in from the log in button. it is there for later to transition from this view to the next view
-     * @param title       title field input
-     * @param description description field input
-     * @param type        type field input
-     * @param location    location field input
-     * @param startD      start date field input
-     * @param startH      start hour field input
-     * @param startM      start minute field input
-     * @param endD        end date field input
-     * @param endH        end hour field input
-     * @param endM        end minute field input
-     * @param contactId   contact ID
-     */
-    private void updateAptRecordForm(ActionEvent event, String type, String location, String title, String description, LocalDate startD, String startH, String startM, LocalDate endD, String endH, String endM, long contactId) {
-        Timestamp currentTime = Timestamp.valueOf(LocalDateTime.now());
-        Timestamp start = DateTimeConverter.convertAptTimeToUTC(startD, startH, startM);
-        Timestamp end = DateTimeConverter.convertAptTimeToUTC(endD, endH, endM);
-        long custId = AppointmentRecordController.selectApt.getCustomer_id();
-
-        appointmentDao.update(new Appointment(AppointmentRecordController.selectApt.getAppointment_id(), title, description, location, type,
-                start, end, currentTime, UserDaoImpl.userName, currentTime, UserDaoImpl.userName, custId, contactId, UserDaoImpl.userId));
-        Validator.displaySuccess("updated ");
-        setScene(event, Views.APPOINTMENT_RECORD_VIEW.getView());
-    }
+//    /**
+//     * The method generates a set of available time to display on users window when the time is booked or out of EST office hour
+//     *
+//     * @return
+//     * */
+//    private String getAvailableTime() {
+//        String availableTime = "";
+//        Map<LocalTime, LocalTime> availableTimeToDisplay = BookingAvailability.availableTimeToDisplay;
+//
+//        Iterator iteratorMap = availableTimeToDisplay.entrySet().iterator();
+//        while (iteratorMap.hasNext()) {
+//            Map.Entry mapElement = (Map.Entry) iteratorMap.next();
+//            availableTime = availableTime + mapElement.getKey() + " To "
+//                    + mapElement.getValue() + "\n";
+//        }
+//        return availableTime;
+//    }
 
     /**
      * Display the original appointment information and user can later update directly on the top of those fields.
@@ -201,7 +175,7 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
         initFields();
         initLastAptDateTime();
         initContact();
-        disabledWeekends();
+//        disabledWeekends();
     }
 
     /**
@@ -255,15 +229,15 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
         endMeridiem.setItems(DateTimeConverter.meridiemList);
     }
 
-    /**
-     * This method disabled the weekends option in the date picker.
-     */
-    private void disabledWeekends() {
-        Callback<DatePicker, DateCell> startDayCellFactory = this.getDayCellFactory();
-        startDate.setDayCellFactory(startDayCellFactory);
-        Callback<DatePicker, DateCell> endDayCellFactory = this.getDayCellFactory();
-        endDate.setDayCellFactory(endDayCellFactory);
-    }
+//    /**
+//     * This method disabled the weekends option in the date picker.
+//     */
+//    private void disabledWeekends() {
+//        Callback<DatePicker, DateCell> startDayCellFactory = this.getDayCellFactory();
+//        startDate.setDayCellFactory(startDayCellFactory);
+//        Callback<DatePicker, DateCell> endDayCellFactory = this.getDayCellFactory();
+//        endDate.setDayCellFactory(endDayCellFactory);
+//    }
 
     /**
      * This method validates user inputs.
@@ -278,6 +252,7 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
      * @param endD        end date field input
      * @param endH        end hour field input
      * @param endM        end minute field input
+     * @param contact     a contact id
      * @return boolean if all input are valid returns a ture, otherwise, returns a false.
      */
     private boolean areValidInput(String type, String location, String title, String description, LocalDate startD, String startH, String startM, LocalDate endD, String endH, String endM, String contact) {

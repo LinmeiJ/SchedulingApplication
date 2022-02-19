@@ -116,6 +116,9 @@ public class AddNewCustomerController extends JDBCConnection implements Initiali
 
     /**
      * Create a customer based on user input and save it to the database.
+     *
+     * @param event an event indicates a component-defined action occurred.
+     * @param view a path to the next view window
      **/
     private void addCust(ActionEvent event, String view) {
         String name = addCustNameField.getText();
