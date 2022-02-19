@@ -123,16 +123,15 @@ public class AddNewCustomerController extends JDBCConnection implements Initiali
      */
     @FXML
     void saveCustClicked(ActionEvent event) {
-        addCust(event, Views.ADD_NEW_CUSTOMER_VIEW.getView());
+        addCust(event);
     }
 
     /**
      * Create a customer based on user input and save it to the database.
      *
      * @param event an event indicates a component-defined action occurred.
-     * @param view a path to the next view window
      **/
-    private void addCust(ActionEvent event, String view) {
+    private void addCust(ActionEvent event) {
         String name = addCustNameField.getText();
         String address = addAddressField.getText();
         String phone = addPhoneField.getText();
@@ -145,11 +144,9 @@ public class AddNewCustomerController extends JDBCConnection implements Initiali
             isNewCust = true;
             customerDao.save(customer);
             Validator.displaySuccess("Add the customer");
-            setScene(event, view);
+            setScene(event, Views.CUSTOMER_RECORD_VIEW.getView());
         } else {
-            Validator.displayInvalidInput("Contain invalid entry Or fields can not be empty.\n\n " +
-                    "Example:\n Name: Lucy Wang\nAddress: 123 street name, city name \nPhone(US and " +
-                    "Canada: XXX-XXX-XXXX, UK: XX-XXX-XXX-XXXX)\nPostCode(US and Canada are digits only and UK format example: AF19B)");
+            Validator.displayInvalidInput("Invalid Entry, try again.");
         }
     }
 

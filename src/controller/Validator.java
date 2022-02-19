@@ -11,7 +11,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * A class that contains a set of logic to validate input date or display messages to the user
+ * A class that contains a set of logic to validate input data or display messages to the user
  *
  * @author Linmei M.
  */

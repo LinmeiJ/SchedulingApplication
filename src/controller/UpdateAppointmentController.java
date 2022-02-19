@@ -78,7 +78,7 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
     /**
      * Initialize an appointment object
      */
-    public static Appointment appointment ;
+    public static Appointment appointment;
 
     /**
      * This method sets the scene to the previous scene.
@@ -107,47 +107,47 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
      */
     @FXML
     void updateClicked(ActionEvent event) {
-        String type = aptType.getText();
-        String location = aptLocation.getText();
-        String title = aptTitle.getText();
-        String description = aptDescription.getText();
-        String contactName = contactList.getValue();
-        long contactId = contactDao.getContactId(contactName);
-
-        // get appointment time user wishes to book
-        LocalDate startD = startDate.getValue();
-        LocalDate endD = endDate.getValue();
-        String startH = String.valueOf(DateTimeConverter.get24HrTime(Integer.parseInt(startHr.getValue()), startMeridiem.getValue()));
-        String endH = String.valueOf(DateTimeConverter.get24HrTime(Integer.parseInt(endHr.getValue()), endMeridiem.getValue()));
-        String startM = startMin.getValue();
-        String endM = endMin.getValue();
-
-        //convert the time input to LocalDateTime
-        LocalDateTime startLocalDateTime = LocalDateTime.of(startD, LocalTime.of(Integer.parseInt(startH), Integer.parseInt(startM)));
-        LocalDateTime endLocalDateTime = LocalDateTime.of(endD, LocalTime.of(Integer.parseInt(endH), Integer.parseInt(endM)));
-
-        if (!areValidInput(type, location, title, description, startD, startH, startM, endD, endH, endM, contactName)) {
+        if (!areValidInput(aptType.getText(), aptLocation.getText(), aptTitle.getText(), aptDescription.getText(), startDate.getValue(), startHr.getValue(), startMin.getValue(), endDate.getValue(), endHr.getValue(), endMin.getValue(), contactList.getValue(), startMeridiem.getValue(), endMeridiem.getValue())) {
             Validator.displayInvalidInput("Invalid input. All fields can not be empty");
-        } else if (!Validator.isValidAppointmentTime(startD, startH, startM, endD, endH, endM)) {
-            Validator.displayInfo("Sorry.\n" +
-                    "1. your appointment can not be in the past \n 2. the appointment ending time can not be before the appointment starting time. \n Try again please.");
-        } else if (!DateTimeConverter.isWithinOfficeHour(startD, startH, startM, endD, endH, endM)) {
-            Validator.displayInfo("Sorry, The time you wish to book is out of office hour.");
-        } else if (appointmentDao.isDoubleBooking(appointment.getCustomer_id(),startLocalDateTime, endLocalDateTime)) {
-            Validator.displayInfo("Sorry, the time you have selected is already booked, please select a different time.");
         } else {
-            Timestamp createdDate = DateTimeConverter.convertLocalTimeToUTC(LocalDateTime.now());
-            Timestamp lastUpdate = DateTimeConverter.convertLocalTimeToUTC(LocalDateTime.now());
-            Appointment appointmentUpdate = new Appointment(appointment.getAppointment_id(), title, description, location,
-                    type, Timestamp.valueOf(startLocalDateTime), Timestamp.valueOf(endLocalDateTime),
-                    createdDate, UserDaoImpl.userName, lastUpdate, UserDaoImpl.userName, appointment.getCustomer_id(), contactId, appointment.getUser_id());
-            appointmentDao.update(appointmentUpdate);
-            Validator.displaySuccess("Appointment is saved");
-            setScene(event, Views.APPOINTMENT_RECORD_VIEW.getView());
+            String contactName = contactList.getValue();
+            long contactId = contactDao.getContactId(contactName);
+            String type = aptType.getText();
+            String location = aptLocation.getText();
+            String title = aptTitle.getText();
+            String description = aptDescription.getText();
+
+            // get appointment time user wishes to book
+            LocalDate startD = startDate.getValue();
+            LocalDate endD = endDate.getValue();
+            String startH = String.valueOf(DateTimeConverter.get24HrTime(Integer.parseInt(startHr.getValue()), startMeridiem.getValue()));
+            String endH = String.valueOf(DateTimeConverter.get24HrTime(Integer.parseInt(endHr.getValue()), endMeridiem.getValue()));
+            String startM = startMin.getValue();
+            String endM = endMin.getValue();
+
+            //convert the time input to LocalDateTime
+            LocalDateTime startLocalDateTime = LocalDateTime.of(startD, LocalTime.of(Integer.parseInt(startH), Integer.parseInt(startM)));
+            LocalDateTime endLocalDateTime = LocalDateTime.of(endD, LocalTime.of(Integer.parseInt(endH), Integer.parseInt(endM)));
+            if (!Validator.isValidAppointmentTime(startD, startH, startM, endD, endH, endM)) {
+                Validator.displayInfo("Sorry.\n" +
+                        "Your appointment time can not be in the past Or You appointment ending time can not be before the appointment starting time. \n Try again please.");
+            } else if (!DateTimeConverter.isWithinOfficeHour(startD, startH, startM, endD, endH, endM)) {
+                Validator.displayInfo("Sorry, The time you wish to book is out of office hour.");
+            } else if (appointmentDao.isDoubleBooking(appointment.getCustomer_id(), startLocalDateTime, endLocalDateTime)) {
+                Validator.displayInfo("Sorry, the time you have selected is already booked, please select a different time.");
+            } else {
+                Timestamp createdDate = DateTimeConverter.convertLocalTimeToUTC(LocalDateTime.now());
+                Timestamp lastUpdate = DateTimeConverter.convertLocalTimeToUTC(LocalDateTime.now());
+                Appointment appointmentUpdate = new Appointment(appointment.getAppointment_id(), title, description, location,
+                        type, Timestamp.valueOf(startLocalDateTime), Timestamp.valueOf(endLocalDateTime),
+                        createdDate, UserDaoImpl.userName, lastUpdate, UserDaoImpl.userName, appointment.getCustomer_id(), contactId, appointment.getUser_id());
+                appointmentDao.update(appointmentUpdate);
+                Validator.displaySuccess("Appointment is saved");
+                setScene(event, Views.APPOINTMENT_RECORD_VIEW.getView());
+            }
         }
-
     }
-
+// I am keeping those here for my future enhancement for this program
 //    /**
 //     * The method generates a set of available time to display on users window when the time is booked or out of EST office hour
 //     *
@@ -259,7 +259,7 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
      * @param contact     a contact id
      * @return boolean if all input are valid returns a ture, otherwise, returns a false.
      */
-    private boolean areValidInput(String type, String location, String title, String description, LocalDate startD, String startH, String startM, LocalDate endD, String endH, String endM, String contact) {
-        return Validator.isValidString(type, location, title) && description != null && contact != null && startD != null && endD != null && Validator.isValidString(startH, startM, endH, endM);
+    private boolean areValidInput(String type, String location, String title, String description, LocalDate startD, String startH, String startM, LocalDate endD, String endH, String endM, String contact, String startMe, String endMe) {
+        return Validator.isValidString(type, location, title) && description != null && contact != null && startD != null && endD != null && startMe != null && endMe != null && Validator.isValidString(startH, startM, endH, endM);
     }
 }

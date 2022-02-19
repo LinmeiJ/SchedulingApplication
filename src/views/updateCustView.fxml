@@ -17,32 +17,32 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <Label layoutX="39.0" layoutY="89.0" text="ID">
+            <Label layoutX="40.0" layoutY="112.0" text="ID">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <TextField fx:id="custId" disable="true" editable="false" layoutX="97.0" layoutY="86.0" prefHeight="26.0" prefWidth="128.0" promptText="Auto Gen - Disabled" />
-            <Label layoutX="27.0" layoutY="131.0" text="Name">
+            <TextField fx:id="custId" disable="true" editable="false" layoutX="106.0" layoutY="109.0" prefHeight="26.0" prefWidth="128.0" promptText="Auto Gen - Disabled" />
+            <Label layoutX="28.0" layoutY="169.0" text="Name">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <TextField fx:id="custNameField" layoutX="97.0" layoutY="128.0" prefHeight="25.0" prefWidth="155.0" />
-            <Label layoutX="28.0" layoutY="177.0" prefHeight="18.0" prefWidth="110.0" text="Phone Number" />
-            <TextField fx:id="phoneField" layoutX="155.0" layoutY="173.0" prefHeight="26.0" prefWidth="143.0" />
-            <Label layoutX="28.0" layoutY="222.0" text="Address">
+            <TextField fx:id="custNameField" layoutX="106.0" layoutY="167.0" prefHeight="25.0" prefWidth="155.0" />
+            <Label layoutX="16.0" layoutY="224.0" prefHeight="18.0" prefWidth="110.0" text="Phone Number" />
+            <TextField fx:id="phoneField" layoutX="107.0" layoutY="220.0" prefHeight="26.0" prefWidth="167.0" />
+            <Label layoutX="21.0" layoutY="274.0" text="Address">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <TextField fx:id="addressField" layoutX="116.0" layoutY="219.0" prefHeight="26.0" prefWidth="179.0" />
-            <Label layoutX="25.0" layoutY="271.0" text="Zip Code">
+            <TextField fx:id="addressField" layoutX="101.0" layoutY="271.0" prefHeight="26.0" prefWidth="179.0" />
+            <Label layoutX="26.0" layoutY="328.0" text="Zip Code">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <TextField fx:id="zipCodeField" layoutX="101.0" layoutY="268.0" prefHeight="26.0" prefWidth="128.0" />
+            <TextField fx:id="zipCodeField" layoutX="101.0" layoutY="325.0" prefHeight="26.0" prefWidth="128.0" />
             <AnchorPane layoutX="499.0" layoutY="74.0" prefHeight="343.0" prefWidth="287.0">
                <children>
                   <RadioButton fx:id="USAId" layoutX="37.0" layoutY="41.0" mnemonicParsing="false" onAction="#uSSelected" text="U.S">
@@ -68,14 +68,36 @@
                   </Button>
                </children>
             </AnchorPane>
+            <Button fx:id="backBtn" layoutX="619.0" layoutY="467.0" mnemonicParsing="false" onAction="#backToRecordPage" prefHeight="25.0" prefWidth="110.0" text="Back">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
+            <Label layoutX="106.0" layoutY="192.0" prefHeight="17.0" prefWidth="143.0" text="FirstName LastName" textFill="#908c8c">
+               <font>
+                  <Font name="System Italic" size="11.0" />
+               </font>
+            </Label>
+            <Label layoutX="107.0" layoutY="246.0" prefHeight="17.0" prefWidth="234.0" text="US: XXX-XXX-XXXX; UK: XX-XXX-XXX-XXXX" textFill="#908c8c">
+               <font>
+                  <Font name="System Italic" size="11.0" />
+               </font>
+            </Label>
+            <Label layoutX="101.0" layoutY="297.0" prefHeight="17.0" prefWidth="201.0" text="123 Street Name, City Name" textFill="#908c8c">
+               <font>
+                  <Font name="System Italic" size="11.0" />
+               </font>
+            </Label>
+            <Label layoutX="100.0" layoutY="351.0" prefHeight="17.0" prefWidth="155.0" text="US &amp; CA: 123456, UK: AB19H" textFill="#908c8c">
+               <font>
+                  <Font name="System Italic" size="11.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
-      <Button fx:id="backBtn" layoutX="919.0" layoutY="547.0" mnemonicParsing="false" onAction="#backToRecordPage" text="Back" />
-      <Button fx:id="cancelBtn" layoutX="1030.0" layoutY="547.0" mnemonicParsing="false" onAction="#exitBtnClicked" text="Exit" />
-      <Button fx:id="updateApt" layoutX="841.0" layoutY="473.0" mnemonicParsing="false" onAction="#updateAptClicked" prefHeight="35.0" prefWidth="238.0" text="Update/Add Appointment">
+      <Button fx:id="cancelBtn" layoutX="825.0" layoutY="483.0" mnemonicParsing="false" onAction="#exitBtnClicked" prefHeight="25.0" prefWidth="88.0" text="Exit">
          <font>
-            <Font size="16.0" />
-         </font>
-      </Button>
+            <Font size="14.0" />
+         </font></Button>
    </children>
 </AnchorPane>

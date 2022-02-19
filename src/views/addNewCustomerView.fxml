@@ -43,6 +43,26 @@
                </font>
             </Label>
             <TextField fx:id="addZipCodeField" layoutX="101.0" layoutY="268.0" prefHeight="26.0" prefWidth="128.0" />
+            <Label layoutX="97.0" layoutY="153.0" prefHeight="17.0" prefWidth="128.0" text="FirstName LastName" textFill="#a8a2a2">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Label>
+            <Label layoutX="116.0" layoutY="245.0" prefHeight="17.0" prefWidth="179.0" text="123 StreerName, CityName" textFill="#a8a2a2">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Label>
+            <Label layoutX="155.0" layoutY="199.0" prefHeight="17.0" prefWidth="216.0" text="US: XXX-XXX-XXXX; UK: XX-XXX-XXX-XXXX" textFill="#a8a2a2">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Label>
+            <Label layoutX="101.0" layoutY="294.0" prefHeight="17.0" prefWidth="155.0" text="US&amp;CA: 123456 UK: AB19H" textFill="#a8a2a2">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
       <AnchorPane layoutX="536.0" layoutY="85.0" prefHeight="343.0" prefWidth="287.0">

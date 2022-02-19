@@ -101,6 +101,9 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
      */
     @FXML
     void saveIsClicked(ActionEvent event) {
+        if (!areValidInput(aptTypeField.getText(), aptLocationField.getText(), aptTitleField.getText(), aptDescriptionField.getText(), startDate.getValue(), startHr.getValue(), startMin.getValue(), endDate.getValue(), endHr.getValue(), endMin.getValue(), contactList.getValue(), startMeridiem.getValue(), endMeridiem.getValue())) {
+            Validator.displayInvalidInput("Invalid input. All fields can not be empty");
+        } else {
         String title = aptTitleField.getText();
         String description = aptDescriptionField.getText();
         String type = aptTypeField.getText();
@@ -115,33 +118,37 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
         // get appointment time user wishes to book
         LocalDate startD = startDate.getValue();
         LocalDate endD = endDate.getValue();
-        String startH = String.valueOf(DateTimeConverter.get24HrTime(Integer.parseInt(startHr.getValue()), startMeridiem.getValue()));
-        String endH = String.valueOf(DateTimeConverter.get24HrTime(Integer.parseInt(endHr.getValue()), endMeridiem.getValue()));
         String startM = startMin.getValue();
         String endM = endMin.getValue();
-
-        //convert the time input to LocalDateTime
-        LocalDateTime startLocalDateTime = LocalDateTime.of(startD, LocalTime.of(Integer.parseInt(startH), Integer.parseInt(startM)));
-        LocalDateTime endLocalDateTime = LocalDateTime.of(endD, LocalTime.of(Integer.parseInt(endH), Integer.parseInt(endM)));
-
-        if (!areValidInput(type, location, title, description, startD, startH, startM, endD, endH, endM, contactName, customerName, userName)) {
-            Validator.displayInvalidInput("Invalid input. All fields can not be empty");
-        } else if (!Validator.isValidAppointmentTime(startD, startH, startM, endD, endH, endM)) {
-            Validator.displayInfo("Sorry.\n" +
-                    "1. your appointment can not be in the past \n 2. the appointment ending time can not be before the appointment starting time. \n Try again please.");
-        } else if (!DateTimeConverter.isWithinOfficeHour(startD, startH, startM, endD, endH, endM)) {
-            Validator.displayInfo("Sorry, The time you wish to book is out of office hour.");
-        } else if (appointmentDao.isDoubleBooking(customerId, startLocalDateTime, endLocalDateTime)) {
-            Validator.displayInfo("Sorry, the time you have selected is already booked, please select a different time.");
+        if (startMeridiem.getValue() == null && endMeridiem.getValue() == null) {
+            Validator.displayInvalidInput("Please select a meridiem - AM or PM");
         } else {
-            Timestamp createdDate = DateTimeConverter.convertLocalTimeToUTC(LocalDateTime.now());
-            Timestamp lastUpdate = DateTimeConverter.convertLocalTimeToUTC(LocalDateTime.now());
-            Appointment appointment = new Appointment(title, description, location,
-                    type, Timestamp.valueOf(startLocalDateTime), Timestamp.valueOf(endLocalDateTime),
-                    createdDate, userName, lastUpdate, userName, customerId, contactId, userId);
-            appointmentDao.save(appointment);
-            Validator.displaySuccess("Appointment is saved");
-            setScene(event, Views.APPOINTMENT_RECORD_VIEW.getView());
+            String startH = String.valueOf(DateTimeConverter.get24HrTime(Integer.parseInt(startHr.getValue()), startMeridiem.getValue()));
+
+            String endH = String.valueOf(DateTimeConverter.get24HrTime(Integer.parseInt(endHr.getValue()), endMeridiem.getValue()));
+
+
+            //convert the time input to LocalDateTime
+            LocalDateTime startLocalDateTime = LocalDateTime.of(startD, LocalTime.of(Integer.parseInt(startH), Integer.parseInt(startM)));
+            LocalDateTime endLocalDateTime = LocalDateTime.of(endD, LocalTime.of(Integer.parseInt(endH), Integer.parseInt(endM)));
+
+          if (!Validator.isValidAppointmentTime(startD, startH, startM, endD, endH, endM)) {
+                Validator.displayInfo("Sorry.\n" +
+                        "Your appointment can not be in the past OR Your appointment ending time can not be before the appointment starting time. \n Try again please.");
+            } else if (!DateTimeConverter.isWithinOfficeHour(startD, startH, startM, endD, endH, endM)) {
+                Validator.displayInfo("Sorry, The time you wish to book is out of office hour.");
+            } else if (appointmentDao.isDoubleBooking(customerId, startLocalDateTime, endLocalDateTime)) {
+                Validator.displayInfo("Sorry, the time you have selected is already booked, please select a different time.");
+            } else {
+                Timestamp createdDate = DateTimeConverter.convertLocalTimeToUTC(LocalDateTime.now());
+                Timestamp lastUpdate = DateTimeConverter.convertLocalTimeToUTC(LocalDateTime.now());
+                Appointment appointment = new Appointment(title, description, location,
+                        type, Timestamp.valueOf(startLocalDateTime), Timestamp.valueOf(endLocalDateTime),
+                        createdDate, userName, lastUpdate, userName, customerId, contactId, userId);
+                appointmentDao.save(appointment);
+                Validator.displaySuccess("Appointment is saved");
+                setScene(event, Views.APPOINTMENT_RECORD_VIEW.getView());
+            }}
         }
     }
 
@@ -193,7 +200,7 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
     private boolean areValidInput(String type, String location, String title, String description, LocalDate startD, String startH, String startM, LocalDate endD, String endH, String endM, String contact, String customer, String user) {
         return Validator.isValidString(type, location, title) && description.length() > 0 && contact != null && customer != null && user != null && startD != null && endD != null && startM != null && startH != null && endM != null && endH != null;
     }
-//
+// I am keeping those here for my future enhancement for this program
 //    private String getAvailableTime() {
 //        String availableTime = "";
 //        Iterator iteratorMap = BookingAvailability.availableTimeToDisplay.entrySet().iterator();
@@ -236,10 +243,10 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
         endDate.setValue(LocalDate.now());
         endDate.setShowWeekNumbers(true);
 
-        Callback<DatePicker, DateCell> startDayCellFactory = this.getDayCellFactory();
-        startDate.setDayCellFactory(startDayCellFactory);
-        Callback<DatePicker, DateCell> endDayCellFactory = this.getDayCellFactory();
-        endDate.setDayCellFactory(endDayCellFactory);
+//        Callback<DatePicker, DateCell> startDayCellFactory = this.getDayCellFactory();
+//        startDate.setDayCellFactory(startDayCellFactory);
+//        Callback<DatePicker, DateCell> endDayCellFactory = this.getDayCellFactory();
+//        endDate.setDayCellFactory(endDayCellFactory);
 
         startHr.setItems(DateTimeConverter.hrList);
         startMin.setItems(DateTimeConverter.minuteList);

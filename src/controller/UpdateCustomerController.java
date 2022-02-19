@@ -61,10 +61,10 @@ public class UpdateCustomerController implements Initializable, CommonUseHelperI
      * Initialize a customer object
      */
     private final Customer customer = new Customer();
-    /**
-     * initialize isSaved to false
-     */
-    private boolean isSaved = false;
+//    /**
+//     * initialize isSaved to false
+//     */
+//    private boolean isSaved = false;
     /**
      * create a country ID variable
      */
@@ -158,10 +158,9 @@ public class UpdateCustomerController implements Initializable, CommonUseHelperI
                 getCustomerUpdatedInfo(custNameField.getText(), addressField.getText(), phoneField.getText(), zipCodeField.getText());
                 customerDao.update(customer);
                 Validator.displaySuccess("Updated");
-                isSaved = true;
+                setScene(event, Views.CUSTOMER_RECORD_VIEW.getView());
             } else {
-                Validator.displayInvalidInput("Contain invalid entry Or fields can not be empty.\n\n Example:\n Name: Lucy Wang\nAddress: 123 street name, city name \nPhone(US and Canada: XXX-XXX-XXXX, UK: XX-XXX-XXX-XXXX)\nPostCode(US and Canada are digits only and UK format example: AF19B)");
-                setScene(event, Views.UPDATE_CUSTOMER_VIEW.getView());
+                Validator.displayInvalidInput("Invalid entry, try gain.");
             }
         } else {
             Validator.displayInfo("No change is found.");
@@ -218,19 +217,19 @@ public class UpdateCustomerController implements Initializable, CommonUseHelperI
         return Validator.isValidName(name) && Validator.isValidAddress(address) && Validator.isValidPhoneNumber(phone) && Validator.isValidZipCode(postCode);
     }
 
-    /**
-     * This method give an option for user to also update the same customers appointment.
-     *
-     * @param event an event indicates a component-defined action occurred.
-     */
-    @FXML
-    void updateAptClicked(ActionEvent event) {
-        if (!detectAnyChange(event) || isSaved) {
-            setScene(event, Views.APPOINTMENT_RECORD_VIEW.getView());
-        } else {
-            Validator.displayUnsavedInfo("Please save customer's information before add/update the appointments");
-        }
-    }
+//    /**
+//     * This method give an option for user to also update the same customers appointment.
+//     *
+//     * @param event an event indicates a component-defined action occurred.
+//     */
+//    @FXML
+//    void updateAptClicked(ActionEvent event) {
+//        if (!detectAnyChange(event) || isSaved) {
+//            setScene(event, Views.APPOINTMENT_RECORD_VIEW.getView());
+//        } else {
+//            Validator.displayUnsavedInfo("Please save customer's information before add/update the appointments");
+//        }
+//    }
 
     /**
      * Initialize the customer previous info.

@@ -92,6 +92,7 @@ public class DateTimeConverter {
         return Timestamp.valueOf(FORMATTER.format(dateTime.atZone(ZoneId.systemDefault()).withZoneSameInstant(ZoneId.of(String.valueOf(TimeZoneOption.EST), ZoneId.SHORT_IDS))));
     }
 
+    // I am keeping those here for my future enhancement for this program
 //    /**
 //     * This method converts a user entered appointment time to UTC time
 //     *
@@ -152,6 +153,7 @@ public class DateTimeConverter {
         return localDateTime;
     }
 
+    // I am keeping those here for my future enhancement for this program
 //    /**
 //     * This method converts a UTC time to an EST time
 //     *
@@ -277,6 +279,7 @@ public class DateTimeConverter {
                 && !isWeekend(aptDateTime, endDateTime);
     }
 
+    // I am keeping those here for my future enhancement for this program
 //    /**
 //     * This method generates a local time for user to identify the EST starting office hour based on the local date
 //     *
@@ -308,7 +311,6 @@ public class DateTimeConverter {
      */
     public static int get24HrTime(int hr, String meridiem) {
         hr += meridiem.equals("AM") ? 0 : 12;
-//        hr = meridiem.equals("PM")? hr-12 : hr;
         return hr;
     }
 
