@@ -158,7 +158,6 @@ public class ReportController implements Initializable, CommonUseHelperIfc {
         ObservableList<String> contactNames = contacts.stream()
                 .map(c -> c.getContact_name())
                 .collect(Collectors.toCollection(FXCollections::observableArrayList));
-
         contactList.setItems(contactNames);
 
         if (contactName != null) {

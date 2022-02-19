@@ -37,8 +37,8 @@ public class AppointmentDaoImpl extends JDBCConnection implements ServiceIfc<App
         try {
             while (rs.next()) {
                 long aptId = rs.getLong("appointment_id");
-                Timestamp startDateTime = DateTimeConverter.convertUTCToLocal(String.valueOf(rs.getTimestamp("start")));
-                Timestamp endDateTime = DateTimeConverter.convertUTCToLocal(String.valueOf(rs.getTimestamp("end")));
+                Timestamp startDateTime = rs.getTimestamp("start");
+                Timestamp endDateTime = rs.getTimestamp("end");
 
                 appointment = new Appointment(aptId, startDateTime, endDateTime);
                 allAppointment.add(appointment);
