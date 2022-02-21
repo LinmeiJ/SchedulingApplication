@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.UpdateAppointmentController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="571.0" prefWidth="1044.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.UpdateAppointmentController">
    <children>
       <AnchorPane layoutX="112.0" layoutY="49.0" prefHeight="522.0" prefWidth="813.0">
          <children>
@@ -67,7 +67,7 @@
             <Label fx:id="startOfficeHr" layoutX="512.0" layoutY="48.0" prefHeight="18.0" prefWidth="30.0" />
             <Label layoutX="556.0" layoutY="48.0" prefHeight="18.0" prefWidth="27.0" text="To" />
             <Label fx:id="endOfficeHr" layoutX="587.0" layoutY="48.0" prefHeight="18.0" prefWidth="46.0" />
-            <Label layoutX="290.0" layoutY="49.0" prefHeight="18.0" prefWidth="194.0" text="Local Time Office Hour:" />
+            <Label layoutX="353.0" layoutY="48.0" prefHeight="18.0" prefWidth="155.0" text="Local Time Office Hour:" />
             <Button fx:id="backBtn" layoutX="755.0" layoutY="13.0" mnemonicParsing="false" onAction="#backToRecordPage" text="Back" />
             <Button fx:id="saveUpdates" layoutX="767.0" layoutY="398.0" mnemonicParsing="false" onAction="#updateClicked" prefHeight="44.0" prefWidth="94.0" text="Save">
                <font>

@@ -58,7 +58,7 @@
                   <Font size="11.0" />
                </font>
             </Label>
-            <Label layoutX="101.0" layoutY="294.0" prefHeight="17.0" prefWidth="155.0" text="US&amp;CA: 123456 UK: AB19H" textFill="#a8a2a2">
+            <Label layoutX="101.0" layoutY="294.0" prefHeight="17.0" prefWidth="155.0" text="US&amp;CA: 12456 UK: AB19H" textFill="#a8a2a2">
                <font>
                   <Font size="11.0" />
                </font>
@@ -85,11 +85,11 @@
             <ComboBox fx:id="divisionList" editable="true" layoutX="37.0" layoutY="87.0" prefHeight="36.0" prefWidth="249.0" promptText="Division List" />
          </children>
       </AnchorPane>
-      <Button fx:id="saveCustBtn" layoutX="948.0" layoutY="482.0" mnemonicParsing="false" onAction="#saveCustClicked" prefHeight="44.0" prefWidth="94.0" text="Save">
+      <Button fx:id="saveCustBtn" layoutX="947.0" layoutY="549.0" mnemonicParsing="false" onAction="#saveCustClicked" prefHeight="44.0" prefWidth="94.0" text="Save">
          <font>
             <Font size="20.0" />
          </font></Button>
-      <Button fx:id="backBtn" layoutX="919.0" layoutY="547.0" mnemonicParsing="false" onAction="#backToRecordPage" text="Back" />
-      <Button fx:id="cancelBtn" layoutX="1030.0" layoutY="547.0" mnemonicParsing="false" onAction="#exitBtnClicked" text="Exit" />
+      <Button fx:id="backBtn" layoutX="912.0" layoutY="73.0" mnemonicParsing="false" onAction="#backToRecordPage" text="Back" />
+      <Button fx:id="cancelBtn" layoutX="984.0" layoutY="73.0" mnemonicParsing="false" onAction="#exitBtnClicked" text="Exit" />
    </children>
 </AnchorPane>

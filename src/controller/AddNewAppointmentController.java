@@ -11,7 +11,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.util.Callback;
 
 import java.net.URL;
 import java.sql.Timestamp;
@@ -238,10 +237,7 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
      */
     private void setDateTime() {
         startDate.setValue(LocalDate.now());
-        startDate.setShowWeekNumbers(true);
-
         endDate.setValue(LocalDate.now());
-        endDate.setShowWeekNumbers(true);
 
 //        Callback<DatePicker, DateCell> startDayCellFactory = this.getDayCellFactory();
 //        startDate.setDayCellFactory(startDayCellFactory);
@@ -272,7 +268,8 @@ public class AddNewAppointmentController implements Initializable, CommonUseHelp
     }
 
     /**
-     * Lambda expression #1: Convert a list of contact object into a contact ID and contact Name key value pair map
+     * Lambda expression #1: Convert a list of contact object into a contact ID and contact Name key value pair map.
+     * This is a faster and cleaner way to write code instead of using traditional loops.
      *
      * @return a map that contains only contact ID and its corresponding contact name
      */

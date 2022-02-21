@@ -226,6 +226,8 @@ public class AppointmentRecordController extends JDBCConnection implements Initi
 
     /**
      * Lambda expression #2.This method sets up the appointment list filtering by current month
+     * Using stream to loop through a list then save to a new list based on a filter condition. there will be much more code involves if
+     * I use traditional way to operate the same task.
      *
      * @param appointments an appointment list of all months
      * @return an appointment list of current month

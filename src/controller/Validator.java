@@ -68,7 +68,7 @@ public final class Validator {
      * @return if the string is valid, returns ture, otherwise returns a false.
      */
     public static boolean checkStringEntry(String str1) {
-        return !str1.isEmpty();
+        return !str1.isEmpty() && !(str1.length() == 0);
     }
 
     /**
@@ -235,7 +235,7 @@ public final class Validator {
         switch (CustomerRecordController.ctryId) {
             case US:
             case CANADA:
-                p = Pattern.compile("^\\d+$");
+                p = Pattern.compile("^\\d{5}$");
                 break;
             case UK:
                 p = Pattern.compile("^[A-Z]{1,2}[0-9]{2}[A-Z]$");
