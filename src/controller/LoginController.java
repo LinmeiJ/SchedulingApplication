@@ -25,20 +25,44 @@ import java.util.*;
  * @author Linmei M.
  */
 public class LoginController implements Initializable, CommonUseHelperIfc {
+    /**
+     * The user name label on the user log in screen
+     */
     @FXML
     private Label userName;
+    /**
+     * The user name field on the user log in screen
+     */
     @FXML
     private TextField userNameField;
+    /**
+     * The password label on the user log in screen
+     */
     @FXML
     private Label password;
+    /**
+     * The password field on the user log in screen
+     */
     @FXML
     private PasswordField passwordField;
+    /**
+     * The log in button on the user log in screen
+     */
     @FXML
     private Button loginBtn;
+    /**
+     * The zone ID label on the user log in screen
+     */
     @FXML
     private Label locationField;
+    /**
+     * The exit button on the user log in screen
+     */
     @FXML
     private Button exitId;
+    /**
+     * The Sign in label on the user log in screen
+     */
     @FXML
     private Label signIn;
 

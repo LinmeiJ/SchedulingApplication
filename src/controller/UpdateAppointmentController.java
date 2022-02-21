@@ -26,44 +26,99 @@ import java.util.ResourceBundle;
  * @author Linmei M.
  */
 public class UpdateAppointmentController extends JDBCConnection implements Initializable, CommonUseHelperIfc {
+    /**
+     * The appointment description on the update appointment screen
+     */
     @FXML
     private TextArea aptDescription;
+    /**
+     * The appointment ID on the update appointment screen
+     */
     @FXML
     private TextField aptID;
+    /**
+     * The appointment location on the update appointment screen
+     */
     @FXML
     private TextField aptLocation;
+    /**
+     * The appointment title on the update appointment screen
+     */
     @FXML
     private TextField aptTitle;
+    /**
+     * The appointment type on the update appointment screen
+     */
     @FXML
     private TextField aptType;
+    /**
+     * The appointment exit button on the update appointment screen
+     */
     @FXML
     private Button cancelBtn;
+    /**
+     * The customer ID that is associated to this appointment on the update appointment screen
+     */
     @FXML
     private Label custID;
+    /**
+     * The appointment end date on the update appointment screen
+     */
     @FXML
     private DatePicker endDate;
+    /**
+     * the appointment end hour on the update appointment screen
+     */
     @FXML
     private ComboBox<String> endHr;
+    /**
+     * The appointment end minute on the update appointment screen
+     */
     @FXML
     private ComboBox<String> endMin;
+    /**
+     * The appointment start date on the update appointment screen
+     */
     @FXML
     private DatePicker startDate;
+    /**
+     * The appointment start hour on the update appointment screen
+     */
     @FXML
     private ComboBox<String> startHr;
+    /**
+     * The appointment start minute on the update appointment screen
+     */
     @FXML
     private ComboBox<String> startMin;
+    /**
+     * A list of contacts for user to select that will be associate to this appointment on the update appointment screen.
+     */
     @FXML
     private ComboBox<String> contactList;
+    /**
+     * The user ID that is associated to this appointment on the update appointment screen
+     */
     @FXML
     private Label userId;
+    /**
+     * The appointment start meridiem on the update appointment screen
+     */
     @FXML
     private ChoiceBox<String> startMeridiem;
-
+    /**
+     * The appointment end meridiem on the update appointment screen
+     */
     @FXML
     private ChoiceBox<String> endMeridiem;
+    /**
+     * The office start hour in local time on the update appointment screen
+     */
     @FXML
     private Label startOfficeHr;
-
+    /**
+     * The office end hour in local time on the update appointment screen
+     */
     @FXML
     private Label endOfficeHr;
 
@@ -257,6 +312,8 @@ public class UpdateAppointmentController extends JDBCConnection implements Initi
      * @param endH        end hour field input
      * @param endM        end minute field input
      * @param contact     a contact id
+     * @param endMe       end appointment time meridiem
+     * @param startMe     start appointment time meridiem
      * @return boolean if all input are valid returns a ture, otherwise, returns a false.
      */
     private boolean areValidInput(String type, String location, String title, String description, LocalDate startD, String startH, String startM, LocalDate endD, String endH, String endM, String contact, String startMe, String endMe) {

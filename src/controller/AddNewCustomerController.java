@@ -28,22 +28,49 @@ import java.util.ResourceBundle;
  * @author Linmei M.
  */
 public class AddNewCustomerController extends JDBCConnection implements Initializable, CommonUseHelperIfc {
+    /**
+     * The customer name field on the add a new customer screen
+     */
     @FXML
     private TextField addCustNameField;
+    /**
+     * The phone number field on the add a new customer screen
+     */
     @FXML
     private TextField addPhoneField;
+    /**
+     * The address field on the add a new customer screen
+     */
     @FXML
     private TextField addAddressField;
+    /**
+     * The zip code field on the add a new customer screen
+     */
     @FXML
     private TextField addZipCodeField;
+    /**
+     * The U.S. radio list button on the add a new customer screen
+     */
     @FXML
     private RadioButton USAId;
+    /**
+     * The C.A. radio list button on the add a new customer screen
+     */
     @FXML
     private RadioButton canadaId;
+    /**
+     * The U.K. radio list button on the add a new customer screen
+     */
     @FXML
     private RadioButton englandId;
+    /**
+     * The division comboBox list on the add a new customer screen
+     */
     @FXML
     private ComboBox<String> divisionList;
+    /**
+     * The exit button on the add a new customer screen
+     */
     @FXML
     private Button cancelBtn;
 

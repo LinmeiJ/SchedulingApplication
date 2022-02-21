@@ -242,7 +242,7 @@ public class DateTimeConverter {
      * @param endDate an appointment end date
      * @param endH an appointment end hour
      * @param endM an appointment end minute
-     * @return
+     * @return true if iswithin office hour, otherwise return false.
      */
     public static boolean isWithinOfficeHour(LocalDate dateValue, String hrValue, String minuteValue, LocalDate endDate, String endH, String endM) {
         Timestamp aptStartDateTime = convertAptTimeToEST(dateValue, hrValue, minuteValue);

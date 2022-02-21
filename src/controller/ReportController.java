@@ -27,38 +27,89 @@ import java.util.stream.Collectors;
  * @author Linmei M.
  */
 public class ReportController implements Initializable, CommonUseHelperIfc {
+    /**
+     * The exit button on the report screen
+     */
     @FXML
     private Button exit;
+    /**
+     * The appointment description on the report two table view on the report screen
+     */
     @FXML
     private TableColumn<Appointment, String> description;
+    /**
+     * The appointment start date time on the report two table view on the report screen
+     */
     @FXML
     private TableColumn<Appointment, Timestamp> start;
+    /**
+     * The appointment title on the report two table view on the report screen
+     */
     @FXML
     private TableColumn<Appointment, String> title;
+    /**
+     * The appointment type on the report two table view on the report screen
+     */
     @FXML
     private TableColumn<Appointment, String> type;
+    /**
+     * The appointment ID on the report two table view on the report screen
+     */
     @FXML
     private TableColumn<Appointment, Long> aptID;
+    /**
+     * A contact list for user to select to view a list of appointment that associated to the contact ID/name
+     */
     @FXML
     private ComboBox<String> contactList;
+    /**
+     * The country name header on the report three table on the report screen
+     */
     @FXML
     private TableColumn<Country, String> countryName;
+    /**
+     * The customer ID on the report two table view on the report screen
+     */
     @FXML
     private TableColumn<Report, Long> custId;
+    /**
+     * The appointment end date time on the report two table view on the report screen
+     */
     @FXML
     private TableColumn<Appointment, Timestamp> end;
+    /**
+     * The total appointment count by month or type table column on the report one table view on the report screen
+     */
     @FXML
     private TableColumn<Report, String> typeMonthOption;
+    /**
+     * The total appointment count column on the report one table view on the report screen
+     */
     @FXML
     private TableColumn<Report, Integer> typeMonthCount;
+    /**
+     * The month type comBox on the report screen
+     */
     @FXML
     private ComboBox<String> monthTypeCombo;
+    /**
+     * The total count of customers for the report three on the report screen
+     */
     @FXML
     private TableColumn<Country, Long> totalCountCustomers;
+    /**
+     * The report one table view on the report screen
+     */
     @FXML
     private TableView<Report> reportOne;
+    /**
+     * The report two table view on the report screen
+     */
     @FXML
     private TableView<Appointment> reportTwo;
+    /**
+     * The report three table view on the report screen
+     */
     @FXML
     private TableView<Country> reportThree;
 

@@ -18,8 +18,6 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 /**
@@ -28,34 +26,79 @@ import java.util.stream.Collectors;
  * @author Linmei M.
  */
 public class AppointmentRecordController extends JDBCConnection implements Initializable, CommonUseHelperIfc {
+    /**
+     * The appointment contact name column on the appointment record screen
+     */
     @FXML
     private TableColumn<Appointment, String> aptContact;
+    /**
+     * The appointment customer ID column on the appointment record screen
+     */
     @FXML
     private TableColumn<Appointment, Long> aptCustID;
+    /**
+     * The appointment description column on the appointment record screen
+     */
     @FXML
     private TableColumn<Appointment, String> aptDescription;
+    /**
+     * The appointment start date time column on the appointment record screen
+     */
     @FXML
     private TableColumn<Appointment, Timestamp> aptStartDateTime;
+    /**
+     * The appointment end date time column on the appointment record screen
+     */
     @FXML
     private TableColumn<Appointment, Timestamp> aptEndDateTime;
+    /**
+     * The appointment ID column on the appointment record screen
+     */
     @FXML
     private TableColumn<Appointment, Long> aptID;
+    /**
+     * The appointment location column on the appointment record screen
+     */
     @FXML
     private TableColumn<Appointment, String> aptLocation;
+    /**
+     * The appointment title column on the appointment record screen
+     */
     @FXML
     private TableColumn<Appointment, String> aptTitle;
+    /**
+     * The appointment type column on the appointment record screen
+     */
     @FXML
     private TableColumn<Appointment, String> aptType;
+    /**
+     * The appointment user ID column on the appointment record screen
+     */
     @FXML
     private TableColumn<Appointment, Long> aptUserID;
+    /**
+     * The appointment table column on the appointment record screen
+     */
     @FXML
     private TableView<Appointment> appointmentTable;
+    /**
+     * The exit button on the appointment record screen
+     */
     @FXML
     private Button exitBtn;
+    /**
+     * The filter radio button for month on the appointment record screen
+     */
     @FXML
     private RadioButton filterByMonth;
+    /**
+     * The filter radio button for week on the appointment record screen
+     */
     @FXML
     private RadioButton filterByWeek;
+    /**
+     * The filter radio button for all appointment on the appointment record screen
+     */
     @FXML
     private RadioButton listAll;
 
@@ -232,7 +275,7 @@ public class AppointmentRecordController extends JDBCConnection implements Initi
      * @param appointments an appointment list of all months
      * @return an appointment list of current month
      */
-    private ObservableList<Appointment> getAptsForCurrentMonth(ObservableList<Appointment> appointments) {
+    public ObservableList<Appointment> getAptsForCurrentMonth(ObservableList<Appointment> appointments) {
         ObservableList<Appointment> aptByMonth;
         Month currentMonth = LocalDate.now().getMonth();
         //lambda expression: get the current week appointments by filters starting from sunday to sarturday

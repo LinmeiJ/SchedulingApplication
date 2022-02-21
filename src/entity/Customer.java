@@ -8,16 +8,49 @@ import java.sql.Timestamp;
  * @author Linmei M.
  */
 public class Customer {
+    /**
+     * An unique customer ID that is generated in database
+     */
     private int customer_id;
+    /**
+     * An customer name that is associated to the customer ID
+     */
     private String customer_name;
+    /**
+     * An customer address
+     */
     private String address;
+    /**
+     * An customer's postal code
+     */
     private String postal_code;
+    /**
+     * An customer's phone number
+     */
     private String phone;
+    /**
+     * The date of creating this customer info
+     */
     private Timestamp create_date;
+    /**
+     * The person who created this customer info
+     */
     private String created_by;
+    /**
+     * The date time of when the customer was last updated
+     */
     private Timestamp last_update;
+    /**
+     * The person who did the last update
+     */
     private String last_updated_by;
+    /**
+     * A division ID that represents the country in which the customer from
+     */
     private long division_id;
+    /**
+     * The FirstLevelDivision table that is associated to the customer
+     */
     private FirstLevelDivision firstLevelDivision;//imperfect way to display the division on the record table
 
     /**

@@ -8,12 +8,33 @@ import java.sql.Timestamp;
  * @author Linmei M.
  */
 public class FirstLevelDivision {
+    /**
+     * An division ID
+     */
     private long division_id;
+    /**
+     * The city/state name
+     */
     private String division;
+    /**
+     * The date time of this division is created
+     */
     private Timestamp create_date;
+    /**
+     * The person who created this division
+     */
     private String created_by;
+    /**
+     * The date time of when this division was last updated
+     */
     private Timestamp last_update;
+    /**
+     * The persopn who last updated this division
+     */
     private String last_updated_by;
+    /**
+     * The country ID that is associated to the division
+     */
     private long country_id;
 
     /**

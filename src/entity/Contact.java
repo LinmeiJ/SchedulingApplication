@@ -6,8 +6,17 @@ package entity;
  * @author Linmei M.
  */
 public class Contact {
+    /**
+     * A contact ID that is getting from the DB
+     */
     private int contact_id;
+    /**
+     * An contact name associated to the contact ID
+     */
     private String contact_name;
+    /**
+     * An email that associated to the contact ID
+     */
     private String email;
 
     /**

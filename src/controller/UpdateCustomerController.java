@@ -24,24 +24,54 @@ import java.util.ResourceBundle;
  * @author Linmei M.
  */
 public class UpdateCustomerController implements Initializable, CommonUseHelperIfc {
+    /**
+     * The customer ID field on the customer update screen
+     */
     @FXML
     private TextField custId;
+    /**
+     * The customer name field on the customer update screen
+     */
     @FXML
     private TextField custNameField;
+    /**
+     * The phone number field on the customer update screen
+     */
     @FXML
     private TextField phoneField;
+    /**
+     * The address of the customer on the customer update screen
+     */
     @FXML
     private TextField addressField;
+    /**
+     * The zip code filed on the customer update screen
+     */
     @FXML
     private TextField zipCodeField;
+    /**
+     * The U.S. radio button on the customer update screen
+     */
     @FXML
     private RadioButton USAId;
+    /**
+     * The C.A button on the customer update screen
+     */
     @FXML
     private RadioButton canadaId;
+    /**
+     * The U.K. radio button on the customer update screen
+     */
     @FXML
     private RadioButton englandId;
+    /**
+     * The division comboBox on the customer update screen
+     */
     @FXML
     private ComboBox<String> division;
+    /**
+     * The exit button on the customer update screen
+     */
     @FXML
     private Button cancelBtn;
 
@@ -61,10 +91,6 @@ public class UpdateCustomerController implements Initializable, CommonUseHelperI
      * Initialize a customer object
      */
     private final Customer customer = new Customer();
-//    /**
-//     * initialize isSaved to false
-//     */
-//    private boolean isSaved = false;
     /**
      * create a country ID variable
      */

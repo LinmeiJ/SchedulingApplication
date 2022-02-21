@@ -8,12 +8,33 @@ import java.sql.Timestamp;
  * @author Linmei M.
  */
 public class Country {
+    /**
+     * A country ID that is generated in database
+     */
     private long country_id;
+    /**
+     * A country name that is associated to the country ID
+     */
     private String countryName;
+    /**
+     * The data time of this country ID that is created
+     */
     private Timestamp create_date;
+    /**
+     * The person who created this country ID
+     */
     private String created_by;
+    /**
+     * The date time of when the country was last updated
+     */
     private Timestamp last_update;
+    /**
+     * The person who last updated this country
+     */
     private String last_updated_by;
+    /**
+     * The count of total customer by country ID
+     */
     private Long count;
 
     /**

@@ -6,10 +6,25 @@ package entity;
  * @author Linmei M.
  */
 public class Report {
+    /**
+     * The month in which an appointment is in
+     */
     private String month;
+    /**
+     * The type of each appointment
+     */
     private String type;
+    /**
+     * The country of where each customer comes from
+     */
     private String country;
+    /**
+     * Total count of either by type of by month
+     */
     private int count;
+    /**
+     * the total customer count by country
+     */
     private int ctrCount;
 
     /**

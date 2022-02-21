@@ -8,20 +8,65 @@ import java.sql.Timestamp;
  * @author Linmei M.
  */
 public class Appointment {
+    /**
+     * An appointment ID that is getting from DB
+     */
     private long appointment_id;
+    /**
+     * An appointment title
+     */
     private String title;
+    /**
+     * An appointment description
+     */
     private String description;
+    /**
+     * An appointment location
+     */
     private String location;
+    /**
+     * An appointment type
+     */
     private String type;
+    /**
+     * An appointment start date time
+     */
     private Timestamp start;
+    /**
+     * An appointment end date time
+     */
     private Timestamp end;
+    /**
+     * An appointment created date
+     */
     private Timestamp Created_date;
+    /**
+     * The person who created this appointment
+     */
     private String Created_by;
+    /**
+     * The last updated date time for this appointment
+     */
     private Timestamp last_update;
+    /**
+     * The person who last updated the appointment
+     */
     private String last_updated_by;
+    /**
+     * The associated customer ID for this appointment
+     */
     private long customer_id;
+    /**
+     * The associated contact ID for this appointment
+     */
     private long contact_id;
+    /**
+     * The associated user ID for this appointment
+     */
     private long user_id;
+    /**
+     * The associated contact name for this appointment
+     */
     private String contact_name;
 
     /**

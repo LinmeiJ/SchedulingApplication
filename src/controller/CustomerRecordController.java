@@ -23,20 +23,44 @@ import java.util.logging.*;
  * @author Linmei M.
  */
 public class CustomerRecordController implements Initializable, CommonUseHelperIfc {
+    /**
+     * The exit button on the customer record screen
+     */
     @FXML
     private Button exitId;
+    /**
+     * The customer record table on the customer record screen
+     */
     @FXML
     private TableView<Customer> recordTable;
+    /**
+     * The customer ID column on the customer record screen
+     */
     @FXML
     private TableColumn<Customer, Long> custID;
+    /**
+     * The customer name column on the customer record screen
+     */
     @FXML
     private TableColumn<Customer, String> custName;
+    /**
+     * The customer address column on the customer record screen
+     */
     @FXML
     private TableColumn<Customer, String> custAddress;
+    /**
+     * The customer zipcode column on the customer record screen
+     */
     @FXML
     private TableColumn<Customer, String> custZipCode;
+    /**
+     * The customer phone number column on the customer record screen
+     */
     @FXML
     private TableColumn<Customer, String> custPhoneNum;
+    /**
+     * The customer division column on the customer record screen
+     */
     @FXML
     private TableColumn<Customer, String> custDivision;
 
